@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ## 
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Mon Apr 27 12:34:09 2015 Johan Paasche
+## Last update Mon Apr 27 13:07:08 2015 Johan Paasche
 ##
 
 #########################################################
@@ -32,8 +32,11 @@ LINKING		=	yes
 #			FLAGS				#
 #########################################################
 CFLAGS		=	-W -Wall -Wextra -ansi -I$(INCLUDE_DIR)
-MAKEFLAGS	+=	--warn-undefined-variables --no-print-directory
-LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)/libs/ -lgdl_gl -lGL -lGLEW -ldl -lrt -lfbdxsdk -lSDL2 -lpthread
+MAKEFLAGS	+=	--warn-undefined-variables		\
+			--warn-unused-variables			\
+			--no-print-directory
+LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)/libs/ \
+			-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
 
 
 
@@ -48,6 +51,7 @@ SRC_DIR		=	./src/
 OBJ_DIR		=	./obj/
 
 
+
 #########################################################
 #	 	ARTIFICIAL INTELLIGENCE			#
 #########################################################
@@ -58,6 +62,8 @@ AI_OBJS			=	$(addsuffix .o, $(basename $(subst $(AI_SRC_DIR), $(AI_OBJ_DIR), $(A
 
 AI_SRC			=	exemple.cpp		\
 
+
+
 #########################################################
 #	 	ARTIFICIAL INTELLIGENCE			#
 #########################################################
@@ -67,6 +73,7 @@ GRAPHICS_SRCS		=	$(addprefix $(GRAPHICS_SRC_DIR), $(GRAPHICS_SRC))
 GRAPHICS_OBJS		=	$(addsuffix .o, $(basename $(subst $(GRAPHICS_SRC_DIR), $(GRAPHICS_OBJ_DIR), $(GRAPHICS_SRCS))))
 
 GRAPHICS_SRC		=	test.cpp		\
+
 
 
 #########################################################
@@ -91,6 +98,8 @@ SRCS			=	$(AI_SRCS)		\
 				$(GRAPHICS_SRCS)	\
 				$(BOMBERMAN_SRCS)
 
+
+
 #########################################################
 #			RULES				#
 #########################################################
@@ -108,16 +117,18 @@ debug		:	$(FIRST) fclean
 			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS) -g3'
 
 $(BOMBERMAN)	:	$(PRO)
+ifeq	($(LINKING), yes)
 			@$(LINK) $(PRO) $(BOMBERMAN)
+endif
 
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.cpp
 			@$(ECHO) $(COLOR_2)
-			$(CC) $(CFLAGS) -c $< -o $@
+			$(CC) $(CFLAGS) -c $< -o $@ $(LFLAGS)
 			@$(ECHO) $(COLOR_OFF)
 
 $(PRO)		:	$(OBJS)
 			@$(ECHO) $(COLOR_3) "\nLinking ...\n"$(COLOR_4)
-			$(CC) $(CFLAGS) $(OBJS) -o $(PRO)
+			$(CC) $(CFLAGS) $(OBJS) -o $(PRO) $(LFLAGS)
 			@$(ECHO) $(COLOR_3) "\nDone.\n"$(COLOR_OFF)
 
 clean		:
