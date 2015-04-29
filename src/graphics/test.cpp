@@ -5,13 +5,21 @@
 // Login   <paasch_j@epitech.net>
 //
 // Started on  Mon Apr 27 11:47:41 2015 Johan Paasche
-// Last update Mon Apr 27 12:00:49 2015 Johan Paasche
+// Last update Mon Apr 27 23:46:03 2015 Johan Paasche
 //
 
-#include	"basics.hh"
+#include	"bomberman.hh"
+#include	<time.h>
+#include	<unistd.h>
 
 bool		helloWorld()
 {
+  gdl::SdlContext	_context;
+  gdl::Texture		_texture;
+
+  _context.start(500, 500, "Bomberman");
+
+  sleep(1);
   std::cout << "Hello, World !" << std::endl;
   return (true);
 }

@@ -1,0 +1,127 @@
+//
+// test.cpp for test in /home/paasch_j/cpp_bomberman
+//
+// Made by Johan Paasche
+// Login   <paasch_j@epitech.net>
+//
+// Started on  Mon Apr 27 11:47:41 2015 Johan Paasche
+// Last update Mon Apr 27 23:46:03 2015 Johan Paasche
+//
+
+#include	"bomberman.hh"
+#include	<time.h>
+#include	<unistd.h>
+
+bool		helloWorld()
+{
+  gdl::SdlContext	_context;
+  gdl::Texture		_texture;
+  gdl::Geometry		_g;
+  
+  glEnable(GL_DEPTH_TEST);
+  
+  _context.start(500, 500, "Bomberman");
+  if (!(_texture.load("./ressources/desert_texture.tga")))
+    return (false);
+
+  _g.setColor(glm::vec4(1, 0, 0, 1));
+
+  _g.pushVertex(glm::vec3(0.5, -0.5, 0.5));
+  _g.pushVertex(glm::vec3(0.5, 0.5, 0.5));
+  _g.pushVertex(glm::vec3(-0.5, 0.5, 0.5));
+  _g.pushVertex(glm::vec3(-0.5, -0.5, 0.5));
+
+  _g.pushUv(glm::vec2(0.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 1.0f));
+  _g.pushUv(glm::vec2(0.0f, 1.0f));
+
+    _g.setColor(glm::vec4(1, 0, 0, 1));
+
+  _g.pushVertex(glm::vec3(0.5, -0.5, 0.5));
+  _g.pushVertex(glm::vec3(0.5, 0.5, 0.5));
+  _g.pushVertex(glm::vec3(-0.5, 0.5, 0.5));
+  _g.pushVertex(glm::vec3(-0.5, -0.5, 0.5));
+
+  _g.pushUv(glm::vec2(0.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 1.0f));
+  _g.pushUv(glm::vec2(0.0f, 1.0f));
+
+
+
+  _g.setColor(glm::vec4(1, 1, 0, 1));
+
+  _g.pushVertex(glm::vec3(0.5, -0.5, -0.5));
+  _g.pushVertex(glm::vec3(0.5, 0.5, -0.5));
+  _g.pushVertex(glm::vec3(-0.5, 0.5, -0.5));
+  _g.pushVertex(glm::vec3(-0.5, -0.5, -0.5));
+
+  _g.pushUv(glm::vec2(0.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 1.0f));
+  _g.pushUv(glm::vec2(0.0f, 1.0f));
+
+
+  
+  _g.setColor(glm::vec4(0, 1, 1, 1));
+
+  _g.pushVertex(glm::vec3(0.5, -0.5, -0.5));
+  _g.pushVertex(glm::vec3(0.5, 0.5, -0.5));
+  _g.pushVertex(glm::vec3(0.5, 0.5, 0.5));
+  _g.pushVertex(glm::vec3(0.5, -0.5, 0.5));
+
+  _g.pushUv(glm::vec2(0.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 1.0f));
+  _g.pushUv(glm::vec2(0.0f, 1.0f));
+
+  
+  _g.setColor(glm::vec4(1, 0, 1, 1));
+
+  _g.pushVertex(glm::vec3(-0.5, -0.5, 0.5));
+  _g.pushVertex(glm::vec3(-0.5, 0.5, 0.5));
+  _g.pushVertex(glm::vec3(-0.5, 0.5, -0.5));
+  _g.pushVertex(glm::vec3(-0.5, -0.5, -0.5));
+
+  _g.pushUv(glm::vec2(0.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 1.0f));
+  _g.pushUv(glm::vec2(0.0f, 1.0f));
+
+
+  
+  _g.setColor(glm::vec4(0, 1, 0, 1));
+
+  _g.pushVertex(glm::vec3(0.5, 0.5, 0.5));
+  _g.pushVertex(glm::vec3(0.5, 0.5, -0.5));
+  _g.pushVertex(glm::vec3(-0.5, 0.5, -0.5));
+  _g.pushVertex(glm::vec3(-0.5, 0.5, 0.5));
+
+  _g.pushUv(glm::vec2(0.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 1.0f));
+  _g.pushUv(glm::vec2(0.0f, 1.0f));
+
+
+  
+  _g.setColor(glm::vec4(1, 0, 0, 1));
+
+  _g.pushVertex(glm::vec3(0.5, -0.5, -0.5));
+  _g.pushVertex(glm::vec3(0.5, -0.5, 0.5));
+  _g.pushVertex(glm::vec3(-0.5, -0.5, 0.5));
+  _g.pushVertex(glm::vec3(-0.5, -0.5, -0.5));
+
+  _g.pushUv(glm::vec2(0.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 0.0f));
+  _g.pushUv(glm::vec2(1.0f, 1.0f));
+  _g.pushUv(glm::vec2(0.0f, 1.0f));
+
+  _g.build();
+  _texture.bind();
+  _g.draw(shader, getTranformation(), GL_QUADS);
+  
+  sleep(1);
+  std::cout << "Hello, World !" << std::endl;
+  return (true);
+}

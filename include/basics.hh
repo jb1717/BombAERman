@@ -5,11 +5,11 @@
 // Login   <paasch_j@epitech.net>
 //
 // Started on  Mon Apr 27 11:44:38 2015 Johan Paasche
-// Last update Mon Apr 27 11:50:07 2015 Johan Paasche
+// Last update Mon Apr 27 14:07:20 2015 Johan Paasche
 //
 
-#ifndef		__BASICS_HH__
-# define	__BASICS_HH__
+#ifndef		___BASICS_HH___
+# define	___BASICS_HH___
 
 # define	UNUSED		__attribute__((unused))
 
@@ -25,4 +25,4 @@
 int		lol();
 bool		helloWorld();
 
-#endif		/* !__BASICS_HH__ */
+#endif		/* !___BASICS_HH___ */

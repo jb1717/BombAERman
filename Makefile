@@ -5,12 +5,13 @@
 ## Login   <paasch_j@epitech.net>
 ## 
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Mon Apr 27 14:29:11 2015 Johan Paasche
+## Last update Wed Apr 29 19:43:09 2015 Johan Paasche
 ##
 
 #########################################################
 #			BASICS				#
 #########################################################
+
 CC	=	g++
 RM	=	rm -f
 RMDIR	=	rm -rf
@@ -27,10 +28,10 @@ COLOR_5		=	"\033[36m"
 
 LINKING		=	yes
 
-
 #########################################################
 #			FLAGS				#
 #########################################################
+
 CFLAGS		=	-W -Wall -Wextra -ansi -I$(INCLUDE_DIR)
 MAKEFLAGS	+=	--warn-undefined-variables		\
 			--warn-unused-variables			\
@@ -43,6 +44,7 @@ LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)/libs/ \
 #########################################################
 #			TREE				#
 #########################################################
+
 LIB_DIR		=	./lib/
 LIB_INCLUDE_DIR	=	$(LIB_DIR)/includes/
 INCLUDE_DIR	=	./include/
@@ -55,6 +57,7 @@ OBJ_DIR		=	./obj/
 #########################################################
 #	 	ARTIFICIAL INTELLIGENCE			#
 #########################################################
+
 AI_SRC_DIR		=	$(addprefix $(SRC_DIR), ai/)
 AI_OBJ_DIR		=	$(addprefix $(OBJ_DIR), ai/)
 AI_SRCS			=	$(addprefix $(AI_SRC_DIR), $(AI_SRC))
@@ -67,6 +70,7 @@ AI_SRC			=	exemple.cpp		\
 #########################################################
 #	 	ARTIFICIAL INTELLIGENCE			#
 #########################################################
+
 GRAPHICS_SRC_DIR	=	$(addprefix $(SRC_DIR), graphics/)
 GRAPHICS_OBJ_DIR	=	$(addprefix $(OBJ_DIR), graphics/)
 GRAPHICS_SRCS		=	$(addprefix $(GRAPHICS_SRC_DIR), $(GRAPHICS_SRC))
@@ -79,6 +83,7 @@ GRAPHICS_SRC		=	test.cpp		\
 #########################################################
 #		   GAME  CORE				#
 #########################################################
+
 BOMBERMAN_SRC_DIR	=	$(addprefix $(SRC_DIR), bomberman/)
 BOMBERMAN_OBJ_DIR	=	$(addprefix $(OBJ_DIR), bomberman/)
 BOMBERMAN_SRCS		=	$(addprefix $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_SRC))
@@ -111,8 +116,8 @@ FIRST		:=	$(shell test -d $(BINARY_DIR)		|| mkdir $(BINARY_DIR))		\
 			$(shell test -d $(BOMBERMAN_OBJ_DIR)	|| mkdir $(BOMBERMAN_OBJ_DIR))
 
 all		:
-			$(shell export LD_LIBRARY_PATH=$(LIB_DIR)libs)
 			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS)'
+
 
 debug		:	$(FIRST) fclean
 			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS) -g3'
@@ -124,12 +129,32 @@ endif
 
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.cpp
 			@$(ECHO) $(COLOR_5)
-			$(CC) $(CFLAGS) -c $< -o $@ $(LFLAGS)
+			@$(CC) $(CFLAGS) -c $< -o $@ $(LFLAGS)
+			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) "$(CFLAGS)" $(COLOR_4)"$(LFLAGS)"$(COLOR_3)" $<"$(COLOR_5)" ===> "$(COLOR_3)"$@\n"
 			@$(ECHO) $(COLOR_OFF)
 
 $(PRO)		:	$(OBJS)
 			@$(ECHO) $(COLOR_3) "\nLinking ...\n"$(COLOR_4)
-			$(CC) $(CFLAGS) $(OBJS) -o $(PRO) $(LFLAGS)
+			@$(CC) $(CFLAGS) $(OBJS) -o $(PRO) $(LFLAGS)
+			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) $(CFLAGS) $(LFLAGS) "\n"$(COLOR_4)$(OBJS)$(COLOR_5)"\n"
+			@$(ECHO)	"	  ________ \n"
+			@$(ECHO)	"	 |	  |\n"
+			@$(ECHO)	"	 |	  |\n"
+			@$(ECHO)	"	 |	  |\n"
+			@$(ECHO)	"	 |	  |\n"
+			@$(ECHO)	"	 |	  |\n"
+			@$(ECHO)	"	 |	  | \n"
+			@$(ECHO)	"	 |        | \n"
+			@$(ECHO)	"	 |        |\n"
+			@$(ECHO)      "       ___        ___\n"
+			@$(ECHO)      "       \            / \n"
+			@$(ECHO)       "        \          /\n"
+			@$(ECHO)        "         \        /\n"
+			@$(ECHO)         "          \      /\n"
+			@$(ECHO)          "           \    /\n"
+			@$(ECHO)           "            \  /\n"
+			@$(ECHO)            "             \/\n"
+			@$(ECHO) $(COLOR_4) $(PRO)"\n"
 			@$(ECHO) $(COLOR_3) "\nDone.\n"$(COLOR_OFF)
 
 clean		:
@@ -143,12 +168,11 @@ clean		:
 			@$(RMDIR) $(OBJ_DIR)
 			@$(ECHO) $(COLOR_3)"Deleting binary directory ...\n"
 			@$(RMDIR) $(BINARY_DIR)
-			@$(ECHO) "Done.\n"$(COLOR_OFF)
 
 fclean		:	clean
 			@$(ECHO) $(COLOR_3)"Deleting Binary ...\n"
-			$(RM) $(BOMBERMAN)
-			$(RM) $(PRO)
+			@$(RM) $(BOMBERMAN)
+			@$(RM) $(PRO)
 			@$(ECHO) $(COLOR_3)"Done\n"$(COLOR_OFF)
 
 re		:	fclean all
