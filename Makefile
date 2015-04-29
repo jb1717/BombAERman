@@ -5,12 +5,13 @@
 ## Login   <paasch_j@epitech.net>
 ## 
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Mon Apr 27 13:07:08 2015 Johan Paasche
+## Last update Wed Apr 29 16:57:47 2015 Milox Thomas
 ##
 
 #########################################################
 #			BASICS				#
 #########################################################
+
 CC	=	g++
 RM	=	rm -f
 RMDIR	=	rm -rf
@@ -31,6 +32,7 @@ LINKING		=	yes
 #########################################################
 #			FLAGS				#
 #########################################################
+
 CFLAGS		=	-W -Wall -Wextra -ansi -I$(INCLUDE_DIR)
 MAKEFLAGS	+=	--warn-undefined-variables		\
 			--warn-unused-variables			\
@@ -43,6 +45,7 @@ LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)/libs/ \
 #########################################################
 #			TREE				#
 #########################################################
+
 LIB_DIR		=	./lib/
 LIB_INCLUDE_DIR	=	$(LIB_DIR)/includes/
 INCLUDE_DIR	=	./include/
@@ -55,6 +58,7 @@ OBJ_DIR		=	./obj/
 #########################################################
 #	 	ARTIFICIAL INTELLIGENCE			#
 #########################################################
+
 AI_SRC_DIR		=	$(addprefix $(SRC_DIR), ai/)
 AI_OBJ_DIR		=	$(addprefix $(OBJ_DIR), ai/)
 AI_SRCS			=	$(addprefix $(AI_SRC_DIR), $(AI_SRC))
@@ -67,6 +71,7 @@ AI_SRC			=	exemple.cpp		\
 #########################################################
 #	 	ARTIFICIAL INTELLIGENCE			#
 #########################################################
+
 GRAPHICS_SRC_DIR	=	$(addprefix $(SRC_DIR), graphics/)
 GRAPHICS_OBJ_DIR	=	$(addprefix $(OBJ_DIR), graphics/)
 GRAPHICS_SRCS		=	$(addprefix $(GRAPHICS_SRC_DIR), $(GRAPHICS_SRC))
@@ -79,6 +84,7 @@ GRAPHICS_SRC		=	test.cpp		\
 #########################################################
 #		   GAME  CORE				#
 #########################################################
+
 BOMBERMAN_SRC_DIR	=	$(addprefix $(SRC_DIR), bomberman/)
 BOMBERMAN_OBJ_DIR	=	$(addprefix $(OBJ_DIR), bomberman/)
 BOMBERMAN_SRCS		=	$(addprefix $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_SRC))
