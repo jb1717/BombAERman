@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ## 
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Mon Apr 27 13:07:08 2015 Johan Paasche
+## Last update Mon Apr 27 14:29:11 2015 Johan Paasche
 ##
 
 #########################################################
@@ -111,6 +111,7 @@ FIRST		:=	$(shell test -d $(BINARY_DIR)		|| mkdir $(BINARY_DIR))		\
 			$(shell test -d $(BOMBERMAN_OBJ_DIR)	|| mkdir $(BOMBERMAN_OBJ_DIR))
 
 all		:
+			$(shell export LD_LIBRARY_PATH=$(LIB_DIR)libs)
 			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS)'
 
 debug		:	$(FIRST) fclean
@@ -122,7 +123,7 @@ ifeq	($(LINKING), yes)
 endif
 
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.cpp
-			@$(ECHO) $(COLOR_2)
+			@$(ECHO) $(COLOR_5)
 			$(CC) $(CFLAGS) -c $< -o $@ $(LFLAGS)
 			@$(ECHO) $(COLOR_OFF)
 
@@ -151,5 +152,8 @@ fclean		:	clean
 			@$(ECHO) $(COLOR_3)"Done\n"$(COLOR_OFF)
 
 re		:	fclean all
+
+test		:
+			export LD_LIBRARY_PATH=./lib/libs/
 
 .PHONY		:	all clean fclean re
