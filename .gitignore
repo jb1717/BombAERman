@@ -7,7 +7,6 @@
 # Compiled Object files
 *.slo
 *.lo
-*.o
 *.obj
 
 # Precompiled Headers
@@ -16,19 +15,14 @@
 
 # Libraries
 *.lib
-*.a
 *.la
 *.lo
-*.so
 
 # Shared objects (inc. Windows DLLs)
 *.dll
-*.so
-*.so.*
 *.dylib
 
 # Compiled Dynamic libraries
-*.so
 *.dylib
 *.dll
 
@@ -38,7 +32,6 @@
 # Compiled Static libraries
 *.lai
 *.la
-*.a
 *.lib
 
 # Executables
