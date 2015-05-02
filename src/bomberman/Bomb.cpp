@@ -5,29 +5,18 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Sun May  3 01:03:38 2015 David Tran
-// Last update Sun May  3 01:11:41 2015 David Tran
+// Last update Sun May  3 01:45:18 2015 David Tran
 //
 
 #include "Bomb.hh"
 
-Bomb::Bomb(char Range, bool Launch) : range(Range), launched(Launch)
+Bomb::Bomb(bool Launch) : launched(Launch)
 {}
 
 Bomb::~Bomb()
 {}
 
-char	Bomb::getRange() const
-{
-  return (range);
-}
-
-void	Bomb::setRange(char const &Range)
-{
-  range = Range;
-}
-
-
-bool	Bomb::isLaunched()
+bool	Bomb::isLaunched() const
 {
   return (launched);
 }

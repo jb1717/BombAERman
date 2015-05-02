@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Sat May  2 15:53:03 2015 David Tran
-// Last update Sun May  3 01:09:17 2015 David Tran
+// Last update Sun May  3 01:45:03 2015 David Tran
 //
 
 #ifndef BOMB_HH_
@@ -14,15 +14,12 @@
 class	Bomb
 {
 public:
-  Bomb(char Range = 0, bool Launch = false);
+  Bomb(bool Launch = false);
   ~Bomb();
 public:
-  char		getRange() const;
-  void		setRange(char const &);
-  bool		isLaunched();
+  bool		isLaunched() const;
   void		triggerLaunch();
 private:
-  char		range;
   bool		launched;
 };
 
