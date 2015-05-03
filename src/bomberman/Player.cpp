@@ -1,16 +1,16 @@
 //
 // Player.cpp for Bomberman in /home/tran_0/rendu/cpp_bomberman/include
-// 
+//
 // Made by David Tran
 // Login   <tran_0@epitech.net>
-// 
+//
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Sun May  3 11:46:09 2015 David Tran
+// Last update Sun May  3 13:08:04 2015 Jean-Baptiste Grégoire
 //
 
 #include "Player.hh"
 
-Player::Player(char Speed, bool alive, char Range) : speed(Speed), isAlive(alive), range(Range)
+Player::Player(char Speed, bool alive, char Range) : isAlive(alive), range(Range), speed(Speed)
 {
   Bomb	*newone = new Bomb;
 
@@ -30,7 +30,7 @@ bool	Player::is_Alive() const
 
 void	Player::triggerAlive()
 {
-  (isAlive) ? isAlive = false : isAlive = true;
+  isAlive = !isAlive;
 }
 
 //
@@ -57,11 +57,11 @@ bool	Player::triggerOneBomb()
 {
   std::vector<Bomb *>::const_iterator	it = bombs.begin();
 
-  while (it != bomb.end())
+  while (it != bombs.end())
     {
-      if ((*it).isLaunched() == false)
+      if ((*it)->isLaunched() == false)
 	{
-	  (*it).triggerLaunch();
+	  (*it)->triggerLaunch();
 	  return (true);
 	}
       it++;
