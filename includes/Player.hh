@@ -1,11 +1,11 @@
 //
 // Player.hh for Bomberman in /home/tran_0/rendu/cpp_bomberman/include
-// 
+//
 // Made by David Tran
 // Login   <tran_0@epitech.net>
-// 
+//
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Sun May  3 11:39:33 2015 David Tran
+// Last update Mon May  4 18:04:59 2015 David Tran
 //
 
 #ifndef PLAYER_HH_
@@ -22,6 +22,8 @@ public:
 public:
   bool					is_Alive() const;
   void					triggerAlive();
+  bool					triggerOneBomb();
+
 public:
   void					addBomb();
   std::vector<Bomb*>			getBombs() const;
@@ -33,9 +35,12 @@ public:
 public:
   char					getSpeed() const;
   void					setSpeed(char const &);
+
 private:
   bool			isAlive;
   std::vector<Bomb *>	bombs;
   char			range;
   char			speed;
 };
+
+#endif // !PLAYER_HH

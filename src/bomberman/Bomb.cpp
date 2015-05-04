@@ -1,11 +1,11 @@
 //
 // bomb.cpp for bomberman in /home/tran_0/rendu/cpp_bomberman/include
-// 
+//
 // Made by David Tran
 // Login   <tran_0@epitech.net>
-// 
+//
 // Started on  Sun May  3 01:03:38 2015 David Tran
-// Last update Sun May  3 01:45:18 2015 David Tran
+// Last update Sun May  3 13:03:52 2015 Jean-Baptiste Grégoire
 //
 
 #include "Bomb.hh"
@@ -23,5 +23,5 @@ bool	Bomb::isLaunched() const
 
 void	Bomb::triggerLaunch()
 {
-  (launched == false) ? (launched = true) : (launched = false);
+  launched = !launched;
 }
