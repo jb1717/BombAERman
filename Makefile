@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ## 
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sun May  3 01:51:40 2015 David Tran
+## Last update Mon May  4 18:32:08 2015 David Tran
 ##
 
 #########################################################
@@ -47,7 +47,7 @@ LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)/libs/ \
 
 LIB_DIR		=	./lib/
 LIB_INCLUDE_DIR	=	$(LIB_DIR)/includes/
-INCLUDE_DIR	=	./include/
+INCLUDE_DIR	=	./includes/
 BINARY_DIR	=	./bin/
 SRC_DIR		=	./src/
 OBJ_DIR		=	./obj/
