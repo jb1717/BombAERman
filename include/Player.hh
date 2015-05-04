@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Sun May  3 01:50:22 2015 David Tran
+// Last update Sun May  3 11:39:33 2015 David Tran
 //
 
 #ifndef PLAYER_HH_
@@ -26,6 +26,7 @@ public:
   void					addBomb();
   std::vector<Bomb*>			getBombs() const;
   std::vector<Bomb*>::const_iterator	getBombIt() const;
+  bool					triggerOneBomb();
 public:
   char					getRange() const;
   void					setRange(char const &);
