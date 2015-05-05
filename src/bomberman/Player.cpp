@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Mon May  4 18:33:31 2015 David Tran
+// Last update Tue May  5 17:44:24 2015 David Tran
 //
 
 #include "Player.hh"
@@ -61,7 +61,7 @@ bool	Player::triggerOneBomb()
     {
       if ((*it)->isLaunched() == false)
 	{
-	  (*it)->triggerLaunch();
+	  (*it)->triggerLaunch(0, 0);
 	  return (true);
 	}
       it++;

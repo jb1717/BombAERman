@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Mon May  4 18:33:38 2015 David Tran
+// Last update Tue May  5 17:43:31 2015 David Tran
 //
 
 #ifndef PLAYER_HH_
@@ -19,17 +19,17 @@ class	Player
 public:
   Player(char Speed = 1, bool alive = true);
   ~Player();
-public:
+public: //
   bool					is_Alive() const;
   void					triggerAlive();
 
-public:
+public: //
   void					addBomb();
   std::vector<Bomb*>			getBombs() const;
   std::vector<Bomb*>::const_iterator	getBombIt() const;
   bool					triggerOneBomb();
   void					powerUpRange();
-public:
+public: //
   char					getSpeed() const;
   void					setSpeed(char const &);
 
