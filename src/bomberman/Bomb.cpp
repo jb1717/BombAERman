@@ -5,12 +5,12 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:03:38 2015 David Tran
-// Last update Sun May  3 13:03:52 2015 Jean-Baptiste Grégoire
+// Last update Tue May  5 17:37:43 2015 David Tran
 //
 
 #include "Bomb.hh"
 
-Bomb::Bomb(bool Launch) : launched(Launch)
+Bomb::Bomb(bool Launch, char Range) : launched(Launch), range(Range)
 {}
 
 Bomb::~Bomb()
@@ -21,7 +21,33 @@ bool	Bomb::isLaunched() const
   return (launched);
 }
 
-void	Bomb::triggerLaunch()
+void	Bomb::triggerLaunch(int x, int y)
 {
+  std::pair<int, int>	coord(x, y);
+
   launched = !launched;
+  _start = (launched) ? std::clock() : 0;
+  _coord = coord;
+}
+
+bool	Bomb::explosion_check()
+{
+  if (launched && (std::clock() - _start) / CLOCKS_PER_SEC > 3)
+    return (true);
+  return (false);
+}
+
+char	Bomb::getRange() const
+{
+  return (range);
+}
+
+void	Bomb::setRange(char const &Range)
+{
+  range = Range;
+}
+
+std::pair<int, int>	Bomb::get_coord() const
+{
+  return (_coord);
 }

@@ -5,12 +5,12 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Sun May  3 13:08:04 2015 Jean-Baptiste Grégoire
+// Last update Tue May  5 17:44:24 2015 David Tran
 //
 
 #include "Player.hh"
 
-Player::Player(char Speed, bool alive, char Range) : isAlive(alive), range(Range), speed(Speed)
+Player::Player(char Speed, bool alive) : isAlive(alive), speed(Speed)
 {
   Bomb	*newone = new Bomb;
 
@@ -61,7 +61,7 @@ bool	Player::triggerOneBomb()
     {
       if ((*it)->isLaunched() == false)
 	{
-	  (*it)->triggerLaunch();
+	  (*it)->triggerLaunch(0, 0);
 	  return (true);
 	}
       it++;
@@ -69,19 +69,20 @@ bool	Player::triggerOneBomb()
   return (false);
 }
 
+void	Player::powerUpRange()
+{
+  std::vector<Bomb *>::const_iterator	it = bombs.begin();
+
+  while (it != bombs.end())
+    {
+      (*it)->setRange((*it)->getRange() + 1);
+      it++;
+    }
+}
+
 //
 // PowerUp Functions
 //
-char	Player::getRange() const
-{
-  return (range);
-}
-
-void	Player::setRange(char const &Range)
-{
-  range = Range;
-}
-
 char	Player::getSpeed() const
 {
   return (speed);
