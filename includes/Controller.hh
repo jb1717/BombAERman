@@ -5,12 +5,19 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Sun May  3 16:35:29 2015 Jean-Baptiste Grégoire
-// Last update Sun May  3 17:54:39 2015 Jean-Baptiste Grégoire
+// Last update Tue May  5 19:43:20 2015 Jean-Baptiste Grégoire
 //
 
 #ifndef CONTROLLER_HH_
 # define CONTROLLER_HH_
 
+# include <stdint.h>
+# include <sys/stat.h>
+# include <strings.h>
+# include <string>
+# include <iostream>
+# include <fstream>
+# include <sstream>
 # include "IInput.hh"
 # include "Event.hh"
 
@@ -31,7 +38,7 @@ enum		e_type
 class		Controller : public IInput
 {
 public:
-  Controller();
+  Controller(uint32_t id);
   ~Controller();
 
 public:
@@ -39,10 +46,12 @@ public:
   bool		plugged() const;
 
 private:
-  uint8_t	_id;
-  int		_fd;
+  uint32_t	_id;
   bool		_isPlugged;
+  std::ifstream	_in;
   t_controller	_ctrler;
+  std::string	_ctrlerFile;
+  struct stat	_statBuf;
 };
 
 #endif // !CONTROLLER_HH_

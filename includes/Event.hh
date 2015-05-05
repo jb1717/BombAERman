@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Sun May  3 17:40:33 2015 Jean-Baptiste Grégoire
-// Last update Sun May  3 17:54:20 2015 Jean-Baptiste Grégoire
+// Last update Tue May  5 15:53:13 2015 Jean-Baptiste Grégoire
 //
 
 #ifndef EVENT_HH_
@@ -35,6 +35,10 @@ namespace	bomber
 	JoyRightDown,
 	JoyRightLeft,
 	JoyRightRight,
+	JoyMiddleUp,
+	JoyMiddleDown,
+	JoyMiddleLeft,
+	JoyMiddleRight,
 	ControllerUp,
 	ControllerDown,
 	ControllerLeft,
@@ -46,12 +50,17 @@ namespace	bomber
 	TriggerLB,
 	TriggerRB,
 	TriggerLT,
-	TriggetRT
+	TriggerRT,
+	Start,
+	Select,
+	Power,
+	Undifined
       };
 
   public:
     EventType	type;
     KeyID	key;
+    int16_t	value;
   };
 }
 
