@@ -5,12 +5,12 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Tue May  5 17:44:24 2015 David Tran
+// Last update Tue May  5 17:59:03 2015 David Tran
 //
 
 #include "Player.hh"
 
-Player::Player(char Speed, bool alive) : isAlive(alive), speed(Speed)
+Player::Player(char Speed, bool alive, Map &map) : isAlive(alive), speed(Speed), _map(map)
 {
   Bomb	*newone = new Bomb;
 

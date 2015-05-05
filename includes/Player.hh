@@ -5,19 +5,20 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Tue May  5 17:43:31 2015 David Tran
+// Last update Tue May  5 18:04:29 2015 David Tran
 //
 
 #ifndef PLAYER_HH_
 # define PLAYER_HH_
 
 # include <vector>
+# include "Map.hh"
 # include "Bomb.hh"
 
 class	Player
 {
 public:
-  Player(char Speed = 1, bool alive = true);
+  Player(char Speed = 1, bool alive = true, Map &map);
   ~Player();
 public: //
   bool					is_Alive() const;
@@ -36,6 +37,7 @@ public: //
 private:
   bool			isAlive;
   std::vector<Bomb *>	bombs;
+  Map			&_map;
   char			speed;
 };
 
