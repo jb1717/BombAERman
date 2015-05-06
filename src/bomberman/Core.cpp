@@ -5,21 +5,27 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Tue May  5 17:48:04 2015 David Tran
-// Last update Tue May  5 18:19:32 2015 David Tran
+// Last update Wed May  6 17:38:25 2015 David Tran
 //
 
 #include "Core.hh"
 
 Core::Core(Map &map) : _map(map)
-{
+{}
 
-}
-
-~Core::Core()
+Core::~Core()
 {}
 
 
 void	Core::addPlayer()
 {
-  _players.push_back(new Player(1, true, _map));
+  EThread	*newplayer = new EThread;
+
+  _players.push_back(newplayer);
+  newplayer->launch(launch_player, this);
+}
+
+Map	&Core::getMap()
+{
+  return (_map);
 }

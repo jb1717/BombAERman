@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Tue May  5 17:59:03 2015 David Tran
+// Last update Wed May  6 17:42:17 2015 David Tran
 //
 
 #include "Player.hh"
@@ -92,3 +92,6 @@ void	Player::setSpeed(char const &Speed)
 {
   speed = Speed;
 }
+
+void	Player::run_user()
+{}

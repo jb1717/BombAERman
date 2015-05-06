@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Tue May  5 17:48:33 2015 David Tran
-// Last update Tue May  5 18:19:44 2015 David Tran
+// Last update Wed May  6 17:40:04 2015 David Tran
 //
 
 #ifndef CORE_HH_
@@ -14,6 +14,9 @@
 # include <vector>
 # include "Map.hh"
 # include "Player.hh"
+# include "EThread.hh"
+
+class	EThread;
 
 class	Core
 {
@@ -22,9 +25,13 @@ public:
   ~Core();
 public:
   void		addPlayer();
+public:
+  Map		&getMap();
 private:
-  std::vector<Player *>		_players;
-  Map				&_map
+  std::vector<EThread *>	_players;
+  Map				&_map;
 };
+
+void	*launch_player(void *);
 
 #endif // !CORE_HH_

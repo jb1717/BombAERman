@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Tue May  5 18:04:29 2015 David Tran
+// Last update Wed May  6 17:42:05 2015 David Tran
 //
 
 #ifndef PLAYER_HH_
@@ -18,27 +18,29 @@
 class	Player
 {
 public:
-  Player(char Speed = 1, bool alive = true, Map &map);
+  Player(char Speed, bool alive, Map &map);
   ~Player();
-public: //
+public: // Principal functions
+  void					run_user();
+public: // Player Safety
   bool					is_Alive() const;
   void					triggerAlive();
 
-public: //
+public: // Player Bomb tools
   void					addBomb();
   std::vector<Bomb*>			getBombs() const;
   std::vector<Bomb*>::const_iterator	getBombIt() const;
   bool					triggerOneBomb();
   void					powerUpRange();
-public: //
+public: // Speed Power-up
   char					getSpeed() const;
   void					setSpeed(char const &);
 
 private:
   bool			isAlive;
   std::vector<Bomb *>	bombs;
-  Map			&_map;
   char			speed;
+  Map			&_map;
 };
 
 #endif // !PLAYER_HH

@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ## 
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Mon May  4 18:32:08 2015 David Tran
+## Last update Wed May  6 17:37:20 2015 David Tran
 ##
 
 #########################################################
@@ -90,8 +90,10 @@ BOMBERMAN_SRCS		=	$(addprefix $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_SRC))
 BOMBERMAN_OBJS		=	$(addsuffix .o, $(basename $(subst $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_OBJ_DIR), $(BOMBERMAN_SRCS))))
 
 BOMBERMAN_SRC		=	main.cpp		\
-				Bomb.hh			\
-				Player.hh
+				Bomb.cpp		\
+				Player.cpp		\
+				Core.cpp		\
+				EThread.cpp		\
 
 
 BOMBERMAN		=	bomberman
