@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 11:59:37 2015 Jean-Baptiste Grégoire
-// Last update Wed May  6 13:15:41 2015 Jean-Baptiste Grégoire
+// Last update Wed May  6 13:24:03 2015 Jean-Baptiste Grégoire
 //
 
 #ifndef CRATE_HH_
@@ -23,8 +23,10 @@ public:
 
 public:
   Crate();
-  BonusType	getBonus() const;
   ~Crate();
+
+public:
+  BonusType	getBonus() const;
 
 private:
   BonusType	_bonus;
