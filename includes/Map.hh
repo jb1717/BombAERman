@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:22:05 2015 Jean-Baptiste Grégoire
-// Last update Wed May  6 13:23:36 2015 Jean-Baptiste Grégoire
+// Last update Thu May  7 14:18:58 2015 Jean-Baptiste Grégoire
 //
 
 #ifndef MAP_HH_
@@ -13,14 +13,25 @@
 
 # include <string>
 
+# define MAP_EMPTY_CHAR	'o'
+
 class		Map
 {
 public:
-  Map();
+  enum Direction
+    {
+      North = 0, South, East, West
+    };
+
+public:
+  Map(size_t length, size_t width);
+  bool	moveEntity(size_t x, size_t y, Direction dir);
   ~Map();
 
 private:
   std::string	_map;
+  size_t	_xLength;
+  size_t	_yLength;
 };
 
 #endif // !MAP_HH_
