@@ -5,12 +5,12 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Tue May  5 17:48:04 2015 David Tran
-// Last update Wed May  6 17:38:25 2015 David Tran
+// Last update Thu May  7 14:21:19 2015 David Tran
 //
 
 #include "Core.hh"
 
-Core::Core(Map &map) : _map(map)
+Core::Core(Map &map, int players) : _map(map), _nbPlayers(players)
 {}
 
 Core::~Core()
@@ -19,13 +19,38 @@ Core::~Core()
 
 void	Core::addPlayer()
 {
-  EThread	*newplayer = new EThread;
-
-  _players.push_back(newplayer);
-  newplayer->launch(launch_player, this);
+  _players.push_back(new EThread);
 }
 
-Map	&Core::getMap()
+void	Core::create_all_players()
+{
+  int	i = 0;
+
+  while (i < _nbPlayers)
+    {
+      addPlayer();
+      i++;
+    }
+}
+
+Map	&Core::getMap() const
 {
   return (_map);
+}
+
+void	Core::launch_players()
+{
+  std::vector<EThread *>::iterator	it = _players.begin();
+
+  while (it != _players.end())
+    {
+      (*it)->launch(launch_player, this);
+      it++;
+    }
+}
+
+void	Core::run()
+{
+  create_all_players();
+  launch_players();
 }

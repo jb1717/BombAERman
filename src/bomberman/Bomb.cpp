@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:03:38 2015 David Tran
-// Last update Tue May  5 17:37:43 2015 David Tran
+// Last update Thu May  7 14:22:07 2015 David Tran
 //
 
 #include "Bomb.hh"
@@ -50,4 +50,9 @@ void	Bomb::setRange(char const &Range)
 std::pair<int, int>	Bomb::get_coord() const
 {
   return (_coord);
+}
+
+void			Bomb::run()
+{
+
 }

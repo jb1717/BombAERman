@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Sat May  2 15:53:03 2015 David Tran
-// Last update Tue May  5 17:41:37 2015 David Tran
+// Last update Thu May  7 14:22:17 2015 David Tran
 //
 
 #ifndef BOMB_HH_
@@ -27,6 +27,7 @@ public:
   char			getRange() const;
   void			setRange(char const &);
   std::pair<int, int>	get_coord() const;
+  void			run();
 private:
   bool			launched;
   std::clock_t		_start;
