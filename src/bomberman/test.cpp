@@ -1,8 +1,10 @@
 #include "Score.hpp"
+#include "Save.hpp"
 
 int main()
 {
   Score		test;
+  Save    sav;
 
   test.show();
   std::cout << "~~~~~~~~~~" << std::endl;
@@ -15,14 +17,13 @@ int main()
   test << "bobby;46";
   test << "lilou;654654";
   test.showTop();
-  test << "ben;1";
+  test << "ben;2015";
   test << "manu;1234567";
 
-  // time_t t = time(0);   // get time now
-  //    struct tm * now = localtime( & t );
-  //    std::cout << (now->tm_year + 1900) << '-'
-  //         << (now->tm_mon + 1) << '-'
-  //         <<  now->tm_mday
-  //         << std::endl;
+  TOP             *a = test >> 3;
+
+  for (TOP::iterator i = a->begin(); i != a->end(); ++i) {
+    std::cout << ">> - PLAYER " << (*i).player << " DATE " << (*i).date << " SCORE " << (*i).best << std::endl;
+  }
   return 0;
 }
