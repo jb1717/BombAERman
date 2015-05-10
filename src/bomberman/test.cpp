@@ -10,15 +10,15 @@ int main()
   std::cout << "~~~~~~~~~~" << std::endl;
   test.showTop();
   std::cout << "~~~~~~~~~~" << std::endl;
-  test << "jimmy;999999";
+  test << "jimmy;999";
   test << "tommy;1456";
-  test << "johnny;12456";
-  test << "henry;14756";
+  test << "johnny;456";
+  test << "henry;156";
   test << "bobby;46";
-  test << "lilou;654654";
+  test << "lilou;654";
   test.showTop();
-  test << "ben;2015";
-  test << "manu;1234567";
+  test << "ben;2";
+  test << "manu;666";
 
   TOP             *a = test >> 3;
 

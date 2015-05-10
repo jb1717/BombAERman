@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Wed May  6 17:12:20 2015 David Tran
-// Last update Thu May  7 13:34:04 2015 David Tran
+// Last update Sat May  9 09:09:49 2015 Milox Thomas
 //
 
 #ifndef ETHREAD_HH_
