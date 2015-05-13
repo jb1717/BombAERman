@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Wed May  6 17:42:05 2015 David Tran
+// Last update Wed May 13 15:53:58 2015 Jean-Baptiste Grégoire
 //
 
 #ifndef PLAYER_HH_
@@ -15,12 +15,19 @@
 # include "Map.hh"
 # include "Bomb.hh"
 
+# define PLAYER_CHAR	'p'
+
 class	Player
 {
 public:
   Player(char Speed, bool alive, Map &map);
   ~Player();
 public: // Principal functions
+  bool					playerSpawn(int x, int y, Map::Direction direction);
+  bool					turnLeft();
+  bool					turnRight();
+  bool					goAhead();
+  bool					goBack();
   void					run_user();
 public: // Player Safety
   bool					is_Alive() const;
@@ -37,10 +44,13 @@ public: // Speed Power-up
   void					setSpeed(char const &);
 
 private:
-  bool			isAlive;
-  std::vector<Bomb *>	bombs;
-  char			speed;
+  int			_x;
+  int			_y;
+  bool			_isAlive;
+  std::vector<Bomb *>	_bombs;
+  char			_speed;
   Map			&_map;
+  Map::Direction	_dir;
 };
 
 #endif // !PLAYER_HH

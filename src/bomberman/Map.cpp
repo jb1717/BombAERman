@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Thu May  7 14:15:16 2015 Jean-Baptiste Grégoire
+// Last update Wed May 13 15:48:19 2015 Jean-Baptiste Grégoire
 //
 
 #include "Map.hh"
@@ -13,6 +13,18 @@
 Map::Map(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLength)
 {
 
+}
+
+bool	Map::placeEntity(size_t x, size_t y, char entity)
+{
+  int	to = y * _xLength + x;
+
+  if (_map[to] == MAP_EMPTY_CHAR)
+    {
+      _map[to] = entity;
+      return (true);
+    }
+  return (false);
 }
 
 bool	Map::moveEntity(size_t x, size_t y, Direction dir)
