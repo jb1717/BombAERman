@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:03:38 2015 David Tran
-// Last update Thu May  7 14:22:07 2015 David Tran
+// Last update Thu May  7 23:25:57 2015 David Tran
 //
 
 #include "Bomb.hh"

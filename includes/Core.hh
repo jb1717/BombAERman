@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Tue May  5 17:48:33 2015 David Tran
-// Last update Thu May  7 14:21:15 2015 David Tran
+// Last update Mon May 11 18:49:52 2015 David Tran
 //
 
 #ifndef CORE_HH_
@@ -27,6 +27,7 @@ public:
   void		addPlayer();
   void		launch_players();
   void		create_all_players();
+  void		run();
 public:
   Map		&getMap() const;
 private:
