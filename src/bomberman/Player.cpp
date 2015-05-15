@@ -10,9 +10,9 @@
 
 #include "Player.hh"
 
-Player::Player(char Speed, bool alive, Map &map) : _isAlive(alive), _speed(Speed), _map(map)
+Player::Player(char Speed, bool alive, Map &map) : AObj(map, 0, 0), _isAlive(alive), _speed(Speed)
 {
-  Bomb	*newone = new Bomb;
+  Bomb	*newone = new Bomb(map);
 
   _bombs.push_back(newone);
 }
@@ -21,8 +21,7 @@ bool		Player::playerSpawn(int x, int y, Map::Direction direction)
 {
   if (_map.placeEntity(x, y, PLAYER_CHAR))
     {
-      _x = x;
-      _y = y;
+      setPosition(x, y);
       _dir = direction;
       return (true);
     }
@@ -50,7 +49,7 @@ void	Player::triggerAlive()
 //
 void		Player::addBomb()
 {
-  Bomb		*newone = new Bomb;
+  Bomb		*newone = new Bomb(_map);
 
   _bombs.push_back(newone);
 }

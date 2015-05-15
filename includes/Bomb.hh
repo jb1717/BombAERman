@@ -13,11 +13,12 @@
 
 # include <ctime>
 # include <iostream>
+# include "AObj.hh"
 
-class	Bomb
+class	Bomb : public AObj
 {
 public:
-  Bomb(bool Launch = false, char Range = 2);
+  Bomb(Map &map, bool Launch = false, char Range = 2);
   ~Bomb();
 public:
   bool			isLaunched() const;
@@ -26,13 +27,11 @@ public:
 public:
   char			getRange() const;
   void			setRange(char const &);
-  std::pair<int, int>	get_coord() const;
   void			run();
 private:
   bool			launched;
   std::clock_t		_start;
   char			range;
-  std::pair<int, int>	_coord;
 };
 
 #endif // !Bomb_HH_

@@ -10,7 +10,7 @@
 
 #include "Bomb.hh"
 
-Bomb::Bomb(bool Launch, char Range) : launched(Launch), range(Range)
+Bomb::Bomb(Map &map, bool Launch, char Range) : AObj(map), launched(Launch), range(Range)
 {}
 
 Bomb::~Bomb()
@@ -23,11 +23,9 @@ bool	Bomb::isLaunched() const
 
 void	Bomb::triggerLaunch(int x, int y)
 {
-  std::pair<int, int>	coord(x, y);
-
   launched = !launched;
   _start = (launched) ? std::clock() : 0;
-  _coord = coord;
+  setPosition(x, y);
 }
 
 bool	Bomb::explosion_check()
@@ -45,11 +43,6 @@ char	Bomb::getRange() const
 void	Bomb::setRange(char const &Range)
 {
   range = Range;
-}
-
-std::pair<int, int>	Bomb::get_coord() const
-{
-  return (_coord);
 }
 
 void			Bomb::run()

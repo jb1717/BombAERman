@@ -14,10 +14,11 @@
 # include <vector>
 # include "Map.hh"
 # include "Bomb.hh"
+# include "AObj.hh"
 
 # define PLAYER_CHAR	'p'
 
-class	Player
+class	Player : public AObj
 {
 public:
   Player(char Speed, bool alive, Map &map);
@@ -44,12 +45,9 @@ public: // Speed Power-up
   void					setSpeed(char const &);
 
 private:
-  int			_x;
-  int			_y;
   bool			_isAlive;
   std::vector<Bomb *>	_bombs;
   char			_speed;
-  Map			&_map;
   Map::Direction	_dir;
 };
 

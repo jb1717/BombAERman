@@ -12,8 +12,9 @@
 # define CRATE_HH_
 
 # include <cstdlib>
+# include "AObj.hh"
 
-class		Crate
+class		Crate : public AObj
 {
 public:
   enum	BonusType

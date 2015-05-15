@@ -1,11 +1,11 @@
 ##
 ## Makefile for CPP_BOMBERMAN in /home/paasch_j/cpp_bomberman
-## 
+##
 ## Made by Johan Paasche
 ## Login   <paasch_j@epitech.net>
-## 
+##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Wed May  6 17:37:20 2015 David Tran
+## Last update Sat May 16 01:30:19 2015 Jean-Baptiste Grégoire
 ##
 
 #########################################################
@@ -94,6 +94,8 @@ BOMBERMAN_SRC		=	main.cpp		\
 				Player.cpp		\
 				Core.cpp		\
 				EThread.cpp		\
+				AObj.cpp		\
+				Map.cpp
 
 
 BOMBERMAN		=	bomberman
