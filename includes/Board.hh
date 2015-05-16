@@ -15,7 +15,7 @@
 # include <vector>
 # include "AObj.hh"
 
-# define Board_EMPTY_CHAR	'o'
+# define MAP_EMPTY_CHAR	'o'
 
 class		Board
 {
@@ -25,14 +25,22 @@ public:
       North = 0, West, South, East
     };
 
+  enum entityType
+  {
+      PLAYER = 0, CRATE, UNBREACKABLE_WALL
+  };
+
 public:
   Board(size_t length, size_t width);
-  // bool	placeEntity(size_t x, size_t y, char entity);
+  bool	placeEntity(size_t x, size_t y, entityType type, Direction dir = North);
   // bool	moveEntity(size_t x, size_t y, Direction dir);
   ~Board();
 
 private:
-  std::vector<AObj>	_board;
+  AObj	*createEntity(Board &board, entityType type);
+
+private:
+  std::vector<std::vector<AObj *> > _board;
   size_t	_xLength;
   size_t	_yLength;
 };

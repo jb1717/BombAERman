@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Sat May 16 05:55:02 2015 David Tran
+// Last update Sat May 16 08:06:23 2015 David Tran
 //
 
 #include "Player.hh"
@@ -19,14 +19,8 @@ Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
 
 bool		Player::playerSpawn(int x, int y, Board::Direction direction)
 {
-  // if (_board.placeEntity(x, y, PLAYER_CHAR))
-  //   {
-  //     setPosition(x, y);
-  //     _dir = direction;
-  //     return (true);
-  //   }
-  // return (false);
-  (void)x; (void)y; (void)direction;
+  setPosition(x, y);
+  _dir = direction;
   return (true);
 }
 
