@@ -5,13 +5,14 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Wed May 13 15:53:58 2015 Jean-Baptiste Grégoire
+// Last update Sat May 16 05:55:23 2015 David Tran
 //
 
 #ifndef PLAYER_HH_
 # define PLAYER_HH_
 
 # include <vector>
+# include <utility>
 # include "Board.hh"
 # include "Bomb.hh"
 # include "AObj.hh"
@@ -21,7 +22,7 @@
 class	Player : public AObj
 {
 public:
-  Player(char Speed, bool alive, Board &Board);
+  Player(Board &Board);
   ~Player();
 public: // Principal functions
   bool					playerSpawn(int x, int y, Board::Direction direction);
@@ -49,6 +50,7 @@ private:
   std::vector<Bomb *>	_bombs;
   char			_speed;
   Board::Direction	_dir;
+  std::pair<size_t, size_t>	coords;
 };
 
 #endif // !PLAYER_HH

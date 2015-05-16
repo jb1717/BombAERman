@@ -5,12 +5,12 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Wed May 13 21:44:28 2015 Jean-Baptiste Grégoire
+// Last update Sat May 16 05:55:02 2015 David Tran
 //
 
 #include "Player.hh"
 
-Player::Player(char Speed, bool alive, Board &Board) : AObj(Board, 0, 0), _isAlive(alive), _speed(Speed)
+Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
 {
   Bomb	*newone = new Bomb(Board);
 

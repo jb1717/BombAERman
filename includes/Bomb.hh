@@ -5,13 +5,13 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Sat May  2 15:53:03 2015 David Tran
-// Last update Thu May  7 14:22:17 2015 David Tran
+// Last update Sat May 16 06:51:42 2015 David Tran
 //
 
 #ifndef BOMB_HH_
 # define BOMB_HH_
 
-# include <ctime>
+# include <chrono>
 # include <iostream>
 # include "AObj.hh"
 
@@ -29,9 +29,9 @@ public:
   void			setRange(char const &);
   void			run();
 private:
-  bool			launched;
-  std::clock_t		_start;
-  char			range;
+  bool					launched;
+  std::chrono::steady_clock::time_point	time;
+  char					range;
 };
 
 #endif // !Bomb_HH_

@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Tue May  5 17:48:04 2015 David Tran
-// Last update Thu May  7 14:21:19 2015 David Tran
+// Last update Sat May 16 05:48:16 2015 David Tran
 //
 
 #include "Engine.hh"
@@ -51,6 +51,10 @@ void	Engine::launch_players()
 
 void	Engine::run()
 {
-  create_all_players();
-  launch_players();
+  while (42)
+    {
+      if (getBoard().size() <= 1)
+	return ;
+      usleep(1000);
+    }
 }
