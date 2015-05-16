@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sat May 16 13:43:29 2015 Jean-Baptiste Grégoire
+## Last update Sat May 16 21:14:25 2015 Jamais
 ##
 
 #########################################################
@@ -32,11 +32,17 @@ LINKING		=	yes
 #			FLAGS				#
 #########################################################
 
-CFLAGS		=	-W -Wall -Wextra -ansi -I$(INCLUDE_DIR) -std=c++11
+CFLAGS		=	-W -Wall -Wextra -ansi -std=c++11	\
+			-I $(INCLUDE_DIR)			\
+			-I $(AI_INC_DIR)			\
+			-I $(GRAPHICS_INC_DIR)			\
+			-I $(BOMBERMAN_INC_DIR)			\
+
 MAKEFLAGS	+=	--warn-undefined-variables		\
 			--warn-unused-variables			\
 			--no-print-directory
-LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)/libs/ \
+
+LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ \
 			-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
 
 
@@ -46,7 +52,7 @@ LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)/libs/ \
 #########################################################
 
 LIB_DIR		=	./lib/
-LIB_INCLUDE_DIR	=	$(LIB_DIR)/includes/
+LIB_INCLUDE_DIR	=	$(INCLUDE_DIR)lib/
 INCLUDE_DIR	=	./includes/
 BINARY_DIR	=	./bin/
 SRC_DIR		=	./src/
@@ -60,6 +66,7 @@ OBJ_DIR		=	./obj/
 
 AI_SRC_DIR		=	$(addprefix $(SRC_DIR), ai/)
 AI_OBJ_DIR		=	$(addprefix $(OBJ_DIR), ai/)
+AI_INC_DIR		=	$(addprefix $(INCLUDE_DIR), ai)
 AI_SRCS			=	$(addprefix $(AI_SRC_DIR), $(AI_SRC))
 AI_OBJS			=	$(addsuffix .o, $(basename $(subst $(AI_SRC_DIR), $(AI_OBJ_DIR), $(AI_SRCS))))
 
@@ -68,16 +75,17 @@ AI_SRC			=	exemple.cpp		\
 
 
 #########################################################
-#	 	ARTIFICIAL INTELLIGENCE			#
+#		   GAME ENGINE				#
 #########################################################
 
 GRAPHICS_SRC_DIR	=	$(addprefix $(SRC_DIR), graphics/)
 GRAPHICS_OBJ_DIR	=	$(addprefix $(OBJ_DIR), graphics/)
+GRAPHICS_INC_DIR	=	$(addprefix $(INCLUDE_DIR), gameEngine)
 GRAPHICS_SRCS		=	$(addprefix $(GRAPHICS_SRC_DIR), $(GRAPHICS_SRC))
 GRAPHICS_OBJS		=	$(addsuffix .o, $(basename $(subst $(GRAPHICS_SRC_DIR), $(GRAPHICS_OBJ_DIR), $(GRAPHICS_SRCS))))
 
-GRAPHICS_SRC		=	test.cpp		\
-
+GRAPHICS_SRC		=	main.cpp	\
+				AObject.cpp	\
 
 
 #########################################################
@@ -86,6 +94,7 @@ GRAPHICS_SRC		=	test.cpp		\
 
 BOMBERMAN_SRC_DIR	=	$(addprefix $(SRC_DIR), bomberman/)
 BOMBERMAN_OBJ_DIR	=	$(addprefix $(OBJ_DIR), bomberman/)
+BOMBERMAN_INC_DIR	=	$(addprefix $(INCLUDE_DIR), engine)
 BOMBERMAN_SRCS		=	$(addprefix $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_SRC))
 BOMBERMAN_OBJS		=	$(addsuffix .o, $(basename $(subst $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_OBJ_DIR), $(BOMBERMAN_SRCS))))
 
