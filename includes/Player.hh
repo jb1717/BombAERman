@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Sat May 16 05:55:23 2015 David Tran
+// Last update Sat May 16 08:19:37 2015 David Tran
 //
 
 #ifndef PLAYER_HH_
@@ -50,7 +50,6 @@ private:
   std::vector<Bomb *>	_bombs;
   char			_speed;
   Board::Direction	_dir;
-  std::pair<size_t, size_t>	coords;
 };
 
 #endif // !PLAYER_HH

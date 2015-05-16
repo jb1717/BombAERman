@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Sat May 16 08:06:23 2015 David Tran
+// Last update Sat May 16 08:23:09 2015 David Tran
 //
 
 #include "Player.hh"
@@ -17,10 +17,11 @@ Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
   _bombs.push_back(newone);
 }
 
-bool		Player::playerSpawn(int x, int y, Board::Direction direction)
+bool		Player::playerSpawn(int x, int y, Board::Direction direction, int Id)
 {
   setPosition(x, y);
   _dir = direction;
+  setId(Id);
   return (true);
 }
 
