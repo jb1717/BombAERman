@@ -46,7 +46,7 @@ int	EThread::waitThread()
 void	*launch_player(void *arg)
 {
   Engine		*corpse = static_cast<Engine *>(arg);
-  Player	newone(1, true, corpse->getBoard());
+  Player	newone(corpse->getBoard());
 
   newone.run_user();
   return (NULL);

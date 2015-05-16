@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sat May 16 04:59:37 2015 Jean-Baptiste Grégoire
+## Last update Sat May 16 07:20:10 2015 Jean-Baptiste Grégoire
 ##
 
 #########################################################
@@ -95,7 +95,9 @@ BOMBERMAN_SRC		=	main.cpp		\
 				Engine.cpp		\
 				EThread.cpp		\
 				AObj.cpp		\
-				Board.cpp
+				Board.cpp		\
+				UnbreakableWall.cpp	\
+				Crate.cpp
 
 
 BOMBERMAN		=	bomberman

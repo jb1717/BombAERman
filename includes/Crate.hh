@@ -23,14 +23,16 @@ public:
     };
 
 public:
-  Crate();
+  Crate(Board &board);
   ~Crate();
 
 public:
   BonusType	getBonus() const;
+  bool      isBreak() const;
 
 private:
   BonusType	_bonus;
+  bool			_break;
 };
 
 #endif // !CRATE_HH_

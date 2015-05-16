@@ -10,7 +10,7 @@
 
 #include "Player.hh"
 
-Player::Player(char Speed, bool alive, Board &Board) : AObj(Board, 0, 0), _isAlive(alive), _speed(Speed)
+Player::Player(Board &Board) : AObj(Board, 0, 0)
 {
   Bomb	*newone = new Bomb(Board);
 
@@ -19,14 +19,8 @@ Player::Player(char Speed, bool alive, Board &Board) : AObj(Board, 0, 0), _isAli
 
 bool		Player::playerSpawn(int x, int y, Board::Direction direction)
 {
-  // if (_board.placeEntity(x, y, PLAYER_CHAR))
-  //   {
-  //     setPosition(x, y);
-  //     _dir = direction;
-  //     return (true);
-  //   }
-  // return (false);
-  (void)x; (void)y; (void)direction;
+  setPosition(x, y);
+  _dir = direction;
   return (true);
 }
 

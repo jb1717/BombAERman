@@ -9,23 +9,50 @@
 //
 
 #include "Board.hh"
+#include "Player.hh"
+#include "Crate.hh"
+#include "UnbreakableWall.hh"
+
 
 Board::Board(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLength)
 {
 
 }
 
-// bool	Board::placeEntity(size_t x, size_t y, char entity)
-// {
-//   int	to = y * _xLength + x;
+AObj  *Board::createEntity(Board &board, entityType type)
+{
+  switch (type)
+  {
+    case PLAYER:
+      return (new Player(board));
+    case CRATE:
+      return (new Crate(board));
+    case UNBREACKABLE_WALL:
+      return (new UnbreakableWall(board));
+    default:
+      return (NULL);
+  }
+}
 
-//   if (_board[to] == Board_EMPTY_CHAR)
-//     {
-//       _board[to] = entity;
-//       return (true);
-//     }
-//   return (false);
-// }
+bool	Board::placeEntity(size_t x, size_t y, entityType type, Direction dir)
+{
+  int	to = y * _xLength + x;
+  AObj	*obj;
+
+  if (_board[to].empty())
+    {
+      obj = createEntity(*this, type);
+      if (!obj)
+        return (false);
+      if (type != PLAYER)
+        obj->setPosition(x, y);
+      else
+        reinterpret_cast<Player *>(obj)->playerSpawn(x, y, dir);
+      _board[to].push_back(obj);
+      return (true);
+    }
+  return (false);
+}
 
 // bool	Board::moveEntity(size_t x, size_t y, Direction dir)
 // {
@@ -59,9 +86,9 @@ Board::Board(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLeng
 //     }
 //   if (to == -1)
 //     return (false);
-//   c = _Board[from];
-//   _Board[from] = Board_EMPTY_CHAR;
-//   _Board[to] = c;
+//   c = _board[from];
+//   _board[from] = Board_EMPTY_CHAR;
+//   _board[to] = c;
 //   return (true);
 // }
 

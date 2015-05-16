@@ -21,7 +21,7 @@
 class	Player : public AObj
 {
 public:
-  Player(char Speed, bool alive, Board &Board);
+  Player(Board &Board);
   ~Player();
 public: // Principal functions
   bool					playerSpawn(int x, int y, Board::Direction direction);

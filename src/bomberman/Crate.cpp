@@ -10,7 +10,7 @@
 
 #include "Crate.hh"
 
-Crate::Crate()
+Crate::Crate(Board &board) : AObj(board, 0, 0), _break(false)
 {
   _bonus = static_cast<Crate::BonusType>(std::rand() % 4); // remember to initialize the seed !
 }
@@ -18,6 +18,11 @@ Crate::Crate()
 Crate::BonusType	Crate::getBonus() const
 {
   return (_bonus);
+}
+
+bool		Crate::isBreak() const
+{
+  return (_break);
 }
 
 Crate::~Crate()
