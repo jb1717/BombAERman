@@ -18,7 +18,7 @@
 class	Bomb : public AObj
 {
 public:
-  Bomb(Map &map, bool Launch = false, char Range = 2);
+  Bomb(Board &Board, bool Launch = false, char Range = 2);
   ~Bomb();
 public:
   bool			isLaunched() const;

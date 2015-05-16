@@ -1,5 +1,5 @@
 //
-// Core.hh for Bomberman in /home/tran_0/rendu/cpp_bomberman
+// Engine.hh for Bomberman in /home/tran_0/rendu/cpp_bomberman
 // 
 // Made by David Tran
 // Login   <tran_0@epitech.net>
@@ -8,34 +8,34 @@
 // Last update Mon May 11 18:49:52 2015 David Tran
 //
 
-#ifndef CORE_HH_
-# define CORE_HH_
+#ifndef Engine_HH_
+# define Engine_HH_
 
 # include <vector>
-# include "Map.hh"
+# include "Board.hh"
 # include "Player.hh"
 # include "EThread.hh"
 
 class	EThread;
 
-class	Core
+class	Engine
 {
 public:
-  Core(Map &map, int players);
-  ~Core();
+  Engine(Board &Board, int players);
+  ~Engine();
 public:
   void		addPlayer();
   void		launch_players();
   void		create_all_players();
   void		run();
 public:
-  Map		&getMap() const;
+  Board		&getBoard() const;
 private:
   std::vector<EThread *>	_players;
-  Map				&_map;
+  Board				&_Board;
   int				_nbPlayers;
 };
 
 void	*launch_player(void *);
 
-#endif // !CORE_HH_
+#endif // !Engine_HH_

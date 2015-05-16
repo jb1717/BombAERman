@@ -10,7 +10,7 @@
 
 #include "Bomb.hh"
 
-Bomb::Bomb(Map &map, bool Launch, char Range) : AObj(map), launched(Launch), range(Range)
+Bomb::Bomb(Board &Board, bool Launch, char Range) : AObj(Board), launched(Launch), range(Range)
 {}
 
 Bomb::~Bomb()

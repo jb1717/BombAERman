@@ -10,7 +10,7 @@
 
 #include "AObj.hh"
 
-AObj::AObj(Map &map, size_t x, size_t y) : _map(map), _x(x), _y(y)
+AObj::AObj(Board &board, size_t x, size_t y) : _board(board), _x(x), _y(y)
 {
 
 }

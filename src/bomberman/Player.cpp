@@ -10,22 +10,24 @@
 
 #include "Player.hh"
 
-Player::Player(char Speed, bool alive, Map &map) : AObj(map, 0, 0), _isAlive(alive), _speed(Speed)
+Player::Player(char Speed, bool alive, Board &Board) : AObj(Board, 0, 0), _isAlive(alive), _speed(Speed)
 {
-  Bomb	*newone = new Bomb(map);
+  Bomb	*newone = new Bomb(Board);
 
   _bombs.push_back(newone);
 }
 
-bool		Player::playerSpawn(int x, int y, Map::Direction direction)
+bool		Player::playerSpawn(int x, int y, Board::Direction direction)
 {
-  if (_map.placeEntity(x, y, PLAYER_CHAR))
-    {
-      setPosition(x, y);
-      _dir = direction;
-      return (true);
-    }
-  return (false);
+  // if (_board.placeEntity(x, y, PLAYER_CHAR))
+  //   {
+  //     setPosition(x, y);
+  //     _dir = direction;
+  //     return (true);
+  //   }
+  // return (false);
+  (void)x; (void)y; (void)direction;
+  return (true);
 }
 
 Player::~Player()
@@ -49,7 +51,7 @@ void	Player::triggerAlive()
 //
 void		Player::addBomb()
 {
-  Bomb		*newone = new Bomb(_map);
+  Bomb		*newone = new Bomb(_board);
 
   _bombs.push_back(newone);
 }
@@ -112,23 +114,27 @@ void	Player::run_user()
 
 bool	Player::turnLeft()
 {
-  _dir = static_cast<Map::Direction>((_dir + 1) % 4);
-  return (_map.moveEntity(_x, _y, _dir));
+  _dir = static_cast<Board::Direction>((_dir + 1) % 4);
+  // return (_board.moveEntity(_x, _y, _dir));
+  return (true);
 }
 
 bool	Player::turnRight()
 {
-  _dir = static_cast<Map::Direction>((_dir - 1) >= 0 ? _dir - 1 : 3);
-  return (_map.moveEntity(_x, _y, _dir));
+  _dir = static_cast<Board::Direction>((_dir - 1) >= 0 ? _dir - 1 : 3);
+  // return (_board.moveEntity(_x, _y, _dir));
+  return (true);
 }
 
 bool	Player::goAhead()
 {
-  return (_map.moveEntity(_x, _y, _dir));
+  // return (_board.moveEntity(_x, _y, _dir));
+  return (true);
 }
 
 bool	Player::goBack()
 {
-  _dir = static_cast<Map::Direction>((_dir + 2) % 4);
-  return (_map.moveEntity(_x, _y, _dir));
+  _dir = static_cast<Board::Direction>((_dir + 2) % 4);
+  // return (_board.moveEntity(_x, _y, _dir));
+  return (true);
 }

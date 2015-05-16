@@ -11,13 +11,15 @@
 #ifndef AOBJ_HH_
 # define AOBJ_HH_
 
+# include <stddef.h>
 # include <utility>
-# include "Map.hh"
+
+class Board;
 
 class AObj
 {
 public:
-  AObj(Map &map, size_t x = 0, size_t y = 0);
+  AObj(Board &board, size_t x = 0, size_t y = 0);
   ~AObj();
 
 public:
@@ -25,7 +27,7 @@ public:
 	std::pair<size_t, size_t>	getPosition() const;
 
 protected:
-  Map 	&_map;
+  Board 	&_board;
   size_t	_x;
   size_t	_y;
 };

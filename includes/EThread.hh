@@ -13,9 +13,9 @@
 
 # include <pthread.h>
 # include <stdlib.h>
-# include "Core.hh"
+# include "Engine.hh"
 
-class	Core;
+class	Engine;
 
 class	EThread
 {

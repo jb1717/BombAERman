@@ -12,7 +12,7 @@
 # define PLAYER_HH_
 
 # include <vector>
-# include "Map.hh"
+# include "Board.hh"
 # include "Bomb.hh"
 # include "AObj.hh"
 
@@ -21,10 +21,10 @@
 class	Player : public AObj
 {
 public:
-  Player(char Speed, bool alive, Map &map);
+  Player(char Speed, bool alive, Board &Board);
   ~Player();
 public: // Principal functions
-  bool					playerSpawn(int x, int y, Map::Direction direction);
+  bool					playerSpawn(int x, int y, Board::Direction direction);
   bool					turnLeft();
   bool					turnRight();
   bool					goAhead();
@@ -48,7 +48,7 @@ private:
   bool			_isAlive;
   std::vector<Bomb *>	_bombs;
   char			_speed;
-  Map::Direction	_dir;
+  Board::Direction	_dir;
 };
 
 #endif // !PLAYER_HH
