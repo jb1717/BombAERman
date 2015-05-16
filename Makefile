@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sat May 16 21:14:25 2015 Jamais
+## Last update Sun May 17 00:40:53 2015 Jamais
 ##
 
 #########################################################
@@ -85,7 +85,9 @@ GRAPHICS_SRCS		=	$(addprefix $(GRAPHICS_SRC_DIR), $(GRAPHICS_SRC))
 GRAPHICS_OBJS		=	$(addsuffix .o, $(basename $(subst $(GRAPHICS_SRC_DIR), $(GRAPHICS_OBJ_DIR), $(GRAPHICS_SRCS))))
 
 GRAPHICS_SRC		=	main.cpp	\
-				AObject.cpp	\
+				AGameObject.cpp	\
+				Cube.hpp	\
+				GameEngine.cpp	\
 
 
 #########################################################
