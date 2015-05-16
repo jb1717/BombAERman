@@ -24,14 +24,15 @@ bool	Bomb::isLaunched() const
 void	Bomb::triggerLaunch(int x, int y)
 {
   launched = !launched;
-  _start = (launched) ? std::chrono::steady_clock::now() : 0;
+  if (launched)
+    _time = std::chrono::steady_clock::now();
   setPosition(x, y);
 }
 
 bool	Bomb::explosion_check()
 {
   std::chrono::steady_clock::time_point timeNow = std::chrono::steady_clock::now();
-  if (launched && (std::chrono::duration_cast<std::chrono::duration<int>>(timeNow - time)).count() > 3)
+  if (launched && (std::chrono::duration_cast<std::chrono::duration<int>>(timeNow - _time)).count() > 3)
     return (true);
   return (false);
 }

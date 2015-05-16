@@ -17,6 +17,8 @@
 
 # define MAP_EMPTY_CHAR	'o'
 
+class		Player;
+
 class		Board
 {
 public:
@@ -32,15 +34,19 @@ public:
 
 public:
   Board(size_t length, size_t width);
-  bool	placeEntity(size_t x, size_t y, entityType type, Direction dir = North);
-  // bool	moveEntity(size_t x, size_t y, Direction dir);
+  bool	placeEntity(size_t x, size_t y, entityType type, size_t id, Direction dir = North);
+  bool	moveEntity(size_t x, size_t y, size_t id, Direction dir);
   ~Board();
+
+public:
+  std::vector<Player *>  &getPlayers();
 
 private:
   AObj	*createEntity(Board &board, entityType type);
 
 private:
   std::vector<std::vector<AObj *> > _board;
+  std::vector<Player *> _players;
   size_t	_xLength;
   size_t	_yLength;
 };

@@ -34,7 +34,7 @@ AObj  *Board::createEntity(Board &board, entityType type)
   }
 }
 
-bool	Board::placeEntity(size_t x, size_t y, entityType type, Direction dir)
+bool	Board::placeEntity(size_t x, size_t y, entityType type, size_t id, Direction dir)
 {
   int	to = y * _xLength + x;
   AObj	*obj;
@@ -47,50 +47,66 @@ bool	Board::placeEntity(size_t x, size_t y, entityType type, Direction dir)
       if (type != PLAYER)
         obj->setPosition(x, y);
       else
-        reinterpret_cast<Player *>(obj)->playerSpawn(x, y, dir);
+        reinterpret_cast<Player *>(obj)->playerSpawn(x, y, dir, id);
       _board[to].push_back(obj);
       return (true);
     }
   return (false);
 }
 
-// bool	Board::moveEntity(size_t x, size_t y, Direction dir)
-// {
-//   int	from = y * _xLength + x;
-//   int	to;
-//   char	c;
+bool	Board::moveEntity(size_t x, size_t y, size_t id, Direction dir)
+{
+  int	from = y * _xLength + x;
+  int	to;
+  AObj	*tmp = NULL;
 
-//   switch (dir)
-//     {
-//     case North:
-//       if (y > 0)
-//         to = from - _yLength;
-//       else
-//         to = -1;
-//     case South:
-//       if (y < _yLength)
-//         to = from + _yLength;
-//       else
-//         to = -1;
-//     case East:
-//       if (x > 0)
-//         to = from - 1;
-//       else
-//         to = -1;
-//     case West:
-//       if (x < _xLength)
-//         to = from + 1;
-//       else
-//         to = -1;
-//     default: return(false);
-//     }
-//   if (to == -1)
-//     return (false);
-//   c = _board[from];
-//   _board[from] = Board_EMPTY_CHAR;
-//   _board[to] = c;
-//   return (true);
-// }
+  switch (dir)
+    {
+    case North:
+      if (y > 0)
+        to = from - _yLength;
+      else
+        to = -1;
+    case South:
+      if (y < _yLength)
+        to = from + _yLength;
+      else
+        to = -1;
+    case East:
+      if (x > 0)
+        to = from - 1;
+      else
+        to = -1;
+    case West:
+      if (x < _xLength)
+        to = from + 1;
+      else
+        to = -1;
+    default: return(false);
+    }
+  if (to == -1)
+    return (false);
+  std::vector<AObj *>::iterator it;
+  for (it = _board[from].begin(); it != _board[from].end(); ++it)
+  {
+    if ((*it)->getId() == id)
+    {
+      tmp = *it;
+      break ;
+    }
+  }
+  if (!tmp)
+    return (false);
+  _board[from].erase(it);
+  _board[to].push_back(tmp);
+  return (true);
+}
+
+std::vector<Player *>  &Board::getPlayers()
+{
+  return (_players);
+}
+
 
 Board::~Board()
 {

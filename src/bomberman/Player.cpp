@@ -17,7 +17,7 @@ Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
   _bombs.push_back(newone);
 }
 
-bool		Player::playerSpawn(int x, int y, Board::Direction direction, int Id)
+bool		Player::playerSpawn(int x, int y, Board::Direction direction, size_t Id)
 {
   setPosition(x, y);
   _dir = direction;
@@ -110,26 +110,22 @@ void	Player::run_user()
 bool	Player::turnLeft()
 {
   _dir = static_cast<Board::Direction>((_dir + 1) % 4);
-  // return (_board.moveEntity(_x, _y, _dir));
-  return (true);
+  return (_board.moveEntity(_x, _y, _id, _dir));
 }
 
 bool	Player::turnRight()
 {
   _dir = static_cast<Board::Direction>((_dir - 1) >= 0 ? _dir - 1 : 3);
-  // return (_board.moveEntity(_x, _y, _dir));
-  return (true);
+  return (_board.moveEntity(_x, _y, _id, _dir));
 }
 
 bool	Player::goAhead()
 {
-  // return (_board.moveEntity(_x, _y, _dir));
-  return (true);
+  return (_board.moveEntity(_x, _y, _id, _dir));
 }
 
 bool	Player::goBack()
 {
   _dir = static_cast<Board::Direction>((_dir + 2) % 4);
-  // return (_board.moveEntity(_x, _y, _dir));
-  return (true);
+  return (_board.moveEntity(_x, _y, _id, _dir));
 }

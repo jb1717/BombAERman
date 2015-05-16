@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sat May 16 07:20:10 2015 Jean-Baptiste Grégoire
+## Last update Sat May 16 13:43:29 2015 Jean-Baptiste Grégoire
 ##
 
 #########################################################
@@ -32,7 +32,7 @@ LINKING		=	yes
 #			FLAGS				#
 #########################################################
 
-CFLAGS		=	-W -Wall -Wextra -ansi -I$(INCLUDE_DIR)
+CFLAGS		=	-W -Wall -Wextra -ansi -I$(INCLUDE_DIR) -std=c++11
 MAKEFLAGS	+=	--warn-undefined-variables		\
 			--warn-unused-variables			\
 			--no-print-directory

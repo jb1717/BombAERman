@@ -25,7 +25,7 @@ public:
   Player(Board &Board);
   ~Player();
 public: // Principal functions
-  bool					playerSpawn(int x, int y, Board::Direction direction);
+  bool					playerSpawn(int x, int y, Board::Direction direction, size_t id);
   bool					turnLeft();
   bool					turnRight();
   bool					goAhead();

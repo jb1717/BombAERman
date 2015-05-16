@@ -10,51 +10,24 @@
 
 #include "Engine.hh"
 
-Engine::Engine(Board &Board, int players) : _Board(Board), _nbPlayers(players)
+Engine::Engine(Board &board) : _board(board)
 {}
 
 Engine::~Engine()
 {}
 
 
-void	Engine::addPlayer()
-{
-  _players.push_back(new EThread);
-}
-
-void	Engine::create_all_players()
-{
-  int	i = 0;
-
-  while (i < _nbPlayers)
-    {
-      addPlayer();
-      i++;
-    }
-}
-
 Board	&Engine::getBoard() const
 {
-  return (_Board);
-}
-
-void	Engine::launch_players()
-{
-  std::vector<EThread *>::iterator	it = _players.begin();
-
-  while (it != _players.end())
-    {
-      (*it)->launch(launch_player, this);
-      it++;
-    }
+  return (_board);
 }
 
 void	Engine::run()
 {
   while (42)
     {
-      if (getBoard().size() <= 1)
-	return ;
+      if (_board.getPlayers().size() <= 1)
+	     return ;
       usleep(1000);
     }
 }

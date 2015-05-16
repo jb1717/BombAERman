@@ -30,7 +30,7 @@ public:
   void			run();
 private:
   bool					launched;
-  std::chrono::steady_clock::time_point	time;
+  std::chrono::steady_clock::time_point	_time;
   char					range;
 };
 

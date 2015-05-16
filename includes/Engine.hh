@@ -11,6 +11,8 @@
 #ifndef Engine_HH_
 # define Engine_HH_
 
+# include <unistd.h>
+# include <iostream>
 # include <vector>
 # include "Board.hh"
 # include "Player.hh"
@@ -21,17 +23,14 @@ class	EThread;
 class	Engine
 {
 public:
-  Engine(Board &Board, int players);
+  Engine(Board &board);
   ~Engine();
 public:
-  void		addPlayer();
-  void		launch_players();
-  void		create_all_players();
   void		run();
 public:
   Board		&getBoard() const;
 private:
-  Board				&_Board;
+  Board				&_board;
 };
 
 void	*launch_player(void *);
