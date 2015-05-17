@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Sun May 17 21:21:07 2015 David Tran
+// Last update Sun May 17 22:46:13 2015 David Tran
 //
 
 #include "Player.hh"
@@ -108,7 +108,25 @@ void	Player::run_user()
 {
   while (_isAlive)
     {
+      if (!userAction())
+	return ; // If Negative , throw
     }
+}
+
+int	Player::commandValue()
+{
+  return (0);
+}
+
+bool	Player::userAction()
+{
+  int	keyPressed;
+
+  if ((keyPressed = commandValue()) < 0)
+    return (keyPressed);
+  else if (keyPressed < 4)
+    return (selectDirection(static_cast<Board::Direction>(keyPressed)));
+  return (keyPressed);
 }
 
 bool	Player::selectDirection(Board::Direction direc)

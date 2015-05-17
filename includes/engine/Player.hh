@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Sun May 17 21:21:20 2015 David Tran
+// Last update Sun May 17 22:43:14 2015 David Tran
 //
 
 #ifndef PLAYER_HH_
@@ -32,6 +32,8 @@ public: // Principal functions
   bool					goBack();
   bool					selectDirection(Board::Direction);
   void					run_user();
+  bool					userAction();
+  int					commandValue();
 public: // Player Safety
   bool					is_Alive() const;
   void					triggerAlive();
