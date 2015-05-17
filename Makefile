@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sat May 16 21:14:25 2015 Jamais
+## Last update Sun May 17 06:33:16 2015 Jamais
 ##
 
 #########################################################
@@ -70,7 +70,8 @@ AI_INC_DIR		=	$(addprefix $(INCLUDE_DIR), ai)
 AI_SRCS			=	$(addprefix $(AI_SRC_DIR), $(AI_SRC))
 AI_OBJS			=	$(addsuffix .o, $(basename $(subst $(AI_SRC_DIR), $(AI_OBJ_DIR), $(AI_SRCS))))
 
-AI_SRC			=	exemple.cpp		\
+AI_SRC			=	\
+				exemple.cpp		\
 
 
 
@@ -84,9 +85,14 @@ GRAPHICS_INC_DIR	=	$(addprefix $(INCLUDE_DIR), gameEngine)
 GRAPHICS_SRCS		=	$(addprefix $(GRAPHICS_SRC_DIR), $(GRAPHICS_SRC))
 GRAPHICS_OBJS		=	$(addsuffix .o, $(basename $(subst $(GRAPHICS_SRC_DIR), $(GRAPHICS_OBJ_DIR), $(GRAPHICS_SRCS))))
 
-GRAPHICS_SRC		=	main.cpp	\
-				AObject.cpp	\
-
+GRAPHICS_SRC		=	\
+				main.cpp		\
+				VideoContext.cpp	\
+				AGameObject.cpp		\
+				Cube.hpp		\
+				GameEngine.cpp		\
+				AGameModel.cpp		\
+				Camera.cpp		\
 
 #########################################################
 #		   GAME  CORE				#
@@ -98,7 +104,8 @@ BOMBERMAN_INC_DIR	=	$(addprefix $(INCLUDE_DIR), engine)
 BOMBERMAN_SRCS		=	$(addprefix $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_SRC))
 BOMBERMAN_OBJS		=	$(addsuffix .o, $(basename $(subst $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_OBJ_DIR), $(BOMBERMAN_SRCS))))
 
-BOMBERMAN_SRC		=	main.cpp		\
+BOMBERMAN_SRC		=	\
+				main.cpp		\
 				Bomb.cpp		\
 				Player.cpp		\
 				Engine.cpp		\
