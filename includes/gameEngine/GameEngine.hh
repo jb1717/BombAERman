@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:15:24 2015 Jamais
-// Last update Sun May 17 02:31:52 2015 Jamais
+// Last update Sun May 17 03:06:41 2015 Jamais
 //
 
 #ifndef			___GAMEENGINE_HH___
@@ -32,7 +32,6 @@ public:
   void			draw();
 
 private:
-  gdl::SdlContext	_context;
   gdl::Clock		_clock;
   gdl::Input		_input;
   gdl::BasicShader	_shader;
