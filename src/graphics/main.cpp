@@ -5,11 +5,12 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 15 21:29:13 2015 Jamais
-// Last update Sun May 17 00:45:02 2015 Jamais
+// Last update Sun May 17 06:00:57 2015 Jamais
 //
 
 #include <cstdlib>
 #include "GameEngine.hh"
+#include "Camera.hh"
 
 int	main()
 {

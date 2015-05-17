@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sun May 17 02:25:03 2015 Jamais
+## Last update Sun May 17 06:33:16 2015 Jamais
 ##
 
 #########################################################
@@ -70,7 +70,8 @@ AI_INC_DIR		=	$(addprefix $(INCLUDE_DIR), ai)
 AI_SRCS			=	$(addprefix $(AI_SRC_DIR), $(AI_SRC))
 AI_OBJS			=	$(addsuffix .o, $(basename $(subst $(AI_SRC_DIR), $(AI_OBJ_DIR), $(AI_SRCS))))
 
-AI_SRC			=	exemple.cpp		\
+AI_SRC			=	\
+				exemple.cpp		\
 
 
 
@@ -90,7 +91,8 @@ GRAPHICS_SRC		=	\
 				AGameObject.cpp		\
 				Cube.hpp		\
 				GameEngine.cpp		\
-
+				AGameModel.cpp		\
+				Camera.cpp		\
 
 #########################################################
 #		   GAME  CORE				#

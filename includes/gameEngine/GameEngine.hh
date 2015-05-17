@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:15:24 2015 Jamais
-// Last update Sun May 17 03:06:41 2015 Jamais
+// Last update Sun May 17 07:59:42 2015 Jamais
 //
 
 #ifndef			___GAMEENGINE_HH___
@@ -16,6 +16,7 @@
 
 # include		"VideoContext.hh"
 # include		"AGameObject.hh"
+# include		"AGameModel.hh"
 
 # define		FRAGMENT_SHADER		"shaders/fragmentShader"
 # define		VERTEX_SHADER		"shaders/vertexShader"
@@ -30,6 +31,10 @@ public:
   bool			initialize();
   bool			update();
   void			draw();
+
+public:
+  bool			createMap(std::string const& confFilePath);
+  bool			getEvent();
 
 private:
   gdl::Clock		_clock;
