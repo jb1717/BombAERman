@@ -5,25 +5,25 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Fri May 15 22:18:52 2015 Jean-Baptiste Grégoire
-// Last update Sat May 16 08:22:14 2015 David Tran
+// Last update Sun May 17 19:54:23 2015 David Tran
 //
 
 #include "AObj.hh"
 
-AObj::AObj(Board &board, size_t x, size_t y) : _board(board), _x(x), _y(y)
+AObj::AObj(Board &board, float x, float y) : _board(board), _x(x), _y(y)
 {
 
 }
 
-void  AObj::setPosition(size_t x, size_t y)
+void  AObj::setPosition(float x, float y)
 {
   _x = x;
   _y = y;
 }
 
-std::pair<size_t, size_t> AObj::getPosition() const
+std::pair<float, float> AObj::getPosition() const
 {
-  return (std::pair<size_t, size_t>(_x, _y));
+  return (std::pair<float, float>(_x, _y));
 }
 
 void	AObj::setId(size_t Id)

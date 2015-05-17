@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Fri May 15 22:18:39 2015 Jean-Baptiste Grégoire
-// Last update Sat May 16 08:21:13 2015 David Tran
+// Last update Sun May 17 21:19:54 2015 David Tran
 //
 
 #ifndef AOBJ_HH_
@@ -19,19 +19,19 @@ class Board;
 class AObj
 {
 public:
-  AObj(Board &board, size_t x = 0, size_t y = 0);
+  AObj(Board &board, float x = 0, float y = 0);
   ~AObj();
 
 public:
-	void				setPosition(size_t x, size_t y);
-	std::pair<size_t, size_t>	getPosition() const;
+	void				setPosition(float x, float y);
+	std::pair<float, float>		getPosition() const;
 	void				setId(size_t);
 	size_t				getId(void) const;
 
 protected:
   Board 	&_board;
-  size_t	_x;
-  size_t	_y;
+  float		_x;
+  float		_y;
   size_t	_id;
 };
 

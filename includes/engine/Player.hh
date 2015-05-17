@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Sat May 16 08:19:37 2015 David Tran
+// Last update Sun May 17 21:21:20 2015 David Tran
 //
 
 #ifndef PLAYER_HH_
@@ -25,11 +25,12 @@ public:
   Player(Board &Board);
   ~Player();
 public: // Principal functions
-  bool					playerSpawn(int x, int y, Board::Direction direction, size_t id);
+  bool					playerSpawn(float x, float y, Board::Direction direction, size_t id);
   bool					turnLeft();
   bool					turnRight();
   bool					goAhead();
   bool					goBack();
+  bool					selectDirection(Board::Direction);
   void					run_user();
 public: // Player Safety
   bool					is_Alive() const;
