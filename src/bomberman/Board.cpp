@@ -47,7 +47,10 @@ bool	Board::placeEntity(float x, float y, entityType type, size_t id, Direction 
       if (type != PLAYER)
         obj->setPosition(x, y);
       else
+      {
         reinterpret_cast<Player *>(obj)->playerSpawn(x, y, dir, id);
+        _players.push_back(obj);
+      }
       _board[to].push_back(obj);
       return (true);
     }
@@ -106,7 +109,6 @@ std::vector<Player *>  &Board::getPlayers()
 {
   return (_players);
 }
-
 
 Board::~Board()
 {
