@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:15:24 2015 Jamais
-// Last update Sun May 17 00:50:35 2015 Jamais
+// Last update Sun May 17 02:31:52 2015 Jamais
 //
 
 #ifndef			___GAMEENGINE_HH___
@@ -13,6 +13,8 @@
 
 # include		"basics.hh"
 # include		"graphics.hh"
+
+# include		"VideoContext.hh"
 # include		"AGameObject.hh"
 
 # define		FRAGMENT_SHADER		"shaders/fragmentShader"
@@ -38,9 +40,8 @@ private:
 private:
   std::vector<AGameObject*>	_objects;
 
-// private:
-//   glm::mat4		_projection;
-//   glm::mat4		_transformation;
+private:
+  VideoContext		*_videoContext;
 };
 
 #endif			/* !___GAMEENGINE_HH___ */

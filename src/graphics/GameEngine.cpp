@@ -5,14 +5,16 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Sun May 17 00:51:15 2015 Jamais
+// Last update Sun May 17 02:49:16 2015 Jamais
 //
 
 #include	"GameEngine.hh"
 #include	"Cube.hh"
 
-GameEngine::GameEngine()
-{}
+GameEngine::GameEngine() : Game()
+{
+  _videoContext = new VideoContext(1280, 960, "Afghanistan : 1994 ...");
+}
 
 bool		GameEngine::initialize()
 {
@@ -46,15 +48,30 @@ bool		GameEngine::initialize()
   gdl::Texture *texture  = new gdl::Texture();
   texture->load("./assets/Textures/crate.tga");
 
-  AGameObject *cube = new Cube();
+  gdl::Texture *lava1 = new gdl::Texture();
+  lava1->load("./assets/Textures/lava1.tga");
 
-  cube->setTexture(*texture);
-  cube->initialize();
-  _objects.push_back(cube);
-  AGameObject *slab = new Cube(glm::vec3(2, 1, 2));
-  slab->setTexture(*texture);
-  slab->initialize();
-  _objects.push_back(slab);
+  gdl::Texture *metal = new gdl::Texture();
+  metal->load("./assets/Textures/floor1.tga");
+
+  int	h = 200;
+  int	w = 100;
+
+  for (int x = -w / 2; x < w / 2; x++)
+    {
+      for (int y = -h / 2; y < h / 2; y++)
+	{
+	  AGameObject *floor = new Cube(glm::vec3(x, 0, y));
+	  if (x < 0)
+	    floor->setTexture(*texture);
+	  else if (y < 0)
+	    floor->setTexture(*lava1);
+	  else
+	    floor->setTexture(*metal);
+	  floor->initialize();
+	  _objects.push_back(floor);
+	}
+    }
   return true;
 }
 
@@ -88,4 +105,6 @@ GameEngine::~GameEngine()
 {
   for (size_t i = 0; i < _objects.size(); ++i)
     delete _objects[i];
+  _context.stop();
+  delete _videoContext;
 }

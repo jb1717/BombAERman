@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 16 22:22:44 2015 Jamais
-// Last update Sat May 16 22:40:45 2015 Jamais
+// Last update Sun May 17 01:14:39 2015 Jamais
 //
 
 #ifndef			___CUBE_HH___
@@ -27,7 +27,14 @@ public:
   Cube();
   Cube(glm::vec3 const& position);
   Cube(glm::vec3 const& position, glm::vec3 const& rotation, glm::vec3 const& scale);
+  Cube(AGameObject const& model);
   virtual ~Cube();
+
+public:
+  Cube&		operator=(AGameObject const& model);
+
+public:
+  float		getSpeed() const;
 
 public:
   virtual bool		initialize();
