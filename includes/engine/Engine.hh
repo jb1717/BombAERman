@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Tue May  5 17:48:33 2015 David Tran
-// Last update Sat May 16 06:17:08 2015 David Tran
+// Last update Sun May 17 15:05:40 2015 David Tran
 //
 
 #ifndef Engine_HH_
@@ -23,7 +23,7 @@ class	EThread;
 class	Engine
 {
 public:
-  Engine(Board &board);
+  Engine(Board &board, size_t, size_t);
   ~Engine();
 public:
   void		run();

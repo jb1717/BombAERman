@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:22:05 2015 Jean-Baptiste Grégoire
-// Last update Wed May 13 21:34:49 2015 Jean-Baptiste Grégoire
+// Last update Sun May 17 21:23:55 2015 David Tran
 //
 
 #ifndef Board_HH_
@@ -34,8 +34,8 @@ public:
 
 public:
   Board(size_t length, size_t width);
-  bool	placeEntity(size_t x, size_t y, entityType type, size_t id, Direction dir = North);
-  bool	moveEntity(size_t x, size_t y, size_t id, Direction dir);
+  bool	placeEntity(float x, float y, entityType type, size_t id, Direction dir = North);
+  bool	moveEntity(float x, float y, size_t id, Direction dir);
   ~Board();
 
 public:

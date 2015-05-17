@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Sat May 16 08:23:09 2015 David Tran
+// Last update Sun May 17 21:21:07 2015 David Tran
 //
 
 #include "Player.hh"
@@ -17,7 +17,7 @@ Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
   _bombs.push_back(newone);
 }
 
-bool		Player::playerSpawn(int x, int y, Board::Direction direction, size_t Id)
+bool		Player::playerSpawn(float x, float y, Board::Direction direction, size_t Id)
 {
   setPosition(x, y);
   _dir = direction;
@@ -105,7 +105,22 @@ void	Player::setSpeed(char const &Speed)
 // Principal funcions
 //
 void	Player::run_user()
-{}
+{
+  while (_isAlive)
+    {
+    }
+}
+
+bool	Player::selectDirection(Board::Direction direc)
+{
+  if (_dir == direc)
+    return (goAhead());
+  else if (_dir == (static_cast<Board::Direction>((_dir - 1) % 4)))
+    return (turnLeft());
+  else if (_dir == (static_cast<Board::Direction>((_dir + 1) % 4)))
+    return (turnRight());
+  return (goBack());
+}
 
 bool	Player::turnLeft()
 {

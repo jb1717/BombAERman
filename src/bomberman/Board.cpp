@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Wed May 13 15:48:19 2015 Jean-Baptiste Grégoire
+// Last update Sun May 17 21:24:03 2015 David Tran
 //
 
 #include "Board.hh"
@@ -34,7 +34,7 @@ AObj  *Board::createEntity(Board &board, entityType type)
   }
 }
 
-bool	Board::placeEntity(size_t x, size_t y, entityType type, size_t id, Direction dir)
+bool	Board::placeEntity(float x, float y, entityType type, size_t id, Direction dir)
 {
   int	to = y * _xLength + x;
   AObj	*obj;
@@ -57,7 +57,7 @@ bool	Board::placeEntity(size_t x, size_t y, entityType type, size_t id, Directio
   return (false);
 }
 
-bool	Board::moveEntity(size_t x, size_t y, size_t id, Direction dir)
+bool	Board::moveEntity(float x, float y, size_t id, Direction dir)
 {
   int	from = y * _xLength + x;
   int	to;
