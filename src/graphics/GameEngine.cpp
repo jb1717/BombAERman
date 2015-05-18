@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Sun May 17 08:49:02 2015 Jamais
+// Last update Mon May 18 12:28:04 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -97,7 +97,7 @@ bool		GameEngine::initialize()
   _shader.setUniform("view", camera.getTransformationMatrix());
   _shader.setUniform("projection", camera.getProjectionMatrix());
 
-  perso = new AGameModel(glm::vec3(0, 5, -10), "./assets/Models/marvin.fbx");
+  perso = new AGameModel(glm::vec3(0.0f, -0.5f, 0.0f), "./assets/Models/marvin.fbx");
   perso->scale(glm::vec3(0.002f, 0.002f, 0.002f));
   _objects.push_back(perso);
   createMap("./conf/map.conf");
@@ -155,6 +155,12 @@ bool		GameEngine::getEvent()
       camera.setTarget(camera.getTarget() + glm::vec3(-1 * _input.getMouseDelta().x, -1 * _input.getMouseDelta().y, _input.getMouseDelta().y));
       camera.setTransformationMatrix(glm::lookAt(camera.getPosition(), camera.getTarget(), camera.getFocus()));
     }
+  if (_input.getKey(SDL_MOUSEWHEEL))
+    {
+      std::cout << "mouseWheel ! " << _input.getMouseWheel().x << std::endl;
+      if (_input.getMouseWheel().y > 0)
+	camera.setTransformationMatrix(glm::scale(camera.getTransformationMatrix(), glm::vec3(1.01f, 1.01f, 1.01f)));
+    }
   return true;
 }
 
@@ -175,8 +181,11 @@ void		GameEngine::draw()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  //  glDisable(GL_DEPTH_TEST);
+  //  gdl::Geometry	background;
 
-
+  // background.setColor(1, 1, 1, 1);
+  // background.set
 
 
   _shader.bind();
