@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Wed May  6 17:12:20 2015 David Tran
-// Last update Mon May 18 05:06:06 2015 David Tran
+// Last update Mon May 18 19:44:39 2015 David Tran
 //
 
 #ifndef ETHREAD_HH_
@@ -13,11 +13,8 @@
 
 # include <pthread.h>
 # include <stdlib.h>
-# include "Engine.hh"
-# include "Bomb.hh"
 
-class	Engine;
-class	Bomb;
+# define NO_TIMEOUT 0
 
 class	EThread
 {
@@ -32,6 +29,9 @@ private:
   pthread_t	_thread;
   bool		_running;
 };
+
+# include "Engine.hh"
+# include "Bomb.hh"
 
 void	*launch_player(void *);
 void	*run_bomb(void *);

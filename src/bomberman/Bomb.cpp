@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:03:38 2015 David Tran
-// Last update Mon May 18 04:59:59 2015 David Tran
+// Last update Mon May 18 19:46:49 2015 David Tran
 //
 
 #include "Bomb.hh"
@@ -27,10 +27,7 @@ void	Bomb::triggerLaunch(int x, int y)
 {
   launched = !launched;
   if (launched)
-    {
-      _time = std::chrono::steady_clock::now();
-      bombThread->launch(run_bomb, this);
-    }
+    _time = std::chrono::steady_clock::now();
   setPosition(x, y);
 }
 
@@ -56,7 +53,7 @@ void			Bomb::run()
 {
   while (!explosion_check())
     {
-      usleep(0.2);
+      usleep(1);
     }
   launched = !launched;
 }

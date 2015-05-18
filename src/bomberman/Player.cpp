@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Mon May 18 05:02:00 2015 David Tran
+// Last update Mon May 18 19:48:09 2015 David Tran
 //
 
 #include "Player.hh"
@@ -15,6 +15,7 @@ Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
   Bomb	*newone = new Bomb(Board);
 
   _bombs.push_back(newone);
+  _bombThread = new EThreadPool(1);
 }
 
 bool		Player::playerSpawn(float x, float y, Board::Direction direction, size_t Id)
@@ -49,6 +50,7 @@ void		Player::addBomb()
   Bomb		*newone = new Bomb(_board);
 
   _bombs.push_back(newone);
+  _bombThread->addNewThread(1);
 }
 
 std::vector<Bomb *>		Player::getBombs() const
@@ -71,6 +73,7 @@ bool	Player::triggerOneBomb()
       if ((*it)->isLaunched() == false)
 	{
 	  (*it)->triggerLaunch(positions.first, positions.second);
+	  _bombThread->addWork(run_bomb, (*it));
 	  return (true);
 	}
       it++;
