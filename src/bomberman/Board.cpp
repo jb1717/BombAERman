@@ -57,32 +57,53 @@ bool	Board::placeEntity(float x, float y, entityType type, size_t id, Direction 
   return (false);
 }
 
+void	Board::setNewPosition(float x, int y)
+{
+  
+}
+
+void  Board::updatePositionOnSquare(float fromX, float fromY, float toX, float toY)
+{
+  if (fromX < 1.5)
+  {
+    
+  }
+  else if (fromX > 1.5)
+  {
+ 
+  }
+  else
+  {
+
+  }
+}
+
 bool	Board::moveEntity(float x, float y, size_t id, Direction dir)
 {
-  int	from = y * _xLength + x;
-  int	to;
+  float	from = y * _xLength + x;
+  float	to;
   AObj	*tmp = NULL;
 
   switch (dir)
     {
     case North:
       if (y > 0)
-        to = from - _yLength;
+        to = from - _yLength + 0.9;
       else
-        to = -1;
+        to = -0.1;
     case South:
       if (y < _yLength)
-        to = from + _yLength;
+        to = from + _yLength + 0.9;
       else
         to = -1;
     case East:
       if (x > 0)
-        to = from - 1;
+        to = from - 0.1;
       else
         to = -1;
     case West:
       if (x < _xLength)
-        to = from + 1;
+        to = from + 0.1;
       else
         to = -1;
     default: return(false);

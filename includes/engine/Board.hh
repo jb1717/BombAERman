@@ -43,6 +43,8 @@ public:
 
 private:
   AObj	*createEntity(Board &board, entityType type);
+  void	updatePositionOnSquare(float fromX, float fromY, float toX, float toY);
+  void  setNewPosition(float x, int y);
 
 private:
   std::vector<std::vector<AObj *> > _board;
