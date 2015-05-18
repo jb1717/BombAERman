@@ -11,6 +11,7 @@
 #ifndef Board_HH_
 # define Board_HH_
 
+# include <cmath>
 # include <string>
 # include <vector>
 # include "AObj.hh"
@@ -40,11 +41,11 @@ public:
 
 public:
   std::vector<Player *>  &getPlayers();
+  AObj  *removeFromSquare(int x, int y, size_t id);
+  void  updatePos(float x, float y, AObj *obj);
 
 private:
   AObj	*createEntity(Board &board, entityType type);
-  void	updatePositionOnSquare(float fromX, float fromY, float toX, float toY);
-  void  setNewPosition(float x, int y);
 
 private:
   std::vector<std::vector<AObj *> > _board;

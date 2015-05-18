@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Mon May 18 05:09:15 2015 David Tran
+// Last update Mon May 18 20:24:03 2015 Jean-Baptiste Grégoire
 //
 
 #include "Board.hh"
@@ -22,7 +22,7 @@ Board::Board(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLeng
 AObj  *Board::createEntity(Board &board, entityType type)
 {
   switch (type)
-  {
+    {
     case PLAYER:
       return (new Player(board));
     case CRATE:
@@ -31,7 +31,7 @@ AObj  *Board::createEntity(Board &board, entityType type)
       return (new UnbreakableWall(board));
     default:
       return (NULL);
-  }
+    }
 }
 
 bool	Board::placeEntity(float x, float y, entityType type, size_t id, Direction dir)
@@ -47,82 +47,120 @@ bool	Board::placeEntity(float x, float y, entityType type, size_t id, Direction 
       if (type != PLAYER)
         obj->setPosition(x, y);
       else
-      {
-        reinterpret_cast<Player *>(obj)->playerSpawn(x, y, dir, id);
-        _players.push_back(reinterpret_cast<Player *>(obj));
-      }
+	{
+	  reinterpret_cast<Player *>(obj)->playerSpawn(x, y, dir, id);
+	  _players.push_back(reinterpret_cast<Player *>(obj));
+	}
       _board[to].push_back(obj);
       return (true);
     }
   return (false);
 }
 
-void	Board::setNewPosition(float x, int y)
+AObj	*Board::removeFromSquare(int x, int y, size_t id)
 {
-  
+  AObj	*tmp;
+
+  for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() == id)
+	{
+	  tmp = *it;
+	  _board[y * _xLength + x].erase(it);
+	  break ;
+	}
+    }
+  for (std::vector<AObj *>::iterator it = _board[y * _xLength + x + 1].begin(); it != _board[y * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() == id)
+	{
+	  tmp = *it;
+	  _board[y * _xLength + x].erase(it);
+	  break ;
+	}
+    }
+  for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() == id)
+	{
+	  tmp = *it;
+	  _board[y * _xLength + x].erase(it);
+	  break ;
+	}
+    }
+  for (std::vector<AObj *>::iterator it = _board[((y + 1)* _xLength) + x + 1].begin(); it != _board[y * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() == id)
+	{
+	  tmp = *it;
+	  _board[y * _xLength + x].erase(it);
+	  break ;
+	}
+    }
+  return (tmp);
 }
 
-void  Board::updatePositionOnSquare(float fromX, float fromY, float toX, float toY)
+void	Board::updatePos(float x, float y, AObj *obj)
 {
-  if (fromX < 1.5)
-  {
-    
-  }
-  else if (fromX > 1.5)
-  {
- 
-  }
-  else
-  {
+  float	intPartX, intPartY;
+  int	intx = static_cast<int>(x), inty = static_cast<int>(y);
 
-  }
+  std::modf(x, &intPartX);
+  std::modf(x, &intPartY);
+  if (x < intPartX + 0.5)
+    _board[inty * _xLength + intx].push_back(obj);
+  else if (x > intPartX + 0.5)
+    _board[inty * _xLength + intx + 1].push_back(obj);
+  else
+    {
+      _board[inty * _xLength + intx].push_back(obj);
+      _board[inty * _xLength + intx + 1].push_back(obj);
+    }
+  if (y < intPartY + 0.5)
+    _board[inty * _xLength + intx].push_back(obj);
+  else if (y > intPartY + 0.5)
+    _board[inty + 1* _xLength + intx].push_back(obj);
+  else
+    {
+      _board[inty * _xLength + intx].push_back(obj);
+      _board[((inty + 1) * _xLength) + intx].push_back(obj);
+    }
 }
 
 bool	Board::moveEntity(float x, float y, size_t id, Direction dir)
 {
-  float	from = y * _xLength + x;
-  float	to;
+  float	toX = x, toY = y;
+  int posX = static_cast<int>(x), posY = static_cast<int>(y);
   AObj	*tmp = NULL;
 
   switch (dir)
     {
     case North:
       if (y > 0)
-        to = from - _yLength + 0.9;
+        toY -= 0.1;
       else
-        to = -0.1;
+        toY = -1.0;
     case South:
       if (y < _yLength)
-        to = from + _yLength + 0.9;
+        toY += 0.1;
       else
-        to = -1;
+        toY = -1.0;
     case East:
       if (x > 0)
-        to = from - 0.1;
+        toX -= 0.1;
       else
-        to = -1;
+        toX = -1.0;
     case West:
       if (x < _xLength)
-        to = from + 0.1;
+        toX += 0.1;
       else
-        to = -1;
+        toX = -1.0;
     default: return(false);
     }
-  if (to == -1)
+  if (toX == -1.0 || toY == -1.0)
     return (false);
-  std::vector<AObj *>::iterator it;
-  for (it = _board[from].begin(); it != _board[from].end(); ++it)
-  {
-    if ((*it)->getId() == id)
-    {
-      tmp = *it;
-      break ;
-    }
-  }
-  if (!tmp)
-    return (false);
-  _board[from].erase(it);
-  _board[to].push_back(tmp);
+  tmp = removeFromSquare(posX, posY, id);
+  updatePos(toX, toY, tmp);
   return (true);
 }
 
