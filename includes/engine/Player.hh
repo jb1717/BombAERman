@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Sun May 17 22:43:14 2015 David Tran
+// Last update Mon May 18 05:03:46 2015 David Tran
 //
 
 #ifndef PLAYER_HH_
@@ -18,6 +18,8 @@
 # include "AObj.hh"
 
 # define PLAYER_CHAR	'p'
+
+class	Bomb;
 
 class	Player : public AObj
 {
@@ -34,14 +36,15 @@ public: // Principal functions
   void					run_user();
   bool					userAction();
   int					commandValue();
+  void					checkPosPowerUp();
 public: // Player Safety
   bool					is_Alive() const;
   void					triggerAlive();
 
 public: // Player Bomb tools
   void					addBomb();
-  std::vector<Bomb*>			getBombs() const;
-  std::vector<Bomb*>::const_iterator	getBombIt() const;
+  std::vector<Bomb *>			getBombs() const;
+  std::vector<Bomb *>::const_iterator	getBombIt() const;
   bool					triggerOneBomb();
   void					powerUpRange();
 public: // Speed Power-up

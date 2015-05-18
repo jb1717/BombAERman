@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Wed May  6 17:11:54 2015 David Tran
-// Last update Sat May 16 08:05:55 2015 David Tran
+// Last update Mon May 18 05:06:23 2015 David Tran
 //
 
 #include "EThread.hh"
@@ -49,5 +49,13 @@ void	*launch_player(void *arg)
   Player		newone(corpse->getBoard());
 
   newone.run_user();
+  return (NULL);
+}
+
+void	*run_bomb(void *arg)
+{
+  Bomb			*bomb = static_cast<Bomb *>(arg);
+
+  bomb->run();
   return (NULL);
 }

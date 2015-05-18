@@ -5,13 +5,15 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:03:38 2015 David Tran
-// Last update Sat May 16 07:10:56 2015 David Tran
+// Last update Mon May 18 04:59:59 2015 David Tran
 //
 
 #include "Bomb.hh"
 
 Bomb::Bomb(Board &Board, bool Launch, char Range) : AObj(Board), launched(Launch), range(Range)
-{}
+{
+  bombThread = new EThread;
+}
 
 Bomb::~Bomb()
 {}
@@ -25,7 +27,10 @@ void	Bomb::triggerLaunch(int x, int y)
 {
   launched = !launched;
   if (launched)
-    _time = std::chrono::steady_clock::now();
+    {
+      _time = std::chrono::steady_clock::now();
+      bombThread->launch(run_bomb, this);
+    }
   setPosition(x, y);
 }
 
@@ -49,4 +54,9 @@ void	Bomb::setRange(char const &Range)
 
 void			Bomb::run()
 {
+  while (!explosion_check())
+    {
+      usleep(0.2);
+    }
+  launched = !launched;
 }
