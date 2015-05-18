@@ -35,17 +35,20 @@ public:
 
 public:
   Board(size_t length, size_t width);
-  bool	placeEntity(float x, float y, entityType type, size_t id, Direction dir = North);
-  bool	moveEntity(float x, float y, size_t id, Direction dir);
   ~Board();
 
 public:
+  bool  placeEntity(float x, float y, entityType type, size_t id, Direction dir = North);
+  bool  moveEntity(float x, float y, size_t id, Direction dir);
+
+public:
   std::vector<Player *>  &getPlayers();
-  AObj  *removeFromSquare(int x, int y, size_t id);
-  void  updatePos(float x, float y, AObj *obj);
+  std::vector<AObj *> &getSquareObjects(size_t x, size_t y) const;
 
 private:
   AObj	*createEntity(Board &board, entityType type);
+  AObj  *removeFromSquare(int x, int y, size_t id);
+  void  updatePos(float x, float y, AObj *obj);
 
 private:
   std::vector<std::vector<AObj *> > _board;

@@ -164,6 +164,12 @@ bool	Board::moveEntity(float x, float y, size_t id, Direction dir)
   return (true);
 }
 
+std::vector<AObj *> &getSquareObjects(size_t x, size_t y) const
+{
+  return (_board[y * _xLength + x]);
+}
+
+
 std::vector<Player *>  &Board::getPlayers()
 {
   return (_players);
