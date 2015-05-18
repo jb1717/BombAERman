@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Sun May 17 21:24:03 2015 David Tran
+// Last update Mon May 18 05:09:15 2015 David Tran
 //
 
 #include "Board.hh"
@@ -49,7 +49,7 @@ bool	Board::placeEntity(float x, float y, entityType type, size_t id, Direction 
       else
       {
         reinterpret_cast<Player *>(obj)->playerSpawn(x, y, dir, id);
-        _players.push_back(obj);
+        _players.push_back(reinterpret_cast<Player *>(obj));
       }
       _board[to].push_back(obj);
       return (true);

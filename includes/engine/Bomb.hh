@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Sat May  2 15:53:03 2015 David Tran
-// Last update Sat May 16 06:51:42 2015 David Tran
+// Last update Mon May 18 05:05:01 2015 David Tran
 //
 
 #ifndef BOMB_HH_
@@ -14,6 +14,9 @@
 # include <chrono>
 # include <iostream>
 # include "AObj.hh"
+# include "EThread.hh"
+
+class	EThread;
 
 class	Bomb : public AObj
 {
@@ -32,6 +35,7 @@ private:
   bool					launched;
   std::chrono::steady_clock::time_point	_time;
   char					range;
+  EThread				*bombThread;
 };
 
 #endif // !Bomb_HH_

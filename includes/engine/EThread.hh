@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Wed May  6 17:12:20 2015 David Tran
-// Last update Sat May  9 09:09:49 2015 Milox Thomas
+// Last update Mon May 18 05:06:06 2015 David Tran
 //
 
 #ifndef ETHREAD_HH_
@@ -14,8 +14,10 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include "Engine.hh"
+# include "Bomb.hh"
 
 class	Engine;
+class	Bomb;
 
 class	EThread
 {
@@ -32,5 +34,6 @@ private:
 };
 
 void	*launch_player(void *);
+void	*run_bomb(void *);
 
 #endif // !ETHREAD_HH_

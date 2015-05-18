@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 11:59:37 2015 Jean-Baptiste Grégoire
-// Last update Wed May  6 13:24:03 2015 Jean-Baptiste Grégoire
+// Last update Mon May 18 03:16:22 2015 David Tran
 //
 
 #ifndef CRATE_HH_
@@ -32,7 +32,7 @@ public:
 
 private:
   BonusType	_bonus;
-  bool			_break;
+  bool		_break;
 };
 
 #endif // !CRATE_HH_

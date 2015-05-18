@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Sun May 17 21:21:07 2015 David Tran
+// Last update Mon May 18 05:02:00 2015 David Tran
 //
 
 #include "Player.hh"
@@ -64,12 +64,13 @@ std::vector<Bomb*>::const_iterator	Player::getBombIt() const
 bool	Player::triggerOneBomb()
 {
   std::vector<Bomb *>::const_iterator	it = _bombs.begin();
+  auto	positions = getPosition();
 
   while (it != _bombs.end())
     {
       if ((*it)->isLaunched() == false)
 	{
-	  (*it)->triggerLaunch(0, 0);
+	  (*it)->triggerLaunch(positions.first, positions.second);
 	  return (true);
 	}
       it++;
@@ -104,11 +105,34 @@ void	Player::setSpeed(char const &Speed)
 //
 // Principal funcions
 //
+
+void	Player::checkPosPowerUp()
+{
+}
+
 void	Player::run_user()
 {
   while (_isAlive)
     {
+      if (!userAction())
+	return ; // If Negative , throw
     }
+}
+
+int	Player::commandValue()
+{
+  return (0);
+}
+
+bool	Player::userAction()
+{
+  int	keyPressed;
+
+  if ((keyPressed = commandValue()) < 0)
+    return (keyPressed);
+  else if (keyPressed < 4)
+    return (selectDirection(static_cast<Board::Direction>(keyPressed)));
+  return (keyPressed);
 }
 
 bool	Player::selectDirection(Board::Direction direc)
