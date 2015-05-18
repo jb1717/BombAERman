@@ -5,16 +5,24 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Wed May  6 17:42:17 2015 David Tran
+// Last update Mon May 18 05:02:00 2015 David Tran
 //
 
 #include "Player.hh"
 
-Player::Player(char Speed, bool alive, Map &map) : isAlive(alive), speed(Speed), _map(map)
+Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
 {
-  Bomb	*newone = new Bomb;
+  Bomb	*newone = new Bomb(Board);
 
-  bombs.push_back(newone);
+  _bombs.push_back(newone);
+}
+
+bool		Player::playerSpawn(float x, float y, Board::Direction direction, size_t Id)
+{
+  setPosition(x, y);
+  _dir = direction;
+  setId(Id);
+  return (true);
 }
 
 Player::~Player()
@@ -25,12 +33,12 @@ Player::~Player()
 //
 bool	Player::is_Alive() const
 {
-  return (isAlive);
+  return (_isAlive);
 }
 
 void	Player::triggerAlive()
 {
-  isAlive = !isAlive;
+  _isAlive = !_isAlive;
 }
 
 //
@@ -38,30 +46,31 @@ void	Player::triggerAlive()
 //
 void		Player::addBomb()
 {
-  Bomb		*newone = new Bomb;
+  Bomb		*newone = new Bomb(_board);
 
-  bombs.push_back(newone);
+  _bombs.push_back(newone);
 }
 
 std::vector<Bomb *>		Player::getBombs() const
 {
-  return (bombs);
+  return (_bombs);
 }
 
 std::vector<Bomb*>::const_iterator	Player::getBombIt() const
 {
-  return (bombs.begin());
+  return (_bombs.begin());
 }
 
 bool	Player::triggerOneBomb()
 {
-  std::vector<Bomb *>::const_iterator	it = bombs.begin();
+  std::vector<Bomb *>::const_iterator	it = _bombs.begin();
+  auto	positions = getPosition();
 
-  while (it != bombs.end())
+  while (it != _bombs.end())
     {
       if ((*it)->isLaunched() == false)
 	{
-	  (*it)->triggerLaunch(0, 0);
+	  (*it)->triggerLaunch(positions.first, positions.second);
 	  return (true);
 	}
       it++;
@@ -71,9 +80,9 @@ bool	Player::triggerOneBomb()
 
 void	Player::powerUpRange()
 {
-  std::vector<Bomb *>::const_iterator	it = bombs.begin();
+  std::vector<Bomb *>::const_iterator	it = _bombs.begin();
 
-  while (it != bombs.end())
+  while (it != _bombs.end())
     {
       (*it)->setRange((*it)->getRange() + 1);
       it++;
@@ -85,13 +94,77 @@ void	Player::powerUpRange()
 //
 char	Player::getSpeed() const
 {
-  return (speed);
+  return (_speed);
 }
 
 void	Player::setSpeed(char const &Speed)
 {
-  speed = Speed;
+  _speed = Speed;
+}
+
+//
+// Principal funcions
+//
+
+void	Player::checkPosPowerUp()
+{
 }
 
 void	Player::run_user()
-{}
+{
+  while (_isAlive)
+    {
+      if (!userAction())
+	return ; // If Negative , throw
+    }
+}
+
+int	Player::commandValue()
+{
+  return (0);
+}
+
+bool	Player::userAction()
+{
+  int	keyPressed;
+
+  if ((keyPressed = commandValue()) < 0)
+    return (keyPressed);
+  else if (keyPressed < 4)
+    return (selectDirection(static_cast<Board::Direction>(keyPressed)));
+  return (keyPressed);
+}
+
+bool	Player::selectDirection(Board::Direction direc)
+{
+  if (_dir == direc)
+    return (goAhead());
+  else if (_dir == (static_cast<Board::Direction>((_dir - 1) % 4)))
+    return (turnLeft());
+  else if (_dir == (static_cast<Board::Direction>((_dir + 1) % 4)))
+    return (turnRight());
+  return (goBack());
+}
+
+bool	Player::turnLeft()
+{
+  _dir = static_cast<Board::Direction>((_dir + 1) % 4);
+  return (_board.moveEntity(_x, _y, _id, _dir));
+}
+
+bool	Player::turnRight()
+{
+  _dir = static_cast<Board::Direction>((_dir - 1) >= 0 ? _dir - 1 : 3);
+  return (_board.moveEntity(_x, _y, _id, _dir));
+}
+
+bool	Player::goAhead()
+{
+  return (_board.moveEntity(_x, _y, _id, _dir));
+}
+
+bool	Player::goBack()
+{
+  _dir = static_cast<Board::Direction>((_dir + 2) % 4);
+  return (_board.moveEntity(_x, _y, _id, _dir));
+}

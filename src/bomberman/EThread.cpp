@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Wed May  6 17:11:54 2015 David Tran
-// Last update Wed May  6 17:42:35 2015 David Tran
+// Last update Mon May 18 05:06:23 2015 David Tran
 //
 
 #include "EThread.hh"
@@ -45,9 +45,17 @@ int	EThread::waitThread()
 
 void	*launch_player(void *arg)
 {
-  Core		*corpse = static_cast<Core *>(arg);
-  Player	newone(1, true, corpse->getMap());
+  Engine		*corpse = static_cast<Engine *>(arg);
+  Player		newone(corpse->getBoard());
 
   newone.run_user();
+  return (NULL);
+}
+
+void	*run_bomb(void *arg)
+{
+  Bomb			*bomb = static_cast<Bomb *>(arg);
+
+  bomb->run();
   return (NULL);
 }

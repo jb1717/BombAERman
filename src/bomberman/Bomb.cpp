@@ -5,13 +5,15 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:03:38 2015 David Tran
-// Last update Tue May  5 17:37:43 2015 David Tran
+// Last update Mon May 18 04:59:59 2015 David Tran
 //
 
 #include "Bomb.hh"
 
-Bomb::Bomb(bool Launch, char Range) : launched(Launch), range(Range)
-{}
+Bomb::Bomb(Board &Board, bool Launch, char Range) : AObj(Board), launched(Launch), range(Range)
+{
+  bombThread = new EThread;
+}
 
 Bomb::~Bomb()
 {}
@@ -23,16 +25,19 @@ bool	Bomb::isLaunched() const
 
 void	Bomb::triggerLaunch(int x, int y)
 {
-  std::pair<int, int>	coord(x, y);
-
   launched = !launched;
-  _start = (launched) ? std::clock() : 0;
-  _coord = coord;
+  if (launched)
+    {
+      _time = std::chrono::steady_clock::now();
+      bombThread->launch(run_bomb, this);
+    }
+  setPosition(x, y);
 }
 
 bool	Bomb::explosion_check()
 {
-  if (launched && (std::clock() - _start) / CLOCKS_PER_SEC > 3)
+  std::chrono::steady_clock::time_point timeNow = std::chrono::steady_clock::now();
+  if (launched && (std::chrono::duration_cast<std::chrono::duration<int>>(timeNow - _time)).count() > 3)
     return (true);
   return (false);
 }
@@ -47,7 +52,11 @@ void	Bomb::setRange(char const &Range)
   range = Range;
 }
 
-std::pair<int, int>	Bomb::get_coord() const
+void			Bomb::run()
 {
-  return (_coord);
+  while (!explosion_check())
+    {
+      usleep(0.2);
+    }
+  launched = !launched;
 }

@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Tue May  5 20:46:32 2015 TommyStarK
-// Last update Thu May  7 08:27:00 2015 TommyStarK
+// Last update Sun May 10 02:51:08 2015 Milox Thomas
 //
 
 #include "Score.hpp"
@@ -43,10 +43,8 @@ std::string             Score::epur(const std::string &input)
   std::string           in;
   std::string           final;
 
-  if (i >> in)
-    final += in;
-  while (i >> in)
-    final += ' ' + in;
+  if (i >> in) {final += in;}
+  while (i >> in) {final += ' ' + in;}
   return final;
 }
 
@@ -107,31 +105,9 @@ void                    Score::parseNewScore(t_score *n, const std::string &best
   }
 }
 
-
 /*
-** operator to add/modify best score formating as follow "PLAYERNAME;SCORE"
-*/
-Score                   &Score::operator<<(const std::string &bestscore)
-{
-  t_score               n;
-
-  this->parseNewScore(&n, bestscore);
-  for (TOP::iterator i = _top.begin(); i != _top.end(); ++i)
-  {
-    if ((*i).player == n.player)
-      {
-        if (n.best > (*i).best)
-          (*i).best = n.best;
-        return (*this);
-      }
-  }
-  _top.push_back(n);
-  return (*this);
-}
-
-
-/*
-** Ordering scores from greater to lower
+** Ordering scores of our vector _top
+** from greater to lower
 */
 void                    Score::orderTop()
 {
@@ -163,7 +139,11 @@ void                    Score::orderTop()
 }
 
 /*
-** Create and Write new .score file for futures plays
+** if bool end is false
+**    creates hidden file '.score' and write header.
+** else
+**    update '.score' writting @ end scores.
+**
 */
 void                Score::updateScoreFile(bool end)
 {
@@ -195,43 +175,108 @@ void                Score::updateScoreFile(bool end)
 }
 
 /*
-** get best scores from .score file and upload them into _top
+** Open hidden file '.score'
+** Load best scores
+** upload them into _top (our vector).
 */
 void                Score::extractBestScores()
 {
   std::string       current;
   std::ifstream     file(_filename.c_str());
 
-  while (std::getline(file, current))
-  {
-    if (current[0] != '#') {
-      t_score       n;
-      this->parseFromFile(&n, Score::epur(current));
-      _top.push_back(n);
+  if (file.is_open()) {
+    while (std::getline(file, current)) {
+      if (current[0] != '#') {
+        t_score       n;
+        this->parseFromFile(&n, Score::epur(current));
+        _top.push_back(n);
+      }
+      current.clear();
     }
-    current.clear();
   }
 }
 
+/*
+** operator >> returns a pointer to a std::vector<t_score>.
+** result is filled following the number of scores asked.
+*/
+TOP                     *Score::operator>>(size_t request)
+{
+  TOP                   *ret = new TOP;
+
+  if (_top.empty()) {
+    t_score               s = {"NONE", "NONE", 0};
+    ret->push_back(s);
+    return (ret);
+  }
+  else if (_top.size() < request) {
+    for (TOP::iterator i = _top.begin(); i != _top.end(); ++i) {
+      t_score               s;
+      s.player = (*i).player;
+      s.date = (*i).date;
+      s.best = (*i).best;
+      ret->push_back(s);
+    }
+    return (ret);
+  }
+  else {
+    for (size_t i = 0; i < request; ++i)
+      ret->push_back(_top[i]);
+    return (ret);
+  }
+
+}
 
 /*
-** Display file '.score' for debug
+** operator to add/modify best score.
+** string(param) has to be formated as follow "PLAYERNAME;SCORE"
 */
+Score                   &Score::operator<<(const std::string &bestscore)
+{
+  t_score               n;
+
+  this->parseNewScore(&n, bestscore);
+  for (TOP::iterator i = _top.begin(); i != _top.end(); ++i)
+  {
+    if ((*i).player == n.player)
+      {
+        if (n.best > (*i).best)
+          (*i).best = n.best;
+        return (*this);
+      }
+  }
+  _top.push_back(n);
+  return (*this);
+}
+
+/*
+** Get numbers of players ranked in bestscores;
+*/
+size_t              Score::getNbrRankedPlayers() const
+{
+  return _top.size();
+}
+
+
+
+
+
+//
+//
+// DEBUG
+//
+//
 void                Score::show()
 {
   std::string       tmp;
   std::ifstream     file(_filename.c_str());
 
-  while (std::getline(file, tmp))
-  {
+  while (std::getline(file, tmp)) {
     std::cout << tmp << std::endl;
     tmp.clear();
   }
 }
 
-/*
-** Display _top for debug
-*/
 void                Score::showTop()
 {
   this->orderTop();

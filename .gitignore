@@ -41,11 +41,12 @@
 *.i*86
 *.x86_64
 *.hex
+!bomberman/
+bin/
 
 # Debug files
 *.dSYM/
 
 # Temporary files
-*.o
 #*#
 *~
