@@ -12,7 +12,8 @@
 # define UNBREAKABLEWALL_HH_
 
 # include "AObj.hh"
-# include "Board.hh"
+
+class Board;
 
 class UnbreakableWall : public AObj
 {

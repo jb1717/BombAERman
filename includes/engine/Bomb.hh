@@ -32,6 +32,8 @@ public:
   void			setRange(char const &);
   void			run();
 private:
+  void			explosion();
+private:
   bool					launched;
   std::chrono::steady_clock::time_point	_time;
   char					range;

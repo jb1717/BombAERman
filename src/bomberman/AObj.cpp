@@ -26,12 +26,12 @@ std::pair<float, float> AObj::getPosition() const
   return (std::pair<float, float>(_x, _y));
 }
 
-void	AObj::setId(size_t Id)
+void	AObj::setId(int id)
 {
-  _id = Id;
+  _id = id;
 }
 
-size_t	AObj::getId(void) const
+int		AObj::getId(void) const
 {
   return (_id);
 }
