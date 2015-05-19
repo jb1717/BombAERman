@@ -25,8 +25,8 @@ AObj  *Board::createEntity(Board &board, entityType type)
     {
     case PLAYER:
       return (new Player(board));
-    case CRATE:
-      return (new Crate(board));
+    // case CRATE:
+    //   return (new Crate(board));
     case UNBREACKABLE_WALL:
       return (new UnbreakableWall(board));
     default:
@@ -37,7 +37,7 @@ AObj  *Board::createEntity(Board &board, entityType type)
 bool	Board::placeEntity(float x, float y, entityType type, size_t id, Direction dir)
 {
   int	to = static_cast<int>(y) * _xLength + static_cast<int>(x);
-  AObj	*obj;
+  AObj	*obj;  
 
   if (_board[to].empty())
     {
@@ -61,9 +61,9 @@ bool	Board::placeEntity(float x, float y, AObj *entity)
 {
   int	to = static_cast<int>(y) * _xLength + static_cast<int>(x);
 
-  if (!_baord[to].empty())
+  if (!_board[to].empty())
     return (false);
-  _baord[to].push_back(entity);
+  _board[to].push_back(entity);
   return (true);
 }
 
@@ -92,7 +92,7 @@ void  Board::deleteEntity(float x, float y, int id, bool breakWall)
   }
 }
 
-AObj	*Board::removeFromSquare(int x, int y, size_t id)
+AObj	*Board::removeFromSquare(int x, int y, int id)
 {
   AObj	*tmp;
 
@@ -199,7 +199,7 @@ bool	Board::moveEntity(float x, float y, size_t id, Direction dir)
   return (true);
 }
 
-std::vector<AObj *> &getSquareObjects(size_t x, size_t y) const
+std::vector<AObj *> &Board::getSquareObjects(size_t x, size_t y)
 {
   return (_board[y * _xLength + x]);
 }

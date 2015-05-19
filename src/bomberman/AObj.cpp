@@ -28,7 +28,7 @@ std::pair<float, float> AObj::getPosition() const
 
 void	AObj::setId(int id)
 {
-  _id = Id;
+  _id = id;
 }
 
 int		AObj::getId(void) const

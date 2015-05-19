@@ -27,7 +27,6 @@ public:
     {
       North = 0, West, South, East
     };
-
   enum entityType
   {
       PLAYER = 0, CRATE, UNBREACKABLE_WALL
@@ -49,11 +48,11 @@ public:
 
 public:
   std::vector<Player *>  &getPlayers();
-  std::vector<AObj *> &getSquareObjects(size_t x, size_t y) const;
+  std::vector<AObj *> &getSquareObjects(size_t x, size_t y);
 
 private:
   AObj	*createEntity(Board &board, entityType type);
-  AObj  *removeFromSquare(int x, int y, size_t id);
+  AObj  *removeFromSquare(int x, int y, int id);
   void  updatePos(float x, float y, AObj *obj);
 
 private:

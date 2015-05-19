@@ -25,7 +25,7 @@ public:
 public:
 	void				setPosition(float x, float y);
 	std::pair<float, float>		getPosition() const;
-	void				setId(size_t);
+	void				setId(int);
 	int					getId(void) const;
 
 protected:
