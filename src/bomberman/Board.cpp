@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Mon May 18 20:24:03 2015 Jean-Baptiste Grégoire
+// Last update Tue May 19 17:59:00 2015 Jean-Baptiste Grégoire
 //
 
 #include "Board.hh"
@@ -36,7 +36,7 @@ AObj  *Board::createEntity(Board &board, entityType type)
 
 bool	Board::placeEntity(float x, float y, entityType type, size_t id, Direction dir)
 {
-  int	to = y * _xLength + x;
+  int	to = static_cast<int>(y) * _xLength + static_cast<int>(x);
   AObj	*obj;
 
   if (_board[to].empty())
@@ -55,6 +55,41 @@ bool	Board::placeEntity(float x, float y, entityType type, size_t id, Direction 
       return (true);
     }
   return (false);
+}
+
+bool	Board::placeEntity(float x, float y, AObj *entity)
+{
+  int	to = static_cast<int>(y) * _xLength + static_cast<int>(x);
+
+  if (!_baord[to].empty())
+    return (false);
+  _baord[to].push_back(entity);
+  return (true);
+}
+
+void  Board::deleteEntity(float x, float y, int id, bool breakWall)
+{
+  int	posx = static_cast<int>(x), posy = static_cast<int>(y);
+  std::vector<AObj *>	tmp = _board[posy * _xLength + posx];
+
+  for (std::vector<AObj *>::iterator it = tmp.begin(); it != tmp.end();)
+  {
+    if (id == 0)
+    {
+      if ((*it)->getId() == Wall && breakWall == false)
+      {
+        ++it;
+        continue ;
+      }
+      delete *it;
+      it = tmp.erase(it);
+    }
+    else if (id == (*it)->getId())
+    {
+      delete *it;
+      it = tmp.erase(it);
+    }
+  }
 }
 
 AObj	*Board::removeFromSquare(int x, int y, size_t id)

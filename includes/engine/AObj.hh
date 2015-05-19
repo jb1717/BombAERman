@@ -26,13 +26,13 @@ public:
 	void				setPosition(float x, float y);
 	std::pair<float, float>		getPosition() const;
 	void				setId(size_t);
-	size_t				getId(void) const;
+	int					getId(void) const;
 
 protected:
   Board 	&_board;
   float		_x;
   float		_y;
-  size_t	_id;
+  int			_id;
 };
 
 #endif // !AOBJ

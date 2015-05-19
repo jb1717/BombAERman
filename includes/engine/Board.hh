@@ -32,6 +32,10 @@ public:
   {
       PLAYER = 0, CRATE, UNBREACKABLE_WALL
   };
+  enum	IDType
+  {
+    Bomb = -3, Crate = -2, Wall = -1, NoID = 0
+  };
 
 public:
   Board(size_t length, size_t width);
@@ -39,7 +43,9 @@ public:
 
 public:
   bool  placeEntity(float x, float y, entityType type, size_t id, Direction dir = North);
+  bool  placeEntity(float x, float y, AObj *entity);
   bool  moveEntity(float x, float y, size_t id, Direction dir);
+  void	deleteEntity(float x, float y, int id = 0, bool breakWall = false);
 
 public:
   std::vector<Player *>  &getPlayers();
