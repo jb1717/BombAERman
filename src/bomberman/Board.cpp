@@ -5,14 +5,14 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Mon May 18 20:24:03 2015 Jean-Baptiste Grégoire
+// Last update Wed May 20 16:30:37 2015 Jean-Baptiste Grégoire
 //
 
 #include "Board.hh"
 #include "Player.hh"
 #include "Crate.hh"
 #include "UnbreakableWall.hh"
-
+#include "Explosion.hh"
 
 Board::Board(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLength)
 {
@@ -34,9 +34,9 @@ AObj  *Board::createEntity(Board &board, entityType type)
     }
 }
 
-bool	Board::placeEntity(float x, float y, entityType type, size_t id, Direction dir)
+bool	Board::placeEntity(float x, float y, entityType type, int id, Direction dir)
 {
-  int	to = y * _xLength + x;
+  int	to = static_cast<int>(y) * _xLength + static_cast<int>(x);
   AObj	*obj;
 
   if (_board[to].empty())
@@ -57,7 +57,69 @@ bool	Board::placeEntity(float x, float y, entityType type, size_t id, Direction 
   return (false);
 }
 
-AObj	*Board::removeFromSquare(int x, int y, size_t id)
+bool	Board::placeEntity(float x, float y, AObj *entity)
+{
+  int	to = static_cast<int>(y) * _xLength + static_cast<int>(x);
+
+  if (!_board[to].empty())
+    return (false);
+  _board[to].push_back(entity);
+  return (true);
+}
+
+void	Board::popEntity(int x, int y, int id)
+{
+  for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() == id)
+        _board[y * _xLength + x].erase(it);
+    }
+}
+
+void  Board::deleteEntity(float x, float y, int id, bool breakWall)
+{
+  int	posx = static_cast<int>(x), posy = static_cast<int>(y);
+  std::vector<AObj *>	tmp = _board[posy * _xLength + posx];
+
+  for (std::vector<AObj *>::iterator it = tmp.begin(); it != tmp.end();)
+    {
+      if (id == 0)
+	{
+	  if ((*it)->getId() == Wall && breakWall == false)
+	    {
+	      ++it;
+	      continue ;
+	    }
+	  else if ((*it)->getId() == CrateID && reinterpret_cast<Crate *>(*it)->getBonus() != Crate::NONE)
+	    {
+	      reinterpret_cast<Crate *>(*it)->breakIt();
+	      ++it;
+	    }
+	  else
+	    {
+	      delete *it;
+	      it = tmp.erase(it);
+	    }
+	}
+      else if (id == (*it)->getId())
+	{
+	  delete *it;
+	  it = tmp.erase(it);
+	}
+    }
+}
+
+void  Board::setExplosion(float x, float y)
+{
+  int posx = static_cast<int>(x), posy = static_cast<int>(y);
+  int	pos = posy * _xLength + posx;
+  Explosion	*exp = new Explosion(*this);
+
+  if (_board[pos].empty())
+    _board[pos].push_back(exp);
+}
+
+AObj	*Board::removeFromSquare(int x, int y, int id)
 {
   AObj	*tmp;
 
@@ -127,7 +189,7 @@ void	Board::updatePos(float x, float y, AObj *obj)
     }
 }
 
-bool	Board::moveEntity(float x, float y, size_t id, Direction dir)
+bool	Board::moveEntity(float x, float y, int id, Direction dir)
 {
   float	toX = x, toY = y;
   int posX = static_cast<int>(x), posY = static_cast<int>(y);
@@ -164,7 +226,16 @@ bool	Board::moveEntity(float x, float y, size_t id, Direction dir)
   return (true);
 }
 
-std::vector<AObj *> &getSquareObjects(size_t x, size_t y) const
+void	Board::removePlayer(int id)
+{
+  for (std::vector<Player *>::iterator it = _players.begin(); it != _players.end(); ++it)
+  {
+    if ((*it)->getId() == id)
+      _players.erase(it);
+  }
+}
+
+std::vector<AObj *> &Board::getSquareObjects(size_t x, size_t y)
 {
   return (_board[y * _xLength + x]);
 }

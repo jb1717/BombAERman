@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Fri May 15 22:18:39 2015 Jean-Baptiste Grégoire
-// Last update Sun May 17 21:19:54 2015 David Tran
+// Last update Wed May 20 12:03:50 2015 David Tran
 //
 
 #ifndef AOBJ_HH_
@@ -25,14 +25,13 @@ public:
 public:
 	void				setPosition(float x, float y);
 	std::pair<float, float>		getPosition() const;
-	void				setId(size_t);
-	size_t				getId(void) const;
-
+	void				setId(int);
+	int				getId(void) const;
 protected:
   Board 	&_board;
   float		_x;
   float		_y;
-  size_t	_id;
+  int		_id;
 };
 
 #endif // !AOBJ

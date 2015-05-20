@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Mon May 18 19:48:09 2015 David Tran
+// Last update Wed May 20 14:13:06 2015 David Tran
 //
 
 #include "Player.hh"
@@ -18,7 +18,7 @@ Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
   _bombThread = new EThreadPool(1);
 }
 
-bool		Player::playerSpawn(float x, float y, Board::Direction direction, size_t Id)
+bool		Player::playerSpawn(float x, float y, Board::Direction direction, int Id)
 {
   setPosition(x, y);
   _dir = direction;
@@ -27,7 +27,16 @@ bool		Player::playerSpawn(float x, float y, Board::Direction direction, size_t I
 }
 
 Player::~Player()
-{}
+{
+  int intx = static_cast<int>(_x), inty = static_cast<int>(_y);
+
+  _board.popEntity(intx, inty, _id);
+  _board.popEntity(intx + 1, inty, _id);
+  _board.popEntity(intx, inty + 1, _id);
+  _board.popEntity(intx + 1, inty + 1, _id);
+  _board.removePlayer(_id);
+  // delete from all the vector of squares
+}
 
 //
 // Alive Functions
@@ -72,13 +81,14 @@ bool	Player::triggerOneBomb()
     {
       if ((*it)->isLaunched() == false)
 	{
-	  (*it)->triggerLaunch(positions.first, positions.second);
+	  (*it)->setPosition(positions.first, positions.second);
 	  _bombThread->addWork(run_bomb, (*it));
+	  _board.placeEntity(_x, _y, (*it));
 	  return (true);
 	}
       it++;
     }
-  return (false);
+  return (true);
 }
 
 void	Player::powerUpRange()
@@ -111,6 +121,25 @@ void	Player::setSpeed(char const &Speed)
 
 void	Player::checkPosPowerUp()
 {
+  std::vector<AObj *>	all_in = _board.getSquareObjects(static_cast<int>(_x), static_cast<int>(_y));
+  auto			all_in_it = all_in.begin();
+  Crate::BonusType	powerup = Crate::NONE;
+
+  while (all_in_it != all_in.begin())
+    {
+      if ((*all_in_it)->getId() == -2)
+	{
+	  powerup = reinterpret_cast<Crate *>((*all_in_it))->getBonus();
+	  if (powerup == Crate::SPEED)
+	    _speed += 1;
+	  else if (powerup == Crate::RANGE)
+	    powerUpRange();
+	  else if (powerup == Crate::ADD)
+	    addBomb();
+	  return ;
+	}
+      all_in_it++;
+    }
 }
 
 void	Player::run_user()
@@ -119,6 +148,7 @@ void	Player::run_user()
     {
       if (!userAction())
 	return ; // If Negative , throw
+      checkPosPowerUp();
     }
 }
 
@@ -132,10 +162,12 @@ bool	Player::userAction()
   int	keyPressed;
 
   if ((keyPressed = commandValue()) < 0)
-    return (keyPressed);
+    return (false);
   else if (keyPressed < 4)
     return (selectDirection(static_cast<Board::Direction>(keyPressed)));
-  return (keyPressed);
+  else if (keyPressed == 4)
+    return (triggerOneBomb());
+  return (false);
 }
 
 bool	Player::selectDirection(Board::Direction direc)

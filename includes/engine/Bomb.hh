@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 // 
 // Started on  Sat May  2 15:53:03 2015 David Tran
-// Last update Mon May 18 05:05:01 2015 David Tran
+// Last update Wed May 20 14:04:06 2015 David Tran
 //
 
 #ifndef BOMB_HH_
@@ -25,12 +25,14 @@ public:
   ~Bomb();
 public:
   bool			isLaunched() const;
-  void			triggerLaunch(int x, int y);
+  void			triggerLaunch();
   bool			explosion_check();
 public:
   char			getRange() const;
   void			setRange(char const &);
   void			run();
+private:
+  void			explosion();
 private:
   bool					launched;
   std::chrono::steady_clock::time_point	_time;

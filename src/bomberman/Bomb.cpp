@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:03:38 2015 David Tran
-// Last update Mon May 18 19:46:49 2015 David Tran
+// Last update Wed May 20 14:04:33 2015 David Tran
 //
 
 #include "Bomb.hh"
@@ -23,12 +23,26 @@ bool	Bomb::isLaunched() const
   return (launched);
 }
 
-void	Bomb::triggerLaunch(int x, int y)
+void	Bomb::triggerLaunch()
 {
   launched = !launched;
   if (launched)
     _time = std::chrono::steady_clock::now();
-  setPosition(x, y);
+}
+
+void	Bomb::explosion()
+{
+  for (float i = 1.0; i < static_cast<float>(range + 1); ++i)
+  {
+    _board.deleteEntity(_x, _y - i);
+    _board.setExplosion(_x, _y - i);
+    _board.deleteEntity(_x, _y + i);
+    _board.setExplosion(_x, _y + i);
+    _board.deleteEntity(_x - i, _y);
+    _board.setExplosion(_x - i, _y);
+    _board.deleteEntity(_x + i, _y - i);
+    _board.setExplosion(_x + i, _y - i);
+  }
 }
 
 bool	Bomb::explosion_check()
@@ -51,9 +65,10 @@ void	Bomb::setRange(char const &Range)
 
 void			Bomb::run()
 {
+  triggerLaunch();
   while (!explosion_check())
     {
-      usleep(1);
+      usleep(10);
     }
   launched = !launched;
 }

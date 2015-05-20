@@ -20,6 +20,11 @@ Crate::BonusType	Crate::getBonus() const
   return (_bonus);
 }
 
+void		Crate::breakIt()
+{
+  _break = true;
+}
+
 bool		Crate::isBreak() const
 {
   return (_break);
