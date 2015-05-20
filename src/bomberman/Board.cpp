@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Wed May 20 14:10:58 2015 Jean-Baptiste Grégoire
+// Last update Wed May 20 14:16:28 2015 David Tran
 //
 
 #include "Board.hh"
