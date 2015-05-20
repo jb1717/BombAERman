@@ -12,6 +12,7 @@
 #include "Player.hh"
 #include "Crate.hh"
 #include "UnbreakableWall.hh"
+#include "Explosion.hh"
 
 Board::Board(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLength)
 {
@@ -80,7 +81,7 @@ void  Board::deleteEntity(float x, float y, int id, bool breakWall)
         ++it;
         continue ;
       }
-      else if ((*it)->getId() == CrateID && (*it)->getBonus() != NONE)
+      else if ((*it)->getId() == CrateID && reinterpret_cast<Crate *>(*it)->getBonus() != Crate::NONE)
       {
         reinterpret_cast<Crate *>(*it)->breakIt();
         ++it;
