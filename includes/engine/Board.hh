@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:22:05 2015 Jean-Baptiste Grégoire
-// Last update Sun May 17 21:23:55 2015 David Tran
+// Last update Wed May 20 12:01:36 2015 David Tran
 //
 
 #ifndef Board_HH_
@@ -41,9 +41,9 @@ public:
   ~Board();
 
 public:
-  bool  placeEntity(float x, float y, entityType type, size_t id, Direction dir = North);
+  bool  placeEntity(float x, float y, entityType type, int id, Direction dir = North);
   bool  placeEntity(float x, float y, AObj *entity);
-  bool  moveEntity(float x, float y, size_t id, Direction dir);
+  bool  moveEntity(float x, float y, int id, Direction dir);
   void	deleteEntity(float x, float y, int id = 0, bool breakWall = false);
 
 public:
