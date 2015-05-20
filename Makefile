@@ -5,8 +5,10 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Wed May 20 20:53:07 2015 Milox Thomas
+## Last update Wed May 20 22:12:22 2015 Milox Thomas
 ##
+
+GRAPHICALGAME	=	yes
 
 #########################################################
 #			BASICS				#
@@ -86,13 +88,21 @@ GRAPHICS_SRCS		=	$(addprefix $(GRAPHICS_SRC_DIR), $(GRAPHICS_SRC))
 GRAPHICS_OBJS		=	$(addsuffix .o, $(basename $(subst $(GRAPHICS_SRC_DIR), $(GRAPHICS_OBJ_DIR), $(GRAPHICS_SRCS))))
 
 GRAPHICS_SRC		=	\
-				main.cpp		\
 				VideoContext.cpp	\
 				AGameObject.cpp		\
 				Cube.hpp		\
 				GameEngine.cpp		\
 				AGameModel.cpp		\
 				Camera.cpp		\
+				ABomb.cpp		\
+				BasicBomb.cpp		\
+				main.cpp		\
+
+ifeq ($(GRAPHICALGAME),yes)
+$(GRAPHICS_SRC) += main.cpp
+else
+$(BOMBERMAN_SRC) += main.cpp
+endif
 
 #########################################################
 #		   GAME  CORE				#
@@ -105,7 +115,6 @@ BOMBERMAN_SRCS		=	$(addprefix $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_SRC))
 BOMBERMAN_OBJS		=	$(addsuffix .o, $(basename $(subst $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_OBJ_DIR), $(BOMBERMAN_SRCS))))
 
 BOMBERMAN_SRC		=	\
-				main.cpp		\
 				Bomberman.cpp		\
 				Bomb.cpp		\
 				Player.cpp		\
@@ -123,6 +132,7 @@ BOMBERMAN_SRC		=	\
 				AButtons		\
 				LauncherUI.cpp		\
 				Explosion.cpp
+#				main.cpp		\
 
 
 BOMBERMAN		=	bomberman

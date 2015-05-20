@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 06:14:11 2015 Jamais
-// Last update Sun May 17 08:23:24 2015 Jamais
+// Last update Tue May 19 23:50:50 2015 Jamais
 //
 
 #include	"Camera.hh"
@@ -157,6 +157,14 @@ glm::mat4		Camera::rotate(glm::mat4 const& transformMatrix, glm::vec3 const& axi
 {
   _transformationMatrix = glm::rotate(transformMatrix, angle, axis);
   _rotation += axis * angle;
+  return _transformationMatrix;
+}
+
+glm::mat4		Camera::zoom(float zoomRatio)
+{
+  _transformationMatrix = glm::scale(_transformationMatrix, glm::vec3(1 + zoomRatio,
+								      1 + zoomRatio,
+								      1 + zoomRatio));
   return _transformationMatrix;
 }
 
