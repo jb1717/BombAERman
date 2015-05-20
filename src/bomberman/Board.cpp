@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Tue May 19 17:59:00 2015 Jean-Baptiste Grégoire
+// Last update Wed May 20 12:03:21 2015 David Tran
 //
 
 #include "Board.hh"
@@ -33,7 +33,7 @@ AObj  *Board::createEntity(Board &board, entityType type)
     }
 }
 
-bool	Board::placeEntity(float x, float y, entityType type, size_t id, Direction dir)
+bool	Board::placeEntity(float x, float y, entityType type, int id, Direction dir)
 {
   int	to = static_cast<int>(y) * _xLength + static_cast<int>(x);
   AObj	*obj;  
@@ -179,7 +179,7 @@ void	Board::updatePos(float x, float y, AObj *obj)
     }
 }
 
-bool	Board::moveEntity(float x, float y, size_t id, Direction dir)
+bool	Board::moveEntity(float x, float y, int id, Direction dir)
 {
   float	toX = x, toY = y;
   int posX = static_cast<int>(x), posY = static_cast<int>(y);

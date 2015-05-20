@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Mon May 18 19:44:59 2015 David Tran
+// Last update Wed May 20 12:00:49 2015 David Tran
 //
 
 #ifndef PLAYER_HH_
@@ -17,6 +17,7 @@
 # include "Board.hh"
 # include "Bomb.hh"
 # include "AObj.hh"
+# include "Crate.hh"
 
 # define PLAYER_CHAR	'p'
 
@@ -29,7 +30,7 @@ public:
   Player(Board &Board);
   ~Player();
 public: // Principal functions
-  bool					playerSpawn(float x, float y, Board::Direction direction, size_t id);
+  bool					playerSpawn(float x, float y, Board::Direction direction, int id);
   bool					turnLeft();
   bool					turnRight();
   bool					goAhead();

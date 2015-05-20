@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Tue May 19 15:20:32 2015 David Tran
+// Last update Wed May 20 12:00:42 2015 David Tran
 //
 
 #include "Player.hh"
@@ -18,7 +18,7 @@ Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
   _bombThread = new EThreadPool(1);
 }
 
-bool		Player::playerSpawn(float x, float y, Board::Direction direction, size_t Id)
+bool		Player::playerSpawn(float x, float y, Board::Direction direction, int Id)
 {
   setPosition(x, y);
   _dir = direction;
@@ -115,20 +115,19 @@ void	Player::checkPosPowerUp()
 {
   std::vector<AObj *>	all_in = _board.getSquareObjects(static_cast<int>(_x), static_cast<int>(_y));
   auto			all_in_it = all_in.begin();
-  Crate::BonusType	powerup = NONE;
+  Crate::BonusType	powerup = Crate::NONE;
 
   while (all_in_it != all_in.begin())
     {
       if ((*all_in_it)->getId() == -2)
 	{
-	  powerup = (*all_in_it)->getBonus();
-	  if (powerup == SPEED)
+	  powerup = reinterpret_cast<Crate *>((*all_in_it))->getBonus();
+	  if (powerup == Crate::SPEED)
 	    _speed += 1;
-	  else if (powerup == RANGE)
+	  else if (powerup == Crate::RANGE)
 	    powerUpRange();
-	  else if (powerup == ADD)
+	  else if (powerup == Crate::ADD)
 	    addBomb();
-	  _board.removeFromSquare(static_cast<int>(_x), static_cast<int>(_y), _id);
 	  return ;
 	}
       all_in_it++;
