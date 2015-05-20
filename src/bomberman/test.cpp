@@ -20,6 +20,7 @@ int main()
   test << "ben;2";
   test << "manu;666";
 
+
   TOP             *a = test >> 3;
 
   for (TOP::iterator i = a->begin(); i != a->end(); ++i) {

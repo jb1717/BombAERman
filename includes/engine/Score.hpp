@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Tue May  5 20:46:09 2015 TommyStarK
-// Last update Sun May 10 02:48:05 2015 Milox Thomas
+// Last update Wed May 20 09:17:47 2015 TommyStarK
 //
 
 #ifndef _SCORE_HPP_
@@ -36,8 +36,8 @@ public:
 
 private:
   std::string                   _filename;
-	std::fstream            _file;
-	std::vector<t_score>    _top;
+	std::fstream                  _file;
+	std::vector<t_score>          _top;
 
 private:
   std::string                   epur(const std::string &);

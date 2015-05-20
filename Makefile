@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Wed May 20 15:44:36 2015 Emmanuel Chambon
+## Last update Wed May 20 20:53:07 2015 Milox Thomas
 ##
 
 #########################################################
@@ -118,6 +118,10 @@ BOMBERMAN_SRC		=	\
 				ECondVar.cpp		\
 				EThreadPool.cpp		\
 				EMutex.cpp		\
+				Score.cpp		\
+				AUI.cpp			\
+				AButtons		\
+				LauncherUI.cpp		\
 				Explosion.cpp
 
 
