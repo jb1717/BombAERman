@@ -67,6 +67,15 @@ bool	Board::placeEntity(float x, float y, AObj *entity)
   return (true);
 }
 
+void	Board::popEntity(int x, int y, int id)
+{
+    for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() == id)
+        _board[y * _xLength + x].erase(it);
+    }
+}
+
 void  Board::deleteEntity(float x, float y, int id, bool breakWall)
 {
   int	posx = static_cast<int>(x), posy = static_cast<int>(y);
