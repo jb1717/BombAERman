@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:22:05 2015 Jean-Baptiste Grégoire
-// Last update Wed May 20 12:01:36 2015 David Tran
+// Last update Wed May 20 12:07:11 2015 David Tran
 //
 
 #ifndef Board_HH_
@@ -33,7 +33,7 @@ public:
   };
   enum	IDType
   {
-    Bomb = -3, Crate = -2, Wall = -1, NoID = 0
+    Bomb = -3, CrateID = -2, Wall = -1, NoID = 0
   };
 
 public:
