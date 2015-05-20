@@ -47,6 +47,7 @@ public:
   void	deleteEntity(float x, float y, int id = 0, bool breakWall = false);
   void	setExplosion(float x, float y);
   void  popEntity(int x, int y, int id);
+  void	removePlayer(int id);
 
 public:
   std::vector<Player *>  &getPlayers();

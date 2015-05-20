@@ -226,6 +226,15 @@ bool	Board::moveEntity(float x, float y, int id, Direction dir)
   return (true);
 }
 
+void	Board::removePlayer(int id)
+{
+  for (std::vector<Player *>::iterator it = _players.begin(); it != _players.end(); ++it)
+  {
+    if ((*it)->getID() == id)
+      _players.erase(it);
+  }
+}
+
 std::vector<AObj *> &Board::getSquareObjects(size_t x, size_t y)
 {
   return (_board[y * _xLength + x]);

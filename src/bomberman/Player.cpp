@@ -33,7 +33,8 @@ Player::~Player()
   _board.popEntity(intx, inty, _id);
   _board.popEntity(intx + 1, inty, _id);
   _board.popEntity(intx, inty + 1, _id);
-  _board.popEntity(intx + 1, inty + 1, _id);  
+  _board.popEntity(intx + 1, inty + 1, _id);
+  _board.removePlayer(_id);
   // delete from all the vector of squares
 }
 
