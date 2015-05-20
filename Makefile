@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Wed May 20 22:21:51 2015 Emmanuel Chambon
+## Last update Wed May 20 22:31:33 2015 Jamais
 ##
 
 GRAPHICALGAME	=	yes
@@ -44,8 +44,8 @@ MAKEFLAGS	+=	--warn-undefined-variables		\
 			--warn-unused-variables			\
 			--no-print-directory
 
-LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ \
-			-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
+LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ $(LIBS)
+#			-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
 
 
 
@@ -53,6 +53,7 @@ LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ \
 #			TREE				#
 #########################################################
 
+LIBS		=	-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
 LIB_DIR		=	./lib/
 LIB_INCLUDE_DIR	=	$(INCLUDE_DIR)lib/
 INCLUDE_DIR	=	./includes/
@@ -174,13 +175,13 @@ endif
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.cpp
 			@$(ECHO) $(COLOR_5)
 			@$(CC) $(CFLAGS) -c $< -o $@ $(LFLAGS)
-			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) "$(CFLAGS)" $(COLOR_4)"$(LFLAGS)"$(COLOR_3)" $<"$(COLOR_5)" ===> "$(COLOR_3)"$@\n"
+			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) "$(CFLAGS)" $(COLOR_4)"$(LIBS)"$(COLOR_3)" $<"$(COLOR_5)" ===> "$(COLOR_3)"$@\n"
 			@$(ECHO) $(COLOR_OFF)
 
 $(PRO)		:	$(OBJS)
 			@$(ECHO) $(COLOR_3) "\nLinking ...\n"$(COLOR_4)
 			@$(CC) $(CFLAGS) $(OBJS) -o $(PRO) $(LFLAGS)
-			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) $(CFLAGS) $(LFLAGS) "\n"$(COLOR_4)$(OBJS)$(COLOR_5)"\n"
+			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) $(CFLAGS) $(LIBS) "\n"$(COLOR_4)$(OBJS)$(COLOR_5)"\n"
 			@$(ECHO)	"	  ________ \n"
 			@$(ECHO)	"	 |	  |\n"
 			@$(ECHO)	"	 |	  |\n"
