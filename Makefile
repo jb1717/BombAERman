@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Mon May 18 17:26:11 2015 Hugo Prenat
+## Last update Wed May 20 15:22:38 2015 Hugo Prenat
 ##
 
 #########################################################
@@ -113,7 +113,10 @@ BOMBERMAN_SRC		=	\
 				AObj.cpp		\
 				Board.cpp		\
 				UnbreakableWall.cpp	\
-				Crate.cpp
+				Crate.cpp		\
+				ECondVar.cpp		\
+				EThreadPool.cpp		\
+				EMutex.cpp		\
 
 
 BOMBERMAN		=	bomberman

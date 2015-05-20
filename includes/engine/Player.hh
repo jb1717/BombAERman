@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Mon May 18 05:03:46 2015 David Tran
+// Last update Mon May 18 19:44:59 2015 David Tran
 //
 
 #ifndef PLAYER_HH_
@@ -13,6 +13,7 @@
 
 # include <vector>
 # include <utility>
+# include "EThreadPool.hh"
 # include "Board.hh"
 # include "Bomb.hh"
 # include "AObj.hh"
@@ -20,6 +21,7 @@
 # define PLAYER_CHAR	'p'
 
 class	Bomb;
+class	EThreadPool;
 
 class	Player : public AObj
 {
@@ -56,6 +58,7 @@ private:
   std::vector<Bomb *>	_bombs;
   char			_speed;
   Board::Direction	_dir;
+  EThreadPool		*_bombThread;
 };
 
 #endif // !PLAYER_HH
