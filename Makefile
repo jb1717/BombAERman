@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Wed May 20 22:12:22 2015 Milox Thomas
+## Last update Wed May 20 22:21:51 2015 Emmanuel Chambon
 ##
 
 GRAPHICALGAME	=	yes
@@ -96,7 +96,7 @@ GRAPHICS_SRC		=	\
 				Camera.cpp		\
 				ABomb.cpp		\
 				BasicBomb.cpp		\
-				main.cpp		\
+#				main.cpp		\
 
 ifeq ($(GRAPHICALGAME),yes)
 $(GRAPHICS_SRC) += main.cpp
@@ -115,6 +115,7 @@ BOMBERMAN_SRCS		=	$(addprefix $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_SRC))
 BOMBERMAN_OBJS		=	$(addsuffix .o, $(basename $(subst $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_OBJ_DIR), $(BOMBERMAN_SRCS))))
 
 BOMBERMAN_SRC		=	\
+				BoardHandler.cpp	\
 				Bomberman.cpp		\
 				Bomb.cpp		\
 				Player.cpp		\
@@ -131,8 +132,8 @@ BOMBERMAN_SRC		=	\
 				AUI.cpp			\
 				AButtons		\
 				LauncherUI.cpp		\
-				Explosion.cpp
-#				main.cpp		\
+				Explosion.cpp		\
+				main.cpp		\
 
 
 BOMBERMAN		=	bomberman

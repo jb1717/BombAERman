@@ -50,3 +50,4 @@ bin/
 # Temporary files
 #*#
 *~
+*.log

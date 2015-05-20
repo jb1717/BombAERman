@@ -13,6 +13,7 @@
 
 # include   <regex>
 # include   "basics.hh"
+# include   "BoardHandler.hh"
 # include   "gameEngine/graphics.hh"
 # include   "gameEngine/VideoContext.hh"
 
@@ -26,7 +27,7 @@ private:
     void                setWidthHeight();
 private:
     VideoContext        _window;
-    int                 _x = 1920, _y = 1080;
+    int                 _x = 1820, _y = 1080;
 };
 
 #endif      /* !___BOMBERMAN_HH___ */

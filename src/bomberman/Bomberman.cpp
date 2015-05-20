@@ -22,6 +22,8 @@ Bomberman::Bomberman()
 
     // MAINUI(_window, x, y);
 
+    BoardHandler(_x, _y);
+
     while (1) ;
 }
 
