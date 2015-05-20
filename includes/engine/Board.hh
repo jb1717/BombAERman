@@ -45,6 +45,7 @@ public:
   bool  placeEntity(float x, float y, AObj *entity);
   bool  moveEntity(float x, float y, size_t id, Direction dir);
   void	deleteEntity(float x, float y, int id = 0, bool breakWall = false);
+  void	setExplosion(float x, float y);
 
 public:
   std::vector<Player *>  &getPlayers();

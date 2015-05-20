@@ -27,7 +27,9 @@ bool		Player::playerSpawn(float x, float y, Board::Direction direction, size_t I
 }
 
 Player::~Player()
-{}
+{
+  // delete from all the vector of squares
+}
 
 //
 // Alive Functions

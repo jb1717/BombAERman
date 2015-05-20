@@ -13,7 +13,6 @@
 #include "Crate.hh"
 #include "UnbreakableWall.hh"
 
-
 Board::Board(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLength)
 {
 
@@ -81,8 +80,16 @@ void  Board::deleteEntity(float x, float y, int id, bool breakWall)
         ++it;
         continue ;
       }
-      delete *it;
-      it = tmp.erase(it);
+      else if ((*it)->getId() == CrateID && (*it)->getBonus() != NONE)
+      {
+        reinterpret_cast<Crate *>(*it)->breakIt();
+        ++it;
+      }
+      else
+      {
+        delete *it;
+        it = tmp.erase(it);
+      }
     }
     else if (id == (*it)->getId())
     {
@@ -90,6 +97,16 @@ void  Board::deleteEntity(float x, float y, int id, bool breakWall)
       it = tmp.erase(it);
     }
   }
+}
+
+void  Board::setExplosion(float x, float y)
+{
+  int posx = static_cast<int>(x), posy = static_cast<int>(y);
+  int	pos = posy * _xLength + posx;
+  Explosion	*exp = new Explosion(*this);
+
+  if (_board[pos].empty())
+    _board[pos].push_back(exp);
 }
 
 AObj	*Board::removeFromSquare(int x, int y, int id)

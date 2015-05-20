@@ -37,9 +37,13 @@ void	Bomb::explosion()
   for (float i = 1.0; i < static_cast<float>(range + 1); ++i)
   {
     _board.deleteEntity(_x, _y - i);
+    _board.setExplosion(_x, _y - i);
     _board.deleteEntity(_x, _y + i);
+    _board.setExplosion(_x, _y + i);
     _board.deleteEntity(_x - i, _y);
+    _board.setExplosion(_x - i, _y);
     _board.deleteEntity(_x + i, _y - i);
+    _board.setExplosion(_x + i, _y - i);
   }
 }
 
