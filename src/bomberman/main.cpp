@@ -5,11 +5,12 @@
 // Login   <paasch_j@epitech.net>
 //
 // Started on  Mon Apr 27 11:27:27 2015 Johan Paasche
-// Last update Tue May 19 11:18:48 2015 Emmanuel Chambon
+// Last update Wed May 20 21:59:35 2015 Jamais
 //
 
 #include	"basics.hh"
 #include	"Bomberman.hh"
+
 
 int	main()
 {

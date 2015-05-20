@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 05:42:13 2015 Jamais
-// Last update Sun May 17 08:09:08 2015 Jamais
+// Last update Tue May 19 23:48:33 2015 Jamais
 //
 
 #ifndef			___CAMERA_HH___
@@ -90,6 +90,7 @@ public:
   glm::mat4    		rotate(glm::mat4 const& transformMatrix, glm::vec3 const& axis, float angle);
 
 public:
+  glm::mat4		zoom(float);
   glm::mat4    		zoom(glm::vec3 const& zoom);
   glm::mat4    		zoom(glm::mat4 const& transformMatrix, glm::vec3 const& zoom);
 

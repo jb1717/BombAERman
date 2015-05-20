@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:15:24 2015 Jamais
-// Last update Sun May 17 07:59:42 2015 Jamais
+// Last update Tue May 19 23:55:10 2015 Jamais
 //
 
 #ifndef			___GAMEENGINE_HH___
@@ -34,6 +34,7 @@ public:
 
 public:
   bool			createMap(std::string const& confFilePath);
+  bool			setupGame(std::string const& filePath);
   bool			getEvent();
 
 private:
