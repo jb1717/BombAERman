@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Wed May 20 13:49:50 2015 Jean-Baptiste Grégoire
+## Last update Wed May 20 15:44:36 2015 Emmanuel Chambon
 ##
 
 #########################################################
@@ -106,6 +106,7 @@ BOMBERMAN_OBJS		=	$(addsuffix .o, $(basename $(subst $(BOMBERMAN_SRC_DIR), $(BOM
 
 BOMBERMAN_SRC		=	\
 				main.cpp		\
+				Bomberman.cpp		\
 				Bomb.cpp		\
 				Player.cpp		\
 				Engine.cpp		\
