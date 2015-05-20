@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Wed May 20 14:16:28 2015 David Tran
+// Last update Wed May 20 16:30:37 2015 Jean-Baptiste Grégoire
 //
 
 #include "Board.hh"
@@ -230,7 +230,7 @@ void	Board::removePlayer(int id)
 {
   for (std::vector<Player *>::iterator it = _players.begin(); it != _players.end(); ++it)
   {
-    if ((*it)->getID() == id)
+    if ((*it)->getId() == id)
       _players.erase(it);
   }
 }
