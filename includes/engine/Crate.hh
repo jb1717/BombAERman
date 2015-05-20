@@ -29,6 +29,7 @@ public:
 public:
   BonusType	getBonus() const;
   bool      isBreak() const;
+  void			breakIt();
 
 private:
   BonusType	_bonus;

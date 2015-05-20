@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Mon May 18 19:26:59 2015 David Tran
+## Last update Wed May 20 13:49:50 2015 Jean-Baptiste Grégoire
 ##
 
 #########################################################
@@ -117,6 +117,7 @@ BOMBERMAN_SRC		=	\
 				ECondVar.cpp		\
 				EThreadPool.cpp		\
 				EMutex.cpp		\
+				Explosion.cpp
 
 
 BOMBERMAN		=	bomberman

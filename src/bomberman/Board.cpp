@@ -5,14 +5,14 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Wed May 20 14:12:25 2015 David Tran
+// Last update Wed May 20 14:16:28 2015 David Tran
 //
 
 #include "Board.hh"
 #include "Player.hh"
 #include "Crate.hh"
 #include "UnbreakableWall.hh"
-
+#include "Explosion.hh"
 
 Board::Board(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLength)
 {
@@ -67,29 +67,56 @@ bool	Board::placeEntity(float x, float y, AObj *entity)
   return (true);
 }
 
+void	Board::popEntity(int x, int y, int id)
+{
+  for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() == id)
+        _board[y * _xLength + x].erase(it);
+    }
+}
+
 void  Board::deleteEntity(float x, float y, int id, bool breakWall)
 {
   int	posx = static_cast<int>(x), posy = static_cast<int>(y);
   std::vector<AObj *>	tmp = _board[posy * _xLength + posx];
 
   for (std::vector<AObj *>::iterator it = tmp.begin(); it != tmp.end();)
-  {
-    if (id == 0)
     {
-      if ((*it)->getId() == Wall && breakWall == false)
-      {
-        ++it;
-        continue ;
-      }
-      delete *it;
-      it = tmp.erase(it);
+      if (id == 0)
+	{
+	  if ((*it)->getId() == Wall && breakWall == false)
+	    {
+	      ++it;
+	      continue ;
+	    }
+	  else if ((*it)->getId() == CrateID && reinterpret_cast<Crate *>(*it)->getBonus() != Crate::NONE)
+	    {
+	      reinterpret_cast<Crate *>(*it)->breakIt();
+	      ++it;
+	    }
+	  else
+	    {
+	      delete *it;
+	      it = tmp.erase(it);
+	    }
+	}
+      else if (id == (*it)->getId())
+	{
+	  delete *it;
+	  it = tmp.erase(it);
+	}
     }
-    else if (id == (*it)->getId())
-    {
-      delete *it;
-      it = tmp.erase(it);
-    }
-  }
+}
+
+void  Board::setExplosion(float x, float y)
+{
+  int posx = static_cast<int>(x), posy = static_cast<int>(y);
+  int	pos = posy * _xLength + posx;
+  Explosion	*exp = new Explosion(*this);
+
+  if (_board[pos].empty())
+    _board[pos].push_back(exp);
 }
 
 AObj	*Board::removeFromSquare(int x, int y, int id)

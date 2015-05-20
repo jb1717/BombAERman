@@ -27,7 +27,15 @@ bool		Player::playerSpawn(float x, float y, Board::Direction direction, int Id)
 }
 
 Player::~Player()
-{}
+{
+  int intx = static_cast<int>(_x), inty = static_cast<int>(_y);
+
+  _board.popEntity(intx, inty, _id);
+  _board.popEntity(intx + 1, inty, _id);
+  _board.popEntity(intx, inty + 1, _id);
+  _board.popEntity(intx + 1, inty + 1, _id);  
+  // delete from all the vector of squares
+}
 
 //
 // Alive Functions
