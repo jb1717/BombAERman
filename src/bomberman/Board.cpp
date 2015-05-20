@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Wed May 20 12:03:21 2015 David Tran
+// Last update Wed May 20 14:10:58 2015 Jean-Baptiste Grégoire
 //
 
 #include "Board.hh"
@@ -37,7 +37,7 @@ AObj  *Board::createEntity(Board &board, entityType type)
 bool	Board::placeEntity(float x, float y, entityType type, int id, Direction dir)
 {
   int	to = static_cast<int>(y) * _xLength + static_cast<int>(x);
-  AObj	*obj;  
+  AObj	*obj;
 
   if (_board[to].empty())
     {
@@ -69,7 +69,7 @@ bool	Board::placeEntity(float x, float y, AObj *entity)
 
 void	Board::popEntity(int x, int y, int id)
 {
-    for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+  for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
     {
       if ((*it)->getId() == id)
         _board[y * _xLength + x].erase(it);
@@ -82,31 +82,31 @@ void  Board::deleteEntity(float x, float y, int id, bool breakWall)
   std::vector<AObj *>	tmp = _board[posy * _xLength + posx];
 
   for (std::vector<AObj *>::iterator it = tmp.begin(); it != tmp.end();)
-  {
-    if (id == 0)
     {
-      if ((*it)->getId() == Wall && breakWall == false)
-      {
-        ++it;
-        continue ;
-      }
-      else if ((*it)->getId() == CrateID && reinterpret_cast<Crate *>(*it)->getBonus() != Crate::NONE)
-      {
-        reinterpret_cast<Crate *>(*it)->breakIt();
-        ++it;
-      }
-      else
-      {
-        delete *it;
-        it = tmp.erase(it);
-      }
+      if (id == 0)
+	{
+	  if ((*it)->getId() == Wall && breakWall == false)
+	    {
+	      ++it;
+	      continue ;
+	    }
+	  else if ((*it)->getId() == CrateID && reinterpret_cast<Crate *>(*it)->getBonus() != Crate::NONE)
+	    {
+	      reinterpret_cast<Crate *>(*it)->breakIt();
+	      ++it;
+	    }
+	  else
+	    {
+	      delete *it;
+	      it = tmp.erase(it);
+	    }
+	}
+      else if (id == (*it)->getId())
+	{
+	  delete *it;
+	  it = tmp.erase(it);
+	}
     }
-    else if (id == (*it)->getId())
-    {
-      delete *it;
-      it = tmp.erase(it);
-    }
-  }
 }
 
 void  Board::setExplosion(float x, float y)

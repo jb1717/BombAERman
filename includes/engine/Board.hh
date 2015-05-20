@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:22:05 2015 Jean-Baptiste Grégoire
-// Last update Wed May 20 12:07:11 2015 David Tran
+// Last update Wed May 20 14:11:16 2015 Jean-Baptiste Grégoire
 //
 
 #ifndef Board_HH_
@@ -28,13 +28,13 @@ public:
       North = 0, West, South, East
     };
   enum entityType
-  {
+    {
       PLAYER = 0, CRATE, UNBREACKABLE_WALL
-  };
+    };
   enum	IDType
-  {
-    Bomb = -3, CrateID = -2, Wall = -1, NoID = 0
-  };
+    {
+      Bomb = -3, CrateID = -2, Wall = -1, NoID = 0
+    };
 
 public:
   Board(size_t length, size_t width);
@@ -46,7 +46,7 @@ public:
   bool  moveEntity(float x, float y, int id, Direction dir);
   void	deleteEntity(float x, float y, int id = 0, bool breakWall = false);
   void	setExplosion(float x, float y);
-  void  popEntity(int x, int y, int id);  
+  void  popEntity(int x, int y, int id);
 
 public:
   std::vector<Player *>  &getPlayers();
