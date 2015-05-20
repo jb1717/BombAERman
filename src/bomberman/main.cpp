@@ -5,14 +5,17 @@
 // Login   <paasch_j@epitech.net>
 //
 // Started on  Mon Apr 27 11:27:27 2015 Johan Paasche
-// Last update Sat May 16 20:42:20 2015 Jamais
+// Last update Tue May 19 11:18:48 2015 Emmanuel Chambon
 //
 
 #include	"basics.hh"
+#include	"Bomberman.hh"
 
-// int	main(UNUSED int ac, UNUSED char **av, UNUSED char **env)
-// {
-//   helloWorld();
-//   std::cout << lol() << std::endl;
-//   return (42);
-// }
+int	main()
+{
+  try {
+    Bomberman();
+  } catch (std::exception &e) {
+    std::cerr << e.what() << std::endl;
+  }
+}

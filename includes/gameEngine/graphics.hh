@@ -5,15 +5,15 @@
 // Login   <paasch_j@epitech.net>
 //
 // Started on  Mon Apr 27 14:00:52 2015 Johan Paasche
-// Last update Mon Apr 27 14:08:45 2015 Johan Paasche
+// Last update Tue May 19 11:31:20 2015 Emmanuel Chambon
 //
 
 #ifndef		___GRAPHICS_HH___
 # define	___GRAPHICS_HH___
 
-# include	<OpenGL.hh>
-# include	<glm/glm.hpp>
-# include	<glm/gtc/matrix_transform.hpp>
+# include	"OpenGL.hh"
+# include	"glm/glm.hpp"
+# include	"glm/gtc/matrix_transform.hpp"
 
 # include	<Game.hh>
 # include	<Clock.hh>
