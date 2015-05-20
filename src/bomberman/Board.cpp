@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Wed May 20 12:03:21 2015 David Tran
+// Last update Wed May 20 14:12:25 2015 David Tran
 //
 
 #include "Board.hh"
@@ -37,7 +37,7 @@ AObj  *Board::createEntity(Board &board, entityType type)
 bool	Board::placeEntity(float x, float y, entityType type, int id, Direction dir)
 {
   int	to = static_cast<int>(y) * _xLength + static_cast<int>(x);
-  AObj	*obj;  
+  AObj	*obj;
 
   if (_board[to].empty())
     {

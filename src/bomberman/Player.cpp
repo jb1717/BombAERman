@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Wed May 20 12:00:42 2015 David Tran
+// Last update Wed May 20 14:13:06 2015 David Tran
 //
 
 #include "Player.hh"
@@ -72,8 +72,9 @@ bool	Player::triggerOneBomb()
     {
       if ((*it)->isLaunched() == false)
 	{
-	  (*it)->triggerLaunch(positions.first, positions.second);
+	  (*it)->setPosition(positions.first, positions.second);
 	  _bombThread->addWork(run_bomb, (*it));
+	  _board.placeEntity(_x, _y, (*it));
 	  return (true);
 	}
       it++;
