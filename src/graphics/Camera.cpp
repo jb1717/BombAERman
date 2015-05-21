@@ -5,15 +5,15 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 06:14:11 2015 Jamais
-// Last update Tue May 19 23:50:50 2015 Jamais
+// Last update Thu May 21 04:09:54 2015 Jamais
 //
 
 #include	"Camera.hh"
 
 Camera::Camera(int Id, glm::vec3 const& position, glm::vec3 const& target, glm::vec3 const& focus) :
   _camId(Id), _position(position), _target(target), _focus(focus),
-  _rotation(0, 0, 0), _zoom(100, 100, 100),
-  _fovy(60.0f), _ratio(800.0f / 600.0f), _zNear(0.1f), _zFar(100.0f)
+  _rotation(0, 0, 0), _zoom(1, 1, 1), _spin(1, 0, 1),
+  _fovy(60.0f), _ratio(800.0f / 600.0f), _zNear(0.001f), _zFar(10000.0f)
 {
 
 }
@@ -25,21 +25,52 @@ bool		Camera::setupCamera(VideoContext const& context)
 {
   float		ratio;
 
-  if ((ratio = context.getScreenWidth() / context.getScreenHeight()) == 0.0f)
+  if ((ratio = static_cast<float>(context.getScreenWidth()) / static_cast<float>(context.getScreenHeight())) == 0.0f)
     return false;
   setRatio(ratio);
   return true;
 }
 
-void		Camera::update()
+void		Camera::update(UNUSED gdl::Clock const& clock, gdl::Input& input)
 {
-  _projectionMatrix = glm::perspective(_fovy, _ratio,_zNear, _zFar);
+  if (input.getMouseWheel().y)
+    zoom(0.05 * input.getMouseWheel().y);
+  if (input.getKey(SDL_BUTTON_LEFT))
+    rotate(glm::vec3(0, 1, 0), static_cast<float>(input.getMouseDelta().x));
+  if (input.getKey(SDL_BUTTON_RIGHT))
+    {
+      glm::vec3	delta(input.getMouseDelta().x * -0.1, 0, input.getMouseDelta().y * 0.1);
+      _target += delta;
+    }
+  if (input.getKey(SDLK_KP_PLUS))
+    rotate(glm::vec3(-1, 0, 0), 0.10f);
+  if (input.getKey(SDLK_KP_MINUS))
+    rotate(glm::vec3(1, 0, 0), 0.10f);
+  if (input.getKey(SDLK_UP))
+    move(glm::vec3(0, 0, 1));
+  if (input.getKey(SDLK_DOWN))
+    move(glm::vec3(0, 0, -1));
+  if (input.getKey(SDLK_LEFT))
+    move(glm::vec3(1, 0, 0));
+  if (input.getKey(SDLK_RIGHT))
+    move(glm::vec3(-1, 0, 0));
+  if (_position == _target)
+    _target += glm::vec3(1, 1, 1);
+  refreshPosition();
+}
+
+void		Camera::refreshPosition()
+{
+  _projectionMatrix = glm::perspective(_fovy, _ratio, _zNear, _zFar);
   _transformationMatrix = glm::lookAt(_position, _target, _focus);
+  _transformationMatrix = glm::scale(_transformationMatrix, _zoom);
   _transformationMatrix = glm::rotate(_transformationMatrix, _rotation.x, glm::vec3(1, 0, 0));
   _transformationMatrix = glm::rotate(_transformationMatrix, _rotation.y, glm::vec3(0, 1, 0));
   _transformationMatrix = glm::rotate(_transformationMatrix, _rotation.z, glm::vec3(0, 0, 1));
-  _transformationMatrix = glm::translate(_transformationMatrix, _position);
-  _transformationMatrix = glm::scale(_transformationMatrix, _zoom);
+  // _transformationMatrix = glm::translate(_transformationMatrix, glm::vec3(0, 0, 0));
+  //  _transformationMatrix = glm::translate(_transformationMatrix, glm::vec3(-1 * _position.x, -1 * _position.y, -1 * _position.y));
+  //  _transformationMatrix = glm::rotate(_transformationMatrix, 0.20f, _spin);
+  //  _transformationMatrix = glm::translate(_transformationMatrix, _position);
 }
 
 int		Camera::getId() const
@@ -80,6 +111,11 @@ glm::vec3	Camera::getRotation() const
 glm::vec3	Camera::getZoom() const
 {
   return _zoom;
+}
+
+glm::vec3	Camera::getSpin() const
+{
+  return _spin;
 }
 
 float		Camera::getFovy() const
@@ -132,6 +168,11 @@ void		Camera::setZoom(glm::vec3 const& zoom)
   _zoom = zoom;
 }
 
+void		Camera::setSpin(glm::vec3 const& spin)
+{
+  _spin = spin;
+}
+
 glm::mat4		Camera::translate(glm::vec3 const& translation)
 {
   _transformationMatrix = glm::translate(_transformationMatrix, translation);
@@ -165,6 +206,9 @@ glm::mat4		Camera::zoom(float zoomRatio)
   _transformationMatrix = glm::scale(_transformationMatrix, glm::vec3(1 + zoomRatio,
 								      1 + zoomRatio,
 								      1 + zoomRatio));
+  _zoom.x +=  zoomRatio;
+  _zoom.y +=  zoomRatio;
+  _zoom.z +=  zoomRatio;
   return _transformationMatrix;
 }
 
@@ -180,6 +224,18 @@ glm::mat4		Camera::zoom(glm::mat4 const& transformMatrix, glm::vec3 const& zoom)
   _transformationMatrix = glm::scale(transformMatrix, zoom);
   _zoom *= zoom;
   return _transformationMatrix;
+}
+
+glm::mat4		Camera::pivot(glm::vec3 const& spin)
+{
+  _spin += spin;
+  return _transformationMatrix;
+}
+
+void			Camera::move(glm::vec3 const& direction)
+{
+  _target += direction;
+  _position += direction;
 }
 
 void			Camera::setFovy(float fovy)
