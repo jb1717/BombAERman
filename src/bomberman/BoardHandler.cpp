@@ -1,5 +1,6 @@
 //
-// BoardHandler.cpp for Bomberman in /home/chambo_e/epitech/cpp_bomberman/src/bomberman/
+// BoardHandler.cpp for Bomberman in
+// /home/chambo_e/epitech/cpp_bomberman/src/bomberman/
 //
 // Made by Emmanuel Chambon
 // Login   <chambo_e@epitech.eu>
@@ -10,43 +11,215 @@
 
 #include "BoardHandler.hh"
 
-BoardHandler::BoardHandler(int x, int y) : _x(x), _y(y)
+BoardHandler::BoardHandler()
 {
-    generate();
-    load();
+	generate();
+	load();
 }
 
-void                BoardHandler::save(Board const &board) const
+/*
+** Save board to name.json
+*/
+void BoardHandler::save(std::shared_ptr<Board> const &board, std::string const &name) const
 {
+	rapidjson::Document doc;
+	rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
+	doc.SetObject();
 
+	doc.AddMember("name", rapidjson::Value(name.c_str(), name.length()), allocator);
+	doc.AddMember("height", rapidjson::Value(board->getHeight()), allocator);
+	doc.AddMember("width", rapidjson::Value(board->getWidth()), allocator);
+
+	//TODO generateThumbnail(board);
+	std::string thumbnailPath("./assets/thumbnail/" + name + ".jpg");
+	doc.AddMember("thumbnail", rapidjson::Value(thumbnailPath.c_str(), thumbnailPath.length()), allocator);
+
+	rapidjson::Value map(rapidjson::kArrayType);
+
+	for (size_t i = 0; i < board->size(); i++) {
+		if ((*board)[i].size() == 0) {
+			map.PushBack(::NONE, allocator);
+			continue;
+		}
+		for (auto cas : (*board)[i]) {
+			if (cas->getType() == CRATE || cas->getType() == UNBREAKABLE_WALL)
+				map.PushBack(cas->getType(), allocator);
+		}
+	}
+
+	doc.AddMember("map", map, allocator);
+
+	std::string outputPath("./assets/maps/" + name + ".json");
+	FILE* fp = fopen(outputPath.c_str(), "w");
+	if (fp) {
+		char writeBuffer[65536] = {0};
+		rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
+		rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+		doc.Accept(writer);
+		fclose(fp);
+	}
 }
 
-void                BoardHandler::generate()
+/*
+** Generate a random Board with the width and the height passed as parameters
+** and insert it at the first place in the vector
+*/
+void BoardHandler::generate(int x, int y)
 {
-    std::random_device rd;
-    std::default_random_engine engine(rd());
-    std::uniform_int_distribution<int> dist(CRATE, END);
-    board_t         board;
+	// Random init
+	std::random_device rd;
+	std::default_random_engine engine(rd());
+	std::uniform_int_distribution<int> dist(::CRATE, ::END);
 
-    board.name = "Random";
-    board.thumbnail = "./assets/random.jpg";
-    board.board = new Board(_x, _y);
+	// Board init
+	BoardHandler::board_t board;
 
+	board.name      = "Random";
+	board.thumbnail = "./assets/random.jpg";
+	board.board     = std::make_shared<Board>(x, y);
 
-    for (int y_ = 0 ; y_ < _y; y_++) {
-        for (int x_ = 0; x_ < _x; x_++) {
-            board.board->placeEntity((float )x_, (float)y_, static_cast<entityType>(dist(engine)), 0);
-        }
-    }
-    _boards.push_back(board);
+	// Board filling
+	for (int y_ = 0; y_ < y; y_++) {
+		for (int x_ = 0; x_ < x; x_++) {
+			board.board->placeEntity(static_cast<float>(x_),
+			                         static_cast<float>(y_),
+			                         static_cast<::entityType>(dist(engine)),
+			                         0);
+		}
+	}
+	if (_boards.size() == 0)
+		_boards.push_back(board);
+	else
+		_boards[0] = board;
 }
 
-std::vector<BoardHandler::board_t>  BoardHandler::getBoards() const
+/*
+** Return vector of all the boards available
+*/
+std::vector<BoardHandler::board_t>              BoardHandler::getBoards() const
 {
-    return _boards;
+	return _boards;
 }
 
-void                BoardHandler::load()
+/*
+** Translate a json map value into a Board Object
+*/
+std::shared_ptr<Board> BoardHandler::loadMap(rapidjson::Value const &map, int x, int y)
 {
+	if (map.Size() != static_cast<rapidjson::SizeType>(x * y))
+		throw std::invalid_argument("Corrupted Map. Will not be loaded.");
 
+	std::shared_ptr<Board> board = std::make_shared<Board>(x, y);
+
+	for (int y_ = 0; y_ < y; y_++) {
+		for (int x_ = 0; x_ < x; x_++) {
+			if (!map[(y * y_) + x_].IsNumber()
+			    || static_cast<::entityType>(map[(y * y_) + x_].GetInt()) > ::END)
+				throw std::invalid_argument("Corrupted Map. Will not be loaded.");
+			board->placeEntity(static_cast<float>(x_),
+			                   static_cast<float>(y_),
+			                   static_cast<::entityType>(map[(y * y_) + x_].GetInt()),
+			                   0);
+		}
+	}
+
+	return board;
+}
+
+/*
+** Translate a json map file into a board structure
+*/
+void BoardHandler::loadBoard(std::string const &file)
+{
+	size_t pos;
+
+	if ((pos = file.find_last_of(".")) != std::string::npos && file.substr(pos) == ".json") {
+		FILE* fp = fopen(std::string("assets/maps/" + file).c_str(), "r");
+		if (fp) {
+			char readBuffer[65536] = {0};
+			rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+			rapidjson::Document d;
+
+			if (d.ParseStream(is).HasParseError()
+			    || !d.HasMember("map")
+			    || !d.HasMember("width")
+			    || !d.HasMember("height"))
+				throw std::invalid_argument("Corrupted Map. Will not be loaded.");
+			else {
+				BoardHandler::board_t board;
+
+				board.name = d.HasMember("name") && d["name"].IsString()
+				             ? d["name"].GetString() : "";
+				board.thumbnail = d.HasMember("thumbnail") && d["thumbnail"].IsString()
+				                  ? d["thumbnail"].GetString() : "";
+				if (!d["map"].IsArray() || !d["width"].IsNumber() || !d["height"].IsNumber())
+					throw std::invalid_argument("Corrupted Map. Will not be loaded.");
+				board.board = loadMap(d["map"], d["width"].GetInt(), d["height"].GetInt());
+
+				_boards.push_back(board);
+			}
+
+			fclose(fp);
+		}
+	}
+}
+
+/*
+** Load savec maps saved into the vector of available boards
+*/
+void BoardHandler::load()
+{
+	DIR *dir;
+	struct dirent *ent;
+
+	if ((dir = opendir ("./assets/maps")) != NULL) {
+		while ((ent = readdir (dir)) != NULL) {
+			if (std::string(ent->d_name)[0] != '.') {
+				try {
+					loadBoard(ent->d_name);
+				} catch (std::invalid_argument &e) {
+					std::cerr << ent->d_name << ": " << e.what() << std::endl;
+				}
+			}
+		}
+		closedir (dir);
+	} else {
+		std::cerr << "Cannot open maps folder. They will no be available" << std::endl;
+	}
+}
+
+/*
+** Alias and public for loadBoard()
+*/
+void BoardHandler::loadOnce(std::string const &file)
+{
+	loadBoard(file);
+}
+
+/*
+** Access the Board Object at [at]
+**
+** Support reverse index (::[-1] will return the last element)
+**
+** !! Return only a Board instance and not a board_t structure.
+*/
+std::shared_ptr<Board>                          BoardHandler::operator[](ssize_t at)
+{
+	if (static_cast<std::vector<BoardHandler::board_t>::size_type>(std::abs(at)) > _boards.size())
+		throw std::out_of_range("Out of range query on BoardHandler");
+	return (at < 0) ? _boards[_boards.size() - at].board : _boards[at].board;
+}
+
+/*
+** Access the board_t structure at [at]
+**
+** Support reverse index (::at(-1) will return the last element)
+**
+** !! Return only a board structure and not a Board instance.
+*/
+BoardHandler::board_t BoardHandler::at(ssize_t at)
+{
+	if (static_cast<std::vector<BoardHandler::board_t>::size_type>(std::abs(at)) > _boards.size())
+		throw std::out_of_range("Out of range query on BoardHandler");
+	return (at < 0) ? _boards[_boards.size() - at] : _boards[at];
 }

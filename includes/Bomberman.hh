@@ -1,4 +1,5 @@
 //
+
 // bomberman.hh for CPP_BOMBERMAN in /home/paasch_j/cpp_bomberman
 //
 // Made by Johan Paasche
@@ -8,26 +9,29 @@
 // Last update Tue May 19 11:35:07 2015 Emmanuel Chambon
 //
 
-#ifndef     ___BOMBERMAN_HH___
-# define    ___BOMBERMAN_HH___
+#ifndef ___BOMBERMAN_HH___
+#define ___BOMBERMAN_HH___
 
-# include   <regex>
-# include   "basics.hh"
-# include   "BoardHandler.hh"
-# include   "gameEngine/graphics.hh"
-# include   "gameEngine/VideoContext.hh"
+#include   <regex>
+#include   "basics.hh"
+#include   "BoardHandler.hh"
+#include   "gameEngine/graphics.hh"
+#include   "gameEngine/VideoContext.hh"
 
-class Bomberman
-{
+class Bomberman {
 public:
-    Bomberman();
-    ~Bomberman();
+
+  Bomberman();
+  ~Bomberman();
 
 private:
-    void                setWidthHeight();
+
+  void setWidthHeight();
+
 private:
-    VideoContext        _window;
-    int                 _x = 1820, _y = 1080;
+
+  int _x, _y;
+  VideoContext _window;
 };
 
-#endif      /* !___BOMBERMAN_HH___ */
+#endif /* !___BOMBERMAN_HH___ */

@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Wed May 20 16:30:37 2015 Jean-Baptiste Grégoire
+// Last update Thu May 21 23:58:12 2015 Emmanuel Chambon
 //
 
 #include "Board.hh"
@@ -240,10 +240,29 @@ std::vector<AObj *> &Board::getSquareObjects(size_t x, size_t y)
   return (_board[y * _xLength + x]);
 }
 
+std::vector<AObj *> &Board::operator[](size_t at)
+{
+    return _board[at];
+}
+
+size_t Board::size() const
+{
+    return _board.size();
+}
 
 std::vector<Player *>  &Board::getPlayers()
 {
   return (_players);
+}
+
+size_t                Board::getWidth() const
+{
+  return _xLength;
+}
+
+size_t                Board::getHeight() const
+{
+  return _yLength;
 }
 
 Board::~Board()

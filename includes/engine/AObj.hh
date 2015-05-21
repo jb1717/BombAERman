@@ -16,7 +16,7 @@
 
 enum entityType
   {
-    BOMB = 0, PLAYER, CRATE, UNBREAKABLE_WALL, END = UNBREAKABLE_WALL
+    BOMB = 0, PLAYER, CRATE, UNBREAKABLE_WALL, NONE, END = NONE
   };
 
 class	Board;

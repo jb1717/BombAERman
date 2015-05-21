@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:22:05 2015 Jean-Baptiste Grégoire
-// Last update Wed May 20 14:11:16 2015 Jean-Baptiste Grégoire
+// Last update Thu May 21 23:56:53 2015 Emmanuel Chambon
 //
 
 #ifndef Board_HH_
@@ -48,6 +48,10 @@ public:
 public:
   std::vector<Player *>  &getPlayers();
   std::vector<AObj *> &getSquareObjects(size_t x, size_t y);
+  std::vector<AObj *>   &operator[](size_t);
+  size_t                getWidth() const;
+  size_t                getHeight() const;
+  size_t                size() const;
 
 private:
   AObj	*createEntity(Board &board, entityType type);

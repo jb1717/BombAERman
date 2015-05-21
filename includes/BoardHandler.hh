@@ -1,5 +1,7 @@
 //
-// BoardHandler.hh for Bomberman in /home/chambo_e/epitech/cpp_bomberman/includes/
+
+// BoardHandler.hh for Bomberman in
+// /home/chambo_e/epitech/cpp_bomberman/includes/
 //
 // Made by Emmanuel Chambon
 // Login   <chambo_e@epitech.eu>
@@ -9,41 +11,59 @@
 //
 
 #ifndef BOARDHANDLER_HH_
-# define BOARDHANDLER_HH_
+#define BOARDHANDLER_HH_
 
 #include <vector>
 #include <random>
 #include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <dirent.h>
+#include <typeinfo>
+#include "AObj.hh"
 #include "Board.hh"
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
-#include "rapidjson/prettywriter.h"
+#include "rapidjson/filereadstream.h"
+#include "rapidjson/filewritestream.h"
 
 class BoardHandler
 {
 public:
-    BoardHandler(int = 42, int = 42);
-    ~BoardHandler() {};
+    BoardHandler();
+    ~BoardHandler() {}
 
 public:
-    typedef struct  board_s
+    // Public typedefs
+    struct  board_t
     {
-        std::string         name;
-        std::string         thumbnail;
-        Board               *board;
-    }               board_t;
+        std::string             name;
+        std::string             thumbnail;
+        std::shared_ptr<Board>  board;
+    };
 
 public:
-    void                    save(Board const &) const;
-    void                    generate();
-    std::vector<board_t>    getBoards() const;
+    // Public functions
+    void                                        save(std::shared_ptr<Board> const&, std::string const &name) const;
+    void                                        generate(int = 42, int = 42);
+    void                                        loadOnce(std::string const &);
+
+public:
+    // Public accessors
+    std::shared_ptr<Board>                      operator[](ssize_t);
+    BoardHandler::board_t                       at(ssize_t);
+    std::vector<BoardHandler::board_t>          getBoards() const;
 
 private:
-    std::vector<board_t>       _boards;
-    int                      _x, _y;
+    // Private functions
+    void                                        load();
+    void                                        loadBoard(std::string const &);
+    std::shared_ptr<Board>                      loadMap(rapidjson::Value const &, int, int);
+
 private:
-    void                     load();
+    // Private variables
+    std::vector<board_t>                        _boards;
 };
 
-#endif
+#endif // BOARDHANDLER_HH_

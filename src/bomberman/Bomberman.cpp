@@ -5,62 +5,68 @@
 // chambo_e  <chambon.emmanuel@gmail.com>
 //
 // Started on  Tue May 19 11:18:08 2015 Emmanuel Chambon
-// Last update Wed May 20 22:46:17 2015 Jean-Baptiste Grégoire
+// Last update Wed May 20 23:42:55 2015 Emmanuel Chambon
 //
 
 #include "Bomberman.hh"
+#include "BoardHandler.hh"
 
 Bomberman::Bomberman()
-    : _window(_x, _y, "BombAERman")
+	: _x(1820), _y(980), _window(_x, _y, "BombAERman")
 {
-
-    setWidthHeight();
+	setWidthHeight();
 
     _window.init();
 
-    // SETBACKGROUND(_window);
+	// SETBACKGROUND(_window);
 
-    // MAINUI(_window, x, y);
+	// MAINUI(_window, x, y);
 
-    BoardHandler(_x, _y);
+	BoardHandler();
 
-    while (1) ;
 }
 
 Bomberman::~Bomberman()
 {
-
 }
 
 /*
 ** Define multiple instance of method for different platforms
 */
 #if __linux
-void                    Bomberman::setWidthHeight()
+void Bomberman::setWidthHeight()
 {
-  // FILE *cmd = popen("xdpyinfo  | grep 'dimensions:'", "r");
-  // if (cmd)
-  // {
-  //     char buffer[1024] = {0};
-  //     std::string res(fgets(buffer, sizeof(buffer), cmd));
-  //     std::smatch m;
+	FILE *cmd = popen("xdpyinfo  | grep 'dimensions:'", "r");
 
-  //     if (std::regex_search(res, m, std::regex("([0-9])\\w+")))
-  //     {
-  //         std::string res(m[0]);
-  //         std::regex_token_iterator<std::string::iterator> end;
-  //         std::regex_token_iterator<std::string::iterator> token(res.begin(), res.end(), std::regex("x"), -1);
-  //         _x = std::stoi(*token++) - 100;
-  //         _y = std::stoi(*token++) - 100;
-  //         _window.setScreenWidth(_x);
-  //         _window.setScreenHeight(_y);
-  //     }
-  //     pclose(cmd);
-  // }
+	if (cmd)
+	{
+		char buffer[1024] = { 0 };
+		try {
+			std::string res(fgets(buffer, sizeof(buffer), cmd));
+			std::smatch m;
+
+			if (std::regex_search(res, m, std::regex("([0-9])\\w+")))
+			{
+				std::string res(m[0]);
+				std::regex  sep("x");
+				std::regex_token_iterator<std::string::iterator> end;
+				std::regex_token_iterator<std::string::iterator> token(res.begin(),
+				                                                       res.end(), sep, -1);
+				_x = std::stoi(*token++) - 100;
+				_y = std::stoi(*token++) - 100;
+				_window.setScreenWidth(_x);
+				_window.setScreenHeight(_y);
+			}
+			pclose(cmd);
+		} catch (std::exception& e) {
+			std::cout << "Cannot detect display resolution. Default value will be used" << std::endl;
+		}
+	}
 }
-#else
-void                    Bomberman::setWidthHeight()
+
+#else // if another OS
+void Bomberman::setWidthHeight()
 {
-
 }
+
 #endif
