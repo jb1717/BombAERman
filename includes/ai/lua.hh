@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Thu May  7 14:26:56 2015 Hugo Prenat
-// Last update Thu May  7 14:28:01 2015 Hugo Prenat
+// Last update Thu May 21 16:14:11 2015 Hugo Prenat
 //
 
 #ifndef LUA_HH_
@@ -13,6 +13,8 @@
 
 extern "C" {
 #include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
 }
 
 #endif // !LUA_HH_

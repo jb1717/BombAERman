@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Wed May 20 17:38:05 2015 Hugo Prenat
+## Last update Thu May 21 16:10:13 2015 Hugo Prenat
 ##
 
 #########################################################
@@ -43,7 +43,7 @@ MAKEFLAGS	+=	--warn-undefined-variables		\
 			--no-print-directory
 
 LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ \
-			-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
+			-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread -llua
 
 
 
@@ -70,8 +70,8 @@ AI_INC_DIR		=	$(addprefix $(INCLUDE_DIR), ai)
 AI_SRCS			=	$(addprefix $(AI_SRC_DIR), $(AI_SRC))
 AI_OBJS			=	$(addsuffix .o, $(basename $(subst $(AI_SRC_DIR), $(AI_OBJ_DIR), $(AI_SRCS))))
 
-AI_SRC			=	Ia.cpp\
-
+AI_SRC			=	Ia.cpp		\
+				Luainter.cpp	\
 
 
 
