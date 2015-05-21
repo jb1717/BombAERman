@@ -16,7 +16,7 @@
 
 Board::Board(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLength)
 {
-
+  _board.resize(xLength * yLength);
 }
 
 AObj  *Board::createEntity(Board &board, entityType type)

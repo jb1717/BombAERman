@@ -13,6 +13,7 @@
 
 # include   <regex>
 # include   "basics.hh"
+# include   "BoardHandler.hh"
 # include   "gameEngine/graphics.hh"
 # include   "gameEngine/VideoContext.hh"
 

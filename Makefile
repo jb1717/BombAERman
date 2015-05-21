@@ -5,8 +5,10 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Thu May 21 16:10:13 2015 Hugo Prenat
+## Last update Thu May 21 01:00:07 2015 Jamais
 ##
+
+GRAPHICALGAME	=	yes
 
 #########################################################
 #			BASICS				#
@@ -42,8 +44,8 @@ MAKEFLAGS	+=	--warn-undefined-variables		\
 			--warn-unused-variables			\
 			--no-print-directory
 
-LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ \
-			-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread -llua
+LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ $(LIBS)
+#			-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
 
 
 
@@ -51,6 +53,7 @@ LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ \
 #			TREE				#
 #########################################################
 
+LIBS		=	-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread -llua
 LIB_DIR		=	./lib/
 LIB_INCLUDE_DIR	=	$(INCLUDE_DIR)lib/
 INCLUDE_DIR	=	./includes/
@@ -86,13 +89,21 @@ GRAPHICS_SRCS		=	$(addprefix $(GRAPHICS_SRC_DIR), $(GRAPHICS_SRC))
 GRAPHICS_OBJS		=	$(addsuffix .o, $(basename $(subst $(GRAPHICS_SRC_DIR), $(GRAPHICS_OBJ_DIR), $(GRAPHICS_SRCS))))
 
 GRAPHICS_SRC		=	\
-				main.cpp		\
 				VideoContext.cpp	\
 				AGameObject.cpp		\
 				Cube.hpp		\
 				GameEngine.cpp		\
 				AGameModel.cpp		\
 				Camera.cpp		\
+				ABomb.cpp		\
+				BasicBomb.cpp		\
+				main.cpp		\
+
+ifeq ($(GRAPHICALGAME),yes)
+$(GRAPHICS_SRC) += main.cpp
+else
+$(BOMBERMAN_SRC) += main.cpp
+endif
 
 #########################################################
 #		   GAME  CORE				#
@@ -105,7 +116,7 @@ BOMBERMAN_SRCS		=	$(addprefix $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_SRC))
 BOMBERMAN_OBJS		=	$(addsuffix .o, $(basename $(subst $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_OBJ_DIR), $(BOMBERMAN_SRCS))))
 
 BOMBERMAN_SRC		=	\
-				main.cpp		\
+				BoardHandler.cpp	\
 				Bomberman.cpp		\
 				Bomb.cpp		\
 				Player.cpp		\
@@ -118,7 +129,12 @@ BOMBERMAN_SRC		=	\
 				ECondVar.cpp		\
 				EThreadPool.cpp		\
 				EMutex.cpp		\
-				Explosion.cpp
+				Score.cpp		\
+				AUI.cpp			\
+				AButtons		\
+				LauncherUI.cpp		\
+				Explosion.cpp		\
+#				main.cpp		\
 
 
 BOMBERMAN		=	bomberman
@@ -159,13 +175,13 @@ endif
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.cpp
 			@$(ECHO) $(COLOR_5)
 			@$(CC) $(CFLAGS) -c $< -o $@ $(LFLAGS)
-			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) "$(CFLAGS)" $(COLOR_4)"$(LFLAGS)"$(COLOR_3)" $<"$(COLOR_5)" ===> "$(COLOR_3)"$@\n"
+			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) "$(CFLAGS)" $(COLOR_4)"$(LIBS)"$(COLOR_3)" $<"$(COLOR_5)" ===> "$(COLOR_3)"$@\n"
 			@$(ECHO) $(COLOR_OFF)
 
 $(PRO)		:	$(OBJS)
 			@$(ECHO) $(COLOR_3) "\nLinking ...\n"$(COLOR_4)
 			@$(CC) $(CFLAGS) $(OBJS) -o $(PRO) $(LFLAGS)
-			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) $(CFLAGS) $(LFLAGS) "\n"$(COLOR_4)$(OBJS)$(COLOR_5)"\n"
+			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) $(CFLAGS) $(LIBS) "\n"$(COLOR_4)$(OBJS)$(COLOR_5)"\n"
 			@$(ECHO)	"	  ________ \n"
 			@$(ECHO)	"	 |	  |\n"
 			@$(ECHO)	"	 |	  |\n"

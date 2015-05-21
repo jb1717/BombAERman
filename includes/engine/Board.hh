@@ -29,7 +29,7 @@ public:
     };
   enum entityType
     {
-      PLAYER = 0, CRATE, UNBREACKABLE_WALL
+      PLAYER = 0, CRATE, UNBREACKABLE_WALL, END = UNBREACKABLE_WALL
     };
   enum	IDType
     {
