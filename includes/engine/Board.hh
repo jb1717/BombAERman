@@ -27,10 +27,6 @@ public:
     {
       North = 0, West, South, East
     };
-  enum entityType
-    {
-      PLAYER = 0, CRATE, UNBREACKABLE_WALL, END = UNBREACKABLE_WALL
-    };
   enum	IDType
     {
       Bomb = -3, CrateID = -2, Wall = -1, NoID = 0

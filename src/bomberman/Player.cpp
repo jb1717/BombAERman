@@ -16,6 +16,7 @@ Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
 
   _bombs.push_back(newone);
   _bombThread = new EThreadPool(1);
+  _type = PLAYER;
 }
 
 bool		Player::playerSpawn(float x, float y, Board::Direction direction, int Id)

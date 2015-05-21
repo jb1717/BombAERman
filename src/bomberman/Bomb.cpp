@@ -13,6 +13,7 @@
 Bomb::Bomb(Board &Board, bool Launch, char Range) : AObj(Board), launched(Launch), range(Range)
 {
   bombThread = new EThread;
+  _type = BOMB;
 }
 
 Bomb::~Bomb()

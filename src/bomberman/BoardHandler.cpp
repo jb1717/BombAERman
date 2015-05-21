@@ -25,7 +25,7 @@ void                BoardHandler::generate()
 {
     std::random_device rd;
     std::default_random_engine engine(rd());
-    std::uniform_int_distribution<int> dist(Board::CRATE, Board::END);
+    std::uniform_int_distribution<int> dist(CRATE, END);
     board_t         board;
 
     board.name = "Random";
@@ -35,7 +35,7 @@ void                BoardHandler::generate()
 
     for (int y_ = 0 ; y_ < _y; y_++) {
         for (int x_ = 0; x_ < _x; x_++) {
-            board.board->placeEntity((float )x_, (float)y_, static_cast<Board::entityType>(dist(engine)), 0);
+            board.board->placeEntity((float )x_, (float)y_, static_cast<entityType>(dist(engine)), 0);
         }
     }
     _boards.push_back(board);

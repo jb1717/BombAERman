@@ -27,7 +27,7 @@ AObj  *Board::createEntity(Board &board, entityType type)
       return (new Player(board));
     case CRATE:
       return (new Crate(board));
-    case UNBREACKABLE_WALL:
+    case UNBREAKABLE_WALL:
       return (new UnbreakableWall(board));
     default:
       return (NULL);

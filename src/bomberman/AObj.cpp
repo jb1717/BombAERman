@@ -36,6 +36,12 @@ int		AObj::getId(void) const
   return (_id);
 }
 
+entityType AObj::getType(void) const
+{
+	return (_type);
+}
+
+
 AObj::~AObj()
 {
 

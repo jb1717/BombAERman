@@ -12,7 +12,7 @@
 
 UnbreakableWall::UnbreakableWall(Board &board): AObj(board, 0, 0)
 {
-
+	_type = UNBREAKABLE_WALL;
 }
 
 UnbreakableWall::~UnbreakableWall()

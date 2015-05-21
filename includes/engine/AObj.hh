@@ -14,7 +14,12 @@
 # include <stddef.h>
 # include <utility>
 
-class Board;
+enum entityType
+  {
+    BOMB = 0, PLAYER, CRATE, UNBREAKABLE_WALL, END = UNBREAKABLE_WALL
+  };
+
+class	Board;
 
 class AObj
 {
@@ -27,8 +32,10 @@ public:
 	std::pair<float, float>		getPosition() const;
 	void				setId(int);
 	int				getId(void) const;
+  entityType getType(void) const;
 protected:
   Board 	&_board;
+  entityType	_type;
   float		_x;
   float		_y;
   int		_id;
