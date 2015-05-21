@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Wed May 20 22:31:33 2015 Jamais
+## Last update Thu May 21 01:00:07 2015 Jamais
 ##
 
 GRAPHICALGAME	=	yes
@@ -97,7 +97,7 @@ GRAPHICS_SRC		=	\
 				Camera.cpp		\
 				ABomb.cpp		\
 				BasicBomb.cpp		\
-#				main.cpp		\
+				main.cpp		\
 
 ifeq ($(GRAPHICALGAME),yes)
 $(GRAPHICS_SRC) += main.cpp
@@ -134,7 +134,7 @@ BOMBERMAN_SRC		=	\
 				AButtons		\
 				LauncherUI.cpp		\
 				Explosion.cpp		\
-				main.cpp		\
+#				main.cpp		\
 
 
 BOMBERMAN		=	bomberman

@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 05:42:13 2015 Jamais
-// Last update Tue May 19 23:48:33 2015 Jamais
+// Last update Thu May 21 03:11:26 2015 Jamais
 //
 
 #ifndef			___CAMERA_HH___
@@ -30,6 +30,7 @@ protected:
   glm::vec3		_focus;
   glm::vec3		_rotation;
   glm::vec3		_zoom;
+  glm::vec3		_spin;
 
 protected:
   float			_fovy;
@@ -48,8 +49,8 @@ public:
 
 public:
   bool			setupCamera(VideoContext const& context);
-  void			update();
-
+  void			update(gdl::Clock const& clock, gdl::Input& input);
+  void			refreshPosition();
 public:
   int			getId() const;
 
@@ -63,6 +64,7 @@ public:
   glm::vec3		getFocus() const;
   glm::vec3		getRotation() const;
   glm::vec3		getZoom() const;
+  glm::vec3		getSpin() const;
 
 public:
   float			getFovy() const;
@@ -80,6 +82,7 @@ public:
   void			setFocus(glm::vec3 const& focusPosition);
   void			setRotation(glm::vec3 const& rotation);
   void			setZoom(glm::vec3 const& rotation);
+  void			setSpin(glm::vec3 const& spin);
 
 public:
   glm::mat4    		translate(glm::vec3 const& translation);
@@ -90,9 +93,15 @@ public:
   glm::mat4    		rotate(glm::mat4 const& transformMatrix, glm::vec3 const& axis, float angle);
 
 public:
+  glm::mat4		pivot(glm::vec3 const& spin);
+
+public:
   glm::mat4		zoom(float);
   glm::mat4    		zoom(glm::vec3 const& zoom);
   glm::mat4    		zoom(glm::mat4 const& transformMatrix, glm::vec3 const& zoom);
+
+public:
+  void			move(glm::vec3 const& directon);
 
 public:
   void			setFovy(float fovy);
