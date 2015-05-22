@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 16 20:46:07 2015 Jamais
-// Last update Sun May 17 00:04:34 2015 Jamais
+// Last update Thu May 21 21:25:52 2015 Jamais
 //
 
 #ifndef			___AGAMEOBJECT_HH___
@@ -13,6 +13,7 @@
 
 # include		"basics.hh"
 # include		"graphics.hh"
+# include		"Collider.hh"
 
 class			AGameObject
 {
@@ -20,6 +21,9 @@ protected:
   glm::vec3	_position;
   glm::vec3	_rotation;
   glm::vec3	_scale;
+
+protected:
+  Collider	*_hitBox;
 
 public:
   AGameObject();
@@ -57,6 +61,8 @@ public:
   void			setRotation(glm::vec3 const& rotation);
   void			setScale(glm::vec3 const& scale);
 
+public:
+  bool			collide(AGameObject const& body) const;
 };
 
 #endif			/* !___AGAMEOBJECT_HH___ */

@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 16 22:31:54 2015 Jamais
-// Last update Wed May 20 03:24:59 2015 Jamais
+// Last update Thu May 21 07:03:01 2015 Jamais
 //
 
 #include	"Cube.hh"
@@ -54,7 +54,7 @@ float		Cube::getSpeed() const
 bool		Cube::initialize()
 {
     // back face //
-  _geometry.setColor(glm::vec4(1, 1, 1, 1));
+  _geometry.setColor(glm::vec4(1, 1, 1, 0));
 
   //  _geometry.setColor(glm::vec4(0.99, 0.80, 0.35, 1));
   _geometry.pushVertex(glm::vec3(0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));

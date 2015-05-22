@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:22:05 2015 Jean-Baptiste Grégoire
-// Last update Thu May 21 23:56:53 2015 Emmanuel Chambon
+// Last update Fri May 22 01:50:28 2015 Jamais
 //
 
 #ifndef Board_HH_
@@ -14,6 +14,7 @@
 # include <cmath>
 # include <string>
 # include <vector>
+# include "basics.hh"
 # include "AObj.hh"
 
 # define MAP_EMPTY_CHAR	'o'

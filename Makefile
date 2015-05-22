@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Thu May 21 16:30:48 2015 Emmanuel Chambon
+## Last update Fri May 22 02:21:19 2015 Jamais
 ##
 
 GRAPHICALGAME	=	yes
@@ -91,13 +91,15 @@ GRAPHICS_OBJS		=	$(addsuffix .o, $(basename $(subst $(GRAPHICS_SRC_DIR), $(GRAPH
 GRAPHICS_SRC		=	\
 				VideoContext.cpp	\
 				AGameObject.cpp		\
+				Collider.cpp		\
 				Cube.hpp		\
 				GameEngine.cpp		\
 				AGameModel.cpp		\
 				Camera.cpp		\
 				ABomb.cpp		\
 				BasicBomb.cpp		\
-#				main.cpp		\
+				Character.cpp		\
+				main.cpp
 
 ifeq ($(GRAPHICALGAME),yes)
 $(GRAPHICS_SRC) += main.cpp
@@ -134,7 +136,7 @@ BOMBERMAN_SRC		=	\
 				AButtons		\
 				LauncherUI.cpp		\
 				Explosion.cpp		\
-				main.cpp		\
+#				main.cpp		\
 
 
 BOMBERMAN		=	bomberman
@@ -161,11 +163,11 @@ FIRST		:=	$(shell test -d $(BINARY_DIR)		|| mkdir $(BINARY_DIR))		\
 			$(shell test -d $(BOMBERMAN_OBJ_DIR)	|| mkdir $(BOMBERMAN_OBJ_DIR))
 
 all		:
-			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS)'
+			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS)' MAKEFLAGS='$(MAKEFLAGS) -j -l4'
 
 
 debug		:	$(FIRST) fclean
-			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS) -g3'
+			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS) -g3' MAKEFLAGS='$(MAKEFLAGS) -j -l4'
 
 $(BOMBERMAN)	:	$(PRO)
 ifeq	($(LINKING), yes)
@@ -175,13 +177,13 @@ endif
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.cpp
 			@$(ECHO) $(COLOR_5)
 			@$(CC) $(CFLAGS) -c $< -o $@ $(LFLAGS)
-			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) "$(CFLAGS)" $(COLOR_4)"$(LIBS)"$(COLOR_3)" $<"$(COLOR_5)" ===> "$(COLOR_3)"$@\n"
+			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) "$(CFLAGS)" $(COLOR_4)"$(LIBS)"$(COLOR_3)" $<"$(COLOR_5)"\n"
 			@$(ECHO) $(COLOR_OFF)
 
 $(PRO)		:	$(OBJS)
 			@$(ECHO) $(COLOR_3) "\nLinking ...\n"$(COLOR_4)
 			@$(CC) $(CFLAGS) $(OBJS) -o $(PRO) $(LFLAGS)
-			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) $(CFLAGS) $(LIBS) "\n"$(COLOR_4)$(OBJS)$(COLOR_5)"\n"
+			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) $(CFLAGS) $(LIBS) "\n"$(COLOR_3)$(OBJS)$(COLOR_5)"\n"
 			@$(ECHO)	"	  ________ \n"
 			@$(ECHO)	"	 |	  |\n"
 			@$(ECHO)	"	 |	  |\n"

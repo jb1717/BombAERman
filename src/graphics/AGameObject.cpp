@@ -5,17 +5,20 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 16 20:52:10 2015 Jamais
-// Last update Sat May 16 22:13:18 2015 Jamais
+// Last update Thu May 21 21:33:05 2015 Jamais
 //
 
 #include	"AGameObject.hh"
 
 AGameObject::AGameObject() : _position(0, 0, 0), _rotation(0, 0, 0), _scale(1, 1, 1)
-{}
+{
+  _hitBox = new Collider(*this);
+}
 
 AGameObject::AGameObject(glm::vec3 const& position) : _rotation(0, 0, 0), _scale(1, 1, 1)
 {
   _position = position;
+  _hitBox = new Collider(*this);
 }
 
 AGameObject::AGameObject(glm::vec3 const& position, glm::vec3 const& rotation, glm::vec3 const& scale)
@@ -23,6 +26,7 @@ AGameObject::AGameObject(glm::vec3 const& position, glm::vec3 const& rotation, g
   _position = position;
   _rotation = rotation;
   _scale = scale;
+  _hitBox = new Collider(*this);
 }
 
 AGameObject::AGameObject(AGameObject const& model)
@@ -30,6 +34,7 @@ AGameObject::AGameObject(AGameObject const& model)
   _position = model.getPosition();
   _rotation = model.getRotation();
   _scale = model.getScale();
+  _hitBox = new Collider(*this);
 }
 
 AGameObject&	AGameObject::operator=(AGameObject const& model)
@@ -37,10 +42,15 @@ AGameObject&	AGameObject::operator=(AGameObject const& model)
   _position = model.getPosition();
   _rotation = model.getRotation();
   _scale = model.getScale();
+  _hitBox = new Collider(*this);
   return (*this);
 }
 
-AGameObject::~AGameObject() {}
+AGameObject::~AGameObject()
+{
+  if (_hitBox)
+    delete _hitBox;
+}
 
 void		AGameObject::setTexture(UNUSED gdl::Texture const& texture) {}
 
@@ -104,4 +114,11 @@ glm::mat4	AGameObject::getTransformation() const
   transform = glm::translate(transform, _position);
   transform = glm::scale(transform, _scale);
   return transform;
+}
+
+bool		AGameObject::collide(AGameObject const& body) const
+{
+  if (_hitBox)
+    return _hitBox->collide(body);
+  return false;
 }

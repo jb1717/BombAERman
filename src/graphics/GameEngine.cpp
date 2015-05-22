@@ -5,19 +5,23 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Thu May 21 04:20:08 2015 Jamais
+// Last update Fri May 22 02:36:00 2015 Jamais
 //
 
 #include	"GameEngine.hh"
 #include	"Cube.hh"
 #include	"Camera.hh"
 #include	"BasicBomb.hh"
+#include	"Character.hh"
 
 Camera		camera;
 AGameModel	*perso;
 AGameObject	*skybox;
-BasicBomb	*bomb;
+//BasicBomb	*bomb;
+Cube		*bomb;
 bool		test = false;
+AGameObject	*ref;
+float		timer;
 
 GameEngine::GameEngine() : Game()
 {
@@ -61,7 +65,7 @@ bool		GameEngine::createMap(std::string const& confFilePath)
 	  cell->initialize();
 	  _objects.push_back(cell);
 
-	  if (y == -1 * ys || y == ys || i == 0 || i == s.size())
+	  if (y == -1 * ys || y == ys || i == 0 || i == static_cast<int>(s.size()))
 	    {
 	      cell = new Cube(glm::vec3(x, 0, y));
 	      cell->setTexture(*wall);
@@ -83,15 +87,19 @@ bool		GameEngine::createMap(std::string const& confFilePath)
 	}
       ++y;
     }
-  return true;
+    return true;
 }
 
 bool		GameEngine::setupGame(std::string const& filePath)
 {
   gdl::Texture	*skyTexture = new gdl::Texture;
 
-  perso = new AGameModel(glm::vec3(10.0f, -0.5f, 0.0f), "./assets/Models/marvin.fbx");
-  perso->scale(glm::vec3(0.002f, 0.002f, 0.002f));
+  //  perso = new AGameModel(glm::vec3(10.0f, -0.5f, 0.0f), "./assets/Models/marvin.fbx");
+  //  perso = new Character(glm::vec3(10.0f, -0.5f, 0.0f), "./assets/Models/marvin.fbx");
+  //  perso = new Character(glm::vec3(10.0f, 0.0f, 0.0f), "./assets/Models/test.fbx");
+  perso = new Character(glm::vec3(10.0f, 0.0f, 0.0f), "./assets/Models/pumpkinScaled.fbx");
+  perso->scale(glm::vec3(0.5, 0.5, 0.5));
+  //  perso->scale(glm::vec3(0.002f, 0.002f, 0.002f));
   perso->setCurrentAnim(0);
   _objects.push_back(perso);
 
@@ -115,9 +123,7 @@ bool		GameEngine::initialize()
       || !_shader.load(VERTEX_SHADER, GL_VERTEX_SHADER)
       || !_shader.build())
     return false;
-
   camera.refreshPosition();
-
   _shader.bind();
   _shader.setUniform("view", camera.getTransformationMatrix());
   _shader.setUniform("projection", camera.getProjectionMatrix());
@@ -133,25 +139,34 @@ bool		GameEngine::getEvent()
 
   if (_input.getMouseWheel().y)
     camera.zoom( 0.05 * _input.getMouseWheel().y);
-  if (_input.getKey(SDLK_z))
-    perso->translate(glm::vec3(0, 0, 1));
-  if (_input.getKey(SDLK_s))
-    perso->translate(glm::vec3(0, 0, -1));
-  if (_input.getKey(SDLK_a))
-    perso->translate(glm::vec3(1, 0, 0));
-  if (_input.getKey(SDLK_e))
-    perso->translate(glm::vec3(-1, 0, 0));
+  perso->update(_clock, _input);
   if (_input.getKey(SDLK_SPACE) && test == false)
     {
       glm::vec3 p;
+      gdl::Texture *k = new gdl::Texture;
 
-      bomb = new BasicBomb();
-      bomb->setTimer(2.0);
+      k->load("./assets/Textures/DangerousCrate.tga");
+      // bomb = new BasicBomb();
+      bomb = new Cube();
+      bomb->setTexture(*k);
+      bomb->initialize();
+      // bomb->setTimer(2.0);
+      timer = 2.0;
       p = perso->getPosition();
       p.y = 0.5;
       bomb->translate(p);
       _objects.push_back(bomb);
       test = true;
+      std::vector<AGameObject *>::iterator i;
+      for (i = _objects.begin(); i != _objects.end(); i++)
+	{
+	  if ((*i)->getPosition().x == p.x && (*i)->getPosition().z == p.z)
+	    {
+	      ref = *i;
+
+	      break;
+	    }
+	}
     }
 
   return true;
@@ -165,11 +180,26 @@ bool		GameEngine::update()
   _videoContext->updateContext(_clock, _input);
   camera.update(_clock, _input);
 
+  if (bomb && test == true)
+    {
+      // std::cout << "Bomb (x z) : " << bomb->getPosition().x << "  " << bomb->getPosition().y << "  " << bomb->getPosition().z << std::endl;
+      // std::cout << "Ref (x z) : " << ref->getPosition().x << "  " << ref->getPosition().y  << " " << ref->getPosition().z << std::endl;
+      if (bomb->collide(*ref) == false)
+	{
+	  bomb->translate(glm::vec3(0, -0.1f, 0));
+	}
+    }
+  timer -= _clock.getElapsed();
   _shader.setUniform("view", camera.getTransformationMatrix());
   _shader.setUniform("projection", camera.getProjectionMatrix());
   for (size_t i = 0; i < _objects.size(); ++i)
     _objects[i]->update(_clock, _input);
-  if (bomb && bomb->getTimer() <= 0.0 && test == true)
+  // if (bomb && bomb->getTimer() <= 0.0 && test == true)
+  //   {
+  //     _objects.pop_back();
+  //     test = false;
+  //   }
+  if (bomb && timer <= 0.0 && test == true)
     {
       _objects.pop_back();
       test = false;
@@ -179,26 +209,8 @@ bool		GameEngine::update()
 
 void		GameEngine::draw()
 {
-  GLint OldCullFaceMode;
-  glGetIntegerv(GL_CULL_FACE_MODE, &OldCullFaceMode);
-  GLint OldDepthFuncMode;
-  glGetIntegerv(GL_DEPTH_FUNC, &OldDepthFuncMode);
-
-  glCullFace(GL_FRONT);
-  glDepthFunc(GL_LEQUAL);
-
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  _shader.bind();
-  glDisable(GL_DEPTH_TEST);
-  glDepthMask(GL_FALSE);
-  glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-  glDepthFunc(GL_EQUAL);
   skybox->draw(_shader, _clock);
-  glDepthMask(GL_TRUE);
-  glEnable(GL_DEPTH_TEST);
-
-  glCullFace(OldCullFaceMode);
-  glDepthFunc(OldDepthFuncMode);
 
   for (size_t i = 0; i < _objects.size(); ++i)
     _objects[i]->draw(_shader, _clock);
