@@ -13,6 +13,8 @@
 #define ___BOMBERMAN_HH___
 
 #include   <regex>
+#include   <thread>
+#include   <chrono>
 #include   "basics.hh"
 #include   "BoardHandler.hh"
 #include   "gameEngine/graphics.hh"

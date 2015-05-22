@@ -24,6 +24,8 @@ Bomberman::Bomberman()
 
 	BoardHandler();
 
+	std::this_thread::sleep_for (std::chrono::seconds(2)); // Debug purpose. Will be removed
+
 }
 
 Bomberman::~Bomberman()

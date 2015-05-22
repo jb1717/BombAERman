@@ -31,8 +31,9 @@ void BoardHandler::save(std::shared_ptr<Board> const &board, std::string const &
 	doc.AddMember("width", rapidjson::Value(board->getWidth()), allocator);
 
 	//TODO generateThumbnail(board);
-	std::string thumbnailPath("./assets/thumbnail/" + name + ".jpg");
-	doc.AddMember("thumbnail", rapidjson::Value(thumbnailPath.c_str(), thumbnailPath.length()), allocator);
+
+	std::string tbPath("./assets/thumbnail/" + name + ".jpg");
+	doc.AddMember("thumbnail", rapidjson::Value(tbPath.c_str(), tbPath.length()), allocator);
 
 	rapidjson::Value map(rapidjson::kArrayType);
 
@@ -52,8 +53,8 @@ void BoardHandler::save(std::shared_ptr<Board> const &board, std::string const &
 	std::string outputPath("./assets/maps/" + name + ".json");
 	FILE* fp = fopen(outputPath.c_str(), "w");
 	if (fp) {
-		char writeBuffer[65536] = {0};
-		rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
+		char buff[65536] = {0};
+		rapidjson::FileWriteStream os(fp, buff, sizeof(buff));
 		rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 		doc.Accept(writer);
 		fclose(fp);
@@ -107,7 +108,7 @@ std::vector<BoardHandler::board_t>              BoardHandler::getBoards() const
 std::shared_ptr<Board> BoardHandler::loadMap(rapidjson::Value const &map, int x, int y)
 {
 	if (map.Size() != static_cast<rapidjson::SizeType>(x * y))
-		throw std::invalid_argument("Corrupted Map. Will not be loaded.");
+		throw std::invalid_argument("Corrupted JSON map. Will not be loaded.");
 
 	std::shared_ptr<Board> board = std::make_shared<Board>(x, y);
 
@@ -115,7 +116,7 @@ std::shared_ptr<Board> BoardHandler::loadMap(rapidjson::Value const &map, int x,
 		for (int x_ = 0; x_ < x; x_++) {
 			if (!map[(y * y_) + x_].IsNumber()
 			    || static_cast<::entityType>(map[(y * y_) + x_].GetInt()) > ::END)
-				throw std::invalid_argument("Corrupted Map. Will not be loaded.");
+				throw std::invalid_argument("Corrupted JSON map. Will not be loaded.");
 			board->placeEntity(static_cast<float>(x_),
 			                   static_cast<float>(y_),
 			                   static_cast<::entityType>(map[(y * y_) + x_].GetInt()),
@@ -136,15 +137,15 @@ void BoardHandler::loadBoard(std::string const &file)
 	if ((pos = file.find_last_of(".")) != std::string::npos && file.substr(pos) == ".json") {
 		FILE* fp = fopen(std::string("assets/maps/" + file).c_str(), "r");
 		if (fp) {
-			char readBuffer[65536] = {0};
-			rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+			char buff[65536] = {0};
+			rapidjson::FileReadStream is(fp, buff, sizeof(buff));
 			rapidjson::Document d;
 
 			if (d.ParseStream(is).HasParseError()
 			    || !d.HasMember("map")
 			    || !d.HasMember("width")
 			    || !d.HasMember("height"))
-				throw std::invalid_argument("Corrupted Map. Will not be loaded.");
+				throw std::invalid_argument(file + ": Invalid JSON file. Will not be loaded.");
 			else {
 				BoardHandler::board_t board;
 
@@ -153,10 +154,16 @@ void BoardHandler::loadBoard(std::string const &file)
 				board.thumbnail = d.HasMember("thumbnail") && d["thumbnail"].IsString()
 				                  ? d["thumbnail"].GetString() : "";
 				if (!d["map"].IsArray() || !d["width"].IsNumber() || !d["height"].IsNumber())
-					throw std::invalid_argument("Corrupted Map. Will not be loaded.");
-				board.board = loadMap(d["map"], d["width"].GetInt(), d["height"].GetInt());
+					throw std::invalid_argument(file + ": Invalid JSON map. Will not be loaded.");
+				try {
+					board.board = loadMap(d["map"], d["width"].GetInt(), d["height"].GetInt());
+				} catch(std::invalid_argument &e) {
+					throw std::invalid_argument(file + ": " + e.what());
+				}
 
+				_mutex.lock();
 				_boards.push_back(board);
+				_mutex.unlock();
 			}
 
 			fclose(fp);
@@ -171,20 +178,27 @@ void BoardHandler::load()
 {
 	DIR *dir;
 	struct dirent *ent;
+	// Container for async calls
+	std::vector<std::future<void>>  f;
 
 	if ((dir = opendir ("./assets/maps")) != NULL) {
+		// bind function to avoid static function
+		auto func = std::bind(&BoardHandler::loadBoard, this, std::placeholders::_1);
 		while ((ent = readdir (dir)) != NULL) {
-			if (std::string(ent->d_name)[0] != '.') {
-				try {
-					loadBoard(ent->d_name);
-				} catch (std::invalid_argument &e) {
-					std::cerr << ent->d_name << ": " << e.what() << std::endl;
-				}
-			}
+			if (std::string(ent->d_name)[0] != '.')
+				// Asynchronous load
+				f.push_back(std::async (std::launch::async, func, ent->d_name));
+		}
+		try {
+			for (auto i = f.begin(); i != f.end(); i++)
+				// Asynchronous termination
+				i->get();
+		} catch (std::invalid_argument &e) {
+			std::cerr << e.what() << std::endl;
 		}
 		closedir (dir);
 	} else {
-		std::cerr << "Cannot open maps folder. They will no be available" << std::endl;
+		std::cerr << "Cannot open maps folder. They will not be available" << std::endl;
 	}
 }
 

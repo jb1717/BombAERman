@@ -19,7 +19,8 @@
 #include <memory>
 #include <stdexcept>
 #include <dirent.h>
-#include <typeinfo>
+#include <future>
+#include <mutex>
 #include "AObj.hh"
 #include "Board.hh"
 #include "rapidjson/rapidjson.h"
@@ -64,6 +65,7 @@ private:
 private:
     // Private variables
     std::vector<board_t>                        _boards;
+    std::mutex                                  _mutex;
 };
 
 #endif // BOARDHANDLER_HH_
