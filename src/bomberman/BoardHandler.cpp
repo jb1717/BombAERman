@@ -135,7 +135,7 @@ void BoardHandler::loadBoard(std::string const &file)
 	size_t pos;
 
 	if ((pos = file.find_last_of(".")) != std::string::npos && file.substr(pos) == ".json") {
-		FILE* fp = fopen(std::string("assets/maps/" + file).c_str(), "r");
+		FILE* fp = fopen(std::string(file).c_str(), "r");
 		if (fp) {
 			char buff[65536] = {0};
 			rapidjson::FileReadStream is(fp, buff, sizeof(buff));
@@ -187,7 +187,8 @@ void BoardHandler::load()
 		while ((ent = readdir (dir)) != NULL) {
 			if (std::string(ent->d_name)[0] != '.')
 				// Asynchronous load
-				f.push_back(std::async (std::launch::async, func, ent->d_name));
+				f.push_back(std::async (std::launch::async, func,
+				                        "assets/maps/" + std::string(ent->d_name)));
 		}
 		try {
 			for (auto i = f.begin(); i != f.end(); i++)
