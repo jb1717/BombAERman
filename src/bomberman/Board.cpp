@@ -267,5 +267,14 @@ size_t                Board::getHeight() const
 
 Board::~Board()
 {
-
+  while (!_board.empty())
+  {
+    std::vector<AObj *> v = _board.back();
+    while (!v.empty())
+    {
+      delete v.back();
+      v.pop_back();
+    }
+    _board.pop_back();
+  }
 }
