@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sat May 23 18:15:15 2015 Emmanuel Chambon
+## Last update Sun May 24 00:18:54 2015 Milox Thomas
 ##
 
 GRAPHICALGAME	=	yes
@@ -134,11 +134,10 @@ BOMBERMAN_SRC		=	\
 				ECondVar.cpp		\
 				EThreadPool.cpp		\
 				EMutex.cpp		\
-				Score.cpp		\
-				AUI.cpp			\
-				AButtons		\
-				LauncherUI.cpp		\
 				Explosion.cpp		\
+				LauncherUI.cpp	\
+				UIManager.cpp	\
+				AUI.cpp	\
 				main.cpp		\
 
 
