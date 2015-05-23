@@ -9,16 +9,17 @@
 //
 
 #include "Bomberman.hh"
-#include "BoardHandler.hh"
 
 Bomberman::Bomberman()
 	: _x(1820), _y(980)
 {
 	setWidthHeight();
-	_ui = new LauncherUI(_x, _y, "BombAERman");
-	_score = new Score;
-	BoardHandler();
-	std::this_thread::sleep_for (std::chrono::seconds(2)); // Debug purpose. Will be removed
+
+	// _ui = new LauncherUI(_x, _y, "BombAERman");
+
+	auto asset = AssetManager();
+
+	std::this_thread::sleep_for (std::chrono::seconds(1)); // Debug purpose. Will be removed
 }
 
 Bomberman::~Bomberman()

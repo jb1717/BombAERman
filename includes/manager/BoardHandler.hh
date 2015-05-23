@@ -23,13 +23,14 @@
 #include <mutex>
 #include "AObj.hh"
 #include "Board.hh"
+#include "manager/AAsset.hh"
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/filewritestream.h"
 
-class BoardHandler
+class BoardHandler : public AAsset
 {
 public:
     BoardHandler();
@@ -48,13 +49,14 @@ public:
     // Public functions
     void                                        save(std::shared_ptr<Board> const&, std::string const &name) const;
     void                                        generate(int = 42, int = 42);
-    void                                        loadOnce(std::string const &);
+    void                                        load(std::string const &);
 
 public:
     // Public accessors
     std::shared_ptr<Board>                      operator[](ssize_t);
     BoardHandler::board_t                       at(ssize_t);
     std::vector<BoardHandler::board_t>          getBoards() const;
+    friend std::ostream&    	                operator<<(std::ostream&, BoardHandler const &);
 
 private:
     // Private functions

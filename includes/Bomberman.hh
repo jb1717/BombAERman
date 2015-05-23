@@ -19,7 +19,7 @@
 # include   "Score.hh"
 # include   "basics.hh"
 # include   "LauncherUI.hh"
-# include   "BoardHandler.hh"
+# include   "manager/AssetManager.hh"
 # include   "gameEngine/graphics.hh"
 # include   "gameEngine/VideoContext.hh"
 

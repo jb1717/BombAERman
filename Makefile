@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sat May 23 03:22:45 2015 Milox Thomas
+## Last update Sat May 23 18:15:15 2015 Emmanuel Chambon
 ##
 
 GRAPHICALGAME	=	yes
@@ -118,6 +118,9 @@ BOMBERMAN_SRCS		=	$(addprefix $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_SRC))
 BOMBERMAN_OBJS		=	$(addsuffix .o, $(basename $(subst $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_OBJ_DIR), $(BOMBERMAN_SRCS))))
 
 BOMBERMAN_SRC		=	\
+				Theme.cpp	\
+				ThemeHandler.cpp	\
+				AssetManager.cpp	\
 				BoardHandler.cpp	\
 				Bomberman.cpp		\
 				Bomb.cpp		\

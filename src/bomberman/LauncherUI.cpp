@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Wed May 20 19:57:09 2015 TommyStarK
-// Last update Sat May 23 05:48:37 2015 TommyStarK
+// Last update Sat May 23 18:10:44 2015 Emmanuel Chambon
 //
 
 #include "LauncherUI.hh"

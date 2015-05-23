@@ -9,7 +9,7 @@
 // Last update Wed May 20 21:43:23 2015 Emmanuel Chambon
 //
 
-#include "BoardHandler.hh"
+#include "manager/BoardHandler.hh"
 
 BoardHandler::BoardHandler()
 {
@@ -141,32 +141,36 @@ void BoardHandler::loadBoard(std::string const &file)
 			rapidjson::FileReadStream is(fp, buff, sizeof(buff));
 			rapidjson::Document d;
 
-			if (d.ParseStream(is).HasParseError()
-			    || !d.HasMember("map")
-			    || !d.HasMember("width")
-			    || !d.HasMember("height"))
-				throw std::invalid_argument(file + ": Invalid JSON file. Will not be loaded.");
-			else {
-				BoardHandler::board_t board;
+			try {
+				if (d.ParseStream(is).HasParseError()
+				    || !d.HasMember("map")
+				    || !d.HasMember("width")
+				    || !d.HasMember("height"))
+					throw std::invalid_argument(file + ": Invalid JSON file. Will not be loaded.");
+				else {
+					BoardHandler::board_t board;
 
-				board.name = d.HasMember("name") && d["name"].IsString()
-				             ? d["name"].GetString() : "";
-				board.thumbnail = d.HasMember("thumbnail") && d["thumbnail"].IsString()
-				                  ? d["thumbnail"].GetString() : "";
-				if (!d["map"].IsArray() || !d["width"].IsNumber() || !d["height"].IsNumber())
-					throw std::invalid_argument(file + ": Invalid JSON map. Will not be loaded.");
-				try {
-					board.board = loadMap(d["map"], d["width"].GetInt(), d["height"].GetInt());
-				} catch(std::invalid_argument &e) {
-					throw std::invalid_argument(file + ": " + e.what());
+					board.name = d.HasMember("name") && d["name"].IsString()
+					             ? d["name"].GetString() : "";
+					board.thumbnail = d.HasMember("thumbnail") && d["thumbnail"].IsString()
+					                  ? d["thumbnail"].GetString() : "";
+					if (!d["map"].IsArray() || !d["width"].IsNumber() || !d["height"].IsNumber())
+						throw std::invalid_argument(file + ": Invalid JSON map. Will not be loaded.");
+					try {
+						board.board = loadMap(d["map"], d["width"].GetInt(), d["height"].GetInt());
+					} catch(std::invalid_argument &e) {
+						throw std::invalid_argument(file + ": " + e.what());
+					}
+
+					_mutex.lock();
+					_boards.push_back(board);
+					_mutex.unlock();
 				}
-
-				_mutex.lock();
-				_boards.push_back(board);
-				_mutex.unlock();
+				fclose(fp);
+			} catch (std::exception &e) {
+				fclose(fp);
+				throw;
 			}
-
-			fclose(fp);
 		}
 	}
 }
@@ -206,7 +210,7 @@ void BoardHandler::load()
 /*
 ** Alias and public for loadBoard()
 */
-void BoardHandler::loadOnce(std::string const &file)
+void BoardHandler::load(std::string const &file)
 {
 	loadBoard(file);
 }
@@ -237,4 +241,16 @@ BoardHandler::board_t BoardHandler::at(ssize_t at)
 	if (static_cast<std::vector<BoardHandler::board_t>::size_type>(std::abs(at)) > _boards.size())
 		throw std::out_of_range("Out of range query on BoardHandler");
 	return (at < 0) ? _boards[_boards.size() - at] : _boards[at];
+}
+
+std::ostream&                           operator<<(std::ostream& os, BoardHandler const &bd)
+{
+	for (auto i = bd._boards.begin(); i != bd._boards.end(); i++) {
+		os << "name: " << (*i).name << std::endl
+		   << "width: " << (*i).board->getWidth() << " height: " << (*i).board->getHeight() << std::endl
+		   << "thumbnail: " << (*i).thumbnail;
+		if (i != std::prev(bd._boards.end(), 1))
+			os << std::endl << std::endl;
+	}
+	return os;
 }
