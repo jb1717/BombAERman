@@ -5,27 +5,20 @@
 // chambo_e  <chambon.emmanuel@gmail.com>
 //
 // Started on  Tue May 19 11:18:08 2015 Emmanuel Chambon
-// Last update Wed May 20 23:42:55 2015 Emmanuel Chambon
+// Last update Wed May 20 23:42:55 2015 TommyStarK
 //
 
 #include "Bomberman.hh"
 #include "BoardHandler.hh"
 
 Bomberman::Bomberman()
-	: _x(1820), _y(980), _window(_x, _y, "BombAERman")
+	: _x(1820), _y(980)
 {
 	setWidthHeight();
-
-    _window.init();
-
-	// SETBACKGROUND(_window);
-
-	// MAINUI(_window, x, y);
-
+	_ui = new LauncherUI(_x, _y, "BombAERman");
+	_score = new Score;
 	BoardHandler();
-
 	std::this_thread::sleep_for (std::chrono::seconds(2)); // Debug purpose. Will be removed
-
 }
 
 Bomberman::~Bomberman()
@@ -56,8 +49,6 @@ void Bomberman::setWidthHeight()
 				                                                       res.end(), sep, -1);
 				_x = std::stoi(*token++) - 100;
 				_y = std::stoi(*token++) - 100;
-				_window.setScreenWidth(_x);
-				_window.setScreenHeight(_y);
 			}
 			pclose(cmd);
 		} catch (std::exception& e) {

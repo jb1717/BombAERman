@@ -5,14 +5,18 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Wed May 20 19:57:09 2015 TommyStarK
-// Last update Wed May 20 21:40:33 2015 TommyStarK
+// Last update Sat May 23 05:48:37 2015 TommyStarK
 //
 
-#include "LauncherUI.hpp"
+#include "LauncherUI.hh"
 
-LauncherUI::LauncherUI(VideoContext &videocontext, int x, int y)
-  : _x(x), _y(y), _select(0), _run(true), _win(videocontext)
+LauncherUI::LauncherUI(int x, int y, const std::string &name)
+  : _x(x), _y(y), _select(0), _run(true), _windowTittle(name)
 {
+    _win = std::make_shared<VideoContext>(_x, _y, _windowTittle);
+    _win->setScreenWidth(_x);
+    _win->setScreenHeight(_y);
+    _win->init();
     // _buttons.push_back(new Play);
     // _buttons.push_back(new Settings);
     this->loop();
@@ -50,4 +54,9 @@ void                                    LauncherUI::loop()
     }
   }
   _run = false;
+}
+
+std::shared_ptr<VideoContext>         LauncherUI::getWin()
+{
+  return _win;
 }

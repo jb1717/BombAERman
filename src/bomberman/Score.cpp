@@ -5,10 +5,10 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Tue May  5 20:46:32 2015 TommyStarK
-// Last update Sun May 10 02:51:08 2015 Milox Thomas
+// Last update Sat May 23 05:50:10 2015 TommyStarK
 //
 
-#include "Score.hpp"
+#include "Score.hh"
 
 Score::Score()
   :_filename(".score")

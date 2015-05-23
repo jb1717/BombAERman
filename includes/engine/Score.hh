@@ -1,15 +1,15 @@
 //
-// Score.hpp for BombAERman in /home/tommy/Dropbox/Epitech/2ème Année/cpp_bomberman/includes/
+// Score.hh for BombAERman in /home/tommy/Dropbox/Epitech/2ème Année/cpp_bomberman/includes/
 //
 // Made by TommyStarK
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Tue May  5 20:46:09 2015 TommyStarK
-// Last update Wed May 20 09:17:47 2015 TommyStarK
+// Last update Sat May 23 05:50:42 2015 TommyStarK
 //
 
-#ifndef _SCORE_HPP_
-# define _SCORE_HPP_
+#ifndef _SCORE_HH_
+# define _SCORE_HH_
 
 # include <sstream>
 # include <fstream>
@@ -57,4 +57,4 @@ public:
 };
 
 
-#endif /* ! _SCORE_HPP_ */
+#endif /* ! _SCORE_HH_ */

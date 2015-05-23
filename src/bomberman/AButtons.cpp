@@ -5,10 +5,10 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Wed May 20 17:57:18 2015 TommyStarK
-// Last update Wed May 20 21:15:35 2015 TommyStarK
+// Last update Sat May 23 05:48:37 2015 TommyStarK
 //
 
-#include "AButtons.hpp"
+#include "AButtons.hh"
 
 AButtons::AButtons()
 {
@@ -21,15 +21,34 @@ AButtons::~AButtons()
 
 }
 
-std::tuple<bool, enum AButtons::Keys>                   AButtons::checkInput()
+void                                        AButtons::setPosition(float x, float y, float z)
 {
-  if (getInput(SDLK_UP) == true)
-    return (std::tuple<bool, enum AButtons::Keys>(true, UP));
-  else if (getInput(SDLK_DOWN) == true)
-    return (std::tuple<bool, enum AButtons::Keys>(true, DOWN));
-  else if (getInput(SDLK_RETURN) == true || getInput(SDLK_KP_ENTER) == true)
+  _position = glm::vec3(x < 0 ? std::abs(x) : x,
+                        y < 0 ? std::abs(y) : y,
+                        z < 0 ? std::abs(z) : z);
+}
+
+const std::string                           &AButtons::getButtonName() const
+{
+  return _name;
+}
+
+
+std::tuple<bool, enum AButtons::Keys>       AButtons::checkInput()
+{
+  if (getInput(SDLK_RETURN) || getInput(SDLK_KP_ENTER)) {
     return (std::tuple<bool, enum AButtons::Keys>(true, ENTER));
-  else if (getInput(SDLK_ESCAPE) == true)
-  return (std::tuple<bool, enum AButtons::Keys>(false, NONE));
+  }
+  else if (getInput(SDLK_ESCAPE)) {
     return (std::tuple<bool, enum AButtons::Keys>(true, ESC));
+  }
+  else
+  {
+    if (getInput(SDLK_UP))
+      return (std::tuple<bool, enum AButtons::Keys>(true, UP));
+    else if (getInput(SDLK_DOWN))
+      return (std::tuple<bool, enum AButtons::Keys>(true, DOWN));
+    return (std::tuple<bool, enum AButtons::Keys>(false, OTHER));
+  }
+  return (std::tuple<bool, enum AButtons::Keys>(false, NONE));
 }

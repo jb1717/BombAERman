@@ -12,15 +12,19 @@
 #ifndef ___BOMBERMAN_HH___
 #define ___BOMBERMAN_HH___
 
-#include   <regex>
-#include   <thread>
-#include   <chrono>
-#include   "basics.hh"
-#include   "BoardHandler.hh"
-#include   "gameEngine/graphics.hh"
-#include   "gameEngine/VideoContext.hh"
+# include   <regex>
+# include   <thread>
+# include   <chrono>
+# include   <stdexcept>
+# include   "Score.hh"
+# include   "basics.hh"
+# include   "LauncherUI.hh"
+# include   "BoardHandler.hh"
+# include   "gameEngine/graphics.hh"
+# include   "gameEngine/VideoContext.hh"
 
-class Bomberman {
+class Bomberman
+{
 public:
 
   Bomberman();
@@ -31,9 +35,10 @@ private:
   void setWidthHeight();
 
 private:
+  int                       _x, _y;
+  Score                     *_score;
+  LauncherUI                *_ui;
 
-  int _x, _y;
-  VideoContext _window;
 };
 
 #endif /* !___BOMBERMAN_HH___ */
