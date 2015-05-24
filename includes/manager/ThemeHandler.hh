@@ -5,9 +5,10 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:05:32 2015 Emmanuel Chambon
-// Last update Sat May 23 19:37:28 2015 Emmanuel Chambon
+// Last update Sun May 24 05:16:27 2015 Emmanuel Chambon
 //
 
+#pragma once
 #ifndef THEMEHANDLER_HH_
 #define THEMEHANDLER_HH_
 
@@ -32,17 +33,18 @@ public:
 public:
     void                        load(std::initializer_list<std::initializer_list<std::string>> const &);
     void                        loadTheme(std::string const &, std::string const &);
+    std::vector<std::string>    getThemes() const;
 
 private:
     void                        load();
 
 public:
-    std::shared_ptr<Theme>      operator[](std::string const &);
-    std::shared_ptr<Theme>      operator[](ssize_t);
+    Theme                       &operator[](std::string const &);
+    Theme                       &operator[](ssize_t);
 
 private:
     std::map<std::string, std::shared_ptr<Theme>>         _themes;
-    std::mutex                           _mutex;
+    std::mutex                                            _mutex;
 };
 
 #endif

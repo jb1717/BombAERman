@@ -17,7 +17,37 @@ Bomberman::Bomberman()
 
 	// _ui = new LauncherUI(_x, _y, "BombAERman");
 
+
+	/*
+	**
+	** DEMO ASSETMANAGER
+	**
+	*/
+
 	auto asset = AssetManager();
+
+	// THEMES
+	auto themes = THEME_HANDLER(asset["themes"]);
+
+	auto __attribute__((unused)) first_theme = THEME((*themes)[(*themes).getThemes()[0]]); 	// TO ACCESS A THEME
+	auto __attribute__((unused)) same_theme = THEME((*themes)["fantasy"]); 					// TO ACCESS A THEME WITH IT NAME
+
+	auto __attribute__((unused)) first_texture_of_first_theme = TEXTURE((*first_theme)[(*first_theme).getTextures()[0]]);
+	auto __attribute__((unused)) same_texture_of_first_theme = TEXTURE((*first_theme)["floor1"]);
+
+	auto __attribute__((unused)) direct_access_first_texture = (*THEME((*THEME_HANDLER(asset["themes"]))["fantasy"]))["floor1"];
+
+	// BOARDS
+	auto __attribute__((unused)) boards = BOARD_HANDLER(asset["boards"]);
+	auto __attribute__((unused)) first_board = BOARD((*boards)[0]);
+
+	auto __attribute__((unused)) direct_access_first_board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
+
+	/*
+	**
+	**
+	**
+	*/
 
 	std::this_thread::sleep_for (std::chrono::seconds(1)); // Debug purpose. Will be removed
 }

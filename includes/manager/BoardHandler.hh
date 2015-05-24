@@ -10,6 +10,7 @@
 // Last update Wed May 20 20:57:12 2015 Emmanuel Chambon
 //
 
+#pragma once
 #ifndef BOARDHANDLER_HH_
 #define BOARDHANDLER_HH_
 
@@ -53,7 +54,7 @@ public:
 
 public:
     // Public accessors
-    std::shared_ptr<Board>                      operator[](ssize_t);
+    Board                                       &operator[](ssize_t);
     BoardHandler::board_t                       at(ssize_t);
     std::vector<BoardHandler::board_t>          getBoards() const;
     friend std::ostream&    	                operator<<(std::ostream&, BoardHandler const &);

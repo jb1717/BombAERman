@@ -162,9 +162,8 @@ void BoardHandler::loadBoard(std::string const &file)
 						throw std::invalid_argument(file + ": " + e.what());
 					}
 
-					_mutex.lock();
+					std::lock_guard<std::mutex> guard(_mutex);
 					_boards.push_back(board);
-					_mutex.unlock();
 				}
 				fclose(fp);
 			} catch (std::exception &e) {
@@ -222,11 +221,11 @@ void BoardHandler::load(std::string const &file)
 **
 ** !! Return only a Board instance and not a board_t structure.
 */
-std::shared_ptr<Board>                          BoardHandler::operator[](ssize_t at)
+Board                          &BoardHandler::operator[](ssize_t at)
 {
 	if (static_cast<std::vector<BoardHandler::board_t>::size_type>(std::abs(at)) > _boards.size())
 		throw std::out_of_range("Out of range query on BoardHandler");
-	return (at < 0) ? _boards[_boards.size() - at].board : _boards[at].board;
+	return (at < 0) ? *_boards[_boards.size() - at].board : *_boards[at].board;
 }
 
 /*

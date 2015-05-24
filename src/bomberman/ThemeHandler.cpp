@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 21:07:26 2015 Emmanuel Chambon
-// Last update Sat May 23 19:39:07 2015 Emmanuel Chambon
+// Last update Sun May 24 05:13:36 2015 Emmanuel Chambon
 //
 
 #include "manager/ThemeHandler.hh"
@@ -59,36 +59,44 @@ void ThemeHandler::loadTheme(std::string const &path, std::string const &name)
 {
 	std::shared_ptr<Theme> theme = std::make_shared<Theme>(path, name);
 
-	_mutex.lock();
+	std::lock_guard<std::mutex> guard(_mutex);
 	_themes[name] = theme;
-	_mutex.unlock();
 }
 
-std::shared_ptr<Theme>               ThemeHandler::operator[](std::string const &at)
+std::vector<std::string> 		ThemeHandler::getThemes() const
 {
-	if (_themes.find(at) != _themes.end())
-		return _themes[at];
-	return nullptr;
+	std::vector<std::string> ret;
+
+	for (auto i : _themes)
+		ret.push_back(i.first);
+	return ret;
 }
 
-std::shared_ptr<Theme>              ThemeHandler::operator[](ssize_t at)
+Theme               &ThemeHandler::operator[](std::string const &at)
+{
+	if (_themes.find(at) == _themes.end())
+		throw std::out_of_range("Out of range ThemeHandler.");
+	return *_themes[at];
+}
+
+Theme              &ThemeHandler::operator[](ssize_t at)
 {
 	if (at < 0) {
 		for (std::map<std::string, std::shared_ptr<Theme>>::reverse_iterator i = _themes.rbegin();
 		     i != _themes.rend(); i++) {
 			if (at == 0)
-				return (*i).second;
+			return *(*i).second;
 			at++;
 		}
-		return nullptr;
+		throw std::out_of_range("Out of range ThemeHandler.");
 	} else {
 		ssize_t x = 0;
 		for (auto i  = _themes.begin(); i != _themes.end(); i++) {
 			if (x == at)
-				return (*i).second;
+			return *(*i).second;
 			x++;
 		}
-		return nullptr;
+		throw std::out_of_range("Out of range ThemeHandler.");
 	}
-	return nullptr;
+	throw std::invalid_argument("Invalid Argument ThemeHandler.");
 }
