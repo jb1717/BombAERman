@@ -45,7 +45,7 @@ MAKEFLAGS	+=	--warn-undefined-variables		\
 			--no-print-directory
 
 LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ $(LIBS) \
-			-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
+			-lgdl_gl -lfmod -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
 
 
 
@@ -53,7 +53,7 @@ LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ $(LIBS) \
 #			TREE				#
 #########################################################
 
-LIBS		=	-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
+LIBS		=	-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lfmod -lSDL2 -lpthread
 LIB_DIR		=	./lib/
 LIB_INCLUDE_DIR	=	$(INCLUDE_DIR)lib/
 INCLUDE_DIR	=	./includes/
@@ -120,6 +120,7 @@ BOMBERMAN_OBJS		=	$(addsuffix .o, $(basename $(subst $(BOMBERMAN_SRC_DIR), $(BOM
 BOMBERMAN_SRC		=	\
 				Theme.cpp	\
 				ThemeHandler.cpp	\
+				SoundHandler.cpp	\
 				AssetManager.cpp	\
 				BoardHandler.cpp	\
 				Bomberman.cpp		\

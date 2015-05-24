@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:05:32 2015 Emmanuel Chambon
-// Last update Sun May 24 05:15:28 2015 Emmanuel Chambon
+// Last update Sun May 24 10:41:57 2015 Emmanuel Chambon
 //
 
 #pragma once
@@ -22,12 +22,14 @@
 #include "AAsset.hh"
 #include "BoardHandler.hh"
 #include "ThemeHandler.hh"
+#include "SoundHandler.hh"
 
 #define THEME_HANDLER(x)	reinterpret_cast<ThemeHandler *>(&x)
 #define THEME(x) 			reinterpret_cast<Theme *>(&x)
 #define TEXTURE(x) 			reinterpret_cast<gdl::Texture *>(&x)
 #define BOARD_HANDLER(x)	reinterpret_cast<BoardHandler *>(&x)
 #define BOARD(x)			reinterpret_cast<Board *>(&x)
+#define SOUND_HANDLER(x)	reinterpret_cast<SoundHandler *>(&x)
 
 class AssetManager
 {
@@ -41,6 +43,7 @@ public:
 private:
     void                    loadBoardHandler();
     void                    loadThemeHandler();
+    void                    loadSoundHandler();
 
 private:
     std::map<std::string, std::shared_ptr<AAsset>>         _assets;

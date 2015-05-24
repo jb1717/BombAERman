@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:04:57 2015 Emmanuel Chambon
-// Last update Sun May 24 05:05:32 2015 Emmanuel Chambon
+// Last update Sun May 24 18:01:58 2015 Emmanuel Chambon
 //
 
 #include "manager/AssetManager.hh"
@@ -16,15 +16,14 @@ AssetManager::AssetManager()
 
 	f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadBoardHandler, this)));
 	f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadThemeHandler, this)));
+	f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadSoundHandler, this)));
 
 	for (auto i = f.begin(); i != f.end(); i++)
 		i->get();
 
-    // Themes
     // Models
     // Scores
     // Saves
-	// Sounds
 	// Settings
 }
 
@@ -47,6 +46,14 @@ void 			AssetManager::loadThemeHandler()
 
 	std::lock_guard<std::mutex> guard(_mutex);
 	_assets["themes"] = handler;
+}
+
+void 			AssetManager::loadSoundHandler()
+{
+	std::shared_ptr<SoundHandler> handler = std::make_shared<SoundHandler>();
+
+	std::lock_guard<std::mutex> guard(_mutex);
+	_assets["sounds"] = handler;
 }
 
 AAsset           &AssetManager::operator[](std::string const &at)

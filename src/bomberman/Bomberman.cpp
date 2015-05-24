@@ -17,7 +17,6 @@ Bomberman::Bomberman()
 
 	// _ui = new LauncherUI(_x, _y, "BombAERman");
 
-
 	/*
 	**
 	** DEMO ASSETMANAGER
@@ -43,13 +42,20 @@ Bomberman::Bomberman()
 
 	auto __attribute__((unused)) direct_access_first_board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
 
+	// SOUNDS
+	auto sounds = SOUND_HANDLER(asset["sounds"]);
+
+	sounds->play((*sounds)["dimmi"]);
+
+	while (sounds->isPlaying());
+
 	/*
 	**
 	**
 	**
 	*/
 
-	std::this_thread::sleep_for (std::chrono::seconds(1)); // Debug purpose. Will be removed
+	//	std::this_thread::sleep_for (std::chrono::seconds(10)); // Debug purpose. Will be removed
 }
 
 Bomberman::~Bomberman()

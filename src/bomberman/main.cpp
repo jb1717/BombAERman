@@ -5,7 +5,7 @@
 // Login   <paasch_j@epitech.net>
 //
 // Started on  Mon Apr 27 11:27:27 2015 Johan Paasche
-// Last update Sun May 24 00:19:20 2015 Milox Thomas
+// Last update Sun May 24 05:39:37 2015 Emmanuel Chambon
 //
 
 #include	"basics.hh"
@@ -15,8 +15,8 @@
 int	main()
 {
   try {
-    UIManager();
-    // Bomberman();
+    //UIManager();
+    Bomberman();
   } catch (std::exception &e) {
     std::cerr << e.what() << std::endl;
   }
