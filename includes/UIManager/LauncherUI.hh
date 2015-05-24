@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 21:39:13 2015 TommyStarK
-// Last update Sun May 24 12:51:09 2015 TommyStarK
+// Last update Sun May 24 17:56:55 2015 TommyStarK
 //
 
 #ifndef _LAUNCHERUI_HH_

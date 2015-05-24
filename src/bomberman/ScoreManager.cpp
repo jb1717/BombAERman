@@ -5,10 +5,10 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 07:02:15 2015 TommyStarK
-// Last update Sun May 24 07:02:45 2015 TommyStarK
+// Last update Sun May 24 17:41:41 2015 TommyStarK
 //
 
-#include "ScoreManager.hh"
+#include "UIManager/ScoreManager.hh"
 
 ScoreManager::ScoreManager()
 {
@@ -17,5 +17,5 @@ ScoreManager::ScoreManager()
 
 ScoreManager::~ScoreManager()
 {
-  
+
 }

@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 03:46:33 2015 TommyStarK
-// Last update Sun May 24 06:08:03 2015 TommyStarK
+// Last update Sun May 24 17:59:02 2015 TommyStarK
 //
 
 #include "UIManager/PauseUI.hh"
@@ -19,7 +19,6 @@ PauseUI::~PauseUI()
 {
 
 }
-
 
 void                          PauseUI::launch()
 {

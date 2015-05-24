@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 20:58:21 2015 TommyStarK
-// Last update Sun May 24 06:55:12 2015 TommyStarK
+// Last update Sun May 24 18:00:20 2015 TommyStarK
 //
 
 #ifndef _UIMANAGER_HH_
@@ -16,7 +16,9 @@
 # include <memory>
 # include <iostream>
 # include "AUI.hh"
+# include "PlayUI.hh"
 # include "PauseUI.hh"
+# include "SettingsUI.hh"
 # include "LauncherUI.hh"
 
 class      UIManager
@@ -45,7 +47,7 @@ private:
 // private interns functions
 private:
   void                              UIhandler(const std::string &);
-  std::tuple<int, std::string>      controller(const std::string &);
+  std::tuple<int, std::string>      controller(bool, const std::string &);
 
 // public access
 public:

@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 22:06:02 2015 TommyStarK
-// Last update Sun May 24 13:38:41 2015 TommyStarK
+// Last update Sun May 24 18:14:07 2015 TommyStarK
 //
 
 #include "UIManager/LauncherUI.hh"
@@ -40,15 +40,19 @@ void                       LauncherUI::setUpDisplay()
   _shader.setUniform("view", _camera.getTransformationMatrix());
   _shader.setUniform("projection", _camera.getProjectionMatrix());
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  _camera.zoom(2);
-  for (auto i : _texturehandler) {
-    int j = 15;
-    std::get<1>(i)->load(std::get<0>(i));
-    _items.push_back(new Cube(glm::vec3(0, 0, j)));
-    _items.back()->setTexture(*std::get<1>(i));
-    _items.back()->initialize();
-    _items.back()->draw(_shader, _clock);
-    j -= 8;
+  try {
+    for (auto i : _texturehandler) {
+      int j = 0;
+      std::cout << "TEST " << std::endl;
+      std::get<1>(i)->load(std::get<0>(i));
+      _items.push_back(new Cube(glm::vec3(j, 0, 0)));
+      _items.back()->setTexture(*std::get<1>(i));
+      _items.back()->initialize();
+      _items.back()->draw(_shader, _clock);
+      j -= 2;
+    }
+  } catch(std::invalid_argument &e) {
+    throw std::invalid_argument(e.what());
   }
   _window->flush();
 }
@@ -59,8 +63,12 @@ void                       LauncherUI::updateContext()
   _camera.update(_clock, _input);
   _shader.setUniform("view", _camera.getTransformationMatrix());
   _shader.setUniform("projection", _camera.getProjectionMatrix());
-  for (auto i : _items)
-    (*i).update(_clock, _input);
+  try {
+    for (auto i : _items)
+      (*i).update(_clock, _input);
+  } catch(std::invalid_argument &e) {
+    throw std::invalid_argument(e.what());
+  }
 }
 
 std::string                LauncherUI::getUItoDisplay(int check) const
@@ -81,7 +89,6 @@ void                       LauncherUI::launch()
   this->setUpDisplay();
 }
 
-
 stateUI                    LauncherUI::handlerEvent()
 {
   _selected = PLAY;
@@ -94,7 +101,7 @@ stateUI                    LauncherUI::handlerEvent()
       break ;
     }
     else if (_input.getKey(SDLK_RETURN) || _input.getInput(SDLK_RETURN))
-      return (std::tuple<bool, std::string>(true, this->getUItoDisplay(_selected)));
+      return (std::tuple<bool, std::string>(false, this->getUItoDisplay(_selected)));
     else
     {
       if (_input.getInput(SDLK_UP))
@@ -104,5 +111,5 @@ stateUI                    LauncherUI::handlerEvent()
     }
     this->updateContext();
   }
-  return (_selected = 0, std::tuple<bool, std::string>(true, this->getName()));
+  return (std::tuple<bool, std::string>(true, this->getName()));
 }

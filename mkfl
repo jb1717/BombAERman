@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sun May 24 18:16:38 2015 Milox Thomas
+## Last update Sun May 24 17:43:19 2015 Milox Thomas
 ##
 
 GRAPHICALGAME	=	yes
@@ -45,7 +45,7 @@ MAKEFLAGS	+=	--warn-undefined-variables		\
 			--no-print-directory
 
 LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ $(LIBS) \
-			-lgdl_gl -lfmod -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
+			-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
 
 
 
@@ -53,7 +53,7 @@ LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ $(LIBS) \
 #			TREE				#
 #########################################################
 
-LIBS		=	-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lfmod -lSDL2 -lpthread
+LIBS		=	-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
 LIB_DIR		=	./lib/
 LIB_INCLUDE_DIR	=	$(INCLUDE_DIR)lib/
 INCLUDE_DIR	=	./includes/
@@ -120,7 +120,6 @@ BOMBERMAN_OBJS		=	$(addsuffix .o, $(basename $(subst $(BOMBERMAN_SRC_DIR), $(BOM
 BOMBERMAN_SRC		=	\
 				Theme.cpp	\
 				ThemeHandler.cpp	\
-				SoundHandler.cpp	\
 				AssetManager.cpp	\
 				BoardHandler.cpp	\
 				Bomberman.cpp		\
@@ -138,12 +137,12 @@ BOMBERMAN_SRC		=	\
 				Explosion.cpp		\
 				LauncherUI.cpp	\
 				UIManager.cpp	\
-				Score.cpp		\
-				PlayUI.cpp		\
-				SettingsUI.cpp		\
 				AUI.cpp	\
+				Score.cpp		\
 				ScoreManager.cpp	\
 				PauseUI.cpp		\
+				PlayUI.cpp		\
+				SettingsUI.cpp		\
 				main.cpp		\
 
 
