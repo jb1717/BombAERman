@@ -6,7 +6,7 @@
 // Login   <paasch_j@epitech.net>
 //
 // Started on  Mon Apr 27 14:05:58 2015 Johan Paasche
-// Last update Tue May 19 11:35:07 2015 Emmanuel Chambon
+// Last update Sat May 23 22:36:10 2015 Milox Thomas
 //
 
 #ifndef ___BOMBERMAN_HH___
@@ -16,9 +16,7 @@
 # include   <thread>
 # include   <chrono>
 # include   <stdexcept>
-# include   "Score.hh"
 # include   "basics.hh"
-# include   "LauncherUI.hh"
 # include   "manager/AssetManager.hh"
 # include   "gameEngine/graphics.hh"
 # include   "gameEngine/VideoContext.hh"
@@ -36,8 +34,6 @@ private:
 
 private:
   int                       _x, _y;
-  Score                     *_score;
-  LauncherUI                *_ui;
 
 };
 
