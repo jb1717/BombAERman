@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 22:57:54 2015 TommyStarK
-// Last update Sun May 24 06:54:04 2015 TommyStarK
+// Last update Sun May 24 12:51:32 2015 TommyStarK
 //
 
 #ifndef  _AUI_HH_
@@ -24,7 +24,7 @@ class               AUI
 public:
   virtual ~AUI() {};
 
-// private attributes necessary to display & catch events
+// private necessary attributes to display & catch events
 protected:
   bool              _isRunning;
   std::string       _name;
