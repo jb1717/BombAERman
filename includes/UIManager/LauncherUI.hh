@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 21:39:13 2015 TommyStarK
-// Last update Sun May 24 00:08:12 2015 TommyStarK
+// Last update Sun May 24 06:52:46 2015 TommyStarK
 //
 
 #ifndef _LAUNCHERUI_HH_
@@ -22,14 +22,26 @@ public:
   LauncherUI(int, int, const std::string &);
   ~LauncherUI();
 
+// private functionals attributes
 private:
-  int                   _width, _height;
+  int                   _width;
+  int                   _height;
+  int                   _selected;
   std::string           _name;
   VideoContext          *_window;
 
+// Enum representing different choices for users
+public:
+  enum Display {PLAY = 0, SETTINGS = 1, QUIT = 2};
+
+// Returns a std::string containing name to UI to display
+private:
+  std::string           getUItoDisplay(int) const;
+
+// Public access
 public:
   void                  launch();
-  void                  handlerEvent();
+  stateUI               handlerEvent();
 
 
 };

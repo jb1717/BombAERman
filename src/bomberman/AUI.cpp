@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 23:04:43 2015 TommyStarK
-// Last update Sat May 23 23:37:46 2015 TommyStarK
+// Last update Sun May 24 03:47:54 2015 TommyStarK
 //
 
 
@@ -19,9 +19,4 @@ void                          AUI::setName(const std::string &name)
 std::string                   AUI::getName() const
 {
   return _name;
-}
-
-AUI::TypeUI                   AUI::getType() const
-{
-  return _type;
 }
