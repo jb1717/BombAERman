@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 22:06:02 2015 TommyStarK
-// Last update Sun May 24 18:14:07 2015 TommyStarK
+// Last update Wed May 27 01:06:22 2015 Milox Thomas
 //
 
 #include "UIManager/LauncherUI.hh"
@@ -43,7 +43,6 @@ void                       LauncherUI::setUpDisplay()
   try {
     for (auto i : _texturehandler) {
       int j = 0;
-      std::cout << "TEST " << std::endl;
       std::get<1>(i)->load(std::get<0>(i));
       _items.push_back(new Cube(glm::vec3(j, 0, 0)));
       _items.back()->setTexture(*std::get<1>(i));
