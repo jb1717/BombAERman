@@ -23,9 +23,12 @@ Bomberman::Bomberman()
 	**
 	*/
 
-	auto asset = AssetManager();
-
-	// THEMES
+	auto toto = AssetManager::instance();
+	auto titi = AssetManager::instance();
+	auto tutu = AssetManager::instance();
+	auto asset = AssetManager::instance();
+	//
+	// // THEMES
 	auto themes = THEME_HANDLER(asset["themes"]);
 
 	auto __attribute__((unused)) first_theme = THEME((*themes)[(*themes).getThemes()[0]]); 	// TO ACCESS A THEME
@@ -42,7 +45,7 @@ Bomberman::Bomberman()
 
 	auto __attribute__((unused)) direct_access_first_board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
 
-	// SOUNDS
+	//SOUNDS
 	auto sounds = SOUND_HANDLER(asset["sounds"]);
 
 	sounds->play((*sounds)["dimmi"]);

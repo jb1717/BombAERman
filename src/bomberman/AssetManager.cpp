@@ -5,12 +5,18 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:04:57 2015 Emmanuel Chambon
-// Last update Sun May 24 18:01:58 2015 Emmanuel Chambon
+// Last update Thu May 28 03:31:14 2015 Emmanuel Chambon
 //
 
 #include "manager/AssetManager.hh"
 
-AssetManager::AssetManager()
+AssetManager    &AssetManager::instance()
+{
+    static AssetManager *instance = new AssetManager();
+    return *instance;
+}
+
+AssetManager::AssetManager() : _mutex(std::make_shared<std::mutex>())
 {
 	std::vector<std::future<void>>	f;
 
@@ -36,7 +42,7 @@ void 			AssetManager::loadBoardHandler()
 {
 	std::shared_ptr<BoardHandler> handler = std::make_shared<BoardHandler>();
 
-	std::lock_guard<std::mutex> guard(_mutex);
+	std::lock_guard<std::mutex> guard(*_mutex);
 	_assets["boards"] = handler;
 }
 
@@ -44,7 +50,7 @@ void 			AssetManager::loadThemeHandler()
 {
 	std::shared_ptr<ThemeHandler> handler = std::make_shared<ThemeHandler>();
 
-	std::lock_guard<std::mutex> guard(_mutex);
+	std::lock_guard<std::mutex> guard(*_mutex);
 	_assets["themes"] = handler;
 }
 
@@ -52,7 +58,7 @@ void 			AssetManager::loadSoundHandler()
 {
 	std::shared_ptr<SoundHandler> handler = std::make_shared<SoundHandler>();
 
-	std::lock_guard<std::mutex> guard(_mutex);
+	std::lock_guard<std::mutex> guard(*_mutex);
 	_assets["sounds"] = handler;
 }
 

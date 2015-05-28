@@ -5,7 +5,7 @@
 // Login   <paasch_j@epitech.net>
 //
 // Started on  Mon Apr 27 11:27:27 2015 Johan Paasche
-// Last update Wed May 27 01:05:05 2015 Milox Thomas
+// Last update Thu May 28 02:17:09 2015 Emmanuel Chambon
 //
 
 #include	"basics.hh"
@@ -16,22 +16,22 @@
 int	main()
 {
   try {
-    ScoreHandler  test;
-    test.debug();
+    // ScoreHandler  test;
+    // test.debug();
 
-    test << "Dany;3";
-    test << "jon;123";
-    test << "Tom;9999";
-    test.debug();
+    // test << "Dany;3";
+    // test << "jon;123";
+    // test << "Tom;9999";
+    // test.debug();
 
-    test >> "Dany";
-    test.debug();
+    // test >> "Dany";
+    // test.debug();
 
-    BestScores *top = test.top(3);
-    for (BestScores::iterator i = top->begin(); i != top->end(); i++)
-      std::cout << (*i).best << std::endl;
+    // BestScores *top = test.top(3);
+    // for (BestScores::iterator i = top->begin(); i != top->end(); i++)
+    //   std::cout << (*i).best << std::endl;
 
-    UIManager();
+    // UIManager();
 
     Bomberman();
   } catch (std::exception &e) {

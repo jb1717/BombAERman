@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:05:32 2015 Emmanuel Chambon
-// Last update Sun May 24 10:41:57 2015 Emmanuel Chambon
+// Last update Thu May 28 03:29:37 2015 Emmanuel Chambon
 //
 
 #pragma once
@@ -34,9 +34,12 @@
 class AssetManager
 {
 public:
-    AssetManager();
     ~AssetManager ();
-    AssetManager(const AssetManager&) {};
+    static AssetManager     &instance();
+
+private:
+    AssetManager();
+
 public:
     AAsset                  &operator[](std::string const &);
 
@@ -46,8 +49,8 @@ private:
     void                    loadSoundHandler();
 
 private:
+    std::shared_ptr<std::mutex>                            _mutex;
     std::map<std::string, std::shared_ptr<AAsset>>         _assets;
-    mutable std::mutex                                     _mutex;
 };
 
 #endif
