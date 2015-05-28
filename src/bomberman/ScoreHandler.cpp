@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 07:02:15 2015 TommyStarK
-// Last update Wed May 27 01:03:40 2015 Milox Thomas
+// Last update Thu May 28 12:16:51 2015 Emmanuel Chambon
 //
 
 #include "manager/ScoreHandler.hh"

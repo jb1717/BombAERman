@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 07:00:39 2015 TommyStarK
-// Last update Wed May 27 00:59:55 2015 TommyStarK
+// Last update Thu May 28 12:12:43 2015 Emmanuel Chambon
 //
 
 
@@ -21,13 +21,14 @@
 # include <iostream>
 # include <unistd.h>
 # include <stdexcept>
+# include "AAsset.hh"
 # include "rapidjson/rapidjson.h"
 # include "rapidjson/document.h"
 # include "rapidjson/writer.h"
 # include "rapidjson/filereadstream.h"
 # include "rapidjson/filewritestream.h"
 
-class       ScoreHandler
+class       ScoreHandler : public AAsset
 {
 public:
   ScoreHandler();
