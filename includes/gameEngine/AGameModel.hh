@@ -1,7 +1,6 @@
 #ifndef			___AGAME_MODEL_HH___
 # define		___AGAME_MODEL_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 # include		"Model.hh"

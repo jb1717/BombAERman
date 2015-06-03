@@ -52,3 +52,4 @@ bin/
 #*#
 *~
 *.log
+.score.json

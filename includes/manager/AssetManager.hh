@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:05:32 2015 Emmanuel Chambon
-// Last update Thu May 28 12:12:09 2015 Emmanuel Chambon
+// Last update Mon Jun  1 10:25:43 2015 Emmanuel Chambon
 //
 
 #pragma once
@@ -24,6 +24,7 @@
 #include "ThemeHandler.hh"
 #include "SoundHandler.hh"
 #include "ScoreHandler.hh"
+#include "ModelHandler.hh"
 
 #define THEME_HANDLER(x)	reinterpret_cast<ThemeHandler *>(&x)
 #define THEME(x) 			reinterpret_cast<Theme *>(&x)
@@ -49,6 +50,7 @@ private:
     void                    loadThemeHandler();
     void                    loadSoundHandler();
     void                    loadScoreHandler();
+    void                    loadModelHandler();
 
 private:
     std::shared_ptr<std::mutex>                            _mutex;

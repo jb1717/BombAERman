@@ -11,7 +11,6 @@
 #ifndef			___BASIC_BOMB_HH___
 # define		___BASIC_BOMB_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 # include		"ABomb.hh"

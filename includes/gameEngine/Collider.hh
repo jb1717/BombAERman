@@ -11,7 +11,6 @@
 #ifndef			___COLLIDER_HH___
 # define		___COLLIDER_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 class			AGameObject;

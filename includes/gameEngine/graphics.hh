@@ -24,4 +24,6 @@
 # include	<BasicShader.hh>
 # include	<Model.hh>
 
+# define UNUSED __attribute__((unused))
+
 #endif		/* !___GRAPHICS_HH___ */

@@ -11,7 +11,6 @@
 #ifndef			___VIDEO_CONTEXT_HH___
 # define		___VIDEO_CONTEXT_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 class			VideoContext : public gdl::SdlContext

@@ -23,40 +23,34 @@ Bomberman::Bomberman()
 	**
 	*/
 
-	auto toto = AssetManager::instance();
-	auto titi = AssetManager::instance();
-	auto tutu = AssetManager::instance();
-	auto asset = AssetManager::instance();
+	// auto toto = AssetManager::instance();
+	// auto titi = AssetManager::instance();
+	// auto tutu = AssetManager::instance();
+	// auto asset = AssetManager::instance();
+	// //
+	// // // THEMES
+	// auto themes = THEME_HANDLER(asset["themes"]);
 	//
-	// // THEMES
-	auto themes = THEME_HANDLER(asset["themes"]);
-
-	auto __attribute__((unused)) first_theme = THEME((*themes)[(*themes).getThemes()[0]]); 	// TO ACCESS A THEME
-	auto __attribute__((unused)) same_theme = THEME((*themes)["fantasy"]); 					// TO ACCESS A THEME WITH IT NAME
-
-	auto __attribute__((unused)) first_texture_of_first_theme = TEXTURE((*first_theme)[(*first_theme).getTextures()[0]]);
-	auto __attribute__((unused)) same_texture_of_first_theme = TEXTURE((*first_theme)["floor1"]);
-
-	auto __attribute__((unused)) direct_access_first_texture = (*THEME((*THEME_HANDLER(asset["themes"]))["fantasy"]))["floor1"];
-
-	// BOARDS
-	auto __attribute__((unused)) boards = BOARD_HANDLER(asset["boards"]);
-	auto __attribute__((unused)) first_board = BOARD((*boards)[0]);
-
-	auto __attribute__((unused)) direct_access_first_board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
-
-	//SOUNDS
-	auto sounds = SOUND_HANDLER(asset["sounds"]);
-
-	sounds->play((*sounds)["dimmi"]);
-
-	while (sounds->isPlaying());
-
-	/*
-	**
-	**
-	**
-	*/
+	// auto __attribute__((unused)) first_theme = THEME((*themes)[(*themes).getThemes()[0]]); 	// TO ACCESS A THEME
+	// auto __attribute__((unused)) same_theme = THEME((*themes)["fantasy"]); 					// TO ACCESS A THEME WITH IT NAME
+	//
+	// auto __attribute__((unused)) first_texture_of_first_theme = TEXTURE((*first_theme)[(*first_theme).getTextures()[0]]);
+	// auto __attribute__((unused)) same_texture_of_first_theme = TEXTURE((*first_theme)["floor1"]);
+	//
+	// auto __attribute__((unused)) direct_access_first_texture = (*THEME((*THEME_HANDLER(asset["themes"]))["fantasy"]))["floor1"];
+	//
+	// // BOARDS
+	// auto __attribute__((unused)) boards = BOARD_HANDLER(asset["boards"]);
+	// auto __attribute__((unused)) first_board = BOARD((*boards)[0]);
+	//
+	// auto __attribute__((unused)) direct_access_first_board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
+	//
+	// //SOUNDS
+	// auto sounds = SOUND_HANDLER(asset["sounds"]);
+	//
+	// sounds->play((*sounds)["dimmi"]);
+	//
+	// while (sounds->isPlaying());
 
 	//	std::this_thread::sleep_for (std::chrono::seconds(10)); // Debug purpose. Will be removed
 }

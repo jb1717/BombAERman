@@ -1,9 +1,9 @@
 //
 // Engine.hh for Bomberman in /home/tran_0/rendu/cpp_bomberman
-// 
+//
 // Made by David Tran
 // Login   <tran_0@epitech.net>
-// 
+//
 // Started on  Tue May  5 17:48:33 2015 David Tran
 // Last update Sun May 17 15:05:40 2015 David Tran
 //
@@ -18,6 +18,8 @@
 # include "Player.hh"
 # include "EThread.hh"
 # include "GameEnine.hh"
+
+# define UNUSED __attribute__((unused))
 
 class	EThread;
 

@@ -24,7 +24,7 @@
 #include <mutex>
 #include "AObj.hh"
 #include "Board.hh"
-#include "manager/AAsset.hh"
+#include "AAsset.hh"
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"

@@ -11,7 +11,6 @@
 #ifndef			___CAMERA_HH___
 # define		___CAMERA_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 # include		"VideoContext.hh"
 
