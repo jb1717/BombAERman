@@ -10,7 +10,7 @@
 
 #include "Bomb.hh"
 
-Bomb::Bomb(Board &Board, bool Launch, char Range) : AObj(Board), launched(Launch), range(Range)
+Bomb::Bomb(Board &Board, bool Launch, char Range) : AObj(Board), BasicBomb(), launched(Launch), range(Range)
 {
   bombThread = new EThread;
   _type = BOMB;

@@ -13,8 +13,9 @@
 
 # include <cstdlib>
 # include "AObj.hh"
+# include "Cube.hh"
 
-class		Crate : public AObj
+class		Crate : public AObj, public Cube
 {
 public:
   enum	BonusType

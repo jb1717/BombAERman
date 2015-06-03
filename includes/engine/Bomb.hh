@@ -15,10 +15,11 @@
 # include <iostream>
 # include "AObj.hh"
 # include "EThread.hh"
+# include "BasicBomb.hh"
 
 class	EThread;
 
-class	Bomb : public AObj
+class	Bomb : public AObj, public BasicBomb
 {
 public:
   Bomb(Board &Board, bool Launch = false, char Range = 2);

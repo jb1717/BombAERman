@@ -15,13 +15,13 @@ AObj::AObj(Board &board, float x, float y) : _board(board), _x(x), _y(y)
 
 }
 
-void  AObj::setPosition(float x, float y)
+void  AObj::setPos(float x, float y)
 {
   _x = x;
   _y = y;
 }
 
-std::pair<float, float> AObj::getPosition() const
+std::pair<float, float> AObj::getPos() const
 {
   return (std::pair<float, float>(_x, _y));
 }

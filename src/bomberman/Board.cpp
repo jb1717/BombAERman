@@ -45,7 +45,7 @@ bool	Board::placeEntity(float x, float y, entityType type, int id, Direction dir
       if (!obj)
         return (false);
       if (type != PLAYER)
-        obj->setPosition(x, y);
+        obj->setPos(x, y);
       else
 	{
 	  reinterpret_cast<Player *>(obj)->playerSpawn(x, y, dir, id);

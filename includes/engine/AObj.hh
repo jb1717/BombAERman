@@ -28,8 +28,8 @@ public:
   ~AObj();
 
 public:
-	void				setPosition(float x, float y);
-	std::pair<float, float>		getPosition() const;
+	void				setPos(float x, float y);
+	std::pair<float, float>		getPos() const;
 	void				setId(int);
 	int				getId(void) const;
   entityType getType(void) const;

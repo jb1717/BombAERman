@@ -10,7 +10,7 @@
 
 #include "Player.hh"
 
-Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
+Player::Player(Board &Board) : AObj(Board, 0, 0), Character(), _isAlive(true), _speed(1)
 {
   Bomb	*newone = new Bomb(Board);
 
@@ -21,7 +21,7 @@ Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
 
 bool		Player::playerSpawn(float x, float y, Board::Direction direction, int Id)
 {
-  setPosition(x, y);
+  setPos(x, y);
   _dir = direction;
   setId(Id);
   return (true);
@@ -76,13 +76,13 @@ std::vector<Bomb*>::const_iterator	Player::getBombIt() const
 bool	Player::triggerOneBomb()
 {
   std::vector<Bomb *>::const_iterator	it = _bombs.begin();
-  auto	positions = getPosition();
+  auto	positions = getPos();
 
   while (it != _bombs.end())
     {
       if ((*it)->isLaunched() == false)
 	{
-	  (*it)->setPosition(positions.first, positions.second);
+	  (*it)->setPos(positions.first, positions.second);
 	  _bombThread->addWork(run_bomb, (*it));
 	  _board.placeEntity(_x, _y, (*it));
 	  return (true);

@@ -17,7 +17,7 @@
 # include "Board.hh"
 # include "Player.hh"
 # include "EThread.hh"
-# include "GameEnine.hh"
+# include "GameEngine.hh"
 
 # define UNUSED __attribute__((unused))
 
