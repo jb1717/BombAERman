@@ -11,7 +11,9 @@
 #include "Engine.hh"
 
 Engine::Engine(Board &board, UNUSED size_t x, UNUSED size_t y) : _board(board)
-{}
+{
+  engine.initialize();
+}
 
 Engine::~Engine()
 {}

@@ -17,6 +17,7 @@
 # include "Board.hh"
 # include "Player.hh"
 # include "EThread.hh"
+# include "GameEnine.hh"
 
 class	EThread;
 
@@ -31,6 +32,7 @@ public:
   Board		&getBoard() const;
 private:
   Board				&_board;
+  GameEngine			engine;
 };
 
 void	*launch_player(void *);
