@@ -11,7 +11,6 @@
 #ifndef			___AGAMEOBJECT_HH___
 # define		___AGAMEOBJECT_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 # include		"Collider.hh"
 

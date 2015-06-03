@@ -16,8 +16,7 @@
 # include   <thread>
 # include   <chrono>
 # include   <stdexcept>
-# include   "basics.hh"
-# include   "manager/AssetManager.hh"
+# include   "AssetManager.hh"
 # include   "gameEngine/graphics.hh"
 # include   "gameEngine/VideoContext.hh"
 

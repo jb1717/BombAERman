@@ -11,7 +11,6 @@
 #ifndef			____ABOMB_HH___
 # define		____ABOMB_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 # include		"AGameObject.hh"

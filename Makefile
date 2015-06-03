@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Wed May 27 01:00:44 2015 Milox Thomas
+## Last update Mon Jun  1 09:44:47 2015 Emmanuel Chambon
 ##
 
 GRAPHICALGAME	=	yes
@@ -38,6 +38,7 @@ CFLAGS		=	-W -Wall -Wextra -ansi -std=c++11	\
 			-I $(INCLUDE_DIR)			\
 			-I $(AI_INC_DIR)			\
 			-I $(GRAPHICS_INC_DIR)			\
+			-I $(MANAGER_INC_DIR)			\
 			-I $(BOMBERMAN_INC_DIR)			\
 
 MAKEFLAGS	+=	--warn-undefined-variables		\
@@ -73,7 +74,7 @@ AI_INC_DIR		=	$(addprefix $(INCLUDE_DIR), ai)
 AI_SRCS			=	$(addprefix $(AI_SRC_DIR), $(AI_SRC))
 AI_OBJS			=	$(addsuffix .o, $(basename $(subst $(AI_SRC_DIR), $(AI_OBJ_DIR), $(AI_SRCS))))
 
-AI_SRC			=	\
+AI_SRC			=				\
 				exemple.cpp		\
 
 
@@ -88,7 +89,7 @@ GRAPHICS_INC_DIR	=	$(addprefix $(INCLUDE_DIR), gameEngine)
 GRAPHICS_SRCS		=	$(addprefix $(GRAPHICS_SRC_DIR), $(GRAPHICS_SRC))
 GRAPHICS_OBJS		=	$(addsuffix .o, $(basename $(subst $(GRAPHICS_SRC_DIR), $(GRAPHICS_OBJ_DIR), $(GRAPHICS_SRCS))))
 
-GRAPHICS_SRC		=	\
+GRAPHICS_SRC		=				\
 				VideoContext.cpp	\
 				AGameObject.cpp		\
 				Collider.cpp		\
@@ -108,6 +109,25 @@ $(BOMBERMAN_SRC) += main.cpp
 endif
 
 #########################################################
+#		   ASSETMANAGER				#
+#########################################################
+
+MANAGER_SRC_DIR		=	$(addprefix $(SRC_DIR), manager/)
+MANAGER_OBJ_DIR		=	$(addprefix $(OBJ_DIR), manager/)
+MANAGER_INC_DIR		=	$(addprefix $(INCLUDE_DIR), manager)
+MANAGER_SRCS		=	$(addprefix $(MANAGER_SRC_DIR), $(MANAGER_SRC))
+MANAGER_OBJS		=	$(addsuffix .o, $(basename $(subst $(MANAGER_SRC_DIR), $(MANAGER_OBJ_DIR), $(MANAGER_SRCS))))
+
+MANAGER_SRC		=				\
+				Theme.cpp		\
+				ThemeHandler.cpp	\
+				SoundHandler.cpp	\
+				AssetManager.cpp	\
+				BoardHandler.cpp	\
+				ScoreHandler.cpp	\
+				ModelHandler.cpp	\
+
+#########################################################
 #		   GAME  CORE				#
 #########################################################
 
@@ -117,12 +137,7 @@ BOMBERMAN_INC_DIR	=	$(addprefix $(INCLUDE_DIR), engine)
 BOMBERMAN_SRCS		=	$(addprefix $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_SRC))
 BOMBERMAN_OBJS		=	$(addsuffix .o, $(basename $(subst $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_OBJ_DIR), $(BOMBERMAN_SRCS))))
 
-BOMBERMAN_SRC		=	\
-				Theme.cpp	\
-				ThemeHandler.cpp	\
-				SoundHandler.cpp	\
-				AssetManager.cpp	\
-				BoardHandler.cpp	\
+BOMBERMAN_SRC		=				\
 				Bomberman.cpp		\
 				Bomb.cpp		\
 				Player.cpp		\
@@ -136,25 +151,25 @@ BOMBERMAN_SRC		=	\
 				EThreadPool.cpp		\
 				EMutex.cpp		\
 				Explosion.cpp		\
-				LauncherUI.cpp	\
-				UIManager.cpp	\
+				LauncherUI.cpp		\
+				UIManager.cpp		\
 				PlayUI.cpp		\
 				SettingsUI.cpp		\
-				AUI.cpp	\
-				ScoreHandler.cpp	\
+				AUI.cpp			\
 				PauseUI.cpp		\
 				main.cpp		\
-
 
 BOMBERMAN		=	bomberman
 PRO			=	$(addprefix $(BINARY_DIR), $(BOMBERMAN))
 
 OBJS			=	$(AI_OBJS)		\
 				$(GRAPHICS_OBJS)	\
+				$(MANAGER_OBJS)		\
 				$(BOMBERMAN_OBJS)
 
 SRCS			=	$(AI_SRCS)		\
 				$(GRAPHICS_SRCS)	\
+				$(MANAGER_SRCS)		\
 				$(BOMBERMAN_SRCS)
 
 
@@ -167,6 +182,7 @@ FIRST		:=	$(shell test -d $(BINARY_DIR)		|| mkdir $(BINARY_DIR))		\
 			$(shell test -d $(OBJ_DIR)		|| mkdir $(OBJ_DIR))		\
 			$(shell test -d $(AI_OBJ_DIR)		|| mkdir $(AI_OBJ_DIR))		\
 			$(shell test -d $(GRAPHICS_OBJ_DIR)	|| mkdir $(GRAPHICS_OBJ_DIR))	\
+			$(shell test -d $(MANAGER_OBJ_DIR)	|| mkdir $(MANAGER_OBJ_DIR))	\
 			$(shell test -d $(BOMBERMAN_OBJ_DIR)	|| mkdir $(BOMBERMAN_OBJ_DIR))
 
 all		:

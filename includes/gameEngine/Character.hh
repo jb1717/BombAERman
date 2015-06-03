@@ -11,7 +11,6 @@
 #ifndef			___CHARACTER_HH___
 # define		___CHARACTER_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 # include		"AGameModel.hh"

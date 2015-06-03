@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Sun May 24 08:35:43 2015 Emmanuel Chambon
-// Last update Sun May 24 17:58:12 2015 Emmanuel Chambon
+// Last update Mon Jun  1 09:49:18 2015 Emmanuel Chambon
 //
 
 #pragma once
@@ -20,7 +20,7 @@
 #include <mutex>
 #include <regex>
 #include <dirent.h>
-#include "manager/AAsset.hh"
+#include "AAsset.hh"
 #include "fmod/fmod.hpp"
 
 class SoundHandler : public AAsset

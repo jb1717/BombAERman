@@ -11,7 +11,8 @@
 #ifndef			___GAMEENGINE_HH___
 # define		___GAMEENGINE_HH___
 
-# include		"basics.hh"
+# include       <fstream>
+
 # include		"graphics.hh"
 
 # include		"VideoContext.hh"

@@ -11,7 +11,6 @@
 #ifndef			___GEOMETRIC_HH___
 # define		___GEOMETRIC_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 # include		"AGameObject.hh"

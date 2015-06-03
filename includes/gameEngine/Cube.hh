@@ -11,7 +11,6 @@
 #ifndef			___CUBE_HH___
 # define		___CUBE_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 # include		"AGameObject.hh"

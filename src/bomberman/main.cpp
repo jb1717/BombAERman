@@ -8,14 +8,15 @@
 // Last update Thu May 28 02:17:09 2015 Emmanuel Chambon
 //
 
-#include	"basics.hh"
 #include	"Bomberman.hh"
 #include	"UIManager/UIManager.hh"
-#include	"manager/ScoreHandler.hh"
+#include    "AssetManager.hh"
 
 int	main()
 {
   try {
+    AssetManager::instance();
+
     // ScoreHandler  test;
     // test.debug();
 
