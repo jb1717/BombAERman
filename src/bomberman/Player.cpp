@@ -10,7 +10,7 @@
 
 #include "Player.hh"
 
-Player::Player(Board &Board) : AObj(Board, 0, 0), Character(), _isAlive(true), _speed(1)
+Player::Player(Board &Board) : AObj(Board, 0, 0), Character(), _isAlive(true)
 {
   Bomb	*newone = new Bomb(Board);
 
@@ -101,19 +101,6 @@ void	Player::powerUpRange()
       (*it)->setRange((*it)->getRange() + 1);
       it++;
     }
-}
-
-//
-// PowerUp Functions
-//
-char	Player::getSpeed() const
-{
-  return (_speed);
-}
-
-void	Player::setSpeed(char const &Speed)
-{
-  _speed = Speed;
 }
 
 //
