@@ -26,6 +26,8 @@ public:
 
 public:
   virtual void		update(gdl::Clock const& clock, gdl::Input &input);
+  virtual void		update(gdl::Clock const& clock, gdl::Input &input, Camera const& camera);
+  virtual void		update(gdl::Input &input, Camera const& camera);
 
 };
 

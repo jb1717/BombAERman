@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Thu May 21 20:39:01 2015 Jamais
-// Last update Thu May 21 21:20:45 2015 Jamais
+// Last update Wed Jun  3 19:28:14 2015 Jamais
 //
 
 #ifndef			___COLLIDER_HH___

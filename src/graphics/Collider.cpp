@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Thu May 21 20:46:52 2015 Jamais
-// Last update Fri May 22 01:49:00 2015 Jamais
+// Last update Mon May 25 07:24:14 2015 Jamais
 //
 
 #include		"Collider.hh"
@@ -61,13 +61,13 @@ bool			Collider::overlap(glm::vec3 const& refPosition, glm::vec3 const& refSize,
   glm::vec3		result(0, 0, 0);
 
   if ((down1.x > down2.x && down1.x < up2.x) || (up1.x > down2.x && up1.x < up2.x))
-      result.x = 1.0f;
+    result.x = 1.0f;
   if ((down1.y > down2.y && down1.y < up2.y) || (up1.y > down2.y && up1.y < up2.y))
-      result.y = 1.0f;
+    result.y = 1.0f;
   if ((down1.z > down2.z && down1.z < up2.z) || (up1.z > down2.z && up1.z < up2.z))
-      result.z = 1.0f;
+    result.z = 1.0f;
   if ((targetPosition.x > down1.x && targetPosition.x < up1.x) || (refPosition.x > down2.x && refPosition.x < up2.x))
-       result.x = 1.0f;
+    result.x = 1.0f;
   if ((targetPosition.y > down1.y && targetPosition.y < up1.y) || (refPosition.y > down2.y  && refPosition.y < up2.y))
     result.y = 1.0f;
   if ((targetPosition.z > down1.z && targetPosition.z < up1.z) || (refPosition.z > down2.z && refPosition.z < up2.z))

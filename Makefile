@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Mon Jun  1 09:44:47 2015 Emmanuel Chambon
+## Last update Thu Jun  4 20:02:43 2015 Jamais
 ##
 
 GRAPHICALGAME	=	yes
@@ -14,7 +14,7 @@ GRAPHICALGAME	=	yes
 #			BASICS				#
 #########################################################
 
-CC	=	/usr/bin/g++-4.9
+CC	=	g++
 RM	=	rm -f
 RMDIR	=	rm -rf
 ECHO	=	echo -ne
@@ -90,17 +90,22 @@ GRAPHICS_SRCS		=	$(addprefix $(GRAPHICS_SRC_DIR), $(GRAPHICS_SRC))
 GRAPHICS_OBJS		=	$(addsuffix .o, $(basename $(subst $(GRAPHICS_SRC_DIR), $(GRAPHICS_OBJ_DIR), $(GRAPHICS_SRCS))))
 
 GRAPHICS_SRC		=				\
-				VideoContext.cpp	\
+				ABomb.cpp		\
+				AGameModel.cpp		\
 				AGameObject.cpp		\
+				BasicBomb.cpp		\
+				Camera.cpp		\
+				Character.cpp		\
 				Collider.cpp		\
+				ComplexObject.cpp	\
 				Cube.hpp		\
 				GameEngine.cpp		\
-				AGameModel.cpp		\
-				Camera.cpp		\
-				ABomb.cpp		\
-				BasicBomb.cpp		\
-				Character.cpp		\
-				# main.cpp
+				GraphicString.cpp	\
+				Geometric.cpp		\
+				GeometryFactory.cpp	\
+				Skybox.cpp		\
+				VideoContext.cpp	\
+				main.cpp
 
 ifeq ($(GRAPHICALGAME),yes)
 $(GRAPHICS_SRC) += main.cpp
@@ -157,7 +162,7 @@ BOMBERMAN_SRC		=				\
 				SettingsUI.cpp		\
 				AUI.cpp			\
 				PauseUI.cpp		\
-				main.cpp		\
+#				main.cpp		\
 
 BOMBERMAN		=	bomberman
 PRO			=	$(addprefix $(BINARY_DIR), $(BOMBERMAN))

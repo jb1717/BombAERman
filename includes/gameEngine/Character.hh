@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Thu May 21 01:55:08 2015 Jamais
-// Last update Fri May 22 01:58:34 2015 Jamais
+// Last update Wed Jun  3 19:28:14 2015 Jamais
 //
 
 #ifndef			___CHARACTER_HH___
@@ -26,7 +26,11 @@ public:
 
 public:
   void			update(gdl::Clock const& clock, gdl::Input& input);
+  void			update(gdl::Input& input, Camera const& camera);
+  void			update(gdl::Clock const& clock, gdl::Input& input, Camera const& camera);
 
+public:
+  glm::mat4		getTransformation() const;
 };
 
 #endif			/* !___CHARACTER_HH___ */

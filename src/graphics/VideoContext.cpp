@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 02:17:07 2015 Jamais
-// Last update Sun May 17 03:05:50 2015 Jamais
+// Last update Thu Jun  4 19:57:52 2015 Jamais
 //
 
 #include	"VideoContext.hh"
@@ -22,6 +22,14 @@ VideoContext::~VideoContext()
 bool		VideoContext::init()
 {
   if (start(_screenWidth, _screenHeight, _windowName) == false)
+    return false;
+  glEnable(GL_DEPTH_TEST);
+  return true;
+}
+
+bool		VideoContext::init(int initFlags, int windowsFlags)
+{
+  if (start(_screenWidth, _screenHeight, _windowName, initFlags, windowsFlags) == false)
     return false;
   glEnable(GL_DEPTH_TEST);
   return true;

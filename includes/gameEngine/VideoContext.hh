@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:54:03 2015 Jamais
-// Last update Sun May 17 02:25:47 2015 Jamais
+// Last update Thu Jun  4 19:58:25 2015 Jamais
 //
 
 #ifndef			___VIDEO_CONTEXT_HH___
@@ -26,6 +26,7 @@ public:
 
 public:
   bool			init();
+  bool			init(int initFlags/* = SDL_INIT_VIDEO*/, int windowsFlags/* = SDL_WINDOW_OPENGL*/);
   void			updateContext(gdl::Clock &clock, gdl::Input& input) const;
 
 public:

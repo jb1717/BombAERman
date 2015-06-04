@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Mon May 18 17:47:06 2015 Jamais
-// Last update Mon May 18 17:55:31 2015 Jamais
+// Last update Wed Jun  3 19:28:13 2015 Jamais
 //
 
 #ifndef			___GEOMETRIC_HH___
@@ -20,7 +20,15 @@ class			Geometric : public AGameObject
 protected:
   gdl::Texture		_texture;
   gdl::Geometry		_geometry;
+
+protected:
   float			_speed;
+
+protected:
+  GLenum		_target;
+  GLenum		_pname;
+  GLint			_param;
+  bool			_textureActive;
 
 public:
   Geometric();
@@ -33,7 +41,7 @@ public:
   Geometric&		operator=(AGameObject const& model);
 
 public:
-  float		getSpeed() const;
+  float			getSpeed() const;
 
 public:
   virtual bool		initialize();

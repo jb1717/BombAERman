@@ -5,10 +5,12 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Thu May 21 20:35:59 2015 Jamais
-// Last update Fri May 22 02:00:33 2015 Jamais
+// Last update Sun May 31 23:19:12 2015 Jamais
 //
 
 #include		"Character.hh"
+#include		"GameEngine.hh"
+#include		<cmath>
 
 Character::Character() : AGameModel()
 {
@@ -38,20 +40,56 @@ Character::~Character()
 
 void			Character::update(UNUSED gdl::Clock const& clock, UNUSED gdl::Input& input)
 {
-  if (input.getKey(SDLK_z))
-    translate(glm::vec3(0, 0, 0.01 * _speed));
+
+}
+
+void			Character::update(UNUSED gdl::Input& input, UNUSED Camera const& camera)
+{
+
+}
+
+void			Character::update(UNUSED gdl::Clock const& clock, gdl::Input& input, Camera const& camera)
+{
+  float		angle = camera.getRotation().y * M_PI / 180;
+
+   if (input.getKey(SDLK_z))
+    {
+      _rotation.y = -1 * camera.getRotation().y;
+      translate(glm::vec3(-sin(angle) * _speed, 0, cos(angle) * _speed));
+    }
   if (input.getKey(SDLK_s))
-    translate(glm::vec3(0, 0, -0.01 * _speed));
+    {
+      _rotation.y = 180 - camera.getRotation().y;
+      translate(glm::vec3(sin(angle) * _speed, 0, -cos(angle) * _speed));
+    }
   if (input.getKey(SDLK_q))
-    translate(glm::vec3(0.01 * _speed, 0, 0));
+    {
+      _rotation.y = 90.0 - camera.getRotation().y;
+      translate(glm::vec3(cos(angle) * _speed, 0, sin(angle) * _speed));
+    }
   if (input.getKey(SDLK_d))
-    translate(glm::vec3(-0.01 * _speed, 0, 0));
-  // if (input.getKey(SDLK_z))
-  //   move(glm::vec3(0, 0, 0.01 * _speed));
-  // if (input.getKey(SDLK_s))
-  //   move(glm::vec3(0, 0, -0.01 * _speed));
-  // if (input.getKey(SDLK_q))
-  //   move(glm::vec3(0.01 * speed, 0, 0));
-  // if (input.getKey(SDLK_d))
-  //   move(glm::vec3(-0.01 * speed, 0, 0));
+    {
+      _rotation.y = 270.0 - camera.getRotation().y;
+      translate(glm::vec3(-cos(angle) * _speed, 0, -sin(angle) * _speed));
+    }
+  if (input.getKey(SDLK_a))
+    {
+      _rotation.y = camera.getRotation().y + 45.0;
+      translate(glm::vec3(cos(camera.getRotation().y + 45.0) * _speed, 0, sin(camera.getRotation().y + 45) * _speed));
+    }
+  // if (input.getKey(SDLK_e))
+  //   {
+  //     _rotation.y = 45.0 - camera.getRotation().y;
+  //     translate(glm::vec3(cos(45.0) * _speed, 0, sin(45.0) * _speed));
+  //   }
+}
+
+glm::mat4			Character::getTransformation() const
+{
+  glm::mat4			model(1.0f);
+
+  model = glm::translate(model, _position);
+  model = glm::rotate(model, _rotation.y, glm::vec3(0, 1, 0));
+  model = glm::scale(model, _scale);
+  return model;
 }

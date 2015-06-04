@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 06:14:11 2015 Jamais
-// Last update Thu May 21 04:09:54 2015 Jamais
+// Last update Sun May 24 03:41:04 2015 Jamais
 //
 
 #include	"Camera.hh"
@@ -13,7 +13,7 @@
 Camera::Camera(int Id, glm::vec3 const& position, glm::vec3 const& target, glm::vec3 const& focus) :
   _camId(Id), _position(position), _target(target), _focus(focus),
   _rotation(0, 0, 0), _zoom(1, 1, 1), _spin(1, 0, 1),
-  _fovy(60.0f), _ratio(800.0f / 600.0f), _zNear(0.001f), _zFar(10000.0f)
+  _fovy(60.0f), _ratio(800.0f / 600.0f), _zNear(0.001f), _zFar(110000.0f)
 {
 
 }
@@ -39,7 +39,7 @@ void		Camera::update(UNUSED gdl::Clock const& clock, gdl::Input& input)
     rotate(glm::vec3(0, 1, 0), static_cast<float>(input.getMouseDelta().x));
   if (input.getKey(SDL_BUTTON_RIGHT))
     {
-      glm::vec3	delta(input.getMouseDelta().x * -0.1, 0, input.getMouseDelta().y * 0.1);
+      glm::vec3	delta(input.getMouseDelta().x * -0.1, input.getMouseDelta().y * 0.1, 0);
       _target += delta;
     }
   if (input.getKey(SDLK_KP_PLUS))
@@ -67,10 +67,6 @@ void		Camera::refreshPosition()
   _transformationMatrix = glm::rotate(_transformationMatrix, _rotation.x, glm::vec3(1, 0, 0));
   _transformationMatrix = glm::rotate(_transformationMatrix, _rotation.y, glm::vec3(0, 1, 0));
   _transformationMatrix = glm::rotate(_transformationMatrix, _rotation.z, glm::vec3(0, 0, 1));
-  // _transformationMatrix = glm::translate(_transformationMatrix, glm::vec3(0, 0, 0));
-  //  _transformationMatrix = glm::translate(_transformationMatrix, glm::vec3(-1 * _position.x, -1 * _position.y, -1 * _position.y));
-  //  _transformationMatrix = glm::rotate(_transformationMatrix, 0.20f, _spin);
-  //  _transformationMatrix = glm::translate(_transformationMatrix, _position);
 }
 
 int		Camera::getId() const
