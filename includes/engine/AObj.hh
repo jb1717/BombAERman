@@ -22,24 +22,30 @@ enum entityType
 
 class	Board;
 
-class AObj : public AGameObject
+class AObj
 {
 public:
   AObj(Board &board, float x = 0, float y = 0);
   ~AObj();
 
 public:
-	void				setPos(float x, float y);
-	std::pair<float, float>		getPos() const;
-	void				setId(int);
-	int				getId(void) const;
-  entityType getType(void) const;
+  void				setPos(float x, float y);
+  std::pair<float, float>	getPos() const;
+  void				setId(int);
+  int				getId(void) const;
+public:
+  AGameObject			*getGameObj() const;
+  void				setGameObj(AGameObject *);
+public:
+  entityType			getType(void) const;
+
 protected:
   Board 	&_board;
   entityType	_type;
   float		_x;
   float		_y;
   int		_id;
+  AGameObject	*_gameObj;
 };
 
 #endif // !AOBJ

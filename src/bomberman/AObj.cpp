@@ -10,8 +10,10 @@
 
 #include "AObj.hh"
 
-AObj::AObj(Board &board, float x, float y) : _board(board), AGameObject(), _x(x), _y(y)
-{}
+AObj::AObj(Board &board, float x, float y) : _board(board), _x(x), _y(y)
+{
+  _gameObj = NULL;
+}
 
 void  AObj::setPos(float x, float y)
 {
@@ -39,6 +41,15 @@ entityType AObj::getType(void) const
 	return (_type);
 }
 
+AGameObject	*AObj::getGameObj() const
+{
+  return (_gameObj);
+}
+
+void		AObj::setGameObj(AGameObject *newone)
+{
+  _gameObj = newone;
+}
 
 AObj::~AObj()
 {

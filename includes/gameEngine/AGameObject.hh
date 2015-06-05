@@ -43,7 +43,7 @@ public:
   virtual bool		initialize();
   virtual void		update(gdl::Clock const& clock, gdl::Input &input);
   virtual void		update(Camera const& camera, gdl::Input& input);
-  virtual void		draw(gdl::AShader& shader, gdl::Clock const& clock) {}
+  virtual void		draw(UNUSED gdl::AShader& shader, UNUSED gdl::Clock const& clock) {}
 
 public:
   virtual void	       	translate(glm::vec3 const& translation);
