@@ -5,16 +5,22 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 15 21:29:13 2015 Jamais
-// Last update Wed May 20 22:13:20 2015 Milox Thomas
+// Last update Fri Jun  5 19:16:13 2015 Jamais
 //
 
 #include	<cstdlib>
 #include	"GameEngine.hh"
 #include	"Camera.hh"
+#include	"AssetManager.hh"
+
 
 int	main()
 {
-// On cree son engine
+  V = VideoContext::instanciate();
+  V->init();
+  AssetManager::instance();
+
+
 GameEngine engine;
 if (engine.initialize() == false)
   {

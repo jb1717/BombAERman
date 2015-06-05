@@ -5,10 +5,16 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 02:17:07 2015 Jamais
-// Last update Thu Jun  4 19:57:52 2015 Jamais
+// Last update Fri Jun  5 18:40:17 2015 Jamais
 //
 
 #include	"VideoContext.hh"
+
+VideoContext*	VideoContext::instanciate(unsigned int screenWidth, unsigned int screenHeight, const std::string windowName)
+{
+  static VideoContext	*vContext = new VideoContext(screenWidth, screenHeight, windowName);
+  return vContext;
+}
 
 VideoContext::VideoContext(unsigned int screenWidth, unsigned int screenHeight, const std::string windowName) :
   _screenWidth(screenWidth), _screenHeight(screenHeight), _windowName(windowName)
@@ -23,7 +29,7 @@ bool		VideoContext::init()
 {
   if (start(_screenWidth, _screenHeight, _windowName) == false)
     return false;
-  glEnable(GL_DEPTH_TEST);
+  // glEnable(GL_DEPTH_TEST);
   return true;
 }
 

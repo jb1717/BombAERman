@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:05:32 2015 Emmanuel Chambon
-// Last update Wed Jun  3 12:08:58 2015 Emmanuel Chambon
+// Last update Fri Jun  5 07:57:51 2015 Jamais
 //
 
 #pragma once
@@ -22,6 +22,8 @@
 #include "AGameModel.hh"
 #include "AAsset.hh"
 #include "VideoContext.hh"
+
+extern VideoContext *V;
 
 class ModelHandler : public AAsset
 {

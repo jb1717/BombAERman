@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 23 01:13:10 2015 Jamais
-// Last update Tue May 26 11:21:17 2015 Jamais
+// Last update Fri Jun  5 19:21:13 2015 Jamais
 //
 
 #include		"Skybox.hh"

@@ -5,17 +5,18 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Mon Jun  1 10:02:54 2015 Emmanuel Chambon
-// Last update Wed Jun  3 13:43:20 2015 Emmanuel Chambon
+// Last update Fri Jun  5 18:51:16 2015 Jamais
 //
 
 #include "ModelHandler.hh"
 
 ModelHandler::ModelHandler()
 {
-	_videoContext = new VideoContext(1920, 1280, "Afghanistan : 1994 ...");
+	// _videoContext = new VideoContext(1920, 1280, "Afghanistan : 1994 .1..");
 
-	_videoContext->init();
-
+	// _videoContext->init();
+  _videoContext = VideoContext::instanciate();
+	// V = _videoContext;
 	load();
 }
 
@@ -42,7 +43,9 @@ void ModelHandler::load()
 	} else {
 		throw std::runtime_error("Cannot open models folder.");
 	}
-	delete _videoContext;
+
+	//	V = _videoContext;
+	//	delete _videoContext;
 }
 
 void ModelHandler::loadModel(std::string const &path, std::string const &name)

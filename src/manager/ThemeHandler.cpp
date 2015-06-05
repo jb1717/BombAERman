@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 21:07:26 2015 Emmanuel Chambon
-// Last update Sun May 24 05:13:36 2015 Emmanuel Chambon
+// Last update Fri Jun  5 07:48:53 2015 Jamais
 //
 
 #include "ThemeHandler.hh"
@@ -44,7 +44,7 @@ void ThemeHandler::load()
 		}
 		closedir (dir);
 	} else {
-		throw std::runtime_error("Cannot themes folder.");
+		throw std::runtime_error("Cannot close themes folder.");
 	}
 }
 

@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 06:14:11 2015 Jamais
-// Last update Sun May 24 03:41:04 2015 Jamais
+// Last update Fri Jun  5 19:26:54 2015 Jamais
 //
 
 #include	"Camera.hh"

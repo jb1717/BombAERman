@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 16 20:46:07 2015 Jamais
-// Last update Wed Jun  3 19:28:14 2015 Jamais
+// Last update Fri Jun  5 05:18:13 2015 Jamais
 //
 
 #ifndef			___AGAMEOBJECT_HH___
@@ -42,6 +42,7 @@ public:
 public:
   virtual bool		initialize();
   virtual void		update(gdl::Clock const& clock, gdl::Input &input);
+  virtual void		update(gdl::Clock const& clock, gdl::Input &input, Camera const& camera);
   virtual void		update(Camera const& camera, gdl::Input& input);
   virtual void		draw(UNUSED gdl::AShader& shader, UNUSED gdl::Clock const& clock) {}
 

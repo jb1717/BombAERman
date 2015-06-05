@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 22:06:02 2015 TommyStarK
-// Last update Wed May 27 01:06:22 2015 Milox Thomas
+// Last update Fri Jun  5 19:04:00 2015 Jamais
 //
 
 #include "UIManager/LauncherUI.hh"
@@ -80,11 +80,12 @@ void                       LauncherUI::launch()
 {
 
   _isRunning = true;
-  _window = new VideoContext(_width, _height, _name);
+  _window = VideoContext::instanciate();
+  // _window = new VideoContext(_width, _height, _name);
   _window->setScreenWidth(_width);
   _window->setScreenHeight(_height);
-  if (!_window->init())
-    throw std::runtime_error("(LauncherUI::)launch - init VideoContext failed.");
+  // if (!_window->init())
+  //   throw std::runtime_error("(LauncherUI::)launch - init VideoContext failed.");
   this->setUpDisplay();
 }
 

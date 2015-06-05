@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:54:03 2015 Jamais
-// Last update Thu Jun  4 19:58:25 2015 Jamais
+// Last update Fri Jun  5 18:41:07 2015 Jamais
 //
 
 #ifndef			___VIDEO_CONTEXT_HH___
@@ -21,8 +21,20 @@ protected:
   std::string		_windowName;
 
 public:
-  VideoContext(unsigned int screenWidth = 800, unsigned int screenHeight = 600, const std::string windowName = "");
+  static VideoContext* 	instanciate(
+				    unsigned int screenWidth = 1600,
+				    unsigned int screenHeight = 900,
+				    const std::string windowName = "Molotov Race"
+				    );
   ~VideoContext();
+
+private:
+  VideoContext(
+	       unsigned int screenWidth = 800,
+	       unsigned int screenHeight = 600,
+	       const std::string windowName = ""
+	       );
+
 
 public:
   bool			init();

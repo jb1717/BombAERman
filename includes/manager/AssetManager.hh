@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:05:32 2015 Emmanuel Chambon
-// Last update Mon Jun  1 10:25:43 2015 Emmanuel Chambon
+// Last update Fri Jun  5 19:35:32 2015 Jamais
 //
 
 #pragma once
@@ -25,6 +25,8 @@
 #include "SoundHandler.hh"
 #include "ScoreHandler.hh"
 #include "ModelHandler.hh"
+
+extern gdl::Texture*		lol;
 
 #define THEME_HANDLER(x)	reinterpret_cast<ThemeHandler *>(&x)
 #define THEME(x) 			reinterpret_cast<Theme *>(&x)

@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:15:24 2015 Jamais
-// Last update Wed Jun  3 19:28:13 2015 Jamais
+// Last update Fri Jun  5 07:57:22 2015 Jamais
 //
 
 #ifndef			___GAMEENGINE_HH___
@@ -17,6 +17,10 @@
 # include		"AGameObject.hh"
 # include		"AGameModel.hh"
 # include		"Camera.hh"
+# include		"Board.hh"
+# include		"AObj.hh"
+
+extern VideoContext	*V;
 
 # define		FRAGMENT_SHADER		"shaders/fragmentShader"
 # define		VERTEX_SHADER		"shaders/vertexShader"
@@ -40,6 +44,10 @@ public:
   bool			getEvent();
   bool			Animation();
   AGameObject*		findObject(int, int, int);
+
+public:
+  void			updateCell(std::vector<AObj *>& cellVector);
+  void			drawCell(std::vector<AObj *>& cellVector);
 
 public:
   void			setVideoContext(VideoContext* const videoContext);

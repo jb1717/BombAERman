@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 16 20:52:10 2015 Jamais
-// Last update Sun May 31 23:16:33 2015 Jamais
+// Last update Fri Jun  5 05:17:34 2015 Jamais
 //
 
 #include	"AGameObject.hh"
@@ -57,6 +57,9 @@ void		AGameObject::setTexture(UNUSED gdl::Texture const& texture) {}
 bool		AGameObject::initialize() { return true; }
 
 void		AGameObject::update(UNUSED gdl::Clock const& clock, UNUSED gdl::Input &input)
+{}
+
+void		AGameObject::update(UNUSED gdl::Clock const& clock, UNUSED gdl::Input &input, UNUSED Camera const& camera)
 {}
 
 void		AGameObject::update(UNUSED Camera const& camera, UNUSED gdl::Input &input)
