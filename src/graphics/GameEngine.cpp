@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Fri Jun  5 21:41:04 2015 Jamais
+// Last update Fri Jun  5 21:45:33 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -72,18 +72,12 @@ bool		GameEngine::createMap(UNUSED std::string const& confFilePath)
   gdl::Texture	*wall = new gdl::Texture();
 
   auto	asset = AssetManager::instance();
-  // int	y;
-  // int	ys;
-  // int	x;
-  // int	i = 0;
-
 
   texture->load(CRATE1);
-  //  texture->load("./assets/Textures/transparencyTag.tga");
   secretCrate->load(CRATE2);
   wall->load(CRATE1);
-  floor = &(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["floor"];
-  std::cout << "WIDTH X HEIGHT" << floor->getWidth() << " " << floor->getHeight() << " ===> N°" << floor->getId() << std::endl;
+  // floor = &(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["floor"];
+  // std::cout << "WIDTH X HEIGHT" << floor->getWidth() << " " << floor->getHeight() << " ===> N°" << floor->getId() << std::endl;
   floor = lol;
   std::cout << "WIDTH X HEIGHT" << floor->getWidth() << " " << floor->getHeight() << " ===> N°" << floor->getId() << std::endl;
 
