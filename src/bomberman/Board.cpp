@@ -235,6 +235,41 @@ void	Board::removePlayer(int id)
   }
 }
 
+bool		Board::checkOneCollision(std::vector<AObj *> field, AObj *player)
+{
+  auto		it = field.begin();
+  AGameObject	*playObj = player->getGameObj();
+
+  while (it != field.end())
+    {
+      if (player->getId() != (*it)->getId())
+	{
+	  if (playObj->collide((*(*it)->getGameObj())))
+	    return (true);
+	}
+      it++;
+    }
+  return (false);
+}
+
+bool	Board::collideAround(AObj *player, size_t x, size_t y)
+{
+  bool	collider = false;
+
+  if (y > 0)
+    collider = (checkOneCollision(_board[(y - 1) * _xLength + x], player)) ? true :
+      ((x > 0) ? ((checkOneCollision(_board[(y - 1) * _xLength + x - 1], player)) ? true :
+		  (x < (_xLength - 1)) ? ((checkOneCollision(_board[(y - 1) * _xLength + x + 1], player)) ? true : false) : false) : false);
+  if (!collider && y < (_yLength - 1))
+    collider = (checkOneCollision(_board[(y + 1) * _xLength + x], player)) ? true :
+      ((x > 0) ? ((checkOneCollision(_board[(y + 1) * _xLength + x - 1], player)) ? true :
+		  (x < (_xLength - 1)) ? ((checkOneCollision(_board[(y + 1) * _xLength + x + 1], player)) ? true : false) : false) : false);
+  if (!collider)
+    collider = (x > 0) ? ((checkOneCollision(_board[(y) * _xLength + x - 1], player)) ? true :
+			  ((x < (_xLength - 1)) ? checkOneCollision(_board[(y) * _xLength + x + 1], player) : false)) : false;
+  return (collider);
+}
+
 std::vector<AObj *> &Board::getSquareObjects(size_t x, size_t y)
 {
   return (_board[y * _xLength + x]);

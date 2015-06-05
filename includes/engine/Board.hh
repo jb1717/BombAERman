@@ -15,6 +15,7 @@
 # include <string>
 # include <vector>
 # include "AObj.hh"
+# include "AGameObject.hh"
 
 # define MAP_EMPTY_CHAR	'o'
 
@@ -44,6 +45,8 @@ public:
   void	setExplosion(float x, float y);
   void  popEntity(int x, int y, int id);
   void	removePlayer(int id);
+  bool	collideAround(AObj *, size_t x, size_t y);
+  bool	checkOneCollision(std::vector<AObj *> field, AObj *);
 
 public:
   std::vector<std::vector<AObj *>>	&getFullBoard();
