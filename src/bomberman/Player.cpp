@@ -10,7 +10,7 @@
 
 #include "Player.hh"
 
-Player::Player(Board &Board) : AObj(Board, 0, 0), Character(), _isAlive(true)
+Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true)
 {
   Bomb	*newone = new Bomb(Board);
 
@@ -118,9 +118,7 @@ void	Player::checkPosPowerUp()
       if ((*all_in_it)->getId() == -2)
 	{
 	  powerup = reinterpret_cast<Crate *>((*all_in_it))->getBonus();
-	  if (powerup == Crate::SPEED)
-	    _speed += 1;
-	  else if (powerup == Crate::RANGE)
+	  if (powerup == Crate::RANGE)
 	    powerUpRange();
 	  else if (powerup == Crate::ADD)
 	    addBomb();

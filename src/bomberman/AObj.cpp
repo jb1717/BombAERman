@@ -10,10 +10,8 @@
 
 #include "AObj.hh"
 
-AObj::AObj(Board &board, float x, float y) : _board(board), _x(x), _y(y)
-{
-
-}
+AObj::AObj(Board &board, float x, float y) : _board(board), AGameObject(), _x(x), _y(y)
+{}
 
 void  AObj::setPos(float x, float y)
 {

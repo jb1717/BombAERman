@@ -18,14 +18,13 @@
 # include "Bomb.hh"
 # include "AObj.hh"
 # include "Crate.hh"
-# include "Character.hh"
 
 # define PLAYER_CHAR	'p'
 
 class	Bomb;
 class	EThreadPool;
 
-class	Player : public AObj, public Character
+class	Player : public AObj
 {
 public:
   Player(Board &Board);

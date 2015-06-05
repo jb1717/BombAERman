@@ -13,6 +13,7 @@
 
 # include <stddef.h>
 # include <utility>
+# include "AGameObject.hh"
 
 enum entityType
   {
@@ -21,7 +22,7 @@ enum entityType
 
 class	Board;
 
-class AObj
+class AObj : public AGameObject
 {
 public:
   AObj(Board &board, float x = 0, float y = 0);
