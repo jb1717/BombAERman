@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Fri Jun  5 21:45:33 2015 Jamais
+// Last update Sat Jun  6 01:43:22 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -28,7 +28,6 @@
 
 Camera		camera;
 AGameModel	*perso;
-BasicBomb	*bomb;
 bool		test = false;
 bool		fallen = false;
 std::vector<AGameObject *> _skyfall;
@@ -38,122 +37,43 @@ Skybox		*sk;
 GeometryFactory *factory;
 std::vector<AObj *> objs;
 VideoContext	*V;
-
 AGameObject *	lolilol;
+
+BasicBomb	*bomb;
+Character	*hero;
+gdl::Texture	*texFloor;
+gdl::Texture	*texCrate;
+gdl::Texture	*texWall;
+
 
 GameEngine::GameEngine() : Game()
 {
-  // _videoContext = new VideoContext(1920, 1280, "Afghanistan : 1994 ...");
-  //  sleep(2);
   _videoContext = VideoContext::instanciate();
-  //  sleep(3);
-}
-
-AGameObject	*GameEngine::findObject(int x, UNUSED int y, int z)
-{
-  std::vector<AGameObject*>::iterator i;
-  for (i = _objects.begin(); i != _objects.end(); i++)
-    {
-      if ((*i)->getPosition().x == x && (*i)->getPosition().z == z && (*i)->getPosition().y == 0.5)
-	return *i;
-      if ((*i)->getPosition().x == x && (*i)->getPosition().z == z && (*i)->getPosition().y == -0.5)
-	return *i;
-    }
-  return NULL;
+  texFloor = new gdl::Texture();
+  texFloor->load("./assets/themes/default/default.floor.tga");
+  texCrate = new gdl::Texture();
+  texCrate->load("./assets/themes/default/default.crate.tga");
+  texWall = new gdl::Texture();
+  texWall->load("./assets/themes/default/default.wall.tga");
+  hero = new Character(glm::vec3(0.0f, 0.0f, 0.0f), MAIN_CHARACTER);
+  hero->scale(glm::vec3(0.002f, 0.002f, 0.002f));
+  hero->setCurrentAnim(0);
+  bomb = new BasicBomb();
 }
 
 bool		GameEngine::createMap(UNUSED std::string const& confFilePath)
 {
-  std::ifstream	file;
-  std::string	s;
-  gdl::Texture	*texture  = new gdl::Texture();
-  gdl::Texture	*secretCrate = new gdl::Texture();
-  gdl::Texture	*floor = new gdl::Texture();
-  gdl::Texture	*wall = new gdl::Texture();
-
-  auto	asset = AssetManager::instance();
-
-  texture->load(CRATE1);
-  secretCrate->load(CRATE2);
-  wall->load(CRATE1);
-  // floor = &(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["floor"];
-  // std::cout << "WIDTH X HEIGHT" << floor->getWidth() << " " << floor->getHeight() << " ===> N°" << floor->getId() << std::endl;
-  floor = lol;
-  std::cout << "WIDTH X HEIGHT" << floor->getWidth() << " " << floor->getHeight() << " ===> N°" << floor->getId() << std::endl;
-
-  //floor->load("./assets/themes/default/default.floor.tga");
-  // floor->load("~/Pictures/A.tga");
-  //  texture->load("./assets/Textures/transparencyTag.tga");
-  // srand(time(NULL));
-  // file.open(confFilePath.c_str());
-  // if (!file.is_open())
-  //   return false;
-  // getline(file, s, '\n');
-  // ys = (int)(std::atoi(s.c_str())) / 2;
-  for (int x = -25; x < 25; x++)
-    {
-      for (int y = -25; y < 25; y++)
-	{
-	  Board	b(1, 1);
-	  // AObj *l(b);
-	  AGameObject *cell = new Cube(glm::vec3(x, 0, y));
-	  AGameObject *secondCell = new Cube(glm::vec3(x, 15, y));
-	  AObj*	c = new Crate(b);
-	  cell->setTexture(*floor);
-	  cell->initialize();
-	  _objects.push_back(cell);
-
-	  secondCell->setTexture(*floor);
-	  secondCell->initialize();
-	  lolilol = secondCell;
-	  c->setGameObj(secondCell);
-	  objs.push_back(c);
-	  //	  l->setGameObj(cell);
-
-	  if (x == -25 || y == -25 || x == 24 || y == 24)
-	    {
-	      cell = new Cube(glm::vec3(x, 1, y));
-	    }
-	}
-    }
-  Floor = new Cube(glm::vec3(0, -1.2, 0), glm::vec3(0, 0, 0), glm::vec3(49, 2, 49));
-  Floor->setTexture(*floor);
-  Floor->initialize();
-  Floor->draw(_shader, _clock);
-  //  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  _videoContext->flush();
-  sleep(1);
-  //  _objects.push_back(Floor);
-
-  // ComplexObject *cx = new ComplexObject;
-  // cx->scale(glm::vec3(0.5, 0.5, 0.5));
-  // _objects.push_back(cx);
-
-  // GraphicString*	gs = new GraphicString("G");
-  // GeometryFactory	gf;
-  // gs->render(gf);
-  // std::cout << std::boolalpha << gs->initialize() << std::endl;;
-  // //  gs->translate(glm::vec3(0, 5, 0));
-  // _objects.push_back(gs);
-  return true;
+   return true;
 }
 
-bool		GameEngine::setupGame(std::string const& filePath)
+bool		GameEngine::setupGame(Board* board)
 {
-  perso = new Character(glm::vec3(0.0f, 0.0f, 0.0f), "./assets/Models/Bombinette.fbx");
-  perso = new Character(glm::vec3(0.0f, 0.0f, 0.0f), "./assets/Models/TestExplosion.fbx");
-  perso = new Character(glm::vec3(0.0f, 0.0f, 0.0f), MAIN_CHARACTER);
-  perso->scale(glm::vec3(0.002f, 0.002f, 0.002f));
-  perso->setCurrentAnim(0);
-  _objects.push_back(perso);
-
-  return createMap(filePath);
+  _board = board;
+  return true;
 }
 
 bool		GameEngine::initialize()
 {
-  // if (!_videoContext->init())
-  //    return false;
   if (!camera.setupCamera(*_videoContext))
       return false;
 
@@ -161,8 +81,10 @@ bool		GameEngine::initialize()
       || !_shader.load(VERTEX_SHADER, GL_VERTEX_SHADER)
       || !_shader.build())
     return false;
+
   glEnable(GL_SCISSOR_TEST);
   camera.refreshPosition();
+
   _shader.bind();
   _shader.setUniform("view", camera.getTransformationMatrix());
   _shader.setUniform("projection", camera.getProjectionMatrix());
@@ -181,44 +103,12 @@ bool		GameEngine::getEvent()
 
   if (_input.getKey(SDLK_SPACE) && test == false)
     {
-      glm::vec3 p;
-
-      p = perso->getPosition();
-      p.y = 0.5;
-
-      bomb = new BasicBomb();
-      bomb->setTimer(20.0);
-      bomb->translate(p);
-      bomb->translate(glm::vec3(0, 0, 0));
-      _objects.push_back(bomb);
       test = true;
     }
 
   return true;
 }
 
-
-
-bool		GameEngine::Animation()
-{
-  std::vector<AGameObject *>::iterator i;
-  float q;
-
-  for (i = _objects.begin(); i != _objects.end(); i++)
-    {
-      AGameObject *current = *i;
-
-      if (current->getPosition().y != -0.5 && current->getPosition().y != 0.5)
-	{
-	  AGameObject *test = findObject(current->getPosition().x, 0, current->getPosition().z);
-
-	  q = float(rand() % 50) * -0.0001;
-	  if (!current->collide(*test))
-	    current->translate(glm::vec3(0, q, 0));
-	}
-    }
-  return true;
-}
 
 bool		GameEngine::update()
 {
@@ -227,40 +117,21 @@ bool		GameEngine::update()
 
   _videoContext->updateContext(_clock, _input);
   camera.update(_clock, _input);
-  perso->update(_clock, _input, camera);
+
   _shader.setUniform("view", camera.getTransformationMatrix());
   _shader.setUniform("projection", camera.getProjectionMatrix());
-  if (_input.getKey(SDLK_h))
+
+  for (auto it = _board->getFullBoard().begin(); it != _board->getFullBoard().end(); it++)
     {
-      _videoContext->stop();
-     sleep(2);
-      // if (_videoContext->init() == false)
-      // 	std::cout << "DOMMAGE" << std::endl;
-    }
-  if (test == true)
-    {
-      bomb->update(_clock, _input);
-      if (!bomb->collide(*Floor))
-  	bomb->translate(glm::vec3(0, -0.01, 0));
-    }
-  for (size_t i = 0; i < _skyfall.size(); ++i)
-    {
-      if (_skyfall[i]->collide(*Floor) == false)
+      for (auto itk = (*it).begin(); itk != (*it).end(); itk++)
 	{
-	  _skyfall[i]->translate(glm::vec3(0, -0.01, 0));
-	  _skyfall[i]->update(_clock, _input);
+	  (*itk)->getGameObj()->update(_clock, _input);
 	}
     }
-  for (size_t i = 0; i < _objects.size(); ++i)
-    _objects[i]->update(_clock, _input);
-  if (bomb && bomb->getTimer() <= 0.0 && test == true)
+  for (auto it = _board->getPlayers().begin(); it != _board->getPlayers().end(); it++)
     {
-       _objects.pop_back();
-       delete bomb;
-      test = false;
+      (*it)->getGameObj()->update(_clock, _input, camera);
     }
-  for (size_t i = 0; i < objs.size(); ++i)
-    objs[i]->getGameObj()->update(_clock, _input);
 
   return true;
 }
@@ -268,39 +139,18 @@ bool		GameEngine::update()
 void		GameEngine::draw()
 {
   _shader.setUniform("view", camera.getTransformationMatrix());
-  // glScissor(0, 0, 1920, 1280);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   sk->draw(_shader, _clock);
 
-  // Board	b(1, 1);
-  // AObj*	l = new Crate(b);
-  // AGameObject *cell = new Cube(glm::vec3(5, 5, 5));
-  // cell->setTexture(*floor);
-  // cell->initialize();
-  // l->setGameObj(cell);
-
-
-  lolilol->draw(_shader, _clock);
-  for (size_t i = 0; i < _objects.size(); ++i)
-    _objects[i]->draw(_shader, _clock);
-  // objs.pop_back();
-  // objs.back()->getGameObj()->draw(_shader, _clock);
-  // std::cout << objs.size() << std::endl;
-  for (size_t i = 0; i < objs.size(); ++i)
-    objs[i]->getGameObj()->draw(_shader, _clock);
-
-  // l->getGameObj()->draw(_shader, _clock);
-  //  _videoContext->flush();
-  // glScissor(1600, 960, 320, 320);
-  // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  // glm::mat4 ty(1.0f);
-  // // ty = glm::rotate(ty, 90.0f, glm::vec3(1.0, 0.0, 0.0));
-  // ty = glm::translate(ty, glm::vec3(0.0, 150, -50.0));
-  // ty = glm::scale(ty, glm::vec3(0.1, 0.1, 0.1));
-  // _shader.setUniform("view", ty);
-  // sk->draw(_shader, _clock);
-  // for (size_t i = 0; i < _objects.size(); ++i)
-  //   _objects[i]->draw(_shader, _clock);
+  int x = 0;
+  for (auto it = _board->getFullBoard().begin(); it != _board->getFullBoard().end(); it++)
+    {
+      for (auto itk = (*it).begin(); itk != (*it).end(); itk++)
+	{
+	  (*itk)->getGameObj()->draw(_shader, _clock);
+	  ++x;
+	}
+    }
   _videoContext->flush();
 
 }
@@ -350,5 +200,4 @@ GameEngine::~GameEngine()
 {
   for (size_t i = 0; i < _objects.size(); ++i)
     delete _objects[i];
-  delete _videoContext;
 }

@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Thu May 21 23:58:12 2015 Emmanuel Chambon
+// Last update Sat Jun  6 01:46:16 2015 Jamais
 //
 
 #include "Board.hh"
@@ -13,10 +13,69 @@
 #include "Crate.hh"
 #include "UnbreakableWall.hh"
 #include "Explosion.hh"
+#include "Cube.hh"
 
 Board::Board(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLength)
 {
   _board.resize(xLength * yLength);
+}
+
+bool	Board::initialize()
+{
+  int	x = 0;
+  for (auto it = _board.begin(); it != _board.end(); it++)
+    {
+      //      std::cout << "size = " << (*it).size() << std::endl;
+
+      for (auto internIt = (*it).begin(); internIt != (*it).end(); internIt++)
+	{
+	  AGameObject*	obj;
+
+	  switch ((*internIt)->getType())
+	    {
+	    case CRATE:
+	      {
+		obj = new Cube(glm::vec3((x / _xLength), 1, (x % _yLength)));
+		obj->setTexture(*texCrate);
+	  	(*internIt)->setGameObj(obj);
+	  	break;
+	      }
+	    case UNBREAKABLE_WALL:
+	      {
+		obj = new Cube(glm::vec3((x / _xLength), 0, (x % _yLength)));
+		obj->setTexture(*texWall);
+	  	(*internIt)->setGameObj(obj);
+	  	break;
+	      }
+	    case PLAYER:
+	      {
+		obj = new Character(glm::vec3((x / _xLength), 0, (x % _yLength)), "./assets/Models/marvin.fbx");
+		obj->scale(glm::vec3(0.002f, 0.002f, 0.002f));
+	  	(*internIt)->setGameObj(obj);
+		_players.push_back(reinterpret_cast<Player *>(*internIt));
+	  	break;
+	      }
+
+	    default:
+	      break;
+	    }
+	}
+      ++x;
+    }
+  initGameObjects();
+  return true;
+}
+
+void	Board::initGameObjects()
+{
+  for (auto it = _board.begin(); it != _board.end(); it++)
+    {
+      for (auto internIt = (*it).begin(); internIt != (*it).end(); internIt++)
+	{
+	  if ((*internIt)->getType())
+	    (*internIt)->getGameObj()->initialize();
+	}
+    }
 }
 
 AObj  *Board::createEntity(Board &board, entityType type)
@@ -61,8 +120,8 @@ bool	Board::placeEntity(float x, float y, AObj *entity)
 {
   int	to = static_cast<int>(y) * _xLength + static_cast<int>(x);
 
-  if (!_board[to].empty())
-    return (false);
+  // if (!_board[to].empty())
+  //   return (false);
   _board[to].push_back(entity);
   return (true);
 }

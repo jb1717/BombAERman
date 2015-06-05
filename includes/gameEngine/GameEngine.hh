@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:15:24 2015 Jamais
-// Last update Fri Jun  5 07:57:22 2015 Jamais
+// Last update Sat Jun  6 00:43:54 2015 Jamais
 //
 
 #ifndef			___GAMEENGINE_HH___
@@ -20,6 +20,14 @@
 # include		"Board.hh"
 # include		"AObj.hh"
 
+# include		"BasicBomb.hh"
+# include		"Character.hh"
+
+extern BasicBomb	*bomb;
+extern Character	*hero;
+extern gdl::Texture	*texFloor;
+extern gdl::Texture	*texCrate;
+extern gdl::Texture	*texWall;
 extern VideoContext	*V;
 
 # define		FRAGMENT_SHADER		"shaders/fragmentShader"
@@ -40,10 +48,8 @@ public:
 
 public:
   bool			createMap(std::string const& confFilePath);
-  bool			setupGame(std::string const& filePath);
+  bool			setupGame(Board* board);
   bool			getEvent();
-  bool			Animation();
-  AGameObject*		findObject(int, int, int);
 
 public:
   void			updateCell(std::vector<AObj *>& cellVector);
@@ -71,6 +77,7 @@ private:
 
 private:
   VideoContext		*_videoContext;
+  Board			*_board;
 };
 
 #endif			/* !___GAMEENGINE_HH___ */

@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:22:05 2015 Jean-Baptiste Grégoire
-// Last update Mon Jun  1 09:53:30 2015 Emmanuel Chambon
+// Last update Fri Jun  5 23:08:42 2015 Jamais
 //
 
 #ifndef Board_HH_
@@ -36,6 +36,10 @@ public:
 public:
   Board(size_t length, size_t width);
   ~Board();
+
+public:
+  bool			initialize();
+  void			initGameObjects();
 
 public:
   bool  placeEntity(float x, float y, entityType type, int id, Direction dir = North);

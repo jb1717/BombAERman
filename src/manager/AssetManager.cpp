@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:04:57 2015 Emmanuel Chambon
-// Last update Fri Jun  5 19:36:05 2015 Jamais
+// Last update Sat Jun  6 00:47:09 2015 Jamais
 //
 
 #include "AssetManager.hh"
@@ -39,38 +39,38 @@ AssetManager::AssetManager() : _mutex(std::make_shared<std::mutex>())
     // Scores
     // Saves
 	// Settings
-	gdl::Texture	*te = new gdl::Texture();
-	AGameObject	*cube = new Cube(glm::vec3(0, 0, 0));
+      // 	gdl::Texture	*te = new gdl::Texture();
+      // 	AGameObject	*cube = new Cube(glm::vec3(0, 0, 0));
 
-	te->load("./assets/themes/default/default.floor.tga");
-	lol = te;
-	cube->setTexture(*te);
-	cube->initialize();
+      // 	te->load("./assets/themes/default/default.floor.tga");
+      // 	lol = te;
+      // 	cube->setTexture(*te);
+      // 	cube->initialize();
 
-	std::cout << "[[[[[[[[[]]]]]]]]]" << te->getHeight() << std::endl;
-	gdl::BasicShader	sh;
-	 if (!sh.load(FRAGMENT_SHADER, GL_FRAGMENT_SHADER)
-      || !sh.load(VERTEX_SHADER, GL_VERTEX_SHADER)
-      || !sh.build())
-	   std::cout << "Bouh" << std::endl;
+      // 	std::cout << "[[[[[[[[[]]]]]]]]]" << te->getHeight() << std::endl;
+      // 	gdl::BasicShader	sh;
+      // 	 if (!sh.load(FRAGMENT_SHADER, GL_FRAGMENT_SHADER)
+      // || !sh.load(VERTEX_SHADER, GL_VERTEX_SHADER)
+      // || !sh.build())
+      // 	   std::cout << "Bouh" << std::endl;
 
-	 gdl::Clock		_kikou;
-	 Camera	cam;
+      // 	 gdl::Clock		_kikou;
+      // 	 Camera	cam;
 
-	 Skybox* sk = new Skybox();
-	 glEnable(GL_DEPTH_TEST);
-	 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	 cam.setupCamera(*V);
-	 cam.setPosition(glm::vec3(0, 5, -5));
-	 cam.refreshPosition();
-	 sh.bind();
-	 sh.setUniform("view", cam.getTransformationMatrix());
-	 sh.setUniform("projection", cam.getProjectionMatrix());
-	 cube->draw(sh, _kikou);
-	 sk->draw(sh, _kikou);
-	 V->flush();
-	 std::cout << (V == NULL ? "LOooser " : "ok") << std::endl;
-	 sleep(1);
+      // 	 Skybox* sk = new Skybox();
+      // 	 glEnable(GL_DEPTH_TEST);
+      // 	 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      // 	 cam.setupCamera(*V);
+      // 	 cam.setPosition(glm::vec3(0, 5, -5));
+      // 	 cam.refreshPosition();
+      // 	 sh.bind();
+      // 	 sh.setUniform("view", cam.getTransformationMatrix());
+      // 	 sh.setUniform("projection", cam.getProjectionMatrix());
+      // 	 cube->draw(sh, _kikou);
+      // 	 sk->draw(sh, _kikou);
+      // 	 V->flush();
+      // 	 std::cout << (V == NULL ? "LOooser " : "ok") << std::endl;
+      // 	 sleep(1);
 }
 
 AssetManager::~AssetManager()

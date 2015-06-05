@@ -5,7 +5,7 @@
 // chambo_e  <chambon.emmanuel@gmail.com>
 //
 // Started on  Tue May 19 11:18:08 2015 Emmanuel Chambon
-// Last update Fri Jun  5 18:48:41 2015 Jamais
+// Last update Fri Jun  5 22:55:17 2015 Jamais
 //
 
 #include "Bomberman.hh"
