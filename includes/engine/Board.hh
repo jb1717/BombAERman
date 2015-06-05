@@ -46,6 +46,7 @@ public:
   void	removePlayer(int id);
 
 public:
+  std::vector<std::vector<AObj *>>	&getFullBoard();
   std::vector<Player *>  &getPlayers();
   std::vector<AObj *> &getSquareObjects(size_t x, size_t y);
   std::vector<AObj *>   &operator[](size_t);

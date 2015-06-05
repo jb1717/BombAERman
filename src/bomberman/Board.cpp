@@ -265,6 +265,11 @@ size_t                Board::getHeight() const
   return _yLength;
 }
 
+std::vector<std::vector<AObj *>>	&Board::getFullBoard()
+{
+  return (_board);
+}
+
 Board::~Board()
 {
   while (!_board.empty())
