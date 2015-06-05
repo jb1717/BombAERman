@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Thu Jun  4 20:03:54 2015 Jamais
+// Last update Fri Jun  5 04:55:24 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -17,6 +17,9 @@
 #include	"GeometryFactory.hh"
 #include	"ComplexObject.hh"
 #include	"GraphicString.hh"
+#include	"Board.hh"
+#include	"AObj.hh"
+#include	"Crate.hh"
 
 #include <unistd.h>
 
@@ -81,11 +84,13 @@ bool		GameEngine::createMap(UNUSED std::string const& confFilePath)
     {
       for (int y = -25; y < 25; y++)
 	{
+	  // Board	b(1, 1);
+	  // AObj *l(b);
 	  AGameObject *cell = new Cube(glm::vec3(x, 0, y));
-
 	  cell->setTexture(*floor);
 	  cell->initialize();
 	  _objects.push_back(cell);
+	  //	  l->setGameObj(cell);
 
 	  if (x == -25 || y == -25 || x == 24 || y == 24)
 	    {
@@ -243,8 +248,22 @@ void		GameEngine::draw()
   // glScissor(0, 0, 1920, 1280);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   sk->draw(_shader, _clock);
+
+  gdl::Texture	*floor = new gdl::Texture();
+  floor->load(FLOOR1);
+
+  Board	b(1, 1);
+  AObj*	l = new Crate(b);
+  AGameObject *cell = new Cube(glm::vec3(5, 5, 5));
+  cell->setTexture(*floor);
+  cell->initialize();
+  l->setGameObj(cell);
+
+
+
   for (size_t i = 0; i < _objects.size(); ++i)
     _objects[i]->draw(_shader, _clock);
+  l->getGameObj()->draw(_shader, _clock);
   //  _videoContext->flush();
   // glScissor(1600, 960, 320, 320);
   // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
