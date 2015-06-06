@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Tue May 26 09:17:03 2015 Jamais
-// Last update Thu Jun  4 01:17:37 2015 Jamais
+// Last update Sat Jun  6 06:25:54 2015 Jamais
 //
 
 #include		"GeometryFactory.hh"
@@ -18,7 +18,9 @@ GeometryFactory::GeometryFactory()
   _figures[RIGHT_PLANE] = createRightPlane();
   _figures[FRONT_PLANE] = createFrontPlane();
   _figures[BACK_PLANE] = createBackPlane();
+  _figures[PLANE] = createPlane();
   _figures[CUBE] = createCube();
+  _figures[CYLINDER] = createCylinder();
 }
 
 GeometryFactory::~GeometryFactory()
@@ -107,6 +109,37 @@ gdl::Geometry*		GeometryFactory::createFrontPlane() const
   plane->build();
 
   return plane;
+}
+
+gdl::Geometry*		GeometryFactory::createPlane() const
+{
+  gdl::Geometry		*plane = new gdl::Geometry;
+
+  plane->pushVertex(glm::vec3( 0.5f, -0.5f, 0.0f));   	plane->pushUv(glm::vec2(1.0f, 0.0f));
+  plane->pushVertex(glm::vec3( 0.5f,  0.5f, 0.0f));   	plane->pushUv(glm::vec2(1.0f, 1.0f));
+  plane->pushVertex(glm::vec3(-0.5f,  0.5f, 0.0f));   	plane->pushUv(glm::vec2(0.0f, 1.0f));
+  plane->pushVertex(glm::vec3(-0.5f, -0.5f, 0.0f));   	plane->pushUv(glm::vec2(0.0f, 0.0f));
+  plane->build();
+
+  return plane;
+}
+
+gdl::Geometry*		GeometryFactory::createCylinder() const
+{
+  gdl::Geometry		*cylinder = new gdl::Geometry;
+  auto inc = 2 * M_PI / 7200;
+  float theta = 0;
+  for (int i = 0; i <  7200; i++)
+    {
+      cylinder->pushVertex(glm::vec3(cos(theta), 0.5f, sin(theta)));
+      cylinder->pushVertex(glm::vec3(cos(theta), -0.5f, sin(theta)));
+      cylinder->pushUv(glm::vec2(1.0f, theta));
+      cylinder->pushUv(glm::vec2(0.0f, theta));
+      // cylinder->pushUv(glm::vec2(cos(theta), sin(theta)));
+      // cylinder->pushUv(glm::vec2(cos(theta), sin(theta)));
+      theta += inc;
+    }
+  return cylinder;
 }
 
 gdl::Geometry*		GeometryFactory::createCube() const

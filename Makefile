@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Thu Jun  4 20:02:43 2015 Jamais
+## Last update Sat Jun  6 04:02:12 2015 Jamais
 ##
 
 GRAPHICALGAME	=	yes
@@ -91,6 +91,7 @@ GRAPHICS_OBJS		=	$(addsuffix .o, $(basename $(subst $(GRAPHICS_SRC_DIR), $(GRAPH
 
 GRAPHICS_SRC		=				\
 				ABomb.cpp		\
+				AFX.cpp			\
 				AGameModel.cpp		\
 				AGameObject.cpp		\
 				BasicBomb.cpp		\

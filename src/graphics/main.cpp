@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 15 21:29:13 2015 Jamais
-// Last update Sat Jun  6 01:38:41 2015 Jamais
+// Last update Sat Jun  6 04:47:41 2015 Jamais
 //
 
 #include	<cstdlib>
@@ -24,6 +24,7 @@ int	main()
   video = VideoContext::instanciate();
   video->init();
 
+  //  for (int << = -5 ; x < 5; x++)
   for (int x = 0; x < 10; x++)
     {
       for (int y = 0; y < 10; y++)

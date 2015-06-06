@@ -5,10 +5,11 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 16 20:52:10 2015 Jamais
-// Last update Fri Jun  5 05:17:34 2015 Jamais
+// Last update Sat Jun  6 06:24:24 2015 Jamais
 //
 
 #include	"AGameObject.hh"
+#include	"Camera.hh"
 
 AGameObject::AGameObject() : _position(0, 0, 0), _rotation(0, 0, 0), _scale(1, 1, 1)
 {
@@ -60,7 +61,10 @@ void		AGameObject::update(UNUSED gdl::Clock const& clock, UNUSED gdl::Input &inp
 {}
 
 void		AGameObject::update(UNUSED gdl::Clock const& clock, UNUSED gdl::Input &input, UNUSED Camera const& camera)
-{}
+{
+  _rotation.y = -1 * camera.getRotation().y;
+  _rotation.x = -1 * camera.getRotation().x;
+}
 
 void		AGameObject::update(UNUSED Camera const& camera, UNUSED gdl::Input &input)
 {}
@@ -114,10 +118,10 @@ glm::mat4	AGameObject::getTransformation() const
 {
   glm::mat4	transform(1);
 
+  transform = glm::translate(transform, _position);
   transform = glm::rotate(transform, _rotation.x, glm::vec3(1, 0, 0));
   transform = glm::rotate(transform, _rotation.y, glm::vec3(0, 1, 0));
   transform = glm::rotate(transform, _rotation.z, glm::vec3(0, 0, 1));
-  transform = glm::translate(transform, _position);
   transform = glm::scale(transform, _scale);
   return transform;
 }

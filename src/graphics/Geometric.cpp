@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Mon May 18 17:50:11 2015 Jamais
-// Last update Tue Jun  2 19:38:57 2015 Jamais
+// Last update Sat Jun  6 05:45:49 2015 Jamais
 //
 
 #include	"Geometric.hh"
@@ -53,7 +53,7 @@ float		Geometric::getSpeed() const
 
 bool		Geometric::initialize()
 {
-  _geometry.setColor(glm::vec4(1, 1, 1, 1));
+  _geometry.setColor(glm::vec4(1, 1, 1, 0.5));
   _geometry.pushVertex(glm::vec3(5, 0, -5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
   _geometry.pushVertex(glm::vec3(5, 0, 5));    	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
   _geometry.pushVertex(glm::vec3(-5, 0, 5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
@@ -70,8 +70,11 @@ void		Geometric::update(UNUSED gdl::Clock const& clock, UNUSED gdl::Input &input
 void		Geometric::draw(gdl::AShader &shader, UNUSED gdl::Clock const& clock)
 {
   _texture.bind();
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   _geometry.draw(shader, getTransformation(), GL_QUADS);
+  //  glEnable(GL_DEPTH_TEST);
 }
 
 void		Geometric::setGeometry(gdl::Geometry const& geometry)

@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Thu May 21 20:35:59 2015 Jamais
-// Last update Sun May 31 23:19:12 2015 Jamais
+// Last update Sat Jun  6 02:36:27 2015 Jamais
 //
 
 #include		"Character.hh"
@@ -40,12 +40,10 @@ Character::~Character()
 
 void			Character::update(UNUSED gdl::Clock const& clock, UNUSED gdl::Input& input)
 {
-
 }
 
 void			Character::update(UNUSED gdl::Input& input, UNUSED Camera const& camera)
 {
-
 }
 
 void			Character::update(UNUSED gdl::Clock const& clock, gdl::Input& input, Camera const& camera)
@@ -77,11 +75,6 @@ void			Character::update(UNUSED gdl::Clock const& clock, gdl::Input& input, Came
       _rotation.y = camera.getRotation().y + 45.0;
       translate(glm::vec3(cos(camera.getRotation().y + 45.0) * _speed, 0, sin(camera.getRotation().y + 45) * _speed));
     }
-  // if (input.getKey(SDLK_e))
-  //   {
-  //     _rotation.y = 45.0 - camera.getRotation().y;
-  //     translate(glm::vec3(cos(45.0) * _speed, 0, sin(45.0) * _speed));
-  //   }
 }
 
 glm::mat4			Character::getTransformation() const

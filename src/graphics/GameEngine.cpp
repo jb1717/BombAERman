@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Sat Jun  6 01:43:22 2015 Jamais
+// Last update Sat Jun  6 06:29:05 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -23,6 +23,7 @@
 #include	"Player.hh"
 #include	"Bomb.hh"
 #include	"AssetManager.hh"
+#include	"AFX.hh"
 
 #include <unistd.h>
 
@@ -44,17 +45,29 @@ Character	*hero;
 gdl::Texture	*texFloor;
 gdl::Texture	*texCrate;
 gdl::Texture	*texWall;
+gdl::Texture*	ex1;
+gdl::Texture*	ex2;
+gdl::Texture*	ex3;
 
+AFX*	effect;
+
+AGameObject *falling;
 
 GameEngine::GameEngine() : Game()
 {
   _videoContext = VideoContext::instanciate();
   texFloor = new gdl::Texture();
-  texFloor->load("./assets/themes/default/default.floor.tga");
+  texFloor->load("./assets/themes/default/default.floor.tga", true);
   texCrate = new gdl::Texture();
-  texCrate->load("./assets/themes/default/default.crate.tga");
+  texCrate->load("./assets/themes/default/default.crate.tga", true);
   texWall = new gdl::Texture();
-  texWall->load("./assets/themes/default/default.wall.tga");
+  texWall->load("./assets/themes/default/default.wall.tga", true);
+  ex1 = new gdl::Texture();
+  ex2 = new gdl::Texture();
+  ex3 = new gdl::Texture();
+  ex1->load("./assets/Textures/explosions1.tga");
+  ex2->load("./assets/Textures/explosions2.tga");
+  ex3->load("./assets/Textures/explosions3.tga");
   hero = new Character(glm::vec3(0.0f, 0.0f, 0.0f), MAIN_CHARACTER);
   hero->scale(glm::vec3(0.002f, 0.002f, 0.002f));
   hero->setCurrentAnim(0);
@@ -81,7 +94,7 @@ bool		GameEngine::initialize()
       || !_shader.load(VERTEX_SHADER, GL_VERTEX_SHADER)
       || !_shader.build())
     return false;
-
+  glEnable(GL_DEPTH_TEST);
   glEnable(GL_SCISSOR_TEST);
   camera.refreshPosition();
 
@@ -90,6 +103,71 @@ bool		GameEngine::initialize()
   _shader.setUniform("projection", camera.getProjectionMatrix());
 
   sk = new Skybox;
+  // falling = new Cube(glm::vec3(5, 10, 5));
+  // falling->setTexture(*texFloor);
+  falling = new Character(glm::vec3(3 ,10, 3));
+  falling->scale(glm::vec3(0.002, 0.002, 0.002));
+  reinterpret_cast<Character*>(falling)->load("./assets/Models/marvin.fbx");
+  //  falling->initialize();
+
+  effect = new AFX();
+  factory = new GeometryFactory;
+  Geometric *g = new Geometric();
+  g->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
+  g->setTexture(*ex1);
+  g->scale(glm::vec3(1.5f, 1.5f, 1.5f));
+  effect->push_back(g);
+
+  g = new Geometric();
+  g->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
+  g->setTexture(*ex1);
+  g->scale(glm::vec3(1.75f, 1.75f, 1.75f));
+  effect->push_back(g);
+
+  g = new Geometric();
+  g->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
+  g->setTexture(*ex1);
+  g->scale(glm::vec3(2.0f, 2.0f, 2.0f));
+  effect->push_back(g);
+
+  g = new Geometric();
+  g->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
+  g->setTexture(*ex2);
+  g->scale(glm::vec3(1.5f, 1.5f, 1.5f));
+  effect->push_back(g);
+
+  g = new Geometric();
+  g->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
+  g->setTexture(*ex2);
+  g->scale(glm::vec3(1.75f, 1.75f, 1.75f));
+  effect->push_back(g);
+
+  g = new Geometric();
+  g->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
+  g->setTexture(*ex2);
+  g->scale(glm::vec3(2.0f, 2.0f, 2.0f));
+  effect->push_back(g);
+
+  g = new Geometric();
+  g->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
+  g->setTexture(*ex3);
+  g->scale(glm::vec3(1.5f, 1.5f, 1.5f));
+  effect->push_back(g);
+
+  g = new Geometric();
+  g->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
+  g->setTexture(*ex3);
+  g->scale(glm::vec3(1.75f, 1.75f, 1.75f));
+  effect->push_back(g);
+
+  g = new Geometric();
+  g->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
+  g->setTexture(*ex3);
+  g->scale(glm::vec3(2.0f, 2.0f, 2.0f));
+  effect->push_back(g);
+
+  effect->initialize();
+  effect->translate(glm::vec3(5, 1.5, 5));
   return true;
 }
 
@@ -120,19 +198,33 @@ bool		GameEngine::update()
 
   _shader.setUniform("view", camera.getTransformationMatrix());
   _shader.setUniform("projection", camera.getProjectionMatrix());
+  bool	collide = false;
+  glm::vec3 p;
+  AGameObject *player = _board->getPlayers().front()->getGameObj();
 
-  for (auto it = _board->getFullBoard().begin(); it != _board->getFullBoard().end(); it++)
-    {
-      for (auto itk = (*it).begin(); itk != (*it).end(); itk++)
-	{
-	  (*itk)->getGameObj()->update(_clock, _input);
-	}
-    }
+  p = player->getPosition();
   for (auto it = _board->getPlayers().begin(); it != _board->getPlayers().end(); it++)
     {
       (*it)->getGameObj()->update(_clock, _input, camera);
     }
+  for (auto it = _board->getFullBoard().begin(); it != _board->getFullBoard().end(); it++)
+    {
+      int i = 0;
+      for (auto itk = (*it).begin(); itk != (*it).end(); itk++)
+	{
+	  (*itk)->getGameObj()->update(_clock, _input);
+	  if (i == 0 && player->collide(*(*itk)->getGameObj()))
+	    {
+	      if ((*itk)->getGameObj()->getPosition().y >= 1.0)
+		collide = true;
+	    }
+	  ++i;
+	}
+    }
+  if (collide == true)
+    player->setPosition(p);
 
+  effect->update(_clock, _input, camera);
   return true;
 }
 
@@ -140,7 +232,7 @@ void		GameEngine::draw()
 {
   _shader.setUniform("view", camera.getTransformationMatrix());
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  sk->draw(_shader, _clock);
+  //  sk->draw(_shader, _clock);
 
   int x = 0;
   for (auto it = _board->getFullBoard().begin(); it != _board->getFullBoard().end(); it++)
@@ -151,6 +243,8 @@ void		GameEngine::draw()
 	  ++x;
 	}
     }
+  effect->draw(_shader, _clock);
+  falling->draw(_shader, _clock);
   _videoContext->flush();
 
 }
