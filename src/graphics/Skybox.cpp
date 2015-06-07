@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 23 01:13:10 2015 Jamais
-// Last update Sat Jun  6 05:36:35 2015 Jamais
+// Last update Sun Jun  7 02:54:55 2015 Jamais
 //
 
 #include		"Skybox.hh"
@@ -28,7 +28,7 @@ Skybox::Skybox()
 
   // std::string	filepath("./assets/Textures/SkyBoxTextures/" + skyboxName + "/" + skyboxName);
   std::string	filepath(STORMSKY);
-  GeometryFactory x;
+  GeometryFactory* x = GeometryFactory::instanciate();
 
 
   //std::string	filepath(HELL);
@@ -47,7 +47,7 @@ Skybox::Skybox()
   f = new Geometric();
   f->setTexture(*back);
   f->initialize();
-  f->setGeometry(x.getGeometry(GeometryFactory::BACK_PLANE));
+  f->setGeometry(x->getGeometry(GeometryFactory::BACK_PLANE));
   // f->setGeometry(*g);
   f->scale(glm::vec3(20000, 20000, 20000));
   _faces.push_back(f);
@@ -60,7 +60,7 @@ Skybox::Skybox()
   f = new Geometric();
   f->setTexture(*front);
   f->initialize();
-  f->setGeometry(x.getGeometry(GeometryFactory::FRONT_PLANE));
+  f->setGeometry(x->getGeometry(GeometryFactory::FRONT_PLANE));
   // f->setGeometry(*g);
   f->scale(glm::vec3(20000, 20000, 20000));
   _faces.push_back(f);
@@ -73,7 +73,7 @@ Skybox::Skybox()
   f = new Geometric();
   f->setTexture(*left);
   f->initialize();
-  f->setGeometry(x.getGeometry(GeometryFactory::LEFT_PLANE));
+  f->setGeometry(x->getGeometry(GeometryFactory::LEFT_PLANE));
   // f->setGeometry(*g);
   f->scale(glm::vec3(20000, 20000, 20000));
   _faces.push_back(f);
@@ -88,7 +88,7 @@ Skybox::Skybox()
   f->setTexture(*right);
   f->initialize();
   // f->setGeometry(*g);
-  f->setGeometry(x.getGeometry(GeometryFactory::RIGHT_PLANE));
+  f->setGeometry(x->getGeometry(GeometryFactory::RIGHT_PLANE));
   f->scale(glm::vec3(20000, 20000, 20000));
   _faces.push_back(f);
 
@@ -103,7 +103,7 @@ Skybox::Skybox()
   f->setTexture(*up);
   f->initialize();
   f->translate(glm::vec3(0, -100, 0));
-  f->setGeometry(x.getGeometry(GeometryFactory::UP_PLANE));
+  f->setGeometry(x->getGeometry(GeometryFactory::UP_PLANE));
   // f->setGeometry(*g);
   f->scale(glm::vec3(20020, 20000, 20020));
   _faces.push_back(f);
@@ -119,7 +119,7 @@ Skybox::Skybox()
   f->setTexture(*down);
   f->initialize();
   f->translate(glm::vec3(0, 100, 0));
-  f->setGeometry(x.getGeometry(GeometryFactory::DOWN_PLANE));
+  f->setGeometry(x->getGeometry(GeometryFactory::DOWN_PLANE));
   //  f->setGeometry(*g);
   f->scale(glm::vec3(20000 - 10, 20000, 20000 - 10));
   _faces.push_back(f);

@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:15:24 2015 Jamais
-// Last update Sat Jun  6 00:43:54 2015 Jamais
+// Last update Sun Jun  7 05:04:43 2015 Jamais
 //
 
 #ifndef			___GAMEENGINE_HH___
@@ -23,7 +23,7 @@
 # include		"BasicBomb.hh"
 # include		"Character.hh"
 
-extern BasicBomb	*bomb;
+extern AGameObject	*bomb;
 extern Character	*hero;
 extern gdl::Texture	*texFloor;
 extern gdl::Texture	*texCrate;

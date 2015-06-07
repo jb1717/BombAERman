@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 15 21:29:13 2015 Jamais
-// Last update Sat Jun  6 04:47:41 2015 Jamais
+// Last update Sun Jun  7 02:57:35 2015 Jamais
 //
 
 #include	<cstdlib>
@@ -20,7 +20,6 @@ int	main()
 {
   VideoContext*	video;
   Board*       	board = new Board(10, 10);
-
   video = VideoContext::instanciate();
   video->init();
 

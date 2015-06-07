@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 02:17:07 2015 Jamais
-// Last update Fri Jun  5 18:40:17 2015 Jamais
+// Last update Sat Jun  6 23:07:31 2015 Jamais
 //
 
 #include	"VideoContext.hh"
@@ -35,9 +35,10 @@ bool		VideoContext::init()
 
 bool		VideoContext::init(int initFlags, int windowsFlags)
 {
-  if (start(_screenWidth, _screenHeight, _windowName, initFlags, windowsFlags) == false)
+  if (start(_screenWidth, _screenHeight, _windowName, initFlags, windowsFlags | SDL_GL_DOUBLEBUFFER ) == false)
     return false;
   glEnable(GL_DEPTH_TEST);
+  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
   return true;
 }
 

@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat Jun  6 04:02:46 2015 Jamais
-// Last update Sat Jun  6 06:30:02 2015 Jamais
+// Last update Sat Jun  6 19:13:28 2015 Jamais
 //
 
 #include	"AFX.hh"
@@ -41,13 +41,19 @@ void		AFX::update(gdl::Clock const& clock, gdl::Input& input, Camera const& came
       _timer = _frameTimer;
     }
   if (_currentFrame)
-    _currentFrame->update(clock, input, camera);
+    {
+      _currentFrame->update(clock, input, camera);
+    }
 }
 
 void		AFX::draw(gdl::AShader& shader, gdl::Clock const& clock)
 {
   if (_currentFrame)
-    _currentFrame->draw(shader, clock);
+    {
+      glDisable(GL_DEPTH_TEST);
+      _currentFrame->draw(shader, clock);
+      glEnable(GL_DEPTH_TEST);
+    }
 }
 
 void		AFX::setTimer(float time)

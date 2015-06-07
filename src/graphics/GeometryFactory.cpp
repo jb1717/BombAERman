@@ -5,10 +5,17 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Tue May 26 09:17:03 2015 Jamais
-// Last update Sat Jun  6 06:25:54 2015 Jamais
+// Last update Sun Jun  7 18:50:56 2015 Jamais
 //
 
 #include		"GeometryFactory.hh"
+
+GeometryFactory*	GeometryFactory::instanciate()
+{
+  static GeometryFactory*	geometryCreator = new GeometryFactory;
+
+  return geometryCreator;
+}
 
 GeometryFactory::GeometryFactory()
 {
@@ -19,6 +26,8 @@ GeometryFactory::GeometryFactory()
   _figures[FRONT_PLANE] = createFrontPlane();
   _figures[BACK_PLANE] = createBackPlane();
   _figures[PLANE] = createPlane();
+  _figures[VERTICAL_PLANE] = createVerticalPlane();
+  _figures[DISC] = createDisc();
   _figures[CUBE] = createCube();
   _figures[CYLINDER] = createCylinder();
 }
@@ -124,22 +133,62 @@ gdl::Geometry*		GeometryFactory::createPlane() const
   return plane;
 }
 
+gdl::Geometry*		GeometryFactory::createVerticalPlane() const
+{
+  gdl::Geometry		*plane = new gdl::Geometry;
+
+  plane->pushVertex(glm::vec3( 0.5f, -0.5f, 0.0));   	plane->pushUv(glm::vec2(0.0f, 0.0f));
+  plane->pushVertex(glm::vec3( 0.5f,  0.5f, 0.0f));   	plane->pushUv(glm::vec2(0.0f, 1.0f));
+  plane->pushVertex(glm::vec3(-0.5f,  0.5f, 0.0f));   	plane->pushUv(glm::vec2(1.0f, 1.0f));
+  plane->pushVertex(glm::vec3(-0.5f, -0.5f, 0.0f));   	plane->pushUv(glm::vec2(1.0f, 0.0f));
+  plane->build();
+
+  return plane;
+}
+
 gdl::Geometry*		GeometryFactory::createCylinder() const
 {
   gdl::Geometry		*cylinder = new gdl::Geometry;
-  auto inc = 2 * M_PI / 7200;
-  float theta = 0;
-  for (int i = 0; i <  7200; i++)
+  int	slices = 1440;
+  auto inc = 2 * M_PI / slices;
+  float	theta, theta2;
+  for (int i = 0; i < slices; i++)
     {
-      cylinder->pushVertex(glm::vec3(cos(theta), 0.5f, sin(theta)));
-      cylinder->pushVertex(glm::vec3(cos(theta), -0.5f, sin(theta)));
-      cylinder->pushUv(glm::vec2(1.0f, theta));
-      cylinder->pushUv(glm::vec2(0.0f, theta));
-      // cylinder->pushUv(glm::vec2(cos(theta), sin(theta)));
-      // cylinder->pushUv(glm::vec2(cos(theta), sin(theta)));
-      theta += inc;
+      theta2 = theta + inc;
+      // cylinder->pushVertex(glm::vec3(0.0f, 0.5f, 0.0f));
+      // cylinder->pushUv(glm::vec2(0.5f, 0.5f));
+      cylinder->pushVertex(glm::vec3(0.25 * cos(theta), 0.5f, 0.25 * sin(theta)));
+      cylinder->pushVertex(glm::vec3(0.25 * cos(theta2), 0.5f, 0.25 * sin(theta2)));
+      cylinder->pushVertex(glm::vec3(0.25 * cos(theta), -0.5f, 0.25 * sin(theta)));
+      cylinder->pushVertex(glm::vec3(0.25 * cos(theta2), -0.5f, 0.25 * sin(theta2)));
+      cylinder->pushUv(glm::vec2(theta, 1.0f));
+      cylinder->pushUv(glm::vec2(theta2, 1.0f));
+      cylinder->pushUv(glm::vec2(theta, 0.0f));
+      cylinder->pushUv(glm::vec2(theta2, 0.0f));
+      theta = theta2;
     }
+  cylinder->build();
   return cylinder;
+}
+
+gdl::Geometry*		GeometryFactory::createDisc() const
+{
+  gdl::Geometry		*disc = new gdl::Geometry;
+  int			slices = 360 * 10;
+  float			in = 2 * M_PI / slices;
+  float			theta = 0.0f;
+
+  for (int i = 0; i < slices; i++)
+    {
+      disc->pushVertex(glm::vec3(0.0f, 0.0f, 0.0f));
+      disc->pushUv(glm::vec2(0.5f, 0.5f));
+      disc->pushVertex(glm::vec3(0.5 * cos(theta), 0.5 * sin(theta), 0.0f));
+      disc->pushUv(glm::vec2(0.5f, 0.5f));
+      //      disc->pushUv(glm::vec2(0.5 * cos(theta), 0.5 * sin(theta)));
+      theta += in;
+    }
+  disc->build();
+  return disc;
 }
 
 gdl::Geometry*		GeometryFactory::createCube() const
