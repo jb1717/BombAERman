@@ -10,17 +10,18 @@
 
 #include "Player.hh"
 
-Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true), _speed(1)
+Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true)
 {
   Bomb	*newone = new Bomb(Board);
 
   _bombs.push_back(newone);
   _bombThread = new EThreadPool(1);
+  _type = PLAYER;
 }
 
 bool		Player::playerSpawn(float x, float y, Board::Direction direction, int Id)
 {
-  setPosition(x, y);
+  setPos(x, y);
   _dir = direction;
   setId(Id);
   return (true);
@@ -75,13 +76,13 @@ std::vector<Bomb*>::const_iterator	Player::getBombIt() const
 bool	Player::triggerOneBomb()
 {
   std::vector<Bomb *>::const_iterator	it = _bombs.begin();
-  auto	positions = getPosition();
+  auto	positions = getPos();
 
   while (it != _bombs.end())
     {
       if ((*it)->isLaunched() == false)
 	{
-	  (*it)->setPosition(positions.first, positions.second);
+	  (*it)->setPos(positions.first, positions.second);
 	  _bombThread->addWork(run_bomb, (*it));
 	  _board.placeEntity(_x, _y, (*it));
 	  return (true);
@@ -103,19 +104,6 @@ void	Player::powerUpRange()
 }
 
 //
-// PowerUp Functions
-//
-char	Player::getSpeed() const
-{
-  return (_speed);
-}
-
-void	Player::setSpeed(char const &Speed)
-{
-  _speed = Speed;
-}
-
-//
 // Principal funcions
 //
 
@@ -130,9 +118,7 @@ void	Player::checkPosPowerUp()
       if ((*all_in_it)->getId() == -2)
 	{
 	  powerup = reinterpret_cast<Crate *>((*all_in_it))->getBonus();
-	  if (powerup == Crate::SPEED)
-	    _speed += 1;
-	  else if (powerup == Crate::RANGE)
+	  if (powerup == Crate::RANGE)
 	    powerUpRange();
 	  else if (powerup == Crate::ADD)
 	    addBomb();

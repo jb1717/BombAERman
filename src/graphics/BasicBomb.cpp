@@ -5,14 +5,15 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Wed May 20 21:14:53 2015 Jamais
-// Last update Wed May 20 21:16:46 2015 Jamais
+// Last update Thu Jun  4 20:08:00 2015 Jamais
 //
 
 #include	"BasicBomb.hh"
 
 BasicBomb::BasicBomb() : ABomb()
 {
-  load("./assets/Models/PumpkinBomb2.fbx");
+  load("./assets/models/PumpkinBomb.fbx");
+  setCurrentAnim(0);
   scale(glm::vec3(0.002, 0.002, 0.002));
 }
 

@@ -42,6 +42,7 @@
 *.x86_64
 *.hex
 !bomberman/
+/bomberman
 bin/
 
 # Debug files
@@ -51,3 +52,4 @@ bin/
 #*#
 *~
 *.log
+.score.json

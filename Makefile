@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Thu May 21 01:00:07 2015 Jamais
+## Last update Sat Jun  6 04:02:12 2015 Jamais
 ##
 
 GRAPHICALGAME	=	yes
@@ -38,14 +38,15 @@ CFLAGS		=	-W -Wall -Wextra -ansi -std=c++11	\
 			-I $(INCLUDE_DIR)			\
 			-I $(AI_INC_DIR)			\
 			-I $(GRAPHICS_INC_DIR)			\
+			-I $(MANAGER_INC_DIR)			\
 			-I $(BOMBERMAN_INC_DIR)			\
 
 MAKEFLAGS	+=	--warn-undefined-variables		\
 			--warn-unused-variables			\
 			--no-print-directory
 
-LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ $(LIBS)
-#			-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
+LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ $(LIBS) \
+			-lgdl_gl -lfmod -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread
 
 
 
@@ -53,7 +54,7 @@ LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ $(LIBS)
 #			TREE				#
 #########################################################
 
-LIBS		=	-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2 -lpthread -llua
+LIBS		=	-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lfmod -lSDL2 -lpthread -llua
 LIB_DIR		=	./lib/
 LIB_INCLUDE_DIR	=	$(INCLUDE_DIR)lib/
 INCLUDE_DIR	=	./includes/
@@ -88,22 +89,49 @@ GRAPHICS_INC_DIR	=	$(addprefix $(INCLUDE_DIR), gameEngine)
 GRAPHICS_SRCS		=	$(addprefix $(GRAPHICS_SRC_DIR), $(GRAPHICS_SRC))
 GRAPHICS_OBJS		=	$(addsuffix .o, $(basename $(subst $(GRAPHICS_SRC_DIR), $(GRAPHICS_OBJ_DIR), $(GRAPHICS_SRCS))))
 
-GRAPHICS_SRC		=	\
-				VideoContext.cpp	\
+GRAPHICS_SRC		=				\
+				ABomb.cpp		\
+				AFX.cpp			\
+				AGameModel.cpp		\
 				AGameObject.cpp		\
+				BasicBomb.cpp		\
+				Camera.cpp		\
+				Character.cpp		\
+				Collider.cpp		\
+				ComplexObject.cpp	\
 				Cube.hpp		\
 				GameEngine.cpp		\
-				AGameModel.cpp		\
-				Camera.cpp		\
-				ABomb.cpp		\
-				BasicBomb.cpp		\
-				main.cpp		\
+				GraphicString.cpp	\
+				Geometric.cpp		\
+				GeometryFactory.cpp	\
+				Skybox.cpp		\
+				VideoContext.cpp	\
+				main.cpp
 
 ifeq ($(GRAPHICALGAME),yes)
 $(GRAPHICS_SRC) += main.cpp
 else
 $(BOMBERMAN_SRC) += main.cpp
 endif
+
+#########################################################
+#		   ASSETMANAGER				#
+#########################################################
+
+MANAGER_SRC_DIR		=	$(addprefix $(SRC_DIR), manager/)
+MANAGER_OBJ_DIR		=	$(addprefix $(OBJ_DIR), manager/)
+MANAGER_INC_DIR		=	$(addprefix $(INCLUDE_DIR), manager)
+MANAGER_SRCS		=	$(addprefix $(MANAGER_SRC_DIR), $(MANAGER_SRC))
+MANAGER_OBJS		=	$(addsuffix .o, $(basename $(subst $(MANAGER_SRC_DIR), $(MANAGER_OBJ_DIR), $(MANAGER_SRCS))))
+
+MANAGER_SRC		=				\
+				Theme.cpp		\
+				ThemeHandler.cpp	\
+				SoundHandler.cpp	\
+				AssetManager.cpp	\
+				BoardHandler.cpp	\
+				ScoreHandler.cpp	\
+				ModelHandler.cpp	\
 
 #########################################################
 #		   GAME  CORE				#
@@ -115,8 +143,7 @@ BOMBERMAN_INC_DIR	=	$(addprefix $(INCLUDE_DIR), engine)
 BOMBERMAN_SRCS		=	$(addprefix $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_SRC))
 BOMBERMAN_OBJS		=	$(addsuffix .o, $(basename $(subst $(BOMBERMAN_SRC_DIR), $(BOMBERMAN_OBJ_DIR), $(BOMBERMAN_SRCS))))
 
-BOMBERMAN_SRC		=	\
-				BoardHandler.cpp	\
+BOMBERMAN_SRC		=				\
 				Bomberman.cpp		\
 				Bomb.cpp		\
 				Player.cpp		\
@@ -129,23 +156,26 @@ BOMBERMAN_SRC		=	\
 				ECondVar.cpp		\
 				EThreadPool.cpp		\
 				EMutex.cpp		\
-				Score.cpp		\
-				AUI.cpp			\
-				AButtons		\
-				LauncherUI.cpp		\
 				Explosion.cpp		\
+				LauncherUI.cpp		\
+				UIManager.cpp		\
+				PlayUI.cpp		\
+				SettingsUI.cpp		\
+				AUI.cpp			\
+				PauseUI.cpp		\
 #				main.cpp		\
-
 
 BOMBERMAN		=	bomberman
 PRO			=	$(addprefix $(BINARY_DIR), $(BOMBERMAN))
 
 OBJS			=	$(AI_OBJS)		\
 				$(GRAPHICS_OBJS)	\
+				$(MANAGER_OBJS)		\
 				$(BOMBERMAN_OBJS)
 
 SRCS			=	$(AI_SRCS)		\
 				$(GRAPHICS_SRCS)	\
+				$(MANAGER_SRCS)		\
 				$(BOMBERMAN_SRCS)
 
 
@@ -158,14 +188,15 @@ FIRST		:=	$(shell test -d $(BINARY_DIR)		|| mkdir $(BINARY_DIR))		\
 			$(shell test -d $(OBJ_DIR)		|| mkdir $(OBJ_DIR))		\
 			$(shell test -d $(AI_OBJ_DIR)		|| mkdir $(AI_OBJ_DIR))		\
 			$(shell test -d $(GRAPHICS_OBJ_DIR)	|| mkdir $(GRAPHICS_OBJ_DIR))	\
+			$(shell test -d $(MANAGER_OBJ_DIR)	|| mkdir $(MANAGER_OBJ_DIR))	\
 			$(shell test -d $(BOMBERMAN_OBJ_DIR)	|| mkdir $(BOMBERMAN_OBJ_DIR))
 
 all		:
-			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS)'
+			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS)' MAKEFLAGS='$(MAKEFLAGS) -j -l4'
 
 
 debug		:	$(FIRST) fclean
-			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS) -g3'
+			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS) -g3' MAKEFLAGS='$(MAKEFLAGS) -j -l4'
 
 $(BOMBERMAN)	:	$(PRO)
 ifeq	($(LINKING), yes)
@@ -175,13 +206,13 @@ endif
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.cpp
 			@$(ECHO) $(COLOR_5)
 			@$(CC) $(CFLAGS) -c $< -o $@ $(LFLAGS)
-			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) "$(CFLAGS)" $(COLOR_4)"$(LIBS)"$(COLOR_3)" $<"$(COLOR_5)" ===> "$(COLOR_3)"$@\n"
+			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) "$(CFLAGS)" $(COLOR_4)"$(LIBS)"$(COLOR_3)" $<"$(COLOR_5)"\n"
 			@$(ECHO) $(COLOR_OFF)
 
 $(PRO)		:	$(OBJS)
 			@$(ECHO) $(COLOR_3) "\nLinking ...\n"$(COLOR_4)
 			@$(CC) $(CFLAGS) $(OBJS) -o $(PRO) $(LFLAGS)
-			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) $(CFLAGS) $(LIBS) "\n"$(COLOR_4)$(OBJS)$(COLOR_5)"\n"
+			@$(ECHO) $(COLOR_1)"$(CC)" $(COLOR_2) $(CFLAGS) $(LIBS) "\n"$(COLOR_3)$(OBJS)$(COLOR_5)"\n"
 			@$(ECHO)	"	  ________ \n"
 			@$(ECHO)	"	 |	  |\n"
 			@$(ECHO)	"	 |	  |\n"

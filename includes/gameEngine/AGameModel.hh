@@ -1,7 +1,6 @@
 #ifndef			___AGAME_MODEL_HH___
 # define		___AGAME_MODEL_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 # include		"Model.hh"
@@ -27,6 +26,8 @@ public:
 
 public:
   virtual void		update(gdl::Clock const& clock, gdl::Input &input);
+  virtual void		update(gdl::Clock const& clock, gdl::Input &input, Camera const& camera);
+  virtual void		update(gdl::Input &input, Camera const& camera);
 
 };
 

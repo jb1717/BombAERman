@@ -5,11 +5,14 @@
 // Login   <paasch_j@epitech.net>
 //
 // Started on  Mon Apr 27 14:00:52 2015 Johan Paasche
-// Last update Tue May 19 11:31:20 2015 Emmanuel Chambon
+// Last update Wed Jun  3 19:30:09 2015 Jamais
 //
 
 #ifndef		___GRAPHICS_HH___
 # define	___GRAPHICS_HH___
+
+# include	<iostream>
+# include	<fstream>
 
 # include	"OpenGL.hh"
 # include	"glm/glm.hpp"
@@ -23,5 +26,10 @@
 # include	<Texture.hh>
 # include	<BasicShader.hh>
 # include	<Model.hh>
+
+# include	"FILES.hh"
+
+# define	UNUSED		__attribute__((unused))
+
 
 #endif		/* !___GRAPHICS_HH___ */

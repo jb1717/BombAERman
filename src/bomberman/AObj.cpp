@@ -12,16 +12,16 @@
 
 AObj::AObj(Board &board, float x, float y) : _board(board), _x(x), _y(y)
 {
-
+  _gameObj = NULL;
 }
 
-void  AObj::setPosition(float x, float y)
+void  AObj::setPos(float x, float y)
 {
   _x = x;
   _y = y;
 }
 
-std::pair<float, float> AObj::getPosition() const
+std::pair<float, float> AObj::getPos() const
 {
   return (std::pair<float, float>(_x, _y));
 }
@@ -34,6 +34,21 @@ void	AObj::setId(int id)
 int		AObj::getId(void) const
 {
   return (_id);
+}
+
+entityType AObj::getType(void) const
+{
+	return (_type);
+}
+
+AGameObject	*AObj::getGameObj() const
+{
+  return (_gameObj);
+}
+
+void		AObj::setGameObj(AGameObject *newone)
+{
+  _gameObj = newone;
 }
 
 AObj::~AObj()

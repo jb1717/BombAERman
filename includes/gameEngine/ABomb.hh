@@ -5,13 +5,12 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Wed May 20 19:18:56 2015 Jamais
-// Last update Wed May 20 21:02:27 2015 Jamais
+// Last update Wed Jun  3 19:28:11 2015 Jamais
 //
 
 #ifndef			____ABOMB_HH___
 # define		____ABOMB_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 # include		"AGameObject.hh"

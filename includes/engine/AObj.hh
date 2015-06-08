@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Fri May 15 22:18:39 2015 Jean-Baptiste Grégoire
-// Last update Wed May 20 12:03:50 2015 David Tran
+// Last update Sat Jun  6 00:56:38 2015 Jamais
 //
 
 #ifndef AOBJ_HH_
@@ -13,8 +13,14 @@
 
 # include <stddef.h>
 # include <utility>
+# include "AGameObject.hh"
 
-class Board;
+enum entityType
+  {
+    BOMB = 0, PLAYER, CRATE, UNBREAKABLE_WALL, NONE, END = NONE
+  };
+
+class	Board;
 
 class AObj
 {
@@ -23,15 +29,23 @@ public:
   ~AObj();
 
 public:
-	void				setPosition(float x, float y);
-	std::pair<float, float>		getPosition() const;
-	void				setId(int);
-	int				getId(void) const;
+  void				setPos(float x, float y);
+  std::pair<float, float>	getPos() const;
+  void				setId(int);
+  int				getId(void) const;
+public:
+  AGameObject			*getGameObj() const;
+  void				setGameObj(AGameObject *);
+public:
+  entityType			getType(void) const;
+
 protected:
   Board 	&_board;
+  entityType	_type;
   float		_x;
   float		_y;
   int		_id;
+  AGameObject	*_gameObj;
 };
 
 #endif // !AOBJ

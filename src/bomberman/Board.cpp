@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Wed May 20 16:30:37 2015 Jean-Baptiste Grégoire
+// Last update Sat Jun  6 16:26:08 2015 Jamais
 //
 
 #include "Board.hh"
@@ -13,10 +13,70 @@
 #include "Crate.hh"
 #include "UnbreakableWall.hh"
 #include "Explosion.hh"
+#include "Cube.hh"
 
 Board::Board(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLength)
 {
   _board.resize(xLength * yLength);
+}
+
+bool	Board::initialize()
+{
+  int	x = 0;
+  for (auto it = _board.begin(); it != _board.end(); it++)
+    {
+      //      std::cout << "size = " << (*it).size() << std::endl;
+
+      for (auto internIt = (*it).begin(); internIt != (*it).end(); internIt++)
+	{
+	  AGameObject*	obj;
+
+	  switch ((*internIt)->getType())
+	    {
+	    case CRATE:
+	      {
+		obj = new Cube(glm::vec3((x / _xLength), 1, (x % _yLength)));
+		obj->setTexture(*texCrate);
+	  	(*internIt)->setGameObj(obj);
+	  	break;
+	      }
+	    case UNBREAKABLE_WALL:
+	      {
+		obj = new Cube(glm::vec3((x / _xLength), 0, (x % _yLength)));
+		obj->setTexture(*texWall);
+	  	(*internIt)->setGameObj(obj);
+	  	break;
+	      }
+	    case PLAYER:
+	      {
+		obj = new Character(glm::vec3((x / _xLength), 0.5, (x % _yLength)), "./assets/Models/marvin.fbx");
+		obj->scale(glm::vec3(0.001f, 0.001f, 0.001f));
+	  	(*internIt)->setGameObj(obj);
+		reinterpret_cast<Character *>(obj)->setCurrentAnim(0);
+		_players.push_back(reinterpret_cast<Player *>(*internIt));
+	  	break;
+	      }
+
+	    default:
+	      break;
+	    }
+	}
+      ++x;
+    }
+  initGameObjects();
+  return true;
+}
+
+void	Board::initGameObjects()
+{
+  for (auto it = _board.begin(); it != _board.end(); it++)
+    {
+      for (auto internIt = (*it).begin(); internIt != (*it).end(); internIt++)
+	{
+	  if ((*internIt)->getType())
+	    (*internIt)->getGameObj()->initialize();
+	}
+    }
 }
 
 AObj  *Board::createEntity(Board &board, entityType type)
@@ -27,7 +87,7 @@ AObj  *Board::createEntity(Board &board, entityType type)
       return (new Player(board));
     case CRATE:
       return (new Crate(board));
-    case UNBREACKABLE_WALL:
+    case UNBREAKABLE_WALL:
       return (new UnbreakableWall(board));
     default:
       return (NULL);
@@ -45,7 +105,7 @@ bool	Board::placeEntity(float x, float y, entityType type, int id, Direction dir
       if (!obj)
         return (false);
       if (type != PLAYER)
-        obj->setPosition(x, y);
+        obj->setPos(x, y);
       else
 	{
 	  reinterpret_cast<Player *>(obj)->playerSpawn(x, y, dir, id);
@@ -61,8 +121,8 @@ bool	Board::placeEntity(float x, float y, AObj *entity)
 {
   int	to = static_cast<int>(y) * _xLength + static_cast<int>(x);
 
-  if (!_board[to].empty())
-    return (false);
+  // if (!_board[to].empty())
+  //   return (false);
   _board[to].push_back(entity);
   return (true);
 }
@@ -235,18 +295,86 @@ void	Board::removePlayer(int id)
   }
 }
 
+bool		Board::checkOneCollision(std::vector<AObj *> field, AObj *player)
+{
+  auto		it = field.begin();
+  AGameObject	*playObj = player->getGameObj();
+
+  while (it != field.end())
+    {
+      if (player->getId() != (*it)->getId())
+	{
+	  if (playObj->collide((*(*it)->getGameObj())))
+	    return (true);
+	}
+      it++;
+    }
+  return (false);
+}
+
+bool	Board::collideAround(AObj *player, size_t x, size_t y)
+{
+  bool	collider = false;
+
+  if (y > 0)
+    collider = (checkOneCollision(_board[(y - 1) * _xLength + x], player)) ? true :
+      ((x > 0) ? ((checkOneCollision(_board[(y - 1) * _xLength + x - 1], player)) ? true :
+		  (x < (_xLength - 1)) ? ((checkOneCollision(_board[(y - 1) * _xLength + x + 1], player)) ? true : false) : false) : false);
+  if (!collider && y < (_yLength - 1))
+    collider = (checkOneCollision(_board[(y + 1) * _xLength + x], player)) ? true :
+      ((x > 0) ? ((checkOneCollision(_board[(y + 1) * _xLength + x - 1], player)) ? true :
+		  (x < (_xLength - 1)) ? ((checkOneCollision(_board[(y + 1) * _xLength + x + 1], player)) ? true : false) : false) : false);
+  if (!collider)
+    collider = (x > 0) ? ((checkOneCollision(_board[(y) * _xLength + x - 1], player)) ? true :
+			  ((x < (_xLength - 1)) ? checkOneCollision(_board[(y) * _xLength + x + 1], player) : false)) : false;
+  return (collider);
+}
+
 std::vector<AObj *> &Board::getSquareObjects(size_t x, size_t y)
 {
   return (_board[y * _xLength + x]);
 }
 
+std::vector<AObj *> &Board::operator[](size_t at)
+{
+    return _board[at];
+}
+
+size_t Board::size() const
+{
+    return _board.size();
+}
 
 std::vector<Player *>  &Board::getPlayers()
 {
   return (_players);
 }
 
+size_t                Board::getWidth() const
+{
+  return _xLength;
+}
+
+size_t                Board::getHeight() const
+{
+  return _yLength;
+}
+
+std::vector<std::vector<AObj *>>	&Board::getFullBoard()
+{
+  return (_board);
+}
+
 Board::~Board()
 {
-
+  while (!_board.empty())
+  {
+    std::vector<AObj *> v = _board.back();
+    while (!v.empty())
+    {
+      delete v.back();
+      v.pop_back();
+    }
+    _board.pop_back();
+  }
 }

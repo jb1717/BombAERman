@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 16 22:31:54 2015 Jamais
-// Last update Wed May 20 03:24:59 2015 Jamais
+// Last update Tue May 26 11:06:33 2015 Jamais
 //
 
 #include	"Cube.hh"
@@ -55,43 +55,36 @@ bool		Cube::initialize()
 {
     // back face //
   _geometry.setColor(glm::vec4(1, 1, 1, 1));
-
-  //  _geometry.setColor(glm::vec4(0.99, 0.80, 0.35, 1));
   _geometry.pushVertex(glm::vec3(0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
   _geometry.pushVertex(glm::vec3(0.5, 0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
   _geometry.pushVertex(glm::vec3(-0.5, 0.5, 0.5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
   _geometry.pushVertex(glm::vec3(-0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
 
   // front face
-  //  _geometry.setColor(glm::vec4(1.0f, 0.40f, 0.2, 1));
   _geometry.pushVertex(glm::vec3(0.5, -0.5, -0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
   _geometry.pushVertex(glm::vec3(0.5, 0.5, -0.5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
   _geometry.pushVertex(glm::vec3(-0.5, 0.5, -0.5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
   _geometry.pushVertex(glm::vec3(-0.5, -0.5, -0.5));	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
 
   // left face
-  //  _geometry.setColor(glm::vec4(0.2, 1, 0.5, 1));
   _geometry.pushVertex(glm::vec3(0.5, -0.5, -0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
   _geometry.pushVertex(glm::vec3(0.5, 0.5, -0.5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
   _geometry.pushVertex(glm::vec3(0.5, 0.5, 0.5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
   _geometry.pushVertex(glm::vec3(0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
 
   // right face
-  //  _geometry.setColor(glm::vec4(0.85, 0.0f, 0.17, 1));
   _geometry.pushVertex(glm::vec3(-0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
   _geometry.pushVertex(glm::vec3(-0.5, 0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
   _geometry.pushVertex(glm::vec3(-0.5, 0.5, -0.5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
   _geometry.pushVertex(glm::vec3(-0.5, -0.5, -0.5));	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
 
   // upper face
-  //  _geometry.setColor(glm::vec4(1, 0.0f, 1, 1));
   _geometry.pushVertex(glm::vec3(0.5, 0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
   _geometry.pushVertex(glm::vec3(0.5, 0.5, -0.5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
   _geometry.pushVertex(glm::vec3(-0.5, 0.5, -0.5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
   _geometry.pushVertex(glm::vec3(-0.5, 0.5, 0.5));	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
 
   // downside face
-  // _geometry.setColor(glm::vec4(0.5, 0.5, 1, 1));
   _geometry.pushVertex(glm::vec3(0.5, -0.5, -0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
   _geometry.pushVertex(glm::vec3(0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
   _geometry.pushVertex(glm::vec3(-0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
@@ -101,63 +94,14 @@ bool		Cube::initialize()
   return false;
 }
 
-// bool		Cube::initialize()
-// {
-//   _geometry.setColor(glm::vec4(0.99, 0.80, 0.35, 1));
-
-//   _geometry.pushVertex(glm::vec3(0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
-//   _geometry.pushVertex(glm::vec3(0.5, 0.5, 0.5));	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
-//   _geometry.pushVertex(glm::vec3(-0.5, 0.5, 0.5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
-//   _geometry.pushVertex(glm::vec3(-0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
-
-//   _geometry.setColor(glm::vec4(1.0f, 0.40f, 0.2, 1));
-//   _geometry.pushVertex(glm::vec3(0.5, -0.5, -0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
-//   _geometry.pushVertex(glm::vec3(0.5, 0.5, -0.5));	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
-//   _geometry.pushVertex(glm::vec3(-0.5, 0.5, -0.5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
-//   _geometry.pushVertex(glm::vec3(-0.5, -0.5, -0.5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
-
-//   _geometry.setColor(glm::vec4(0.2, 1, 0.5, 1));
-//   _geometry.pushVertex(glm::vec3(0.5, -0.5, -0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
-//   _geometry.pushVertex(glm::vec3(0.5, 0.5, -0.5));	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
-//   _geometry.pushVertex(glm::vec3(0.5, 0.5, 0.5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
-//   _geometry.pushVertex(glm::vec3(0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
-
-//   _geometry.setColor(glm::vec4(0.85, 0.0f, 0.17, 1));
-//   _geometry.pushVertex(glm::vec3(-0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
-//   _geometry.pushVertex(glm::vec3(-0.5, 0.5, 0.5));	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
-//   _geometry.pushVertex(glm::vec3(-0.5, 0.5, -0.5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
-//   _geometry.pushVertex(glm::vec3(-0.5, -0.5, -0.5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
-
-//   _geometry.setColor(glm::vec4(1, 0.0f, 1, 1));
-//   _geometry.pushVertex(glm::vec3(0.5, 0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
-//   _geometry.pushVertex(glm::vec3(0.5, 0.5, -0.5));	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
-//   _geometry.pushVertex(glm::vec3(-0.5, 0.5, -0.5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
-//   _geometry.pushVertex(glm::vec3(-0.5, 0.5, 0.5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
-
-//   _geometry.setColor(glm::vec4(0.5, 0.5, 1, 1));
-//   _geometry.pushVertex(glm::vec3(0.5, -0.5, -0.5));	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
-//   _geometry.pushVertex(glm::vec3(0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
-//   _geometry.pushVertex(glm::vec3(-0.5, -0.5, 0.5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
-//   _geometry.pushVertex(glm::vec3(-0.5, -0.5, -0.5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
-
-//   _geometry.build();
-//   return false;
-// }
-
 void		Cube::update(UNUSED gdl::Clock const& clock, UNUSED gdl::Input &input)
 {
-  // if (input.getKey(SDLK_UP))
-  //   translate(glm::vec3(0, 0, -1) * static_cast<float>(clock.getElapsed()) * _speed);
-  // if (input.getKey(SDLK_DOWN))
-  //   translate(glm::vec3(0, 0, 1) * static_cast<float>(clock.getElapsed()) * _speed);
-  // if (input.getKey(SDLK_LEFT))
-  //   translate(glm::vec3(-1, 0, 0) * static_cast<float>(clock.getElapsed()) * _speed);
-  // if (input.getKey(SDLK_RIGHT))
-  //   translate(glm::vec3(1, 0, 0) * static_cast<float>(clock.getElapsed()) * _speed);
 }
 
 void		Cube::draw(gdl::AShader &shader, UNUSED gdl::Clock const& clock)
 {
   _texture.bind();
+  glEnable (GL_BLEND);
+  glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   _geometry.draw(shader, getTransformation(), GL_QUADS);
 }

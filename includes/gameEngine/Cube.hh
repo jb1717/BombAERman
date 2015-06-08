@@ -5,13 +5,12 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 16 22:22:44 2015 Jamais
-// Last update Sun May 17 01:14:39 2015 Jamais
+// Last update Wed Jun  3 19:28:14 2015 Jamais
 //
 
 #ifndef			___CUBE_HH___
 # define		___CUBE_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 # include		"AGameObject.hh"

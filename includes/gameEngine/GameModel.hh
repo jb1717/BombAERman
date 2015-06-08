@@ -5,13 +5,12 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Tue May 19 23:32:53 2015 Jamais
-// Last update Tue May 19 23:37:48 2015 Jamais
+// Last update Wed Jun  3 19:28:13 2015 Jamais
 //
 
 #ifndef			___GAME_MODEL_HH___
 # define		___GAME_MODEL_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 # include		"AGameObject.hh"

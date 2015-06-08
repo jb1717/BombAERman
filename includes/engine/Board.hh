@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:22:05 2015 Jean-Baptiste Grégoire
-// Last update Wed May 20 14:11:16 2015 Jean-Baptiste Grégoire
+// Last update Fri Jun  5 23:08:42 2015 Jamais
 //
 
 #ifndef Board_HH_
@@ -15,6 +15,7 @@
 # include <string>
 # include <vector>
 # include "AObj.hh"
+# include "AGameObject.hh"
 
 # define MAP_EMPTY_CHAR	'o'
 
@@ -27,10 +28,6 @@ public:
     {
       North = 0, West, South, East
     };
-  enum entityType
-    {
-      PLAYER = 0, CRATE, UNBREACKABLE_WALL, END = UNBREACKABLE_WALL
-    };
   enum	IDType
     {
       Bomb = -3, CrateID = -2, Wall = -1, NoID = 0
@@ -41,6 +38,10 @@ public:
   ~Board();
 
 public:
+  bool			initialize();
+  void			initGameObjects();
+
+public:
   bool  placeEntity(float x, float y, entityType type, int id, Direction dir = North);
   bool  placeEntity(float x, float y, AObj *entity);
   bool  moveEntity(float x, float y, int id, Direction dir);
@@ -48,10 +49,17 @@ public:
   void	setExplosion(float x, float y);
   void  popEntity(int x, int y, int id);
   void	removePlayer(int id);
+  bool	collideAround(AObj *, size_t x, size_t y);
+  bool	checkOneCollision(std::vector<AObj *> field, AObj *);
 
 public:
+  std::vector<std::vector<AObj *>>	&getFullBoard();
   std::vector<Player *>  &getPlayers();
   std::vector<AObj *> &getSquareObjects(size_t x, size_t y);
+  std::vector<AObj *>   &operator[](size_t);
+  size_t                getWidth() const;
+  size_t                getHeight() const;
+  size_t                size() const;
 
 private:
   AObj	*createEntity(Board &board, entityType type);

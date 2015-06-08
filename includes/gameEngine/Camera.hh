@@ -5,13 +5,12 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 05:42:13 2015 Jamais
-// Last update Thu May 21 03:11:26 2015 Jamais
+// Last update Wed Jun  3 19:28:14 2015 Jamais
 //
 
 #ifndef			___CAMERA_HH___
 # define		___CAMERA_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 # include		"VideoContext.hh"
 

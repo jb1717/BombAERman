@@ -50,14 +50,10 @@ public: // Player Bomb tools
   std::vector<Bomb *>::const_iterator	getBombIt() const;
   bool					triggerOneBomb();
   void					powerUpRange();
-public: // Speed Power-up
-  char					getSpeed() const;
-  void					setSpeed(char const &);
 
 private:
   bool			_isAlive;
   std::vector<Bomb *>	_bombs;
-  char			_speed;
   Board::Direction	_dir;
   EThreadPool		*_bombThread;
 };

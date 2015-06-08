@@ -5,13 +5,12 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:54:03 2015 Jamais
-// Last update Sun May 17 02:25:47 2015 Jamais
+// Last update Sun Jun  7 07:11:37 2015 Jamais
 //
 
 #ifndef			___VIDEO_CONTEXT_HH___
 # define		___VIDEO_CONTEXT_HH___
 
-# include		"basics.hh"
 # include		"graphics.hh"
 
 class			VideoContext : public gdl::SdlContext
@@ -22,11 +21,24 @@ protected:
   std::string		_windowName;
 
 public:
-  VideoContext(unsigned int screenWidth = 800, unsigned int screenHeight = 600, const std::string windowName = "");
+  static VideoContext* 	instanciate(
+				    unsigned int screenWidth = 1600,
+				    unsigned int screenHeight = 900,
+				    const std::string windowName = "Bomber men : 9/11 :')"
+				    );
   ~VideoContext();
+
+private:
+  VideoContext(
+	       unsigned int screenWidth = 800,
+	       unsigned int screenHeight = 600,
+	       const std::string windowName = ""
+	       );
+
 
 public:
   bool			init();
+  bool			init(int initFlags/* = SDL_INIT_VIDEO*/, int windowsFlags/* = SDL_WINDOW_OPENGL*/);
   void			updateContext(gdl::Clock &clock, gdl::Input& input) const;
 
 public:
