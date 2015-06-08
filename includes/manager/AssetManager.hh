@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:05:32 2015 Emmanuel Chambon
-// Last update Fri Jun  5 19:35:32 2015 Jamais
+// Last update Mon Jun  8 06:50:03 2015 Emmanuel Chambon
 //
 
 #pragma once
@@ -26,14 +26,13 @@
 #include "ScoreHandler.hh"
 #include "ModelHandler.hh"
 
-extern gdl::Texture*		lol;
-
 #define THEME_HANDLER(x)	reinterpret_cast<ThemeHandler *>(&x)
 #define THEME(x) 			reinterpret_cast<Theme *>(&x)
 #define TEXTURE(x) 			reinterpret_cast<gdl::Texture *>(&x)
 #define BOARD_HANDLER(x)	reinterpret_cast<BoardHandler *>(&x)
 #define BOARD(x)			reinterpret_cast<Board *>(&x)
 #define SOUND_HANDLER(x)	reinterpret_cast<SoundHandler *>(&x)
+#define MODEL_HANDLER(x)	reinterpret_cast<ModelHandler *>(&x)
 
 class AssetManager
 {

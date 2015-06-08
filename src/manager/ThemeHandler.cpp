@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 21:07:26 2015 Emmanuel Chambon
-// Last update Mon Jun  8 05:43:21 2015 Emmanuel Chambon
+// Last update Mon Jun  8 06:51:04 2015 Emmanuel Chambon
 //
 
 #include "ThemeHandler.hh"
@@ -23,27 +23,17 @@ void ThemeHandler::load()
 {
 	DIR *dir;
 	struct dirent *ent;
-	// Container for async calls
-	std::vector<std::future<void>>  f;
 
 	if ((dir = opendir ("./assets/themes")) != NULL) {
-		// bind function to avoid static function
-		auto func = std::bind(&ThemeHandler::loadTheme, this, std::placeholders::_1, std::placeholders::_2);
-		try {
-		while ((ent = readdir (dir)) != NULL) {
-			if (std::string(ent->d_name)[0] != '.')
-				// Asynchronous load
-				// f.push_back(std::async (std::launch::async, func,
-				//                         "assets/themes/" + std::string(ent->d_name), ent->d_name));
-			  loadTheme("assets/themes/" + std::string(ent->d_name), ent->d_name);
-		}
-		// 	for (auto i = f.begin(); i != f.end(); i++)
-		// 		// Asynchronous termination
-		// 		i->get();
-		} catch (std::invalid_argument &e) {
-			std::cerr << e.what() << std::endl;
-		}
-		closedir (dir);
+	  try {
+	    while ((ent = readdir (dir)) != NULL) {
+	      if (std::string(ent->d_name)[0] != '.')
+		loadTheme("assets/themes/" + std::string(ent->d_name), ent->d_name);
+	    }
+	  } catch (std::invalid_argument &e) {
+	    std::cerr << e.what() << std::endl;
+	  }
+	  closedir (dir);
 	} else {
 		throw std::runtime_error("Cannot close themes folder.");
 	}

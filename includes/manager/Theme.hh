@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Sat May 23 02:03:11 2015 Emmanuel Chambon
-// Last update Mon Jun  8 06:39:53 2015 Emmanuel Chambon
+// Last update Mon Jun  8 06:51:35 2015 Emmanuel Chambon
 //
 
 #pragma once
@@ -18,7 +18,6 @@
 #include <iostream>
 #include <memory>
 #include <mutex>
-#include <future>
 #include <vector>
 #include <dirent.h>
 #include <regex>

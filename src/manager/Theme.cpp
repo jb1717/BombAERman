@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Sat May 23 04:33:27 2015 Emmanuel Chambon
-// Last update Mon Jun  8 06:06:10 2015 Emmanuel Chambon
+// Last update Mon Jun  8 06:50:33 2015 Emmanuel Chambon
 //
 
 #include "Theme.hh"
@@ -53,29 +53,19 @@ void Theme::load(std::string const &path)
 {
 	DIR *dir;
 	struct dirent *ent;
-	// Container for async calls
-	std::vector<std::future<void>>  f;
 
 	if ((dir = opendir (path.c_str())) != NULL) {
-		// bind function to avoid static function
-		auto func = std::bind(&Theme::loadTheme, this, std::placeholders::_1);
-		while ((ent = readdir (dir)) != NULL) {
-		try {
-		  if (std::string(ent->d_name)[0] != '.')
-		    // Asynchronous load
-		    // f.push_back(std::async (std::launch::async, func,
-		    //                         path + "/" + std::string(ent->d_name)));
-		    loadTheme(path + "/" + std::string(ent->d_name));
-		} catch (std::invalid_argument &e) {
-		  std::cerr << e.what() << std::endl;
-		}
-		}
-		// 	for (auto i = f.begin(); i != f.end(); i++)
-		// 		// Asynchronous termination
-		// 		i->get();
-		closedir (dir);
+	  while ((ent = readdir (dir)) != NULL) {
+	    try {
+	      if (std::string(ent->d_name)[0] != '.')
+		loadTheme(path + "/" + std::string(ent->d_name));
+	    } catch (std::invalid_argument &e) {
+	      std::cerr << e.what() << std::endl;
+	    }
+	  }
+	  closedir (dir);
 	} else {
-		throw std::runtime_error("Cannot open theme folder: " + path);
+	  throw std::runtime_error("Cannot open theme folder: " + path);
 	}
 }
 

@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:04:57 2015 Emmanuel Chambon
-// Last update Mon Jun  8 06:39:19 2015 Emmanuel Chambon
+// Last update Mon Jun  8 06:49:56 2015 Emmanuel Chambon
 //
 
 #include "AssetManager.hh"
@@ -13,8 +13,6 @@
 #include "GameEngine.hh"
 #include "Camera.hh"
 #include "Skybox.hh"
-
-gdl::Texture* lol;
 
 AssetManager    &AssetManager::instance()
 {
@@ -24,58 +22,19 @@ AssetManager    &AssetManager::instance()
 
 AssetManager::AssetManager() : _mutex(std::make_shared<std::mutex>())
 {
-	// std::vector<std::future<void>>	f;
+  std::vector<std::future<void>>	f;
 
-	// f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadBoardHandler, this)));
-	// f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadThemeHandler, this)));
-	// f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadSoundHandler, this)));
-	// f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadScoreHandler, this)));
-	// f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadModelHandler, this)));
+  f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadBoardHandler, this)));
+  f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadSoundHandler, this)));
+  f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadScoreHandler, this)));
 
-	// for (auto i = f.begin(); i != f.end(); i++)
-	// 	i->get();
+  for (auto i = f.begin(); i != f.end(); i++)
+    i->get();
 
-  loadBoardHandler();
   loadThemeHandler();
-  loadSoundHandler();
-  loadScoreHandler();
   loadModelHandler();
-  // Models
-    // Scores
-    // Saves
-	// Settings
-      // 	gdl::Texture	*te = new gdl::Texture();
-      // 	AGameObject	*cube = new Cube(glm::vec3(0, 0, 0));
-
-      // 	te->load("./assets/themes/default/default.floor.tga");
-      // 	lol = te;
-      // 	cube->setTexture(*te);
-      // 	cube->initialize();
-
-      // 	std::cout << "[[[[[[[[[]]]]]]]]]" << te->getHeight() << std::endl;
-      // 	gdl::BasicShader	sh;
-      // 	 if (!sh.load(FRAGMENT_SHADER, GL_FRAGMENT_SHADER)
-      // || !sh.load(VERTEX_SHADER, GL_VERTEX_SHADER)
-      // || !sh.build())
-      // 	   std::cout << "Bouh" << std::endl;
-
-      // 	 gdl::Clock		_kikou;
-      // 	 Camera	cam;
-
-      // 	 Skybox* sk = new Skybox();
-      // 	 glEnable(GL_DEPTH_TEST);
-      // 	 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      // 	 cam.setupCamera(*V);
-      // 	 cam.setPosition(glm::vec3(0, 5, -5));
-      // 	 cam.refreshPosition();
-      // 	 sh.bind();
-      // 	 sh.setUniform("view", cam.getTransformationMatrix());
-      // 	 sh.setUniform("projection", cam.getProjectionMatrix());
-      // 	 cube->draw(sh, _kikou);
-      // 	 sk->draw(sh, _kikou);
-      // 	 V->flush();
-      // 	 std::cout << (V == NULL ? "LOooser " : "ok") << std::endl;
-      // 	 sleep(1);
+  // Saves
+  // Settings
 }
 
 AssetManager::~AssetManager()
@@ -85,15 +44,15 @@ AssetManager::~AssetManager()
 
 void 			AssetManager::loadBoardHandler()
 {
-	std::shared_ptr<BoardHandler> handler = std::make_shared<BoardHandler>();
+  std::shared_ptr<BoardHandler> handler = std::make_shared<BoardHandler>();
 
-	std::lock_guard<std::mutex> guard(*_mutex);
-	_assets["boards"] = handler;
+  std::lock_guard<std::mutex> guard(*_mutex);
+  _assets["boards"] = handler;
 }
 
 void 			AssetManager::loadThemeHandler()
 {
-	std::shared_ptr<ThemeHandler> handler = std::make_shared<ThemeHandler>();
+  std::shared_ptr<ThemeHandler> handler = std::make_shared<ThemeHandler>();
 
 	std::lock_guard<std::mutex> guard(*_mutex);
 	_assets["themes"] = handler;
