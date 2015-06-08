@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:04:57 2015 Emmanuel Chambon
-// Last update Sat Jun  6 00:47:09 2015 Jamais
+// Last update Mon Jun  8 06:39:19 2015 Emmanuel Chambon
 //
 
 #include "AssetManager.hh"
@@ -24,18 +24,23 @@ AssetManager    &AssetManager::instance()
 
 AssetManager::AssetManager() : _mutex(std::make_shared<std::mutex>())
 {
-	std::vector<std::future<void>>	f;
+	// std::vector<std::future<void>>	f;
 
-	f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadBoardHandler, this)));
-	f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadThemeHandler, this)));
-	f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadSoundHandler, this)));
-	f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadScoreHandler, this)));
-	f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadModelHandler, this)));
+	// f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadBoardHandler, this)));
+	// f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadThemeHandler, this)));
+	// f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadSoundHandler, this)));
+	// f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadScoreHandler, this)));
+	// f.push_back(std::async(std::launch::async, std::bind(&AssetManager::loadModelHandler, this)));
 
-	for (auto i = f.begin(); i != f.end(); i++)
-		i->get();
+	// for (auto i = f.begin(); i != f.end(); i++)
+	// 	i->get();
 
-    // Models
+  loadBoardHandler();
+  loadThemeHandler();
+  loadSoundHandler();
+  loadScoreHandler();
+  loadModelHandler();
+  // Models
     // Scores
     // Saves
 	// Settings

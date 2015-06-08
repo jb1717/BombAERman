@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Sat May 23 02:03:11 2015 Emmanuel Chambon
-// Last update Sun May 24 05:15:59 2015 Emmanuel Chambon
+// Last update Mon Jun  8 06:39:53 2015 Emmanuel Chambon
 //
 
 #pragma once
@@ -31,7 +31,7 @@ public:
     ~Theme();
 
 public:
-    gdl::Texture                &operator[](std::string const &);
+    gdl::Texture                *operator[](std::string const &);
     std::vector<std::string>    getTextures() const;
 
 private:

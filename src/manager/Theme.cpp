@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Sat May 23 04:33:27 2015 Emmanuel Chambon
-// Last update Mon Jun  8 05:44:27 2015 Emmanuel Chambon
+// Last update Mon Jun  8 06:06:10 2015 Emmanuel Chambon
 //
 
 #include "Theme.hh"
@@ -88,9 +88,9 @@ std::vector<std::string>				Theme::getTextures() const
 	return ret;
 }
 
-gdl::Texture                                    &Theme::operator[](std::string const &at)
+gdl::Texture                                    *Theme::operator[](std::string const &at)
 {
 	if (_textures.find(at) == _textures.end())
 		throw std::out_of_range("Out of range Textures.");
-	return *_textures[at];
+	return _textures[at].get();
 }
