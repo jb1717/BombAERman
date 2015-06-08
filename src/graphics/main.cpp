@@ -15,6 +15,7 @@
 #include	"Crate.hh"
 #include	"UnbreakableWall.hh"
 #include	"Player.hh"
+#include  "Ia.hh"
 
 int	main()
 {
@@ -35,6 +36,7 @@ int	main()
 	  board->placeEntity(x, y, new Crate(*board));
 	  board->placeEntity(x, y, new UnbreakableWall(*board));
 	}
+  board->placeEntity(8, 8, new Ia("ia/easy.lua", *board));
     }
 
   GameEngine	engine;

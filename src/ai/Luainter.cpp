@@ -5,14 +5,22 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Thu May 21 15:34:11 2015 Hugo Prenat
-// Last update Thu May 21 16:16:15 2015 Hugo Prenat
+// Last update Mon Jun  8 23:01:14 2015 Hugo Prenat
 //
 
 #include "Luainter.hh"
 
 Luainter::Luainter(): _L(luaL_newstate())
 {
+  _L = luaL_newstate();
+  if (_L == NULL)
+
   luaL_openlibs(_L);
+  luaopen_base(_L);
+  luaopen_table(_L);
+  luaopen_io(_L);
+  luaopen_string(_L);
+  luaopen_math(_L);
 }
 
 lua_State*	Luainter::getState() const
@@ -34,7 +42,7 @@ void	Luainter::report_errors(int state)
     }
 }
 
-void	Luainter::ExecuteFile(const std::string& fileName)
+void	Luainter::executeFile(const std::string& fileName)
 {
   int state;
 
@@ -44,7 +52,7 @@ void	Luainter::ExecuteFile(const std::string& fileName)
   report_errors(state);
 }
 
-void	Luainter::ExecuteString(const std::string& expression)
+void	Luainter::executeString(const std::string& expression)
 {
   int state;
 
@@ -52,4 +60,10 @@ void	Luainter::ExecuteString(const std::string& expression)
     return ;
   state = luaL_dostring(_L, expression.c_str());
   report_errors(state);
+}
+
+void	Luainter::addFunc(int (*func)(lua_State*), std::string const name)
+{
+  lua_pushcfunction(_L, func);
+  lua_setglobal(_L, name.c_str());
 }
