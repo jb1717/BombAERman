@@ -5,10 +5,11 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Wed Jun  3 11:24:34 2015 Jamais
-// Last update Sun Jun  7 02:58:18 2015 Jamais
+// Last update Mon Jun  8 10:01:44 2015 Jamais
 //
 
 #include	"GraphicString.hh"
+#include	"AssetManager.hh"
 
 GraphicString::GraphicString() : ComplexObject(), _text(""), _size(1)
 {}
@@ -71,25 +72,38 @@ void				GraphicString::setText(std::string const& text)
 
 bool				GraphicString::render(UNUSED GeometryFactory& factory)
 {
+  auto				asset = AssetManager::instance();
   Geometric*			graphicChar;
+  gdl::Texture*			charTexture;
   int				x;
 
   x = _text.size() / 2 * -1;
   for (unsigned int i = 0; i < _text.size(); i++)
     {
-      gdl::Texture*			lok = new gdl::Texture();
       if (_text.substr(i, 1) != " ")
 	{
-	  lok->load("./assets/fonts/" + _text.substr(i, 1) + ".tga");
-	  graphicChar = new Geometric(glm::vec3(_position.x - x, 5, 5));
+	  try {
+	  charTexture = (*THEME((*THEME_HANDLER(asset["themes"]))["fonts"]))[_text.substr(i, 1)];
+	  } catch (std::out_of_range e) { std::cout << e.what() << std::endl;}
+	  graphicChar = new Geometric(glm::vec3(_position.x - x, 0, 0));
 	  graphicChar->setGeometry(factory.getGeometry(GeometryFactory::VERTICAL_PLANE));
-	  graphicChar->setTexture(*lok);
-	  //	  graphicChar->initialize();
+	  graphicChar->setTexture(*charTexture);
+	  graphicChar->initialize();
 	  push_back(graphicChar);
 	}
       x++;
     }
+  std::cout << x << std::endl;
   return true;
+}
+
+void				GraphicString::scale(glm::vec3 const& scale)
+{
+  ComplexObject::scale(scale);
+  for (size_t i = 0; i < _spareParts.size(); i++)
+    {
+      _spareParts[i]->translate(glm::vec3(i * scale.x * (i < _spareParts.size() ? 1 : -1), 0, -2));
+    }
 }
 
 void				GraphicString::clear()

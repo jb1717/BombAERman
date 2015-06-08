@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Tue May 26 09:17:03 2015 Jamais
-// Last update Sun Jun  7 18:50:56 2015 Jamais
+// Last update Mon Jun  8 07:48:10 2015 Jamais
 //
 
 #include		"GeometryFactory.hh"

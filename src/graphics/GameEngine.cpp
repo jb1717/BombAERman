@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Sun Jun  7 19:34:00 2015 Jamais
+// Last update Mon Jun  8 12:26:06 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -43,7 +43,8 @@ std::vector<AObj *> objs;
 VideoContext	*V;
 AGameObject *	lolilol;
 
-AGameObject	*bomb;
+//AGameObject	*bomb;
+AGameModel*	bomb;
 Character	*hero;
 gdl::Texture	*texFloor;
 gdl::Texture	*texCrate;
@@ -61,7 +62,8 @@ GraphicString*	s2;
 AGameObject *falling;
 AGameObject *sol;
 Geometric *choice;
-Geometric* button;
+Geometric* bombChooser;
+Geometric* menu;
 
 GameEngine::GameEngine() : Game()
 {
@@ -73,7 +75,7 @@ GameEngine::GameEngine() : Game()
   texWall = new gdl::Texture();
   texWall->load("./assets/themes/default/default.wall.tga", true);
   texMenu = new gdl::Texture();
-  texMenu->load("./assets/themes/default/default.menu.tga");
+
   ex1 = new gdl::Texture();
   ex2 = new gdl::Texture();
   ex3 = new gdl::Texture();
@@ -84,11 +86,15 @@ GameEngine::GameEngine() : Game()
   hero->scale(glm::vec3(0.002f, 0.002f, 0.002f));
   hero->setCurrentAnim(0);
   bomb = new BasicBomb();
-   sol = new Cube();
-   sol->setTexture(*texFloor);
-   sol->scale(glm::vec3(10, 1000, 10));
-   sol->translate(glm::vec3(4.5, -499.5, 4.5));
-   sol->initialize();
+  auto asset = AssetManager::instance();
+  // = &(*MODEL_HANDLER(asset["models"]))["PumpkinBomb.fbx"];
+  std::cout << bomb->getScale().x << std::endl;
+  sol = new Cube();
+  sol->setTexture(*texFloor);
+  sol->scale(glm::vec3(10, 1000, 10));
+  sol->translate(glm::vec3(4.5, -500.5, 4.5));
+  sol->initialize();
+  texMenu = (*THEME((*THEME_HANDLER(asset["themes"]))["GUI"]))["menu"];
   // bomb = new Cube();
   // bomb->setTexture(*texFloor);
   // bomb->initialize();
@@ -117,7 +123,7 @@ bool		GameEngine::initialize()
   glEnable(GL_SCISSOR_TEST);
   camera.refreshPosition();
   /**/
-  menuCam.setPosition(glm::vec3(0, 0, -1));
+  menuCam.setPosition(glm::vec3(0, 0, -3));
   menuCam.refreshPosition();
   /**/
   glEnable(GL_DEPTH_TEST);
@@ -129,33 +135,26 @@ bool		GameEngine::initialize()
   _shader.setUniform("projection", camera.getProjectionMatrix());
 
   sk = new Skybox;
-  // falling = new Cube(glm::vec3(5, 10, 5));
-  // falling->setTexture(*texFloor);
-  falling = new Character(glm::vec3(3 ,10, 3));
-  falling->scale(glm::vec3(0.002, 0.002, 0.002));
-  reinterpret_cast<Character*>(falling)->load("./assets/Models/marvin.fbx");
-  //  falling->initialize();
-
   effect = new AFX();
+
   factory = GeometryFactory::instanciate();
 
-  // choice = new Cube();
   choice = new Geometric();
   choice->setGeometry(factory->getGeometry(GeometryFactory::VERTICAL_PLANE));
   choice->setTexture(*texMenu);
   choice->scale(glm::vec3(0.5, 0.5, 0.5));
-
-  // choice->translate(glm::vec3(0.25, 0, 0));
   choice->initialize();
 
   gdl::Texture *GuiBomb = new gdl::Texture;
-  std::cout << GuiBomb->load("./assets/themes/default/default.GUIBomb.tga") << std::endl;
-  button = new Geometric();
-  button->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
-  button->setTexture(*GuiBomb);
-  button->scale(glm::vec3(0.40, 0.50, 0.40));
-  button->setPosition(glm::vec3(-0.60, -0.30, 0.0));
-  button->initialize();
+  auto asset = AssetManager::instance();
+
+  GuiBomb = (*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["GUIBomb"];
+  bombChooser = new Geometric();
+  bombChooser->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
+  bombChooser->setTexture(*GuiBomb);
+  bombChooser->setPosition(glm::vec3(-1.5, -1, 0.0));
+  bombChooser->initialize();
+
   Geometric *g = new Geometric();
   g->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
   g->setTexture(*ex1);
@@ -181,34 +180,18 @@ bool		GameEngine::initialize()
   effect->translate(glm::vec3(5, 1, 5));
   effect->rotate(glm::vec3(1, 0, 0), 90);
 
-  s2 = new GraphicString("AIOH");
-  s2->render(*factory);
-  choice = (*s2)[0];
-  gdl::Texture *kio = new gdl::Texture;
-  kio->load("./assets/fonts/B.tga");
-  choice->setTexture(*kio);
-  choice->initialize();
-  s2->initialize();
   s = new GraphicString("BOMBERMAN 3D");
-  s2->translate(glm::vec3(0, 0, 0));
-  s2->scale(glm::vec3(150, 150, 150));
-  //g = new Geometric();
-  //  g->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
-  //  gdl::Texture *l = new gdl::Texture();
-  //  l->load("./assets/fonts/A.tga");
-  // g->setTexture(*l);
-  // s->push_back(g);
   s->render(*factory);
-  std::string d(" BONJOUR AND YO()");
-  *s = d;
-  //  s->translate(glm::vec3(5, 2, 5));
   s->initialize();
+  s->translate(glm::vec3(0, 0, 5));
   s->scale(glm::vec3(0.10, 0.10, 0.10));
-  // s->setPosition(camera.getPosition());
-  //bomb->translate(glm::vec3(5, 5, 5));
-  bomb->setPosition(button->getPosition());
+  bomb->setPosition(bombChooser->getPosition());
   bomb->translate(glm::vec3(0, -0.10, 0));
-  bomb->scale(glm::vec3(0.20, 0.20, 0.20));
+  bomb->scale(glm::vec3(0.40, 0.40, 0.40));
+
+  menu = new Geometric(glm::vec3(0, 0, -2));
+  menu->setGeometry(factory->getGeometry(GeometryFactory::VERTICAL_PLANE));
+  menu->setTexture(*texMenu);
   return true;
 }
 
@@ -242,10 +225,6 @@ bool		GameEngine::update()
 
   _shader.setUniform("view", camera.getTransformationMatrix());
   _shader.setUniform("projection", camera.getProjectionMatrix());
-  s->update(_clock, _input);
-  s2->update(_clock, _input);
-  // s->setPosition(camera.getPosition());
-  // s->translate(glm::vec3(cos(camera.getRotation().y), 0, sin(camera.getRotation().y)));
   bool	collide = false;
   glm::vec3 p;
   AGameObject *player = _board->getPlayers().front()->getGameObj();
@@ -291,24 +270,18 @@ void		GameEngine::draw()
 	  ++x;
 	}
     }
-    effect->translate(glm::vec3(0, 0, 1));
+  effect->translate(glm::vec3(0, 0, 1));
   effect->draw(_shader, _clock);
   effect->translate(glm::vec3(0, 0, -1));
   effect->draw(_shader, _clock);
-  // s2->draw(_shader, _clock);
-  //     falling->draw(_shader, _clock);
-  //     s->draw(_shader, _clock);
-
   if (GUI)
     {
       _shader.setUniform("view", menuCam.getTransformationMatrix());
       _shader.setUniform("projection", menuCam.getProjectionMatrix());
-      choice->draw(_shader, _clock);
-      bomb->draw(_shader, _clock);
-      s2->draw(_shader, _clock);
-      // falling->draw(_shader, _clock);
       s->draw(_shader, _clock);
-      button->draw(_shader, _clock);
+      bomb->draw(_shader, _clock);
+      bombChooser->draw(_shader, _clock);
+      menu->draw(_shader, _clock);
     }
   _videoContext->flush();
 
