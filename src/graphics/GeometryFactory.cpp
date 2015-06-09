@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Tue May 26 09:17:03 2015 Jamais
-// Last update Mon Jun  8 07:48:10 2015 Jamais
+// Last update Tue Jun  9 02:34:50 2015 Jamais
 //
 
 #include		"GeometryFactory.hh"
@@ -27,6 +27,7 @@ GeometryFactory::GeometryFactory()
   _figures[BACK_PLANE] = createBackPlane();
   _figures[PLANE] = createPlane();
   _figures[VERTICAL_PLANE] = createVerticalPlane();
+  _figures[HORIZONTAL_PLANE] = createHorizontalPlane();
   _figures[DISC] = createDisc();
   _figures[CUBE] = createCube();
   _figures[CYLINDER] = createCylinder();
@@ -141,6 +142,19 @@ gdl::Geometry*		GeometryFactory::createVerticalPlane() const
   plane->pushVertex(glm::vec3( 0.5f,  0.5f, 0.0f));   	plane->pushUv(glm::vec2(0.0f, 1.0f));
   plane->pushVertex(glm::vec3(-0.5f,  0.5f, 0.0f));   	plane->pushUv(glm::vec2(1.0f, 1.0f));
   plane->pushVertex(glm::vec3(-0.5f, -0.5f, 0.0f));   	plane->pushUv(glm::vec2(1.0f, 0.0f));
+  plane->build();
+
+  return plane;
+}
+
+gdl::Geometry*		GeometryFactory::createHorizontalPlane() const
+{
+  gdl::Geometry		*plane = new gdl::Geometry;
+
+  plane->pushVertex(glm::vec3( 0.5f,  0.0f, -0.5f));   	plane->pushUv(glm::vec2(0.0f, 0.0f));
+  plane->pushVertex(glm::vec3( 0.5f,  0.0f,  0.5f));   	plane->pushUv(glm::vec2(0.0f, 1.0f));
+  plane->pushVertex(glm::vec3(-0.5f,  0.0f,  0.5f));   	plane->pushUv(glm::vec2(1.0f, 1.0f));
+  plane->pushVertex(glm::vec3(-0.5f,  0.0f, -0.5f));   	plane->pushUv(glm::vec2(1.0f, 0.0f));
   plane->build();
 
   return plane;

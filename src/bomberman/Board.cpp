@@ -23,14 +23,12 @@ Board::Board(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLeng
 bool	Board::initialize()
 {
   int	x = 0;
-  int	y = 0;
 
   int	true_x;
   int	true_y;
   for (auto it = _board.begin(); it != _board.end(); it++)
     {
       //      std::cout << "size = " << (*it).size() << std::endl;
-      y = x / _xLength;
       for (auto internIt = (*it).begin(); internIt != (*it).end(); internIt++)
 	{
 	  AGameObject*	obj;
@@ -56,7 +54,7 @@ bool	Board::initialize()
 	      }
 	    case PLAYER:
 	      {
-		obj = new Character(glm::vec3((x / _xLength), 0.5, (x % _yLength)), "./assets/Models/marvin.fbx");
+		obj = new Character(glm::vec3(true_x, 0.5, true_y), "./assets/Models/marvin.fbx");
 		obj->scale(glm::vec3(0.001f, 0.001f, 0.001f));
 	  	(*internIt)->setGameObj(obj);
 		reinterpret_cast<Character *>(obj)->setCurrentAnim(0);
@@ -308,8 +306,8 @@ bool		Board::checkOneCollision(std::vector<AObj *> field, AObj *player)
 
   while (it != field.end())
     {
-      if (player->getId() != (*it)->getId())
-	{
+      if (player->getType() != (*it)->getType() && (*it)->getType() != UNBREAKABLE_WALL)
+      	{
 	  if (playObj->collide((*(*it)->getGameObj())))
 	    return (true);
 	}
@@ -318,21 +316,25 @@ bool		Board::checkOneCollision(std::vector<AObj *> field, AObj *player)
   return (false);
 }
 
-bool	Board::collideAround(AObj *player, size_t x, size_t y)
+bool	Board::collideAround(AObj *player, long int x, long int y)
 {
   bool	collider = false;
 
-  if (y > 0)
-    collider = (checkOneCollision(_board[(y - 1) * _xLength + x], player)) ? true :
+  x = (x - (static_cast<long int>(_xLength) / 2)) < 0 ? (x - (static_cast<long int>(_xLength) / 2)) * -1 : (x - (static_cast<long int>(_xLength) / 2));
+  y = (y - (static_cast<long int>(_yLength) / 2)) < 0 ? (y - (static_cast<long int>(_yLength) / 2)) * -1 : (y - (static_cast<long int>(_yLength) / 2));
+  if (x < 1 || y < 1 || x > static_cast<long int>(_xLength) || y > static_cast<long int>(_yLength))
+    collider = !collider;
+  if (!collider && y > 0)
+    collider = (checkOneCollision(_board[(y - 1) * static_cast<long int>(_xLength) + x], player)) ? true :
       ((x > 0) ? ((checkOneCollision(_board[(y - 1) * _xLength + x - 1], player)) ? true :
-		  (x < (_xLength - 1)) ? ((checkOneCollision(_board[(y - 1) * _xLength + x + 1], player)) ? true : false) : false) : false);
-  if (!collider && y < (_yLength - 1))
-    collider = (checkOneCollision(_board[(y + 1) * _xLength + x], player)) ? true :
-      ((x > 0) ? ((checkOneCollision(_board[(y + 1) * _xLength + x - 1], player)) ? true :
-		  (x < (_xLength - 1)) ? ((checkOneCollision(_board[(y + 1) * _xLength + x + 1], player)) ? true : false) : false) : false);
+  		  (x < (static_cast<long int>(_xLength) - 1)) ? ((checkOneCollision(_board[(y - 1) * static_cast<long int>(_xLength) + x + 1], player)) ? true : false) : false) : false);
+  if (!collider && y < (static_cast<long int>(_yLength) - 1))
+    collider = (checkOneCollision(_board[(y + 1) * static_cast<long int>(_xLength) + x], player)) ? true :
+      ((x > 0) ? ((checkOneCollision(_board[(y + 1) * static_cast<long int>(_xLength) + x - 1], player)) ? true :
+  		  (x < (static_cast<long int>(_xLength) - 1)) ? ((checkOneCollision(_board[(y + 1) * static_cast<long int>(_xLength) + x + 1], player)) ? true : false) : false) : false);
   if (!collider)
-    collider = (x > 0) ? ((checkOneCollision(_board[(y) * _xLength + x - 1], player)) ? true :
-			  ((x < (_xLength - 1)) ? checkOneCollision(_board[(y) * _xLength + x + 1], player) : false)) : false;
+    collider = (x > 0) ? ((checkOneCollision(_board[(y) * static_cast<long int>(_xLength) + x - 1], player)) ? true :
+  			  ((x < (static_cast<long int>(_xLength) - 1)) ? checkOneCollision(_board[(y) * static_cast<long int>(_xLength) + x + 1], player) : false)) : false;
   return (collider);
 }
 

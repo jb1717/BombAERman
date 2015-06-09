@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Tue Jun  9 03:07:05 2015 Jamais
+// Last update Tue Jun  9 06:18:12 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -43,7 +43,7 @@ std::vector<AObj *> objs;
 VideoContext	*V;
 AGameObject *	lolilol;
 
-//AGameObject	*bomb;
+// AGameObject	*bomb;
 AGameModel*	bomb;
 Character	*hero;
 gdl::Texture	*texFloor;
@@ -85,16 +85,16 @@ GameEngine::GameEngine() : Game()
   hero = new Character(glm::vec3(0.0f, 0.0f, 0.0f), MAIN_CHARACTER);
   hero->scale(glm::vec3(0.002f, 0.002f, 0.002f));
   hero->setCurrentAnim(0);
-  bomb = new BasicBomb();
-  auto asset = AssetManager::instance();
-  //bomb = &(*MODEL_HANDLER(asset["models"]))["PumpkinBomb.fbx"];
-  std::cout << bomb->getScale().x << std::endl;
+  // bomb = new BasicBomb();
+  // auto asset = AssetManager::instance();
+  // = &(*MODEL_HANDLER(asset["models"]))["PumpkinBomb.fbx"];
+  // std::cout << bomb->getScale().x << std::endl;
   sol = new Cube();
   sol->setTexture(*texFloor);
   sol->scale(glm::vec3(10, 1000, 10));
   sol->translate(glm::vec3(0, -500.5, 0));
   sol->initialize();
-  texMenu = (*THEME((*THEME_HANDLER(asset["themes"]))["GUI"]))["menu"];
+  // texMenu = (*THEME((*THEME_HANDLER(asset["themes"]))["GUI"]))["menu"];
   // bomb = new Cube();
   // bomb->setTexture(*texFloor);
   // bomb->initialize();
@@ -190,9 +190,13 @@ bool		GameEngine::initialize()
   s->render(*factory);
   s->initialize();
   s->translate(glm::vec3(-1, 7.5, 15));
-  bomb->setPosition(bombChooser->getPosition());
-  bomb->translate(glm::vec3(0, -0.20, 0));
-  bomb->scale(glm::vec3(0.40, 0.40, 0.40));
+  // bomb->setPosition(bombChooser->getPosition());
+  // bomb->translate(glm::vec3(0, -0.20, 0));
+  // bomb->scale(glm::vec3(0.40, 0.40, 0.40));
+  s->scale(glm::vec3(0.90, 0.90, 0.90));
+  // bomb->setPosition(bombChooser->getPosition());
+  // bomb->translate(glm::vec3(0, -0.10, 0));
+  // bomb->scale(glm::vec3(0.40, 0.40, 0.40));
 
   menu = new Geometric(glm::vec3(0, 0, -2));
   menu->setGeometry(factory->getGeometry(GeometryFactory::VERTICAL_PLANE));
@@ -230,32 +234,14 @@ bool		GameEngine::update()
 
   _shader.setUniform("view", camera.getTransformationMatrix());
   _shader.setUniform("projection", camera.getProjectionMatrix());
-  bool	collide = false;
-  glm::vec3 p;
-  AGameObject *player = _board->getPlayers().front()->getGameObj();
-
-  p = player->getPosition();
   for (auto it = _board->getPlayers().begin(); it != _board->getPlayers().end(); it++)
     {
+      glm::vec3 save = (*it)->getGameObj()->getPosition();
       (*it)->getGameObj()->update(_clock, _input, camera);
+      glm::vec3 p = (*it)->getGameObj()->getPosition();
+      if (_board->collideAround((*it), p.x, p.z))
+	(*it)->getGameObj()->setPosition(save);
     }
-  for (auto it = _board->getFullBoard().begin(); it != _board->getFullBoard().end(); it++)
-    {
-      int i = 0;
-      for (auto itk = (*it).begin(); itk != (*it).end(); itk++)
-	{
-	  (*itk)->getGameObj()->update(_clock, _input);
-	  if (i == 0 && player->collide(*(*itk)->getGameObj()))
-	    {
-	      if ((*itk)->getGameObj()->getPosition().y >= 1.0)
-		collide = true;
-	    }
-	  ++i;
-	}
-    }
-  if (collide == true)
-    player->setPosition(p);
-
   effect->update(_clock, _input, camera);
   return true;
 }
