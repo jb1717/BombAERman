@@ -19,23 +19,26 @@
 int	main()
 {
   VideoContext*	video;
-  Board*       	board = new Board(11, 11);
+  //  Board*       	board = new Board(11, 11);
   video = VideoContext::instanciate();
   video->init();
+  auto		asset = AssetManager::instance();
+  auto		boards = BOARD_HANDLER(asset["boards"]);
+  auto		board = BOARD((*boards)[0]);
 
   //  for (int << = -5 ; x < 5; x++)
-  for (int x = 0; x < 11; x++)
-    {
-      for (int y = 0; y < 11; y++)
-	{
-	  /* placing character in 1 / 1 */
-	  if (x == 1  && y == 1)
-	    board->placeEntity(x, y, new Player(*board));
-	  if (((x % 3 == 0) &&  (y % 3 == 0)) || (x == 0 || y == 0 || x == 10 || y == 10))
-	  board->placeEntity(x, y, new Crate(*board));
-	  board->placeEntity(x, y, new UnbreakableWall(*board));
-	}
-    }
+  // for (int x = 0; x < 11; x++)
+  //   {
+  //     for (int y = 0; y < 11; y++)
+  // 	{
+  // 	  /* placing character in 1 / 1 */
+  // 	  if (x == 1  && y == 1)
+  board->placeEntity(1, 1, new Player(*board));
+  // 	  if (((x % 3 == 0) &&  (y % 3 == 0)) || (x == 0 || y == 0 || x == 10 || y == 10))
+  // 	  board->placeEntity(x, y, new Crate(*board));
+  // 	  board->placeEntity(x, y, new UnbreakableWall(*board));
+  // 	}
+  //   }
   GameEngine	engine;
   board->initialize();
   board->initGameObjects();
