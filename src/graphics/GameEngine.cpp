@@ -241,6 +241,8 @@ bool		GameEngine::update()
       glm::vec3 p = (*it)->getGameObj()->getPosition();
       if (_board->collideAround((*it), p.x, p.z))
 	(*it)->getGameObj()->setPosition(save);
+      else
+	(*it)->setPos((p.x - (_board->getWidth() / 2)) < 0 ? (p.x - (_board->getWidth()) / 2) * -1 : (p.x - _board->getWidth() / 2), (p.z - _board->getHeight() / 2) < 0 ? (p.z - _board->getHeight() / 2) * -1 : (p.z - _board->getHeight() / 2));
     }
   effect->update(_clock, _input, camera);
   return true;
