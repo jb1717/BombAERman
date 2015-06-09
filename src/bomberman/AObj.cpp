@@ -38,7 +38,7 @@ int		AObj::getId(void) const
 
 entityType AObj::getType(void) const
 {
-	return (_type);
+  return (_type);
 }
 
 AGameObject	*AObj::getGameObj() const
