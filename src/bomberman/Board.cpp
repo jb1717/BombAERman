@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Sat Jun  6 16:26:08 2015 Jamais
+// Last update Tue Jun  9 02:19:58 2015 Jamais
 //
 
 #include "Board.hh"
@@ -23,26 +23,33 @@ Board::Board(size_t xLength, size_t yLength) : _xLength(xLength), _yLength(yLeng
 bool	Board::initialize()
 {
   int	x = 0;
+  int	y = 0;
+
+  int	true_x;
+  int	true_y;
   for (auto it = _board.begin(); it != _board.end(); it++)
     {
       //      std::cout << "size = " << (*it).size() << std::endl;
-
+      y = x / _xLength;
       for (auto internIt = (*it).begin(); internIt != (*it).end(); internIt++)
 	{
 	  AGameObject*	obj;
-
+	  true_x = (_xLength / 2) - (x % _xLength);
+	  true_y = (_yLength / 2) - (x / _xLength);
 	  switch ((*internIt)->getType())
 	    {
 	    case CRATE:
 	      {
-		obj = new Cube(glm::vec3((x / _xLength), 1, (x % _yLength)));
+		obj = new Cube(glm::vec3(true_x, 1, true_y));
 		obj->setTexture(*texCrate);
 	  	(*internIt)->setGameObj(obj);
 	  	break;
 	      }
 	    case UNBREAKABLE_WALL:
 	      {
-		obj = new Cube(glm::vec3((x / _xLength), 0, (x % _yLength)));
+		obj = new Cube(glm::vec3(true_x, 0, true_y));
+		// obj = new Cube(glm::vec3(-5 + (x / _xLength), 0, -5 + (x % _yLength)));
+		//		obj = new Cube(glm::vec3((_xLength / 2 ) - (x / _xLength), 1, (x % _yLength) / 2 - (x % _yLength) / 2));
 		obj->setTexture(*texWall);
 	  	(*internIt)->setGameObj(obj);
 	  	break;
@@ -56,7 +63,6 @@ bool	Board::initialize()
 		_players.push_back(reinterpret_cast<Player *>(*internIt));
 	  	break;
 	      }
-
 	    default:
 	      break;
 	    }

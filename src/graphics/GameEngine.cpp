@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Mon Jun  8 12:26:06 2015 Jamais
+// Last update Tue Jun  9 01:58:49 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -92,7 +92,7 @@ GameEngine::GameEngine() : Game()
   sol = new Cube();
   sol->setTexture(*texFloor);
   sol->scale(glm::vec3(10, 1000, 10));
-  sol->translate(glm::vec3(4.5, -500.5, 4.5));
+  sol->translate(glm::vec3(0, -500.5, 0));
   sol->initialize();
   texMenu = (*THEME((*THEME_HANDLER(asset["themes"]))["GUI"]))["menu"];
   // bomb = new Cube();
@@ -183,8 +183,8 @@ bool		GameEngine::initialize()
   s = new GraphicString("BOMBERMAN 3D");
   s->render(*factory);
   s->initialize();
-  s->translate(glm::vec3(0, 0, 5));
-  s->scale(glm::vec3(0.10, 0.10, 0.10));
+  s->translate(glm::vec3(0, 0, 6));
+  //s->scale(glm::vec3(0.90, 0.90, 0.90));
   bomb->setPosition(bombChooser->getPosition());
   bomb->translate(glm::vec3(0, -0.10, 0));
   bomb->scale(glm::vec3(0.40, 0.40, 0.40));
@@ -265,10 +265,10 @@ void		GameEngine::draw()
   for (auto it = _board->getFullBoard().begin(); it != _board->getFullBoard().end(); it++)
     {
       for (auto itk = (*it).begin(); itk != (*it).end(); itk++)
-	{
-	  (*itk)->getGameObj()->draw(_shader, _clock);
-	  ++x;
-	}
+  	{
+  	  (*itk)->getGameObj()->draw(_shader, _clock);
+  	  ++x;
+  	}
     }
   effect->translate(glm::vec3(0, 0, 1));
   effect->draw(_shader, _clock);
@@ -278,9 +278,9 @@ void		GameEngine::draw()
     {
       _shader.setUniform("view", menuCam.getTransformationMatrix());
       _shader.setUniform("projection", menuCam.getProjectionMatrix());
-      s->draw(_shader, _clock);
       bomb->draw(_shader, _clock);
       bombChooser->draw(_shader, _clock);
+      s->draw(_shader, _clock);
       menu->draw(_shader, _clock);
     }
   _videoContext->flush();
