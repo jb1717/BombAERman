@@ -49,7 +49,7 @@ public:
   void	setExplosion(float x, float y);
   void  popEntity(int x, int y, int id);
   void	removePlayer(int id);
-  bool	collideAround(AObj *, size_t x, size_t y);
+  bool	collideAround(AObj *, long int x, long int y);
   bool	checkOneCollision(std::vector<AObj *> field, AObj *);
 
 public:
