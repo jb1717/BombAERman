@@ -80,6 +80,8 @@ void		Controller::controllerUpdate()
 
 bool		Controller::handleEvent(bomber::Event &event, bomber::Event::KeyID key)
 {
+	if (!_isPlugged)
+		return (false);
 	for (auto it = _state.begin(); it != _state.end(); ++it)
 	{
 		if ((*it).key == key)
