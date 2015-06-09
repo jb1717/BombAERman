@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Tue Jun  9 01:58:49 2015 Jamais
+// Last update Tue Jun  9 03:07:05 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -64,7 +64,7 @@ AGameObject *sol;
 Geometric *choice;
 Geometric* bombChooser;
 Geometric* menu;
-
+Geometric* bckgrnd;
 GameEngine::GameEngine() : Game()
 {
   _videoContext = VideoContext::instanciate();
@@ -87,7 +87,7 @@ GameEngine::GameEngine() : Game()
   hero->setCurrentAnim(0);
   bomb = new BasicBomb();
   auto asset = AssetManager::instance();
-  // = &(*MODEL_HANDLER(asset["models"]))["PumpkinBomb.fbx"];
+  //bomb = &(*MODEL_HANDLER(asset["models"]))["PumpkinBomb.fbx"];
   std::cout << bomb->getScale().x << std::endl;
   sol = new Cube();
   sol->setTexture(*texFloor);
@@ -126,6 +126,7 @@ bool		GameEngine::initialize()
   menuCam.setPosition(glm::vec3(0, 0, -3));
   menuCam.refreshPosition();
   /**/
+
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_FLAT);
   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -152,8 +153,13 @@ bool		GameEngine::initialize()
   bombChooser = new Geometric();
   bombChooser->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
   bombChooser->setTexture(*GuiBomb);
-  bombChooser->setPosition(glm::vec3(-1.5, -1, 0.0));
+  bombChooser->setPosition(glm::vec3(-1.90, -1.25, 0.0));
   bombChooser->initialize();
+
+  bckgrnd = new Geometric(glm::vec3(0, 0, 15.1), glm::vec3(0,0,0), glm::vec3(40, 24, 1));
+  bckgrnd->setGeometry(factory->getGeometry(GeometryFactory::VERTICAL_PLANE));
+  bckgrnd->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["WallPaper"]));
+  bckgrnd->initialize();
 
   Geometric *g = new Geometric();
   g->setGeometry(factory->getGeometry(GeometryFactory::PLANE));
@@ -183,10 +189,9 @@ bool		GameEngine::initialize()
   s = new GraphicString("BOMBERMAN 3D");
   s->render(*factory);
   s->initialize();
-  s->translate(glm::vec3(0, 0, 6));
-  //s->scale(glm::vec3(0.90, 0.90, 0.90));
+  s->translate(glm::vec3(-1, 7.5, 15));
   bomb->setPosition(bombChooser->getPosition());
-  bomb->translate(glm::vec3(0, -0.10, 0));
+  bomb->translate(glm::vec3(0, -0.20, 0));
   bomb->scale(glm::vec3(0.40, 0.40, 0.40));
 
   menu = new Geometric(glm::vec3(0, 0, -2));
@@ -278,10 +283,11 @@ void		GameEngine::draw()
     {
       _shader.setUniform("view", menuCam.getTransformationMatrix());
       _shader.setUniform("projection", menuCam.getProjectionMatrix());
-      bomb->draw(_shader, _clock);
-      bombChooser->draw(_shader, _clock);
+      bckgrnd->draw(_shader, _clock);
+      // bomb->draw(_shader, _clock);
+      // bombChooser->draw(_shader, _clock);
       s->draw(_shader, _clock);
-      menu->draw(_shader, _clock);
+      // menu->draw(_shader, _clock);
     }
   _videoContext->flush();
 
