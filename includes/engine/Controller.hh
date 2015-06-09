@@ -11,13 +11,19 @@
 #ifndef CONTROLLER_HH_
 # define CONTROLLER_HH_
 
+# include <sys/types.h>
+# include <fcntl.h>
+# include <unistd.h>
 # include <stdint.h>
 # include <sys/stat.h>
 # include <strings.h>
+# include <sys/file.h>
+# include <errno.h>
 # include <string>
 # include <iostream>
 # include <fstream>
 # include <sstream>
+# include <vector>
 # include "IInput.hh"
 # include "Event.hh"
 
@@ -35,23 +41,28 @@ enum		e_type
     JOYSTICK = 2
   };
 
-class		Controller : public IInput
+class		Controller
 {
 public:
-  Controller(uint32_t id);
+  Controller();
   ~Controller();
 
 public:
-  void		handleEvent(bomber::Event &event);
+  bool    handleEvent(bomber::Event &event, bomber::Event::KeyID key);
   bool		plugged() const;
+  void    controllerUpdate();
 
-private:
+protected:
+  static void    qualifyEvent(t_controller *ctrler, bomber::Event &event);
+
+protected:
   uint32_t	_id;
+  int       _fd;
   bool		_isPlugged;
-  std::ifstream	_in;
   t_controller	_ctrler;
   std::string	_ctrlerFile;
   struct stat	_statBuf;
+  std::vector<bomber::Event> _state;
 };
 
 #endif // !CONTROLLER_HH_
