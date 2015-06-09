@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 29 02:34:39 2015 Jamais
-// Last update Sun Jun  7 02:04:07 2015 Jamais
+// Last update Mon Jun  8 09:59:16 2015 Jamais
 //
 
 #ifndef			___GRAPHIC_STRING_HH___
@@ -44,6 +44,9 @@ public:
 public:
   bool			render(GeometryFactory& factory);
   void			clear();
+
+public:
+  void			scale(glm::vec3 const& scale);
 };
 
 #endif			/* !___GRAPHIC_STRING_HH___ */

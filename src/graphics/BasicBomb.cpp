@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Wed May 20 21:14:53 2015 Jamais
-// Last update Thu Jun  4 20:08:00 2015 Jamais
+// Last update Mon Jun  8 07:06:40 2015 Jamais
 //
 
 #include	"BasicBomb.hh"

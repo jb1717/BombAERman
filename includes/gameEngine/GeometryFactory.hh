@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 24 05:21:40 2015 Jamais
-// Last update Sun Jun  7 18:44:53 2015 Jamais
+// Last update Tue Jun  9 02:34:49 2015 Jamais
 //
 
 #ifndef				___GEOMETRY_FACTORY_HH___
@@ -27,6 +27,7 @@ public:
       BACK_PLANE,
       PLANE,
       VERTICAL_PLANE,
+      HORIZONTAL_PLANE,
       DISC,
       CUBE,
       CYLINDER
@@ -45,6 +46,7 @@ private:
   gdl::Geometry*		createBackPlane() const;
   gdl::Geometry*		createPlane() const;
   gdl::Geometry*		createVerticalPlane() const;
+  gdl::Geometry*		createHorizontalPlane() const;
   gdl::Geometry*		createDisc() const;
   gdl::Geometry*		createCube() const;
   gdl::Geometry*		createCylinder() const;
