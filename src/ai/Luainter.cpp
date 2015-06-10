@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Thu May 21 15:34:11 2015 Hugo Prenat
-// Last update Mon Jun  8 23:01:14 2015 Hugo Prenat
+// Last update Tue Jun  9 22:47:41 2015 Hugo Prenat
 //
 
 #include "Luainter.hh"
@@ -37,7 +37,7 @@ void	Luainter::report_errors(int state)
 {
   if (state != 0)
     {
-      std::cerr << "ERR: " << lua_tostring(_L, state) << std::endl;
+      std::cerr << "ERR: {" << lua_tostring(_L, state) << "}" << std::endl;
       lua_pop(_L, 1);
     }
 }

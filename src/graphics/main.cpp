@@ -36,8 +36,8 @@ int	main()
 	  board->placeEntity(x, y, new Crate(*board));
 	  board->placeEntity(x, y, new UnbreakableWall(*board));
 	}
-  board->placeEntity(8, 8, new Ia("ia/easy.lua", *board));
     }
+  board->placeEntity(8, 8, new Ia("ia/easy.lua", *board));
   GameEngine	engine;
   board->initialize();
   board->initGameObjects();
