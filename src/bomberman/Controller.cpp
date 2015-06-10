@@ -97,7 +97,7 @@ void		Controller::controllerUpdate()
 		  ++s;
 	      }
 	  }
-	dump(_state);
+	// dump(_state);
 }
 
 bool		Controller::handleEvent(bomber::Event &event, bomber::Event::KeyID key)
