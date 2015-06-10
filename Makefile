@@ -14,7 +14,7 @@ GRAPHICALGAME	=	yes
 #			BASICS				#
 #########################################################
 
-CC	=	g++
+CC	=	g++-5
 RM	=	rm -f
 RMDIR	=	rm -rf
 ECHO	=	echo -ne
