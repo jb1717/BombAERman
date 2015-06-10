@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Tue Jun  9 22:37:42 2015 Jean-Baptiste Grégoire
+## Last update Wed Jun 10 22:06:29 2015 Hugo Prenat
 ##
 
 GRAPHICALGAME	=	yes
