@@ -335,6 +335,8 @@ bool	Board::collideAround(AObj *player, long int x, long int y)
   if (!collider)
     collider = (x > 0) ? ((checkOneCollision(_board[(y) * static_cast<long int>(_xLength) + x - 1], player)) ? true :
   			  ((x < (static_cast<long int>(_xLength) - 1)) ? checkOneCollision(_board[(y) * static_cast<long int>(_xLength) + x + 1], player) : false)) : false;
+  if (!collider)
+    collider = checkOneCollision(_board[(y) * static_cast<long int>(_xLength) + x], player);
   return (collider);
 }
 
