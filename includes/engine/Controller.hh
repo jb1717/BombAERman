@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Sun May  3 16:35:29 2015 Jean-Baptiste Grégoire
-// Last update Tue May  5 19:43:20 2015 Jean-Baptiste Grégoire
+// Last update Wed Jun 10 13:26:09 2015 Jean-Baptiste Grégoire
 //
 
 #ifndef CONTROLLER_HH_
@@ -24,8 +24,11 @@
 # include <fstream>
 # include <sstream>
 # include <vector>
-# include "IInput.hh"
+# include <algorithm>
 # include "Event.hh"
+
+# define DEAD_ZONE    0.5
+# define JOY_MAX_VAL  32767
 
 typedef struct	s_controller
 {

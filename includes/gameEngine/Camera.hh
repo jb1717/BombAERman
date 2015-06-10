@@ -48,7 +48,7 @@ public:
 
 public:
   bool			setupCamera(VideoContext const& context);
-  void			update(gdl::Clock const& clock, gdl::Input& input);
+  void			update(gdl::Clock const& clock, Binput& input);
   void			refreshPosition();
 public:
   int			getId() const;

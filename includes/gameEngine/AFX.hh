@@ -12,6 +12,7 @@
 # define		____AFX_HH___
 
 # include		"ComplexObject.hh"
+# include   "Binput.hh"
 # include		"Camera.hh"
 
 # define		TRUE_POS(x, y, b) (y * b->getPos.x)
@@ -31,8 +32,8 @@ public:
   ~AFX();
 
 public:
-  virtual void	       	update(gdl::Clock const& clock, gdl::Input& input);
-  virtual void	       	update(gdl::Clock const& clock, gdl::Input& input, Camera const& camera);
+  virtual void	       	update(gdl::Clock const& clock, Binput& input);
+  virtual void	       	update(gdl::Clock const& clock, Binput& input, Camera const& camera);
   void			draw(gdl::AShader& shader, gdl::Clock const& clock);
 
 public:

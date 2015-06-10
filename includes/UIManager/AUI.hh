@@ -14,7 +14,7 @@
 # include <tuple>
 # include <string>
 # include <functional>
-# include "Input.hh"
+# include "Binput.hh"
 # include "Clock.hh"
 
 typedef std::tuple<bool, std::string>  stateUI;
@@ -29,7 +29,7 @@ protected:
   bool              _isRunning;
   std::string       _name;
   gdl::Clock        _clock;
-  gdl::Input        _input;
+  Binput	        _input;
 
 // to handle different UI by name
 public:

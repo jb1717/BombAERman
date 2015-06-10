@@ -95,18 +95,18 @@ stateUI                    LauncherUI::handlerEvent()
   while (_isRunning)
   {
     this->updateContext();
-    if (_input.getKey(SDLK_ESCAPE) || _input.getInput(SDL_QUIT))
+    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT))
     {
       _isRunning = false;
       break ;
     }
-    else if (_input.getKey(SDLK_RETURN) || _input.getInput(SDLK_RETURN))
+    else if (_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
       return (std::tuple<bool, std::string>(false, this->getUItoDisplay(_selected)));
     else
     {
-      if (_input.getInput(SDLK_UP))
+      if (_input._default.getInput(SDLK_UP))
         _selected = (!_selected ? QUIT : (_selected - 1));
-      else if (_input.getInput(SDLK_DOWN))
+      else if (_input._default.getInput(SDLK_DOWN))
         _selected = (_selected == QUIT ? PLAY : (_selected + 1));
     }
     this->updateContext();

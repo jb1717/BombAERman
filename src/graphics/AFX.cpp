@@ -18,7 +18,7 @@ AFX::AFX() : ComplexObject(), _index(0), _timer(0.5), _frameTimer(0.15)
 AFX::~AFX()
 {}
 
-void		AFX::update(gdl::Clock const& clock, gdl::Input& input)
+void		AFX::update(gdl::Clock const& clock, Binput& input)
 {
   _timer -= clock.getElapsed();
   if (_timer <= 0.0f)
@@ -31,7 +31,7 @@ void		AFX::update(gdl::Clock const& clock, gdl::Input& input)
     _currentFrame->update(clock, input);
 }
 
-void		AFX::update(gdl::Clock const& clock, gdl::Input& input, Camera const& camera)
+void		AFX::update(gdl::Clock const& clock, Binput& input, Camera const& camera)
 {
   _timer -= clock.getElapsed();
   if (_timer <= 0.0f)
