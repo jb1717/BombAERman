@@ -12,6 +12,7 @@
 # define		___VIDEO_CONTEXT_HH___
 
 # include		"graphics.hh"
+# include   "Binput.hh"
 
 class			VideoContext : public gdl::SdlContext
 {
@@ -39,7 +40,7 @@ private:
 public:
   bool			init();
   bool			init(int initFlags/* = SDL_INIT_VIDEO*/, int windowsFlags/* = SDL_WINDOW_OPENGL*/);
-  void			updateContext(gdl::Clock &clock, gdl::Input& input) const;
+  void			updateContext(gdl::Clock &clock, Binput &input) const;
 
 public:
   void			setScreenWidth(unsigned int screenWidth);

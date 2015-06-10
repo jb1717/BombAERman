@@ -206,17 +206,17 @@ bool		GameEngine::initialize()
 
 bool		GameEngine::getEvent()
 {
-  if (_input.getKey(SDLK_ESCAPE) || _input.getInput(SDL_QUIT))
+  if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT))
     return false;
 
-  if (_input.getMouseWheel().y)
-    camera.zoom( 0.05 * _input.getMouseWheel().y);
+  if (_input._default.getMouseWheel().y)
+    camera.zoom( 0.05 * _input._default.getMouseWheel().y);
 
-  if (_input.getKey(SDLK_SPACE) && test == false)
+  if (_input._default.getKey(SDLK_SPACE) && test == false)
     {
       test = true;
     }
-  if (_input.getKey(SDLK_f))
+  if (_input._default.getKey(SDLK_f))
     {
       GUI = !GUI;
     }
@@ -291,7 +291,7 @@ void		GameEngine::setClock(gdl::Clock const& clock)
   _clock = clock;
 }
 
-void		GameEngine::setInput(gdl::Input const& input)
+void		GameEngine::setInput(Binput const& input)
 {
   _input = input;
 }
@@ -311,7 +311,7 @@ gdl::Clock	GameEngine::getClock() const
   return _clock;
 }
 
-gdl::Input	GameEngine::getInput() const
+Binput	GameEngine::getInput() const
 {
   return _input;
 }

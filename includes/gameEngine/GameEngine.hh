@@ -58,18 +58,18 @@ public:
 public:
   void			setVideoContext(VideoContext* const videoContext);
   void			setClock(gdl::Clock const& clock);
-  void			setInput(gdl::Input const& input);
+  void			setInput(Binput const& input);
   void			setShader(gdl::BasicShader const& shader);
 
 public:
   VideoContext*		getVideoContext() const;
   gdl::Clock		getClock() const;
-  gdl::Input		getInput() const;
+  Binput  		getInput() const;
   gdl::BasicShader	getShader() const;
 
 private:
   gdl::Clock		_clock;
-  gdl::Input		_input;
+  Binput		    _input;
   gdl::BasicShader	_shader;
 
 private:

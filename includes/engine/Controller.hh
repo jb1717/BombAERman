@@ -24,6 +24,7 @@
 # include <fstream>
 # include <sstream>
 # include <vector>
+# include <algorithm>
 # include "IInput.hh"
 # include "Event.hh"
 

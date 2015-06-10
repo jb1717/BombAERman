@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Sun May  3 16:38:09 2015 Jean-Baptiste Grégoire
-// Last update Tue May  5 20:00:52 2015 Jean-Baptiste Grégoire
+// Last update Wed Jun 10 02:39:57 2015 Jean-Baptiste Grégoire
 //
 
 #include "Controller.hh"
@@ -58,23 +58,23 @@ void		Controller::controllerUpdate()
 	// erase all double event
 	if (_isPlugged == true && !v.empty())
 	{
-		for (auto it = v.end() - 1; it >= v.begin(); --it)
+	  std::reverse(v.begin(), v.end());
+	  for (auto it = v.begin(); it != v.end(); ++it)
+	    {
+	      for (auto s = it; s != v.end();)
 		{
-			auto s = it - 1;
-			while (s >= v.begin())
-			{
-				if (s->type == it->type && s->number == it->number)
-					s = v.erase(s);
-				else
-					--s;
-			}
+		  if (s != it && s->type == it->type && s->number == it->number)
+		    s = v.erase(s);
+		  else
+		    ++s;
 		}
-		for (auto it = v.begin(); it != v.end(); ++it)
-		{
-			bomber::Event tmp;
-			qualifyEvent(&(*it), tmp);
-			_state.push_back(tmp);
-		}
+	    }
+	  for (auto it = v.begin(); it != v.end(); ++it)
+	    {
+	      bomber::Event tmp;
+	      qualifyEvent(&(*it), tmp);
+	      _state.push_back(tmp);
+	    }
 	}
 }
 
