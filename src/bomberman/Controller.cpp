@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Sun May  3 16:38:09 2015 Jean-Baptiste Grégoire
-// Last update Wed Jun 10 23:27:33 2015 Jean-Baptiste Grégoire
+// Last update Wed Jun 10 23:40:56 2015 Jean-Baptiste Grégoire
 //
 
 #include "Controller.hh"
@@ -112,7 +112,6 @@ bool		Controller::handleEvent(bomber::Event &event, bomber::Event::KeyID key)
 		if ((*it).key == key && (*it).value != 0)
 		{
 			event = *it;
-			std::cout << "return :" << int(key) << " value: " << static_cast<float>(event.value) / JOY_MAX_VAL << std::endl;
 			return (true);
 		}
 	}
