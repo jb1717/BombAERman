@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Tue Jun  9 22:37:42 2015 Jean-Baptiste Grégoire
+## Last update Wed Jun 10 16:03:19 2015 Hugo Prenat
 ##
 
 GRAPHICALGAME	=	yes
@@ -40,6 +40,7 @@ CFLAGS		=	-W -Wall -Wextra -ansi -std=c++11	\
 			-I $(GRAPHICS_INC_DIR)			\
 			-I $(MANAGER_INC_DIR)			\
 			-I $(BOMBERMAN_INC_DIR)			\
+			-I $(AI_CHAI_DIR)			\
 
 MAKEFLAGS	+=	--warn-undefined-variables		\
 			--warn-unused-variables			\
@@ -73,9 +74,9 @@ AI_OBJ_DIR		=	$(addprefix $(OBJ_DIR), ai/)
 AI_INC_DIR		=	$(addprefix $(INCLUDE_DIR), ai)
 AI_SRCS			=	$(addprefix $(AI_SRC_DIR), $(AI_SRC))
 AI_OBJS			=	$(addsuffix .o, $(basename $(subst $(AI_SRC_DIR), $(AI_OBJ_DIR), $(AI_SRCS))))
+AI_CHAI_DIR	=	./lib/src/
 
 AI_SRC			=	Ia.cpp		\
-				Luainter.cpp	\
 
 
 

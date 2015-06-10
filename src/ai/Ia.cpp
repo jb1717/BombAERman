@@ -5,43 +5,20 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Tue Jun  9 22:45:40 2015 Hugo Prenat
+// Last update Wed Jun 10 17:07:32 2015 Hugo Prenat
 //
 
 #include "Ia.hh"
-
-static int	mapToStr(lua_State *L)
-{
-  int		argc = lua_gettop(L);
-  Ia		*tmp;
-  std::string	map;
-
-  // if (argc != 1)
-  //   return (0);
-  // tmp = static_cast<Ia *> (lua_touserdata(L, lua_gettop(L)));
-  // if (tmp == NULL)
-  //   return (0);
-  // tmp->getBoard().getFullBoard();
-  // for (size_t i = 0; i < tmp->getBoard().size(); i++) {
-  //   std::cout << "SIIIIIIIZEEE = " << tmp->getBoard().size() << std::endl;
-  // }
-  // map = "ok je marche bien";
-  lua_pop(L, 1);
-  // lua_pushstring(L, map.c_str());
-  return (0);
-}
 
 Ia::Ia(std::string const &fileName, Board &Board) : Player(Board),
 						    _fileName(fileName)
 {
 	std::cout << "je créé l'IA" << std::endl;
   _key = -1;
-  _lua.executeFile(_fileName);
-  // _lua.addFunc(mapToStr, "mapToStr");
-  lua_pushcfunction(_lua.getState(), mapToStr);
-  lua_setglobal(_lua.getState(), "mapToStr");
-  lua_pushlightuserdata(_lua.getState(), this);
-  lua_setglobal(_lua.getState(), "iaPtr");
+  _chai.add(chaiscript::fun(&Player::is_Alive, this), "iaAlive");
+  _chai.add(chaiscript::fun(&Player::triggerOneBomb, this), "iaDropBomb");
+  _chai.add(chaiscript::fun(&Ia::chooseDir, this), "iaChooseDir");
+  _chai.eval_file(_fileName);
 }
 
 Ia::~Ia()
@@ -57,6 +34,11 @@ void	Ia::run_user()
         return ; // If Negative , throw
       checkPosPowerUp();
     }
+}
+
+bool	Ia::chooseDir(const int dir)
+{
+  return (selectDirection(static_cast<Board::Direction>(dir)));
 }
 
 bool	Ia::userAction()

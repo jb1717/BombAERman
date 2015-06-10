@@ -41,7 +41,7 @@ int	main()
 	  board->placeEntity(x, y, new UnbreakableWall(*board));
 	}
     }
-  board->placeEntity(8, 8, new Ia("ia/easy.lua", *board));
+  board->placeEntity(8, 8, new Ia("ia/easy.chai", *board));
 // =======
 //   // for (int x = 0; x < 11; x++)
 //   //   {
