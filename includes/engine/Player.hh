@@ -19,6 +19,7 @@
 # include "AObj.hh"
 # include "Crate.hh"
 # include "BasicBomb.hh"
+# include "ABomb.hh"
 
 # define PLAYER_CHAR	'p'
 
@@ -56,6 +57,7 @@ public: // Player Bomb tools
   std::vector<Bomb *>::const_iterator	getBombIt() const;
   bool					triggerOneBomb();
   void					powerUpRange();
+  void					goAllExplosions();
 
 private:
   bool			_isAlive;
