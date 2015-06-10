@@ -23,6 +23,8 @@ int	main()
   Board*       	board = new Board(11, 11);
   video = VideoContext::instanciate();
   video->init();
+
+  Ia  *killer = new Ia("ia/easy.chai", *board);
   // auto		asset = AssetManager::instance();
   // auto		boards = BOARD_HANDLER(asset["boards"]);
   // auto		board = BOARD((*boards)[0]);
@@ -34,14 +36,14 @@ int	main()
       for (int y = 0; y < 11; y++)
 	{
 	  /* placing character in 1 / 1 */
-	  if (x == 1  && y == 1)
-	    board->placeEntity(x, y, new Player(*board));
-	  if (((x % 3 == 0) &&  (y % 3 == 0)) || (x == 0 || y == 0 || x == 10 || y == 10))
-	  board->placeEntity(x, y, new Crate(*board));
+	  // if (x == 1  && y == 1)
+	  //   board->placeEntity(x, y, new Player(*board));
+	  //if (((x % 3 == 0) &&  (y % 3 == 0)) || (x == 0 || y == 0 || x == 10 || y == 10))
+	  //board->placeEntity(x, y, new Crate(*board));
 	  board->placeEntity(x, y, new UnbreakableWall(*board));
 	}
     }
-  board->placeEntity(8, 8, new Ia("ia/easy.chai", *board));
+  board->placeEntity(5, 5, killer);
 // =======
 //   // for (int x = 0; x < 11; x++)
 //   //   {
@@ -72,6 +74,9 @@ int	main()
       std::cout << "Couldn't load the map." << std::endl;
       return false;
     }
+  EThread toto;
+
+  toto.launch(launch_ia, killer);
   while (engine.update() == true)
     engine.draw();
   return EXIT_SUCCESS;

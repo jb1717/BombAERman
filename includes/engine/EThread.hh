@@ -1,9 +1,9 @@
 //
 // EThread.hh for Bomberman in /home/tran_0/rendu/cpp_bomberman
-// 
+//
 // Made by David Tran
 // Login   <tran_0@epitech.net>
-// 
+//
 // Started on  Wed May  6 17:12:20 2015 David Tran
 // Last update Mon May 18 19:44:39 2015 David Tran
 //
@@ -32,8 +32,10 @@ private:
 
 # include "Engine.hh"
 # include "Bomb.hh"
+# include "Ia.hh"
 
 void	*launch_player(void *);
+void	*launch_ia(void *);
 void	*run_bomb(void *);
 
 #endif // !ETHREAD_HH_
