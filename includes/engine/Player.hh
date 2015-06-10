@@ -34,7 +34,7 @@ class	Player : public AObj
 {
 public:
   Player(Board &Board);
-  ~Player();
+  virtual ~Player();
 public: // Principal functions
   bool					playerSpawn(float x, float y, Board::Direction direction, int id);
   bool					turnLeft();
