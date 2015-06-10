@@ -57,6 +57,7 @@ public:
 
 protected:
   static void    qualifyEvent(t_controller *ctrler, bomber::Event &event);
+  void          resetAxis(int key);
 
 protected:
   uint32_t	_id;

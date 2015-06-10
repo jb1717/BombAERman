@@ -17,7 +17,7 @@ Controller::Controller() : _id(0), _fd(0), _isPlugged(false)
 	  std::stringstream	tmp;
 	  tmp << "/dev/input/js";
 	  tmp << id;
-	  std::cout << tmp.str() << std::endl;
+	  // std::cout << tmp.str() << std::endl;
 	  _fd = open(tmp.str().c_str(), O_RDONLY | O_NONBLOCK);
 	  if (_fd != -1)
 	  {
@@ -31,12 +31,15 @@ Controller::Controller() : _id(0), _fd(0), _isPlugged(false)
 	bzero(&_ctrler, sizeof(t_controller));
 }
 
-void		dump(std::vector<bomber::Event> v)
+void		Controller::resetAxis(int key)
 {
-  std::cout << "--- DUMP ---" << std::endl << std::endl;
-  for (auto it = v.begin(); it != v.end(); ++it)
-    std::cout << "key: " << it->key << " value: " << it->value << std::endl;
-  std::cout << "--- END ---" << std::endl << std::endl;
+	int 	toErase = (key % 2 == 0 ? key + 1 : key - 1);
+
+	for (auto it = _state.begin(); it != _state.end(); ++it)
+	{
+		if (it->key == toErase)
+			it->value = 0;
+	}
 }
 
 void		Controller::controllerUpdate()
@@ -44,7 +47,6 @@ void		Controller::controllerUpdate()
 	std::vector<t_controller> v;
   	int 	ret(0);
 
-	// _state.clear();
 	if (_isPlugged == false && stat(_ctrlerFile.c_str(), &_statBuf) == 0)
     {
 		flock(_fd, LOCK_UN);
@@ -81,10 +83,11 @@ void		Controller::controllerUpdate()
 	    {
 	      bomber::Event tmp;
 	      qualifyEvent(&(*it), tmp);
+	      if (tmp.type == bomber::Event::JoystickMove && tmp.value == 0)
+	      	resetAxis(tmp.key);
 	      _state.insert(_state.begin(), tmp);
 	    }
 	}
-	//update existing state
 	for (auto it = _state.begin(); it != _state.end(); ++it)
 	  {
 	  	if (it->value != 1 && static_cast<float>(it->value) / JOY_MAX_VAL > -1 * DEAD_ZONE && static_cast<float>(it->value) / JOY_MAX_VAL < DEAD_ZONE)
@@ -97,7 +100,6 @@ void		Controller::controllerUpdate()
 		  ++s;
 	      }
 	  }
-	// dump(_state);
 }
 
 bool		Controller::handleEvent(bomber::Event &event, bomber::Event::KeyID key)
@@ -109,7 +111,6 @@ bool		Controller::handleEvent(bomber::Event &event, bomber::Event::KeyID key)
 		if ((*it).key == key && (*it).value != 0)
 		{
 			event = *it;
-			std::cout << "return :" << int(key) << " value: " << static_cast<float>(event.value) / JOY_MAX_VAL << std::endl;
 			return (true);
 		}
 	}
