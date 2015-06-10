@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Sun May  3 16:38:09 2015 Jean-Baptiste Grégoire
-// Last update Wed Jun 10 13:10:27 2015 Jean-Baptiste Grégoire
+// Last update Wed Jun 10 23:27:33 2015 Jean-Baptiste Grégoire
 //
 
 #include "Controller.hh"
@@ -47,6 +47,7 @@ void		Controller::controllerUpdate()
 	std::vector<t_controller> v;
   	int 	ret(0);
 
+	// _state.clear();
 	if (_isPlugged == false && stat(_ctrlerFile.c_str(), &_statBuf) == 0)
     {
 		flock(_fd, LOCK_UN);
@@ -111,6 +112,7 @@ bool		Controller::handleEvent(bomber::Event &event, bomber::Event::KeyID key)
 		if ((*it).key == key && (*it).value != 0)
 		{
 			event = *it;
+			std::cout << "return :" << int(key) << " value: " << static_cast<float>(event.value) / JOY_MAX_VAL << std::endl;
 			return (true);
 		}
 	}

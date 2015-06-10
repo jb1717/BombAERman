@@ -12,22 +12,27 @@
 
 ABomb::ABomb() : AGameModel()
 {
-
+  _timer = 3;
 }
 
 ABomb::ABomb(glm::vec3 const& _position) : AGameModel(_position)
 {
+  _timer = 3;
 }
 
 ABomb::ABomb(std::string const& filePath) : AGameModel(filePath)
 {
+  _timer = 3;
 }
+
 ABomb::ABomb(glm::vec3 const& _position, std::string const& filePath) : AGameModel(_position, filePath)
 {
+  _timer = 3;
 }
 
 ABomb::ABomb(std::string const& filePath, glm::vec3 const& _position) : AGameModel(_position, filePath)
 {
+  _timer = 3;
 }
 
 ABomb::~ABomb()
@@ -46,4 +51,11 @@ void		ABomb::setTimer(float timer)
 void		ABomb::update(gdl::Clock const& clock, UNUSED gdl::Input& input)
 {
   _timer -= clock.getElapsed();
+}
+
+bool		ABomb::isExplosed() const
+{
+  if (_timer <= 0.0f)
+    return (true);
+  return (false);
 }
