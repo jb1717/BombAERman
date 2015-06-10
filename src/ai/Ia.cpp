@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Wed Jun 10 20:26:35 2015 Hugo Prenat
+// Last update Wed Jun 10 20:29:26 2015 Hugo Prenat
 //
 
 #include "Ia.hh"
@@ -33,6 +33,11 @@ void	Ia::run_user()
 {
   std::cout << "toto" << std::endl;
   _chai.eval_file(_fileName);
+}
+
+bool	Ia::chooseDir(const int dir)
+{
+  return (selectDirection(static_cast<Board::Direction>(dir)));
 }
 
 bool	Ia::chooseDir(const int dir)
