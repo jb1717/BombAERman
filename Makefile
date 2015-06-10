@@ -55,7 +55,7 @@ LFLAGS		=	-I$(LIB_INCLUDE_DIR) -L$(LIB_DIR)libs/ $(LIBS) \
 #			TREE				#
 #########################################################
 
-LIBS		=	-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lfmod -lSDL2 -lpthread -llua
+LIBS		=	-lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lfmod -lSDL2 -lpthread
 LIB_DIR		=	./lib/
 LIB_INCLUDE_DIR	=	$(INCLUDE_DIR)lib/
 INCLUDE_DIR	=	./includes/
