@@ -18,11 +18,17 @@
 # include "Bomb.hh"
 # include "AObj.hh"
 # include "Crate.hh"
+# include "BasicBomb.hh"
 
 # define PLAYER_CHAR	'p'
 
 class	Bomb;
 class	EThreadPool;
+
+enum	keyActions
+  {
+    SPACE = 1, PAUSE = 2, NACT = 0, ERROR = -1
+  };
 
 class	Player : public AObj
 {
@@ -38,7 +44,7 @@ public: // Principal functions
   bool					selectDirection(Board::Direction);
   void					run_user();
   bool					userAction();
-  int					commandValue();
+  keyActions				commandValue();
   void					checkPosPowerUp();
 public: // Player Safety
   bool					is_Alive() const;

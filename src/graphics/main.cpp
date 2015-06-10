@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 15 21:29:13 2015 Jamais
-// Last update Tue Jun  9 02:23:37 2015 Jamais
+// Last update Wed Jun 10 03:49:50 2015 Jean-Baptiste Grégoire
 //
 
 #include	<cstdlib>
@@ -24,7 +24,7 @@ int	main()
   video = VideoContext::instanciate();
   video->init();
 
-  Ia  *killer = new Ia("ia/easy.chai", *board);
+  AObj  *killer = new Ia("ia/easy.chai", *board);
   // auto		asset = AssetManager::instance();
   // auto		boards = BOARD_HANDLER(asset["boards"]);
   // auto		board = BOARD((*boards)[0]);

@@ -77,14 +77,18 @@ bool	Player::triggerOneBomb()
 {
   std::vector<Bomb *>::const_iterator	it = _bombs.begin();
   auto	positions = getPos();
+  float	true_x = (_board.getWidth() / 2) - (static_cast<size_t>(_x) % _board.getWidth());
+  float	true_y = (_board.getHeight() / 2) - (_x / _board.getHeight());
 
   while (it != _bombs.end())
     {
       if ((*it)->isLaunched() == false)
 	{
 	  (*it)->setPos(positions.first, positions.second);
-	  _bombThread->addWork(run_bomb, (*it));
+	  // _bombThread->addWork(run_bomb, (*it));
 	  _board.placeEntity(_x, _y, (*it));
+	  (*it)->setGameObj(new BasicBomb());
+	  (*it)->getGameObj()->setPosition(glm::vec3(true_x, 1, true_y));
 	  return (true);
 	}
       it++;
@@ -138,20 +142,18 @@ void	Player::run_user()
     }
 }
 
-int	Player::commandValue()
+keyActions	Player::commandValue()
 {
-  return (0);
+  return (NACT);
 }
 
 bool	Player::userAction()
 {
-  int	keyPressed;
+  keyActions	keyPressed;
 
   if ((keyPressed = commandValue()) < 0)
     return (false);
-  else if (keyPressed < 4)
-    return (selectDirection(static_cast<Board::Direction>(keyPressed)));
-  else if (keyPressed == 4)
+  else if (keyPressed == SPACE)
     return (triggerOneBomb());
   return (false);
 }
