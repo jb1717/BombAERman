@@ -23,8 +23,12 @@ int	main()
   Board*       	board = new Board(11, 11);
   video = VideoContext::instanciate();
   video->init();
+  // auto		asset = AssetManager::instance();
+  // auto		boards = BOARD_HANDLER(asset["boards"]);
+  // auto		board = BOARD((*boards)[0]);
 
   //  for (int << = -5 ; x < 5; x++)
+// <<<<<<< HEAD
   for (int x = 0; x < 11; x++)
     {
       for (int y = 0; y < 11; y++)
@@ -38,6 +42,20 @@ int	main()
 	}
     }
   board->placeEntity(8, 8, new Ia("ia/easy.lua", *board));
+// =======
+//   // for (int x = 0; x < 11; x++)
+//   //   {
+//   //     for (int y = 0; y < 11; y++)
+//   // 	{
+//   // 	  /* placing character in 1 / 1 */
+//   // 	  if (x == 1  && y == 1)
+//   board->placeEntity(1, 1, new Player(*board));
+//   // 	  if (((x % 3 == 0) &&  (y % 3 == 0)) || (x == 0 || y == 0 || x == 10 || y == 10))
+//   // 	  board->placeEntity(x, y, new Crate(*board));
+//   // 	  board->placeEntity(x, y, new UnbreakableWall(*board));
+//   // 	}
+//   //   }
+// >>>>>>> master
   GameEngine	engine;
   board->initialize();
   board->initGameObjects();

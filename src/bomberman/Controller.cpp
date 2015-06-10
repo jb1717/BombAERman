@@ -5,72 +5,122 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Sun May  3 16:38:09 2015 Jean-Baptiste Grégoire
-// Last update Tue May  5 20:00:52 2015 Jean-Baptiste Grégoire
+// Last update Wed Jun 10 02:39:57 2015 Jean-Baptiste Grégoire
 //
 
 #include "Controller.hh"
 
-Controller::Controller(uint32_t id) : _id(id), _isPlugged(false)
+Controller::Controller() : _id(0), _fd(0), _isPlugged(false)
 {
-  std::stringstream	tmp;
-
-  tmp << "/dev/input/js";
-  tmp << id;
-  _ctrlerFile.assign(tmp.str());
-  _in.open(_ctrlerFile.c_str(), std::ios::in);
-  if (_in.good() == false)
-    std::cout << "Controller " << id << "not plugged !" << std::endl;
-  else
-    _isPlugged = true;
-  bzero(&_ctrler, sizeof(t_controller));
+  for (uint32_t id = 1; id < 11; ++id)
+  {
+	  std::stringstream	tmp;
+	  tmp << "/dev/input/js";
+	  tmp << id;
+	  std::cout << tmp.str() << std::endl;
+	  _fd = open(tmp.str().c_str(), O_RDONLY | O_NONBLOCK);
+	  if (_fd != -1)
+	  {
+	  	flock(_fd, LOCK_EX);
+  		_ctrlerFile.assign(tmp.str());
+  	  	_isPlugged = true;
+		_id = id;
+		break;
+	  }
+  }
+	bzero(&_ctrler, sizeof(t_controller));
 }
 
-void		Controller::handleEvent(bomber::Event &event)
+void		Controller::controllerUpdate()
 {
-  if (_isPlugged == false && stat(_ctrlerFile.c_str(), &_statBuf) == 0)
+	std::vector<t_controller> v;
+  	int 	ret(0);
+
+	_state.clear();
+	if (_isPlugged == false && stat(_ctrlerFile.c_str(), &_statBuf) == 0)
     {
-      _in.close();
-      _in.open(_ctrlerFile.c_str(), std::ios::in);
-      if (_in.good())
-	{
-	  _isPlugged = true;
-	  event.type = bomber::Event::ControllerPlugged;
+		flock(_fd, LOCK_UN);
+     	close(_fd);
+     	_fd = open(_ctrlerFile.c_str(), O_RDONLY | O_NONBLOCK);
+    	if (_fd != -1)
+		{
+	  		flock(_fd, LOCK_EX);
+	  		_isPlugged = true;
+		}
+    }
+    if (_isPlugged == true)
+    {
+		while ((ret = read(_fd, reinterpret_cast<char *>(&_ctrler), sizeof(t_controller))) > 0)
+			v.push_back(_ctrler);
 	}
-    }
-  _in.read(reinterpret_cast<char *>(&_ctrler), sizeof(t_controller));
-  if (_in.good() == false)
-    {
-      event.type = bomber::Event::ControllerUnplugged;
-      _isPlugged = false;
-    }
-  else
-    {
-      if (_ctrler.type == JOYSTICK)
+	if (ret == -1 && (errno ^ EAGAIN) != 0)
+		_isPlugged = false;
+	// erase all double event
+	if (_isPlugged == true && !v.empty())
+	{
+	  std::reverse(v.begin(), v.end());
+	  for (auto it = v.begin(); it != v.end(); ++it)
+	    {
+	      for (auto s = it; s != v.end();)
+		{
+		  if (s != it && s->type == it->type && s->number == it->number)
+		    s = v.erase(s);
+		  else
+		    ++s;
+		}
+	    }
+	  for (auto it = v.begin(); it != v.end(); ++it)
+	    {
+	      bomber::Event tmp;
+	      qualifyEvent(&(*it), tmp);
+	      _state.push_back(tmp);
+	    }
+	}
+}
+
+bool		Controller::handleEvent(bomber::Event &event, bomber::Event::KeyID key)
+{
+	if (!_isPlugged)
+		return (false);
+	for (auto it = _state.begin(); it != _state.end(); ++it)
+	{
+		if ((*it).key == key)
+		{
+			event = *it;
+			return (true);
+		}
+	}
+	return (false);
+}
+
+void		Controller::qualifyEvent(t_controller *ctrler, bomber::Event &event)
+{
+    if (ctrler->type == JOYSTICK)
 	event.type = bomber::Event::JoystickMove;
       else
 	{
-	  if (_ctrler.value == 1)
+	  if (ctrler->value == 1)
 	    event.type = bomber::Event::KeyPressed;
 	  else
 	    event.type = bomber::Event::KeyReleased;
 	}
-      switch (_ctrler.number)
+      switch (ctrler->number)
 	{
 	case 0:
 	  if (event.type == bomber::Event::JoystickMove)
-	    event.key = (_ctrler.value > 0 ? bomber::Event::JoyMiddleRight : bomber::Event::JoyMiddleLeft);
+	    event.key = (ctrler->value > 0 ? bomber::Event::JoyMiddleRight : bomber::Event::JoyMiddleLeft);
 	  else
 	    event.key = bomber::Event::XboxY;
 	  break;
 	case 1:
 	  if (event.type == bomber::Event::JoystickMove)
-	    event.key = (_ctrler.value > 0 ? bomber::Event::JoyMiddleDown : bomber::Event::JoyMiddleUp);
+	    event.key = (ctrler->value > 0 ? bomber::Event::JoyMiddleDown : bomber::Event::JoyMiddleUp);
 	  else
 	    event.key = bomber::Event::XboxB;
 	  break;
 	case 2:
 	  if (event.type == bomber::Event::JoystickMove)
-	    event.key = (_ctrler.value > 0 ? bomber::Event::JoyRightRight : bomber::Event::JoyRightLeft);
+	    event.key = (ctrler->value > 0 ? bomber::Event::JoyRightRight : bomber::Event::JoyRightLeft);
 	  else
 	    event.key = bomber::Event::XboxA;
 	  break;
@@ -78,12 +128,12 @@ void		Controller::handleEvent(bomber::Event &event)
 	case 4: event.key = (event.type == bomber::Event::JoystickMove ? bomber::Event::TriggerRB : bomber::Event::TriggerLT); break;
 	case 5:
 	  if (event.type == bomber::Event::JoystickMove)
-	    event.key = (_ctrler.value > 0 ? bomber::Event::JoyRightDown : bomber::Event::JoyRightUp);
+	    event.key = (ctrler->value > 0 ? bomber::Event::JoyRightDown : bomber::Event::JoyRightUp);
 	  else
 	    event.key = bomber::Event::TriggerRT;
 	  break;
-	case 6: event.key = (_ctrler.value > 0 ? bomber::Event::JoyLeftRight : bomber::Event::JoyLeftLeft); break;
-	case 7: event.key = (_ctrler.value > 0 ? bomber::Event::JoyLeftDown : bomber::Event::JoyLeftUp); break;
+	case 6: event.key = (ctrler->value > 0 ? bomber::Event::JoyLeftRight : bomber::Event::JoyLeftLeft); break;
+	case 7: event.key = (ctrler->value > 0 ? bomber::Event::JoyLeftDown : bomber::Event::JoyLeftUp); break;
 	case 8: event.key = bomber::Event::Start; break;
 	case 9: event.key = bomber::Event::Select; break;
 	case 10: event.key = bomber::Event::Start; break;
@@ -92,8 +142,7 @@ void		Controller::handleEvent(bomber::Event &event)
 	case 13: event.key = bomber::Event::Undifined; break;
 	default: event.key = bomber::Event::Undifined; break;
 	}
-    }
-  event.value = _ctrler.value;
+  event.value = ctrler->value;
 }
 
 bool		Controller::plugged() const
@@ -103,5 +152,6 @@ bool		Controller::plugged() const
 
 Controller::~Controller()
 {
-  _in.close();
+	flock(_fd, LOCK_UN);
+	close(_fd);
 }

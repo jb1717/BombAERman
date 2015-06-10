@@ -11,6 +11,8 @@
 #ifndef EVENT_HH_
 # define EVENT_HH_
 
+# include <stdint.h>
+
 namespace	bomber
 {
   class		Event
@@ -56,6 +58,9 @@ namespace	bomber
 	Power,
 	Undifined
       };
+
+  public:
+  	Event &operator=(Event const &o);
 
   public:
     EventType	type;

@@ -12,6 +12,7 @@
 # define		___AGAMEOBJECT_HH___
 
 # include		"graphics.hh"
+# include   "Binput.hh"
 # include		"Collider.hh"
 
 class			Camera;
@@ -41,8 +42,8 @@ public:
 
 public:
   virtual bool		initialize();
-  virtual void		update(gdl::Clock const& clock, gdl::Input &input);
-  virtual void		update(gdl::Clock const& clock, gdl::Input &input, Camera const& camera);
+  virtual void		update(gdl::Clock const& clock, Binput &input);
+  virtual void		update(gdl::Clock const& clock, Binput &input, Camera const& camera);
   virtual void		update(Camera const& camera, gdl::Input& input);
   virtual void		draw(UNUSED gdl::AShader& shader, UNUSED gdl::Clock const& clock) {}
 

@@ -42,9 +42,10 @@ bool		VideoContext::init(int initFlags, int windowsFlags)
   return true;
 }
 
-void		VideoContext::updateContext(gdl::Clock& clock, gdl::Input &input) const
+void		VideoContext::updateContext(gdl::Clock& clock, Binput &input) const
 {
-  updateInputs(input);
+  updateInputs(input._default);
+  input.controllerUpdate();
   updateClock(clock);
 }
 

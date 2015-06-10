@@ -57,10 +57,10 @@ void		AGameObject::setTexture(UNUSED gdl::Texture const& texture) {}
 
 bool		AGameObject::initialize() { return true; }
 
-void		AGameObject::update(UNUSED gdl::Clock const& clock, UNUSED gdl::Input &input)
+void		AGameObject::update(UNUSED gdl::Clock const& clock, UNUSED Binput &input)
 {}
 
-void		AGameObject::update(UNUSED gdl::Clock const& clock, UNUSED gdl::Input &input, UNUSED Camera const& camera)
+void		AGameObject::update(UNUSED gdl::Clock const& clock, UNUSED Binput &input, UNUSED Camera const& camera)
 {
   _rotation.y = -1 * camera.getRotation().y;
   _rotation.x = -1 * camera.getRotation().x;
