@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:12:42 2015 Hugo Prenat
-// Last update Wed Jun 10 18:10:18 2015 Hugo Prenat
+// Last update Wed Jun 10 20:18:56 2015 Hugo Prenat
 //
 
 #ifndef IA_HH_
@@ -13,25 +13,29 @@
 
 # include <chaiscript/chaiscript.hpp>
 
-# include "../engine/Player.hh"
+# include "Player.hh"
 
-class		Ia : public Player
+class			Ia : public Player
 {
 public:
   Ia(std::string const &fileName, Board &Board);
   ~Ia();
 
 public:
-  Board&	getBoard() const;
+  Board&		getBoard() const;
 
 public:
-  bool		userAction();
-  void		run_user();
-  bool		chooseDir(const int dir);
+  bool			userAction();
+  void			run_user();
+  bool			chooseDir(const int dir);
+  int			getCloserEnemy();     // Return Enemy Id
+  void			getPosById(const int id);     // Set _enemyX _enemyY to Id Pos
 
 private:
-  int		_key;
-  std::string	_fileName;
+  int				_key;
+  int				_enemyX;
+  int				_enemyY;
+  std::string			_fileName;
   chaiscript::ChaiScript	_chai;
 };
 
