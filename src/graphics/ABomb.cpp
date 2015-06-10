@@ -47,3 +47,12 @@ void		ABomb::update(gdl::Clock const& clock, UNUSED gdl::Input& input)
 {
   _timer -= clock.getElapsed();
 }
+
+bool		ABomb::isExplosed() const
+{
+  if (_timer < 0.01f)
+    {
+      return (true);
+    }
+  return (false);
+}

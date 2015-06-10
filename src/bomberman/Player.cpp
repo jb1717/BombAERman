@@ -60,7 +60,7 @@ void		Player::addBomb()
   Bomb		*newone = new Bomb(_board);
 
   _bombs.push_back(newone);
-  _bombThread->addNewThread(1);
+  //  _bombThread->addNewThread(1);
 }
 
 std::vector<Bomb *>		Player::getBombs() const
@@ -89,6 +89,7 @@ bool	Player::triggerOneBomb()
 	  _board.placeEntity(_x, _y, (*it));
 	  (*it)->setGameObj(new BasicBomb());
 	  (*it)->getGameObj()->setPosition(glm::vec3(true_x, 1, true_y));
+	  (*it)->getGameObj()->setTimer(3.0f);
 	  return (true);
 	}
       it++;
