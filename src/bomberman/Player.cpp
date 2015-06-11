@@ -192,22 +192,42 @@ bool	Player::selectDirection(Board::Direction direc)
 bool	Player::turnLeft()
 {
   _dir = static_cast<Board::Direction>((_dir + 1) % 4);
-  return (_board.moveEntity(_x, _y, _id, _dir));
+  if (!_board.moveEntity(_x, _y, _id, _dir))
+    return (false);
+  float	true_x = (_board.getWidth() / 2) - _x;
+  float	true_y = (_board.getHeight() / 2) - _y;
+  _gameObj->setPosition(glm::vec3(true_x, 0.5, true_y));
+  return (true);
 }
 
 bool	Player::turnRight()
 {
   _dir = static_cast<Board::Direction>((_dir - 1) >= 0 ? _dir - 1 : 3);
-  return (_board.moveEntity(_x, _y, _id, _dir));
+  if (!_board.moveEntity(_x, _y, _id, _dir))
+    return (false);
+  float	true_x = (_board.getWidth() / 2) - _x;
+  float	true_y = (_board.getHeight() / 2) - _y;
+  _gameObj->setPosition(glm::vec3(true_x, 0.5, true_y));
+  return (true);
 }
 
 bool	Player::goAhead()
 {
-  return (_board.moveEntity(_x, _y, _id, _dir));
+  if (!_board.moveEntity(_x, _y, _id, _dir))
+    return (false);
+  float	true_x = (_board.getWidth() / 2) - _x;
+  float	true_y = (_board.getHeight() / 2) - _y;
+  _gameObj->setPosition(glm::vec3(true_x, 0.5, true_y));
+  return (true);
 }
 
 bool	Player::goBack()
 {
   _dir = static_cast<Board::Direction>((_dir + 2) % 4);
-  return (_board.moveEntity(_x, _y, _id, _dir));
+  if (!_board.moveEntity(_x, _y, _id, _dir))
+    return (false);
+  float	true_x = (_board.getWidth() / 2) - _x;
+  float	true_y = (_board.getHeight() / 2) - _y;
+  _gameObj->setPosition(glm::vec3(true_x, 0.5, true_y));
+  return (true);
 }
