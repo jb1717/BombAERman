@@ -32,6 +32,10 @@ public:
   void			getPosById(const int id);	// Set _enemyX _enemyY to Id Pos
   std::map<float, AObj *>& getMapEnemy();
 
+public:
+  int       getDistance(int id);
+  int       getCloserAvailableEnemy();
+
 private:
   int				_key;
   float				_enemyX;
