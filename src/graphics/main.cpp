@@ -58,6 +58,9 @@ int	main()
       std::cout << "Couldn't load the map." << std::endl;
       return false;
     }
+  EThread toto;
+
+  toto.launch(launch_ia, killer);
   while (engine.update() == true)
     engine.draw();
   return EXIT_SUCCESS;
