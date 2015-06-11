@@ -51,22 +51,22 @@ void			Character::update(UNUSED gdl::Clock const& clock, Binput& input, Camera c
   float		angle = camera.getRotation().y * M_PI / 180;
   bomber::Event event;
 
-   if (input._default.getKey(SDLK_z) || (input.handleEvent(event, bomber::Event::JoyMiddleUp) && event.value != 0.0))
+   if (input._default.getKey(SDLK_z) || input.handleEvent(event, bomber::Event::JoyMiddleUp))
     {
       _rotation.y = -1 * camera.getRotation().y;
       translate(glm::vec3(-sin(angle) * _speed, 0, cos(angle) * _speed));
     }
-  if (input._default.getKey(SDLK_s) || (input.handleEvent(event, bomber::Event::JoyMiddleDown) && event.value != 0.0))
+  if (input._default.getKey(SDLK_s) || input.handleEvent(event, bomber::Event::JoyMiddleDown))
     {
       _rotation.y = 180 - camera.getRotation().y;
       translate(glm::vec3(sin(angle) * _speed, 0, -cos(angle) * _speed));
     }
-  if (input._default.getKey(SDLK_q) || (input.handleEvent(event, bomber::Event::JoyMiddleLeft) && event.value != 0.0))
+  if (input._default.getKey(SDLK_q) || input.handleEvent(event, bomber::Event::JoyMiddleLeft))
     {
       _rotation.y = 90.0 - camera.getRotation().y;
       translate(glm::vec3(cos(angle) * _speed, 0, sin(angle) * _speed));
     }
-  if (input._default.getKey(SDLK_d) || (input.handleEvent(event, bomber::Event::JoyMiddleRight) && event.value != 0.0))
+  if (input._default.getKey(SDLK_d) || input.handleEvent(event, bomber::Event::JoyMiddleRight))
     {
       _rotation.y = 270.0 - camera.getRotation().y;
       translate(glm::vec3(-cos(angle) * _speed, 0, -sin(angle) * _speed));
