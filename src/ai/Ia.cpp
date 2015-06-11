@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Thu Jun 11 16:05:29 2015 Hugo Prenat
+// Last update Thu Jun 11 17:23:04 2015 Hugo Prenat
 //
 
 #include "Ia.hh"
@@ -27,10 +27,11 @@ Ia::Ia(std::string const &fileName, Board &Board) : Player(Board),
   _chai.add(chaiscript::fun(&Ia::chooseDir, this), "iaChooseDir");
   _chai.add(chaiscript::fun(&Ia::getCloserEnemy, this), "iaCloserEnemy");
   _chai.add(chaiscript::fun(&Ia::getPosById, this), "iaPosById");
-  _chai.add(chaiscript::var(north), "North");
-  _chai.add(chaiscript::var(west), "West");
-  _chai.add(chaiscript::var(south), "South");
-  _chai.add(chaiscript::var(east), "East");
+  _chai.add(chaiscript::fun(&Player::goAhead, this), "iaMove");
+  _chai.add_global_const(chaiscript::const_var(north), "North");
+  _chai.add_global_const(chaiscript::const_var(west), "West");
+  _chai.add_global_const(chaiscript::const_var(south), "South");
+  _chai.add_global_const(chaiscript::const_var(east), "East");
 }
 
 Ia::~Ia()
