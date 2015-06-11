@@ -31,7 +31,6 @@ public:
   char			getRange() const;
   void			setRange(char const &);
   void			run();
-private:
   void			explosion();
 private:
   bool					launched;

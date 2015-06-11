@@ -243,6 +243,10 @@ bool		GameEngine::update()
 	(*it)->getGameObj()->setPosition(save);
       else
 	(*it)->setPos((p.x - (_board->getWidth() / 2)) < 0 ? (p.x - (_board->getWidth()) / 2) * -1 : (p.x - _board->getWidth() / 2), (p.z - _board->getHeight() / 2) < 0 ? (p.z - _board->getHeight() / 2) * -1 : (p.z - _board->getHeight() / 2));
+      if (static_cast<Character *>((*it)->getGameObj())->_bombing)
+	{
+	  (*it)->triggerOneBomb();
+	}
     }
   effect->update(_clock, _input, camera);
   return true;
