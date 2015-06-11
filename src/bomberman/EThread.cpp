@@ -1,15 +1,14 @@
 //
 // EThread.cpp for Bomberman in /home/tran_0/rendu/cpp_bomberman
-//
+// 
 // Made by David Tran
 // Login   <tran_0@epitech.net>
-//
+// 
 // Started on  Wed May  6 17:11:54 2015 David Tran
 // Last update Mon May 18 05:06:23 2015 David Tran
 //
 
 #include "EThread.hh"
-#include "Ia.hh"
 
 EThread::EThread()
 {
@@ -50,14 +49,6 @@ void	*launch_player(void *arg)
   Player		newone(corpse->getBoard());
 
   newone.run_user();
-  return (NULL);
-}
-
-void	*launch_ia(void *arg)
-{
-  Ia		*corpse = static_cast<Ia *>(arg);
-
-  corpse->run_user();
   return (NULL);
 }
 
