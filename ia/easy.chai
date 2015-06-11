@@ -1,3 +1,3 @@
-  print("lol")
+print("lol")
 // iaDropBomb()
-//  iaChooseDir(3)
+//  iaChooseDir(East)

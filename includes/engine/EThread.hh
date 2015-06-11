@@ -32,10 +32,9 @@ private:
 
 # include "Engine.hh"
 # include "Bomb.hh"
-// # include "Ia.hh"
 
 void	*launch_player(void *);
-void	*launch_ia(void *);
 void	*run_bomb(void *);
+void	*launch_ia(void *);
 
 #endif // !ETHREAD_HH_
