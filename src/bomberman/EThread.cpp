@@ -9,6 +9,7 @@
 //
 
 #include "EThread.hh"
+#include "Ia.hh"
 
 EThread::EThread()
 {
