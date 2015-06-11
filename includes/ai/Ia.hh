@@ -31,6 +31,10 @@ public:
   int			getCloserEnemy();     // Return Enemy Id
   void			getPosById(const int id);     // Set _enemyX _enemyY to Id Pos
 
+public:
+  int       getDistance(int id);
+  int       getCloserAvailableEnemy();
+
 private:
   int				_key;
   int				_enemyX;

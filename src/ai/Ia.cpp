@@ -65,6 +65,31 @@ int		Ia::getCloserEnemy()
   return (id);
 }
 
+int   Ia::getDistance(int id)
+{
+  // todo !
+  (void)id;
+  return (0);
+}
+
+int   Ia::getCloserAvailableEnemy()
+{
+  std::map<float, AObj *>   enemy;// = getMapEnemy();
+  int id(0);
+
+  for (auto it = enemy.begin(); it != enemy.end(); ++it)
+  {
+    int tmp = getDistance((*it).first);
+    if (id == 0)
+      id = tmp;
+    if (tmp < id)
+      id =tmp;
+  }
+  if (id == 0 && enemy.size() > 0)
+      id = enemy.begin()->first;
+  return (id);
+}
+
 void	Ia::getPosById(const int id)
 {
   std::vector<std::vector<AObj *>>           v = _board.getFullBoard();
