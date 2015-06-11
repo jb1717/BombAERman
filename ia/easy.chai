@@ -1,5 +1,3 @@
-if (iaAlive() == true){
   print("lol")
 // iaDropBomb()
 //  iaChooseDir(3)
-}
