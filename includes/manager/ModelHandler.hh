@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 18:05:32 2015 Emmanuel Chambon
-// Last update Fri Jun  5 07:57:51 2015 Jamais
+// Last update Sat Jun 13 01:35:25 2015 Emmanuel Chambon
 //
 
 #pragma once
@@ -39,7 +39,8 @@ public:
     AGameModel                  &operator[](std::string const &);
 
 private:
-    std::map<std::string, std::shared_ptr<AGameModel>>    _models;
+    // std::map<std::string, std::shared_ptr<AGameModel>>    _models;
+    std::map<std::string, AGameModel *>                     _models;
     std::mutex                                            _mutex;
     VideoContext                                          *_videoContext;
 };

@@ -67,6 +67,9 @@ void BoardHandler::save(std::shared_ptr<Board> const &board, std::string const &
 */
 void BoardHandler::generate(int x, int y)
 {
+	if (x <= 4 && y <= 4)
+		throw std::logic_error("Map width and height must be > 4");
+
 	// Random init
 	std::random_device rd;
 	std::default_random_engine engine(rd());
