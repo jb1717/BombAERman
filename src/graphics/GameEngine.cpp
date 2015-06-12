@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Fri Jun 12 09:18:13 2015 Jamais
+// Last update Fri Jun 12 09:42:11 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -138,10 +138,11 @@ bool		GameEngine::initialize()
   ground->setTexture(*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["floor"]);
   ground->scale(glm::vec3(_board->getHeight()  -1.0f, 1, _board->getWidth() -1.0f));
 
+  /*
+  ** Special Effect of explosion :: folow it in update and draw */
   effect = new AFX(glm::vec3(0 , 2, 0));
   effect->setScale(glm::vec3(2, 2, 2));
   effect->resetFrame();
-
 
   return true;
 }
