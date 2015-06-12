@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 15 21:29:13 2015 Jamais
-// Last update Fri Jun 12 08:48:13 2015 Jamais
+// Last update Fri Jun 12 11:11:22 2015 Emmanuel Chambon
 //
 
 #include        <cstdlib>
@@ -32,6 +32,8 @@ int     main()
 
   board->initialize();
   board->initGameObjects();
+
+  SOUND_HANDLER(asset["sounds"])->play("bomberman");
 
   if (engine.setupGame(board) == false)
     {

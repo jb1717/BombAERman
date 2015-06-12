@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Sun May 24 08:35:43 2015 Emmanuel Chambon
-// Last update Mon Jun  1 09:49:18 2015 Emmanuel Chambon
+// Last update Fri Jun 12 02:37:23 2015 Emmanuel Chambon
 //
 
 #pragma once
@@ -35,8 +35,7 @@ public:
     void                        pause();
     void                        resume();
     void                        stop();
-    void                        play(FMOD::Sound *);
-    void                        playSample(FMOD::Sound *);
+    void                        play(std::string const &, bool = false);
     bool                        isPlaying();
     FMOD::Sound                 *operator[](std::string const&);
 
