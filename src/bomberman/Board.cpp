@@ -234,6 +234,7 @@ void Board::updatePos(float x, float y, AObj *obj)
 
 	std::modf(x, &intPartX);
 	std::modf(x, &intPartY);
+  obj->setPos(x, y);
 	if (x < intPartX + 0.5)
 		_board[inty * _xLength + intx].push_back(obj);
 	else if (x > intPartX + 0.5)
