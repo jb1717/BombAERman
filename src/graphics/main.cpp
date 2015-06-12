@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 15 21:29:13 2015 Jamais
-// Last update Wed Jun 10 03:49:50 2015 Jean-Baptiste Grégoire
+// Last update Fri Jun 12 11:11:22 2015 Emmanuel Chambon
 //
 
 #include	<cstdlib>
@@ -17,50 +17,35 @@
 #include	"Player.hh"
 #include	"Ia.hh"
 
-int	main()
+std::ostream&	operator<<(std::ostream& os, glm::vec3 const& v)
 {
-  VideoContext*	video;
-  Board*       	board = new Board(11, 11);
-  video = VideoContext::instanciate();
-  video->init();
-  // auto		asset = AssetManager::instance();
-  // auto		boards = BOARD_HANDLER(asset["boards"]);
-  // auto		board = BOARD((*boards)[0]);
-  AObj  *killer = new Ia("ia/easy.chai", *board);
+  os << " {" << v.x << ", " << v.y << ", " << v.z << "}";
+  return os;
+}
 
-  // for (int << = -5 ; x < 5; x++)
-  // for (int x = 0; x < 11; x++)
-  //   {
-  //     for (int y = 0; y < 11; y++)
-  //       {
-  //     	  /* placing character in 1 / 1 */
-  //     	  if (x == 1  && y == 1)
-  //           board->placeEntity(1, 1, new Player(*board));
-  //     	  if (((x % 3 == 0) &&  (y % 3 == 0)) || (x == 0 || y == 0 || x == 10 || y == 10))
-  //     	   board->placeEntity(x, y, new Crate(*board));
-  //     	  board->placeEntity(x, y, new UnbreakableWall(*board));
-  //       }
-  //   }
-  board->placeEntity(5, 5, killer);
-  GameEngine	engine;
+int     main()
+{
+  VideoContext::instanciate()->init();
+  auto asset = AssetManager::instance();
+  GameEngine engine;
+
+  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[1]);
+
   board->initialize();
   board->initGameObjects();
 
-  AssetManager::instance();
+  SOUND_HANDLER(asset["sounds"])->play("bomberman");
 
-  if (engine.initialize() == false)
-    {
-    std::cerr << "ini" << std::endl;
-    return (EXIT_FAILURE);
-    }
   if (engine.setupGame(board) == false)
     {
       std::cout << "Couldn't load the map." << std::endl;
       return false;
     }
-  EThread toto;
-
-  toto.launch(launch_ia, killer);
+  if (engine.initialize() == false)
+    {
+      std::cerr << "ini" << std::endl;
+      return (EXIT_FAILURE);
+    }
   while (engine.update() == true)
     engine.draw();
   return EXIT_SUCCESS;

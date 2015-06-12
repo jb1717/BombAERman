@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 16 20:46:07 2015 Jamais
-// Last update Fri Jun  5 05:18:13 2015 Jamais
+// Last update Thu Jun 11 22:42:04 2015 Jamais
 //
 
 #ifndef			___AGAMEOBJECT_HH___
@@ -23,6 +23,9 @@ protected:
   glm::vec3	_position;
   glm::vec3	_rotation;
   glm::vec3	_scale;
+
+protected:
+  glm::vec4	_color;
 
 protected:
   Collider	*_hitBox;
@@ -53,20 +56,22 @@ public:
   virtual void	       	scale(glm::vec3 const& scale);
 
 public:
-  glm::vec3		getPosition() const;
-  glm::vec3		getRotation() const;
-  glm::vec3		getScale() const;
+  glm::vec3			getPosition() const;
+  glm::vec3			getRotation() const;
+  glm::vec3			getScale() const;
+  glm::vec4			getColor() const;
 
 public:
   virtual glm::mat4    	getTransformation() const;
 
 public:
-  void			setPosition(glm::vec3 const& position);
-  void			setRotation(glm::vec3 const& rotation);
-  void			setScale(glm::vec3 const& scale);
+  void				setPosition(glm::vec3 const& position);
+  void				setRotation(glm::vec3 const& rotation);
+  void				setScale(glm::vec3 const& scale);
+  void				setColor(glm::vec4 const& color);
 
 public:
-  bool			collide(AGameObject const& body) const;
+  bool				collide(AGameObject const& body) const;
 };
 
 #endif			/* !___AGAMEOBJECT_HH___ */

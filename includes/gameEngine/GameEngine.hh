@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:15:24 2015 Jamais
-// Last update Mon Jun  8 06:59:00 2015 Jamais
+// Last update Fri Jun 12 03:09:54 2015 Jamais
 //
 
 #ifndef			___GAMEENGINE_HH___
@@ -33,6 +33,16 @@ extern VideoContext	*V;
 # define		FRAGMENT_SHADER		"shaders/fragmentShader"
 # define		VERTEX_SHADER		"shaders/vertexShader"
 
+/*
+** This macro is used to get the logical position from the x & z position of a AGameObject. **/
+# define		LOGICAL_POSITION(x, y)				\
+  (((x) - (((_board)->getWidth()) / (2))) < 0)			?	(((x) - ((_board)->getWidth()) / (2)) * (-1))		\
+												:	((x) - ((_board)->getWidth()) / (2))				\
+												,												\
+  (((y) - ((_board)->getHeight()) / (2)) < 0)			?	(((y) - ((_board)->getHeight()) / (2)) * (-1))		\
+												:	(((y) - ((_board)->getHeight()) / (2)))				\
+
+
 extern Camera camera;
 
 class			GameEngine : public gdl::Game
@@ -43,6 +53,7 @@ public:
 
 public:
   bool			initialize();
+  bool			loadShader();
   bool			update();
   void			draw();
 

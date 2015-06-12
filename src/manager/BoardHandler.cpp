@@ -71,6 +71,7 @@ void BoardHandler::generate(int x, int y)
 	std::random_device rd;
 	std::default_random_engine engine(rd());
 	std::uniform_int_distribution<int> dist(::CRATE, ::END);
+	std::uniform_int_distribution<int> wall(0, 10);
 
 	// Board init
 	BoardHandler::board_t board;
@@ -80,14 +81,30 @@ void BoardHandler::generate(int x, int y)
 	board.board     = std::make_shared<Board>(x, y);
 
 	// Board filling
-	for (int y_ = 0; y_ < y; y_++) {
-		for (int x_ = 0; x_ < x; x_++) {
-			board.board->placeEntity(static_cast<float>(x_),
-			                         static_cast<float>(y_),
-			                         static_cast<::entityType>(dist(engine)),
-			                         0);
+	for (int y_ = 0; y_ < (y + 2); y_++) {
+		for (int x_ = 0; x_ < (x + 2); x_++) {
+			if (x_ == 0 || x_ == x + 1 || y_ == 0 || y_ == y + 1) {
+				board.board->placeEntity(static_cast<float>(x_),
+				                         static_cast<float>(y_),
+				                         static_cast<::entityType>(::UNBREAKABLE_WALL),
+				                         0);
+				continue;
+			}
+			if (wall(engine) != wall(engine)) {
+				board.board->placeEntity(static_cast<float>(x_),
+				                         static_cast<float>(y_),
+				                         static_cast<::entityType>(dist(engine)),
+				                         0);
+			}
+			else {
+				board.board->placeEntity(static_cast<float>(x_),
+				                         static_cast<float>(y_),
+				                         static_cast<::entityType>(::UNBREAKABLE_WALL),
+				                         0);
+			}
 		}
 	}
+	// board.board->spawnPlayers();
 	if (_boards.size() == 0)
 		_boards.push_back(board);
 	else
@@ -107,7 +124,7 @@ std::vector<BoardHandler::board_t>              BoardHandler::getBoards() const
 */
 std::shared_ptr<Board> BoardHandler::loadMap(rapidjson::Value const &map, int x, int y)
 {
-	if (map.Size() != static_cast<rapidjson::SizeType>(x * y))
+	if (map.Size() != static_cast<rapidjson::SizeType>((x + 2) * (y + 2)))
 		throw std::invalid_argument("Corrupted JSON map. Will not be loaded.");
 
 	std::shared_ptr<Board> board = std::make_shared<Board>(x, y);

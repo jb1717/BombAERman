@@ -3,14 +3,23 @@
 uniform	mat4 projection;
 uniform	mat4 view;
 uniform	mat4 model;
+uniform	vec4	currentColor;
 
 uniform sampler2D fTexture0;
 
 varying vec4 fColor;
+varying vec4 fColor2;
 varying vec4 fNormal;
 varying vec2 fUv;
 
 void main(void)
 {
-	gl_FragColor = texture2D(fTexture0, fUv) * fColor;
+/*	if (texture2D(fTexture0, fUv).r == 0 &&
+	texture2D(fTexture0, fUv).g == 0 &&
+	texture2D(fTexture0, fUv).b == 0)  
+	gl_FragColor = colorTest; texture2D(fTexture0, fUv) * fColor;
+	else*/
+/*	gl_FragColor = texture2D(fTexture0, fUv) * fColor; */
+	gl_FragColor = texture2D(fTexture0, fUv) * currentColor;
+/*	gl_FragColor = texture2D(fTexture0, fUv) * fColor; */
 }

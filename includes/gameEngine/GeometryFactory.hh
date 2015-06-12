@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 24 05:21:40 2015 Jamais
-// Last update Tue Jun  9 02:34:49 2015 Jamais
+// Last update Tue Jun  9 12:11:19 2015 Jamais
 //
 
 #ifndef				___GEOMETRY_FACTORY_HH___
@@ -36,20 +36,21 @@ public:
 
 private:
   std::map<eGeometry, gdl::Geometry* >	_figures;
+  std::map<eGeometry, gdl::Geometry* (GeometryFactory::*)(glm::vec4 const& color, bool generate) const >	_generator;
 
 private:
-  gdl::Geometry*		createDownPlane() const;
-  gdl::Geometry*		createUpPlane() const;
-  gdl::Geometry*		createRightPlane() const;
-  gdl::Geometry*		createLeftPlane() const;
-  gdl::Geometry*		createFrontPlane() const;
-  gdl::Geometry*		createBackPlane() const;
-  gdl::Geometry*		createPlane() const;
-  gdl::Geometry*		createVerticalPlane() const;
-  gdl::Geometry*		createHorizontalPlane() const;
-  gdl::Geometry*		createDisc() const;
-  gdl::Geometry*		createCube() const;
-  gdl::Geometry*		createCylinder() const;
+  gdl::Geometry*		createDownPlane(glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false) const;
+  gdl::Geometry*		createUpPlane(glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false) const;
+  gdl::Geometry*		createRightPlane(glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false) const;
+  gdl::Geometry*		createLeftPlane(glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false) const;
+  gdl::Geometry*		createFrontPlane(glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false) const;
+  gdl::Geometry*		createBackPlane(glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false) const;
+  gdl::Geometry*		createPlane(glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false) const;
+  gdl::Geometry*		createVerticalPlane(glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false) const;
+  gdl::Geometry*		createHorizontalPlane(glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false) const;
+  gdl::Geometry*		createDisc(glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false) const;
+  gdl::Geometry*		createCube(glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false) const;
+  gdl::Geometry*		createCylinder(glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false) const;
 
 private:
   GeometryFactory();
@@ -62,7 +63,7 @@ public:
   ~GeometryFactory();
 
 public:
-  gdl::Geometry&		getGeometry(eGeometry const& type);
+  gdl::Geometry&		getGeometry(eGeometry const& type, glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), bool generate = false);
 
 };
 

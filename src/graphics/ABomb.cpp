@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Wed May 20 19:45:50 2015 Jamais
-// Last update Sun May 24 03:02:57 2015 Jamais
+// Last update Fri Jun 12 03:59:35 2015 Jamais
 //
 
 #include	"ABomb.hh"
@@ -48,7 +48,7 @@ void		ABomb::setTimer(float timer)
   _timer = timer;
 }
 
-void		ABomb::update(gdl::Clock const& clock, UNUSED gdl::Input& input)
+void		ABomb::update(gdl::Clock const& clock, UNUSED Binput& input)
 {
   _timer -= clock.getElapsed();
 }

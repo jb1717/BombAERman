@@ -77,8 +77,8 @@ bool	Player::triggerOneBomb()
 {
   std::vector<Bomb *>::iterator	it = _bombs.begin();
   auto	positions = getPos();
-  float	true_x = (_board.getWidth() / 2) - (static_cast<size_t>(_x) % _board.getWidth());
-  float	true_y = (_board.getHeight() / 2) - (_x / _board.getHeight());
+  float	true_x = (_board.getWidth() / 2) - _x;
+  float	true_y = (_board.getHeight() / 2) - _y;
 
   while (it != _bombs.end())
     {
@@ -121,6 +121,7 @@ void	Player::goAllExplosions()
 	      delete to_del;
 	      (*it)->triggerLaunch();
 	      (*it)->setGameObj(NULL);
+	      (*it)->explosion();
 	    }
 	}
     }

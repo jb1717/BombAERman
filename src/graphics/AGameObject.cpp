@@ -5,24 +5,24 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 16 20:52:10 2015 Jamais
-// Last update Sun Jun  7 06:17:12 2015 Jamais
+// Last update Thu Jun 11 23:32:08 2015 Jamais
 //
 
 #include	"AGameObject.hh"
 #include	"Camera.hh"
 
-AGameObject::AGameObject() : _position(0, 0, 0), _rotation(0, 0, 0), _scale(1, 1, 1)
+AGameObject::AGameObject() : _position(0, 0, 0), _rotation(0, 0, 0), _scale(1, 1, 1), _color(1.0f, 1.0f, 1.0f, 1.0f)
 {
   _hitBox = new Collider(*this);
 }
 
-AGameObject::AGameObject(glm::vec3 const& position) : _rotation(0, 0, 0), _scale(1, 1, 1)
+AGameObject::AGameObject(glm::vec3 const& position) : _rotation(0, 0, 0), _scale(1, 1, 1), _color(1.0f, 1.0f, 1.0f, 1.0f)
 {
   _position = position;
   _hitBox = new Collider(*this);
 }
 
-AGameObject::AGameObject(glm::vec3 const& position, glm::vec3 const& rotation, glm::vec3 const& scale)
+AGameObject::AGameObject(glm::vec3 const& position, glm::vec3 const& rotation, glm::vec3 const& scale) : _color(1.0f, 1.0f, 1.0f, 1.0f)
 {
   _position = position;
   _rotation = rotation;
@@ -35,6 +35,7 @@ AGameObject::AGameObject(AGameObject const& model)
   _position = model.getPosition();
   _rotation = model.getRotation();
   _scale = model.getScale();
+  _color = model.getColor();
   _hitBox = new Collider(*this);
 }
 
@@ -43,6 +44,7 @@ AGameObject&	AGameObject::operator=(AGameObject const& model)
   _position = model.getPosition();
   _rotation = model.getRotation();
   _scale = model.getScale();
+  _color = model.getColor();
   _hitBox = new Collider(*this);
   return (*this);
 }
@@ -113,6 +115,16 @@ void		AGameObject::setRotation(glm::vec3 const& rotation)
 void		AGameObject::setScale(glm::vec3 const& scale)
 {
   _scale = scale;
+}
+
+void		AGameObject::setColor(glm::vec4 const& color)
+{
+  _color = color;
+}
+
+glm::vec4     	AGameObject::getColor() const
+{
+  return _color;
 }
 
 glm::mat4	AGameObject::getTransformation() const

@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Sun May 24 08:37:30 2015 Emmanuel Chambon
-// Last update Sun May 24 18:05:19 2015 Emmanuel Chambon
+// Last update Fri Jun 12 02:43:59 2015 Emmanuel Chambon
 //
 
 #include "SoundHandler.hh"
@@ -22,37 +22,37 @@ SoundHandler::~SoundHandler()
 	for (auto i : _sounds) {
 		fmodError(i.second->release());
 	}
-    _sounds.clear();
+	_sounds.clear();
 	fmodError(_system->close());
 	fmodError(_system->release());
 }
 
-void                    SoundHandler::loadSound(std::string const &file)
+void SoundHandler::loadSound(std::string const &file)
 {
 	FMOD::Sound         *sound = nullptr;
 
 	fmodError(_system->createSound(file.c_str(), FMOD_DEFAULT | FMOD_CREATESTREAM, nullptr, &sound));
 
-	std::smatch         m;
+	std::smatch m;
 
 	if (std::regex_search(file, m, std::regex("[^/]*$")))
 	{
-		std::string     res(m[0]);
-		std::regex      sep("\\.");
+		std::string res(m[0]);
+		std::regex sep("\\.");
 		std::regex_token_iterator<std::string::iterator> end;
 		std::regex_token_iterator<std::string::iterator> token(res.begin(),
 		                                                       res.end(), sep, -1);
 
 		if (std::distance(token, end) != 2)
 			throw std::invalid_argument(file + ": Invalid file.");
-		std::string     asset(*token);
+		std::string asset(*token);
 
 		std::lock_guard<std::mutex> lock(_mutex);
 		_sounds[asset] = sound;
 	}
 }
 
-void                    SoundHandler::load()
+void SoundHandler::load()
 {
 	DIR                 *dir;
 	struct dirent       *ent;
@@ -77,58 +77,57 @@ void                    SoundHandler::load()
 	}
 }
 
-void                    SoundHandler::pause()
+void SoundHandler::pause()
 {
-	bool                paused;
+	bool paused;
 
 	fmodError(_channel->getPaused(&paused));
 	fmodError(_channel->setPaused(!paused));
 }
 
-void                    SoundHandler::resume()
+void SoundHandler::resume()
 {
 	pause();
 }
 
-void                    SoundHandler::stop()
+void SoundHandler::stop()
 {
-	bool                paused;
+	bool paused;
 
 	fmodError(_channel->isPlaying(&paused));
 	if (paused)
 		fmodError(_channel->stop());
 }
 
-void                    SoundHandler::play(FMOD::Sound *sound)
+void SoundHandler::play(std::string const &sound, bool sample)
 {
-	fmodError(_system->playSound(sound, 0, false, &_channel));
-    fmodError(_channel->setVolume(_backgroundVolume));
+	if (sample) {
+		fmodError(_system->playSound(_sounds[sound], 0, false, &_channelSample));
+		fmodError(_channelSample->setVolume(_foregroundVolume));
+	} else {
+		fmodError(_system->playSound(_sounds[sound], 0, false, &_channel));
+		fmodError(_channel->setVolume(_backgroundVolume));
+	}
 }
 
-void                    SoundHandler::playSample(FMOD::Sound *sound)
+bool SoundHandler::isPlaying()
 {
-	fmodError(_system->playSound(sound, 0, false, &_channelSample));
-    fmodError(_channelSample->setVolume(_foregroundVolume));
-}
-
-bool                    SoundHandler::isPlaying()
-{
-	bool                paused;
+	bool paused;
 
 	fmodError(_channel->isPlaying(&paused));
 	return paused;
 }
 
-void                    SoundHandler::setForegroundVolume(float volume)
+void SoundHandler::setForegroundVolume(float volume)
 {
-    _foregroundVolume = volume;
-    fmodError(_channelSample->setVolume(_foregroundVolume));
+	_foregroundVolume = volume;
+	fmodError(_channelSample->setVolume(_foregroundVolume));
 }
 
-void                    SoundHandler::setBackgroundVolume(float volume)
+void SoundHandler::setBackgroundVolume(float volume)
 {
-    _backgroundVolume = volume;
-    fmodError(_channel->setVolume(_backgroundVolume));
+	_backgroundVolume = volume;
+	fmodError(_channel->setVolume(_backgroundVolume));
 }
 
 FMOD::Sound             *SoundHandler::operator[](std::string const &at)
@@ -138,7 +137,7 @@ FMOD::Sound             *SoundHandler::operator[](std::string const &at)
 	return _sounds[at];
 }
 
-void                    SoundHandler::fmodError(FMOD_RESULT res)
+void SoundHandler::fmodError(FMOD_RESULT res)
 {
 	if (res != FMOD_OK)
 		throw std::runtime_error("A problem happened with fmod. Please check your sounds assets.");

@@ -1,11 +1,11 @@
 //
-// Geometric.cpp for CPP_BOMBERMAN in /home/Jamais/cpp_bomberman/src/graphics
+// Geometric.cpp for CPP_BOMBERMAN in /home/Jamais/cpp_bomberman
 //
 // Made by Jamais
 // Login   <Jamais@epitech.net>
 //
-// Started on  Mon May 18 17:50:11 2015 Jamais
-// Last update Sun Jun  7 13:56:22 2015 Jamais
+// Started on  Fri Jun 12 05:56:51 2015 Jamais
+// Last update Fri Jun 12 05:56:58 2015 Jamais
 //
 
 #include	"Geometric.hh"
@@ -59,7 +59,7 @@ bool		Geometric::initialize()
   _geometry.pushVertex(glm::vec3(-5, 0, 5));	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
   _geometry.pushVertex(glm::vec3(-5, 0, -5));	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
   _geometry.build();
-  return false;
+  return true;
 }
 
 void		Geometric::update(UNUSED gdl::Clock const& clock, UNUSED gdl::Input &input)
@@ -70,11 +70,10 @@ void		Geometric::update(UNUSED gdl::Clock const& clock, UNUSED gdl::Input &input
 void		Geometric::draw(gdl::AShader &shader, UNUSED gdl::Clock const& clock)
 {
   _texture.bind();
-  // glEnable(GL_BLEND);
-  // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   _geometry.draw(shader, getTransformation(), GL_QUADS);
-  //  glEnable(GL_DEPTH_TEST);
 }
 
 void		Geometric::setGeometry(gdl::Geometry const& geometry)
