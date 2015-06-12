@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Tue Jun  9 06:18:12 2015 Jamais
+// Last update Fri Jun 12 09:36:16 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -135,6 +135,7 @@ bool		GameEngine::initialize()
   _shader.setUniform("view", camera.getTransformationMatrix());
   _shader.setUniform("projection", camera.getProjectionMatrix());
 
+  std::cout << "Test" << std::endl;
   sk = new Skybox;
   effect = new AFX();
 
