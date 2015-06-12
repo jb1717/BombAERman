@@ -39,6 +39,8 @@ public:
   glm::mat4		getTransformation() const;
 
 public:
+  bool			_bombing;
+public:
 };
 
 #endif			/* !___CHARACTER_HH___ */

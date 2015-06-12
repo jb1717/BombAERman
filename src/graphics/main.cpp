@@ -30,6 +30,7 @@ int     main()
 
   Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
 
+  board->placeEntity(1, 1, new Player(*board));
   board->initialize();
   board->initGameObjects();
 

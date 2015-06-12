@@ -302,19 +302,19 @@ void Board::removePlayer(int id)
 
 bool Board::checkOneCollision(std::vector<AObj *> field, AObj *player)
 {
-	auto it = field.begin();
-	AGameObject   *playObj = player->getGameObj();
+  auto it = field.begin();
+  AGameObject   *playObj = player->getGameObj();
 
-	while (it != field.end())
+  while (it != field.end())
+    {
+      if (player->getType() != (*it)->getType())
 	{
-		if (player->getType() != (*it)->getType() && (*it)->getType() != UNBREAKABLE_WALL)
-		{
-			if (playObj->collide((*(*it)->getGameObj())))
-				return (true);
-		}
-		it++;
+	  if (playObj->collide((*(*it)->getGameObj())))
+	    return (true);
 	}
-	return (false);
+      it++;
+    }
+  return (false);
 }
 
 bool Board::collideAround(AObj *player, long int x, long int y)

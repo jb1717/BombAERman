@@ -201,6 +201,8 @@ bool		GameEngine::update()
 	(*it)->getGameObj()->setPosition(save);
       else
       (*it)->setPos(LOGICAL_POSITION(p.x, p.z));
+      if (static_cast<Character *>((*it)->getGameObj())->_bombing)
+	(*it)->triggerOneBomb();
     }
   return true;
 }
