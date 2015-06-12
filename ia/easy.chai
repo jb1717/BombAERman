@@ -1,3 +1,6 @@
 print("lol")
 // iaDropBomb()
-//  iaChooseDir(East)
+iaChooseDir(East)
+iaChooseDir(East)
+iaChooseDir(East)
+iaChooseDir(East)

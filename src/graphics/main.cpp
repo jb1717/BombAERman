@@ -29,8 +29,10 @@ int     main()
   auto asset = AssetManager::instance();
   GameEngine engine;
 
-  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[1]);
+  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
 
+  Ia  *killer = new Ia("ia/easy.chai", *board);
+  board->placeEntity(1, 1, killer);
   board->initialize();
   board->initGameObjects();
 
@@ -46,6 +48,10 @@ int     main()
       std::cerr << "ini" << std::endl;
       return (EXIT_FAILURE);
     }
+
+  EThread toto;
+
+  toto.launch(launch_ia, killer);
   while (engine.update() == true)
     engine.draw();
   return EXIT_SUCCESS;

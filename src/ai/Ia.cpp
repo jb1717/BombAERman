@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Thu Jun 11 17:23:04 2015 Hugo Prenat
+// Last update Sat Jun 13 00:10:38 2015 Hugo Prenat
 //
 
 #include "Ia.hh"
@@ -47,7 +47,10 @@ void	Ia::run_user()
 
 bool	Ia::chooseDir(const int dir)
 {
-  return (selectDirection(static_cast<Board::Direction>(dir)));
+  std::cout << "Before x = " << _x << " y = " << _y << std::endl;
+  selectDirection(static_cast<Board::Direction>(dir));
+  std::cout << "Afteer x = " << _x << " y = " << _y << std::endl;
+  return (true);
 }
 
 Board&	Ia::getBoard() const
@@ -94,7 +97,7 @@ int   Ia::getDistance(int id)
 
 int   Ia::getCloserAvailableEnemy()
 {
-  std::map<float, AObj *>   enemy;// = getMapEnemy();
+  std::map<float, AObj *>   enemy = getMapEnemy();
   int id(0);
 
   for (auto it = enemy.begin(); it != enemy.end(); ++it)
