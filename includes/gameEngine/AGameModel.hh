@@ -25,9 +25,9 @@ public:
   virtual void		draw(gdl::AShader& shader, gdl::Clock const& clock);
 
 public:
-  virtual void		update(gdl::Clock const& clock, gdl::Input &input);
-  virtual void		update(gdl::Clock const& clock, gdl::Input &input, Camera const& camera);
-  virtual void		update(gdl::Input &input, Camera const& camera);
+  virtual void		update(gdl::Clock const& clock, Binput &input);
+  virtual void		update(gdl::Clock const& clock, Binput& input, Camera const& camera);
+  virtual void		update(Binput& input, Camera const& camera);
 
 };
 

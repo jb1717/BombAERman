@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Wed Jun 10 22:06:29 2015 Hugo Prenat
+## Last update Fri Jun 12 01:09:14 2015 Jamais
 ##
 
 GRAPHICALGAME	=	yes
@@ -104,6 +104,8 @@ GRAPHICS_SRC		=				\
 				GraphicString.cpp	\
 				Geometric.cpp		\
 				GeometryFactory.cpp	\
+				Particle.cpp			\
+				ParticleSystem.cpp	\
 				Skybox.cpp		\
 				VideoContext.cpp	\
 				main.cpp

@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Wed May 20 19:18:56 2015 Jamais
-// Last update Wed Jun  3 19:28:11 2015 Jamais
+// Last update Fri Jun 12 03:59:36 2015 Jamais
 //
 
 #ifndef			____ABOMB_HH___
@@ -32,7 +32,7 @@ public:
   ~ABomb();
 
 public:
-  void			update(gdl::Clock const& clock, gdl::Input &input);
+  void			update(gdl::Clock const& clock, Binput& input);
 
 public:
   float			getTimer() const;

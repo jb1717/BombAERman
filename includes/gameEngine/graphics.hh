@@ -5,7 +5,7 @@
 // Login   <paasch_j@epitech.net>
 //
 // Started on  Mon Apr 27 14:00:52 2015 Johan Paasche
-// Last update Wed Jun  3 19:30:09 2015 Jamais
+// Last update Fri Jun 12 08:48:37 2015 Jamais
 //
 
 #ifndef		___GRAPHICS_HH___
@@ -31,5 +31,6 @@
 
 # define	UNUSED		__attribute__((unused))
 
+std::ostream&	operator<<(std::ostream& os, glm::vec3 const& v);
 
 #endif		/* !___GRAPHICS_HH___ */

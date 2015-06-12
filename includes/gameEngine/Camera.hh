@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 05:42:13 2015 Jamais
-// Last update Wed Jun  3 19:28:14 2015 Jamais
+// Last update Wed Jun 10 10:33:15 2015 Jamais
 //
 
 #ifndef			___CAMERA_HH___
@@ -13,6 +13,12 @@
 
 # include		"graphics.hh"
 # include		"VideoContext.hh"
+
+/*
+** Acces the elements of shaders */
+# define			SHADER_CURRENT_COLOR				"currentColor"
+# define			SHADER_PROJECTION_MATRIX			"projection"
+# define			SHADER_TRANSFORMATION_MATRIX	"view"
 
 class			Camera
 {
@@ -47,6 +53,12 @@ public:
   ~Camera();
 
 public:
+  void			lockShader(
+				   gdl::AShader& shader,
+				   bool setColor = false,
+				   glm::vec4 const& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)
+				   ) const;
+
   bool			setupCamera(VideoContext const& context);
   void			update(gdl::Clock const& clock, Binput& input);
   void			refreshPosition();

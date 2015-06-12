@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 06:14:11 2015 Jamais
-// Last update Fri Jun  5 19:26:54 2015 Jamais
+// Last update Fri Jun 12 05:41:21 2015 Jamais
 //
 
 #include	"Camera.hh"
@@ -13,13 +13,21 @@
 Camera::Camera(int Id, glm::vec3 const& position, glm::vec3 const& target, glm::vec3 const& focus) :
   _camId(Id), _position(position), _target(target), _focus(focus),
   _rotation(0, 0, 0), _zoom(1, 1, 1), _spin(1, 0, 1),
-  _fovy(60.0f), _ratio(800.0f / 600.0f), _zNear(0.001f), _zFar(110000.0f)
+  _fovy(60.0f), _ratio(800.0f / 600.0f), _zNear(0.001f), _zFar(100000.0f)
 {
 
 }
 
 Camera::~Camera()
 {}
+
+void		Camera::lockShader(gdl::AShader& shader, bool setColor, glm::vec4 const& color) const
+{
+  if (setColor)
+    shader.setUniform(SHADER_CURRENT_COLOR, color);
+  shader.setUniform(SHADER_TRANSFORMATION_MATRIX, getTransformationMatrix());
+  shader.setUniform(SHADER_PROJECTION_MATRIX, getProjectionMatrix());
+}
 
 bool		Camera::setupCamera(VideoContext const& context)
 {

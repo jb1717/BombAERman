@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Fri Jun 12 01:17:41 2015 Emmanuel Chambon
+// Last update Fri Jun 12 03:51:28 2015 Jamais
 //
 
 #include "Board.hh"
@@ -56,6 +56,7 @@ bool Board::initialize()
 			{
 				obj = new Character(glm::vec3(true_x, 0.5, true_y), "./assets/Models/marvin.fbx");
 				obj->scale(glm::vec3(0.001f, 0.001f, 0.001f));
+				obj->setColor(glm::vec4(1.0f, 1.0f, 0.0f, 1.0f));
 				(*internIt)->setGameObj(obj);
 				reinterpret_cast<Character *>(obj)->setCurrentAnim(0);
 				_players.push_back(reinterpret_cast<Player *>(*internIt));

@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Wed Jun  3 11:24:34 2015 Jamais
-// Last update Mon Jun  8 10:01:44 2015 Jamais
+// Last update Fri Jun 12 00:12:18 2015 Jamais
 //
 
 #include	"GraphicString.hh"
@@ -35,7 +35,6 @@ GraphicString&			GraphicString::operator=(std::string const& modelString)
   _text = modelString;
   clear();
   render(*factory);
-  delete factory;
   return *this;
 }
 
@@ -45,7 +44,6 @@ GraphicString&			GraphicString::operator=(GraphicString const& model)
   _text = model.getText();
   clear();
   render(*factory);
-  delete factory;
   return *this;
 }
 
@@ -67,7 +65,10 @@ std::string			GraphicString::getText() const
 
 void				GraphicString::setText(std::string const& text)
 {
+  _spareParts.clear();
   _text = text;
+  auto factory = GeometryFactory::instanciate();
+  render(*factory);
 }
 
 bool				GraphicString::render(UNUSED GeometryFactory& factory)
@@ -76,16 +77,23 @@ bool				GraphicString::render(UNUSED GeometryFactory& factory)
   Geometric*			graphicChar;
   gdl::Texture*			charTexture;
   int				x;
+  unsigned int			i;
 
   x = _text.size() / 2 * -1;
-  for (unsigned int i = 0; i < _text.size(); i++)
+  for (i = 0; i < _text.size(); i++)
     {
-      if (_text.substr(i, 1) != " ")
+      if (_text.substr(i, 1) != " " && _text.substr(i, 1) != ".")
 	{
 	  try {
 	  charTexture = (*THEME((*THEME_HANDLER(asset["themes"]))["fonts"]))[_text.substr(i, 1)];
 	  } catch (std::out_of_range e) { std::cout << e.what() << std::endl;}
-	  graphicChar = new Geometric(glm::vec3(_position.x - x, 0, 0));
+	  // if (i > _spareParts.size())
+	    graphicChar = new Geometric(glm::vec3(_position.x - x, _position.y, _position.z));
+	  // else
+	  //   {
+	  //     graphicChar = _spareParts[i];
+	  //     graphicChar->translate(glm::vec3(_position.x - x, _position.y, _position.z));
+	  //   }
 	  graphicChar->setGeometry(factory.getGeometry(GeometryFactory::VERTICAL_PLANE));
 	  graphicChar->setTexture(*charTexture);
 	  graphicChar->initialize();
@@ -93,24 +101,14 @@ bool				GraphicString::render(UNUSED GeometryFactory& factory)
 	}
       x++;
     }
-  std::cout << x << std::endl;
   return true;
 }
 
 void				GraphicString::scale(glm::vec3 const& scale)
 {
   ComplexObject::scale(scale);
-  for (size_t i = 0; i < _spareParts.size(); i++)
-    {
-      _spareParts[i]->translate(glm::vec3(i * scale.x * (i < _spareParts.size() ? 1 : -1), 0, -2));
-    }
 }
 
 void				GraphicString::clear()
 {
-  // for (auto i = _spareParts.begin(); i != _spareParts.end(); i++)
-  //   {
-  //     delete (*i);
-  //   }
-  //  _spareParts.clear();
 }

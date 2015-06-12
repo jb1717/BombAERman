@@ -5,14 +5,14 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Wed May 27 18:16:38 2015 Jamais
-// Last update Thu Jun  4 00:43:49 2015 Jamais
+// Last update Fri Jun 12 09:04:48 2015 Jamais
 //
 
 #include		"ComplexObject.hh"
 #include		"Cube.hh"
 #include		"GeometryFactory.hh"
 
-ComplexObject::ComplexObject() : _nbParts(0)
+ComplexObject::ComplexObject() : AGameObject(), _nbParts(0)
 {
 }
 
@@ -77,18 +77,21 @@ void		ComplexObject::setSparePart(Geometric* const sparePart, unsigned int index
 
 void		ComplexObject::translate(glm::vec3 const& moveVector)
 {
+  AGameObject::translate(moveVector);
   for (std::vector<Geometric*>::iterator it = _spareParts.begin(); it != _spareParts.end(); it++)
     (*it)->translate(moveVector);
 }
 
 void		ComplexObject::rotate(glm::vec3 const& axis, float angle)
 {
+  AGameObject::rotate(axis, angle);
   for (std::vector<Geometric*>::iterator it = _spareParts.begin(); it != _spareParts.end(); it++)
     (*it)->rotate(axis, angle);
 }
 
 void		ComplexObject::scale(glm::vec3 const& scaleVector)
 {
+  AGameObject::scale(scaleVector);
   for (std::vector<Geometric*>::iterator it = _spareParts.begin(); it != _spareParts.end(); it++)
     (*it)->scale(scaleVector);
 }
