@@ -49,6 +49,7 @@ ParticleSystem*	psystem;
 AFX*			effect;
 
 Geometric*		ground;
+
 GameEngine::GameEngine() : Game()
 {
   _videoContext = VideoContext::instanciate();
@@ -61,7 +62,7 @@ GameEngine::GameEngine() : Game()
 
 bool		GameEngine::createMap(UNUSED std::string const& confFilePath)
 {
-   return true;
+  return true;
 }
 
 bool		GameEngine::setupGame(Board* board)
@@ -169,6 +170,7 @@ bool		GameEngine::getEvent()
 
 bool		GameEngine::update()
 {
+  std::lock_guard<std::mutex> lock(_mutex);
   static int	i = 0;
   static float frame = 0.0f;
 
@@ -178,7 +180,7 @@ bool		GameEngine::update()
   camera.update(_clock, _input);
   camera.lockShader(_shader);
   ++i;
-  effect->update(_clock, _input, camera);
+  //  effect->update(_clock, _input, camera);
   std::stringstream sstrm;
   frame += _clock.getElapsed();
   if (frame >= 1.0f)
@@ -194,15 +196,19 @@ bool		GameEngine::update()
   bomb->update(_clock, _input);
   for (auto it = _board->getPlayers().begin(); it != _board->getPlayers().end(); it++)
     {
-      glm::vec3 save = (*it)->getGameObj()->getPosition();
-      (*it)->getGameObj()->update(_clock, _input, camera);
-      glm::vec3 p = (*it)->getGameObj()->getPosition();
-      if (_board->collideAround((*it), p.x, p.z))
-	(*it)->getGameObj()->setPosition(save);
-      else
-      (*it)->setPos(LOGICAL_POSITION(p.x, p.z));
-      if (static_cast<Character *>((*it)->getGameObj())->_bombing)
-	(*it)->triggerOneBomb();
+      if ((*it)->getGameObj())
+	{
+	  glm::vec3 save = (*it)->getGameObj()->getPosition();
+	  (*it)->getGameObj()->update(_clock, _input, camera);
+	  glm::vec3 p = (*it)->getGameObj()->getPosition();
+	  if (_board->collideAround((*it), p.x, p.z))
+	    (*it)->getGameObj()->setPosition(save);
+	  else
+	    (*it)->setPos(LOGICAL_POSITION(p.x, p.z));
+	  if ((*it) && (*it)->getGameObj() && reinterpret_cast<Character *>((*it)->getGameObj())->_bombing)
+	    (*it)->triggerOneBomb();
+	  (*it)->update_bombs(_clock, _input);
+	}
     }
   return true;
 }
@@ -213,19 +219,28 @@ void		GameEngine::draw()
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   sk->draw(_shader, _clock);
   ground->draw(_shader, _clock);
+  _mutex.lock();
   for (auto it = _board->getFullBoard().begin(); it != _board->getFullBoard().end(); it++)
-    for (auto itk = (*it).begin(); itk != (*it).end(); itk++)
-    	(*itk)->getGameObj()->draw(_shader, _clock);
-  effect->draw(_shader, _clock);
-  if (GUI)
     {
-      menuCam.lockShader(_shader);
-       bomb->draw(_shader, _clock);
-      bombChooser->draw(_shader, _clock);
-      s->draw(_shader, _clock);
-      menu->draw(_shader, _clock);
-
+      for (auto itk = (*it).begin(); itk != (*it).end(); itk++)
+	if ((*itk) && (*itk)->getGameObj())
+	  {
+	    if ((*itk)->getId() == -4)
+	      (*itk)->getGameObj()->update(_clock, _input, camera);
+	    (*itk)->getGameObj()->draw(_shader, _clock);
+	  }
     }
+  _mutex.unlock();
+  effect->draw(_shader, _clock);
+  // if (GUI)
+  //   {
+  //     menuCam.lockShader(_shader);
+  //     bomb->draw(_shader, _clock);
+  //     bombChooser->draw(_shader, _clock);
+  //     s->draw(_shader, _clock);
+  //     menu->draw(_shader, _clock);
+
+  //   }
   _videoContext->flush();
 }
 

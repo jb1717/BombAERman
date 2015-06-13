@@ -41,7 +41,7 @@ public:
   void			setTimer(float timer);
 
 public:
-  bool			isExplosed() const;
+  bool			isExplosed();
 };
 
 #endif			/* !____ABOMB_HH___ */

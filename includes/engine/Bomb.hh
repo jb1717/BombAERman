@@ -14,9 +14,8 @@
 # include <chrono>
 # include <iostream>
 # include "AObj.hh"
-# include "EThread.hh"
-
-class	EThread;
+# include "Board.hh"
+# include "Crate.hh"
 
 class	Bomb : public AObj
 {
@@ -36,7 +35,6 @@ private:
   bool					launched;
   std::chrono::steady_clock::time_point	_time;
   char					range;
-  EThread				*bombThread;
 };
 
 #endif // !Bomb_HH_

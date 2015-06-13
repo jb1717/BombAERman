@@ -12,7 +12,7 @@
 
 Explosion::Explosion(Board &board) : AObj(board)
 {
-
+  _id = Board::Explode;
 }
 
 Explosion::~Explosion()
