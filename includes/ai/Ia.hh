@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:12:42 2015 Hugo Prenat
-// Last update Sat Jun 13 13:55:40 2015 Hugo Prenat
+// Last update Sat Jun 13 19:03:19 2015 Hugo Prenat
 //
 
 #ifndef IA_HH_
@@ -26,8 +26,8 @@ public:
   Board&			getBoard() const;
   int				getDistance(int id) const;
   int				getCloserAvailableEnemy() const;
-  std::string			getMap() const;
-  AObj*				getCloserEnemy() const;		// Return Enemy Id
+  int				getCloserEnemy() const;		// Return Enemy Id
+  AObj*				getEnemyById(int id) const;
   std::map<float, AObj *>&	getMapEnemy() const;
 
 public:

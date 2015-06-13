@@ -1,11 +1,13 @@
 var i = 0
 while(iaAlive())
 {
-  if (i % 50000 == 0)
+  if (i % 500000 == 0)
   {
     //iaChooseDir(East)
     //iaDropBomb()
     print("lol")
+    print(iaCloserEnemy())
+    iaMoveToEnemy(iaCloserEnemy())
   }
   i = i + 1
 }

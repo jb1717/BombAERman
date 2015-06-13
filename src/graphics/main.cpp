@@ -53,8 +53,8 @@ int     main()
 
   Ia  *killer = new Ia("ia/easy.chai", *board);
   board->placeEntity(1, 1, killer);
-  // Player	*toto = new Player(*board);
-  // board->placeEntity(1, 1, toto);
+  Player	*toto = new Player(*board);
+  board->placeEntity(5, 5, toto);
   board->initialize();
   board->initGameObjects();
 
@@ -72,6 +72,9 @@ int     main()
     }
   pthread_t	_thread;
   if (pthread_create(&_thread, NULL, launch_ia, killer) != 0)
+    return (EXIT_FAILURE);
+  pthread_t	_threadT;
+  if (pthread_create(&_threadT, NULL, launch_play, toto) != 0)
     return (EXIT_FAILURE);
   while (engine.update() == true)
     engine.draw();

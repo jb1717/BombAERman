@@ -5,10 +5,11 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Sat Jun 13 14:07:01 2015 Hugo Prenat
+// Last update Sat Jun 13 19:18:24 2015 Hugo Prenat
 //
 
 #include "Ia.hh"
+#include "Node.hh"
 
 Ia::Ia(std::string const &fileName, Board &Board) : Player(Board),
 						    _fileName(fileName)
@@ -27,6 +28,7 @@ Ia::Ia(std::string const &fileName, Board &Board) : Player(Board),
   _chai.add(chaiscript::fun(&Ia::chooseDir, this), "iaChooseDir");
   _chai.add(chaiscript::fun(&Ia::getCloserEnemy, this), "iaCloserEnemy");
   _chai.add(chaiscript::fun(&Ia::setPosById, this), "iaPosById");
+  _chai.add(chaiscript::fun(&Ia::moveToEnemy, this), "iaMoveToEnemy");
   _chai.add(chaiscript::fun(&Player::goAhead, this), "iaMove");
   _chai.add_global_const(chaiscript::const_var(north), "North");
   _chai.add_global_const(chaiscript::const_var(west), "West");
@@ -91,29 +93,60 @@ std::map<float, AObj *>& Ia::getMapEnemy() const
 
 void Ia::moveToEnemy(const int id)
 {
-  AObj* enemy = getCloserEnemy();
+  AObj* enemy = getEnemyById(id);
   std::pair<float, float> pos = enemy->getPos();
-  float xDist;
-  float yDist;
+  std::vector<std::vector<AObj *>>  v = _board.getFullBoard();
+  std::map<int, std::string>           map;
+  std::map<int, std::string>           old;
 
-  xDist = _x - pos.first;
-  yDist = _y - pos.second;
-  xDist = yDist - xDist;
+  for (size_t i = 0; i < getBoard().size(); i++) {
+    map[i / getBoard().getWidth()] += ' ';
+  }
+
+  for (std::vector<std::vector<AObj *>>::iterator it = v.begin();
+       it != v.end(); ++it)
+    {
+      std::vector<AObj *> tmp = *it;
+      for (std::vector<AObj *>::iterator i = tmp.begin(); i != tmp.end(); ++i)
+        {
+          AObj  *obj = *i;
+          if (obj->getType() == UNBREAKABLE_WALL) {
+            std::pair<float, float> pos = obj->getPos();
+            map[static_cast<int>(pos.first)][static_cast<int>(pos.second)] = 'x';
+          }
+        }
+    }
+  Node Algo(map, getPos().first, getPos().second, pos.first, pos.second);
+
+  old = Algo.fillMap();
+  for (size_t i = 0; i < getBoard().getWidth(); i++) {
+    std::cout << old[i] << std::endl;
+  }
 }
 
-std::string	Ia::getMap() const
-{
-  std::string map("########");
-
-  return (map);
-}
-
-AObj*		Ia::getCloserEnemy() const
+int		Ia::getCloserEnemy() const
 {
   std::map<float, AObj *>   enemy = getMapEnemy();
 
   std::map<float, AObj *>::iterator it = enemy.begin();
-  return (it->second);
+  return (it->second->getId());
+}
+
+AObj*		Ia::getEnemyById(int id) const
+{
+  std::map<float, AObj *>   enemy = getMapEnemy();
+
+  for(std::map<float, AObj *>::iterator it = enemy.begin(); it != enemy.end();
+  ++it)
+  {
+    if (it->second->getId() == id)
+    {
+      std::cout << "Ok wuala == " << id << std::endl;
+      return (it->second);
+    }
+  }
+  std::cout << getId() << "ouuuppppppppsssssss === " << id << std::endl;
+  return (NULL);
 }
 
 int   Ia::getDistance(int id) const
@@ -134,7 +167,7 @@ int   Ia::getCloserAvailableEnemy() const
     if (id == 0)
       id = tmp;
     if (tmp < id)
-      id =tmp;
+      id = tmp;
   }
   if (id == 0 && enemy.size() > 0)
       id = enemy.begin()->first;
