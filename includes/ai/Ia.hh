@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:12:42 2015 Hugo Prenat
-// Last update Thu Jun 11 15:59:50 2015 Hugo Prenat
+// Last update Sat Jun 13 03:00:42 2015 Hugo Prenat
 //
 
 #ifndef IA_HH_
@@ -15,26 +15,28 @@
 
 # include "Player.hh"
 
-class			Ia : public Player
+class				Ia : public Player
 {
 public:
   Ia(std::string const &fileName, Board &Board);
   ~Ia();
 
 public:
-  Board&		getBoard() const;
+  Board&			getBoard() const;
+  int				getDistance(int id) const;
+  int				getCloserAvailableEnemy() const;
+  std::string			getMap() const;
+  AObj*				getCloserEnemy() const;		// Return Enemy Id
+  std::map<float, AObj *>&	getMapEnemy() const;
 
 public:
-  bool			userAction();
-  void			run_user();
-  bool			chooseDir(const int dir);
-  int			getCloserEnemy();		// Return Enemy Id
-  void			getPosById(const int id);	// Set _enemyX _enemyY to Id Pos
-  std::map<float, AObj *>& getMapEnemy();
+  bool				userAction();
+  void				run_user();
+  bool				chooseDir(const int dir);
+  void				moveToEnemy(const int id);
 
 public:
-  int       getDistance(int id);
-  int       getCloserAvailableEnemy();
+  void				setPosById(const int id);	// Set _enemyX _enemyY to Id Pos
 
 private:
   int				_key;

@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Sat Jun 13 00:10:38 2015 Hugo Prenat
+// Last update Sat Jun 13 03:08:33 2015 Hugo Prenat
 //
 
 #include "Ia.hh"
@@ -26,7 +26,7 @@ Ia::Ia(std::string const &fileName, Board &Board) : Player(Board),
   _chai.add(chaiscript::fun(&Player::triggerOneBomb, this), "iaDropBomb");
   _chai.add(chaiscript::fun(&Ia::chooseDir, this), "iaChooseDir");
   _chai.add(chaiscript::fun(&Ia::getCloserEnemy, this), "iaCloserEnemy");
-  _chai.add(chaiscript::fun(&Ia::getPosById, this), "iaPosById");
+  _chai.add(chaiscript::fun(&Ia::setPosById, this), "iaPosById");
   _chai.add(chaiscript::fun(&Player::goAhead, this), "iaMove");
   _chai.add_global_const(chaiscript::const_var(north), "North");
   _chai.add_global_const(chaiscript::const_var(west), "West");
@@ -58,7 +58,7 @@ Board&	Ia::getBoard() const
   return (_board);
 }
 
-std::map<float, AObj *>& Ia::getMapEnemy()
+std::map<float, AObj *>& Ia::getMapEnemy() const
 {
   std::vector<std::vector<AObj *>>  v = _board.getFullBoard();
   std::map<float, AObj *>           *enemy = new std::map<float, AObj *>;
@@ -82,20 +82,41 @@ std::map<float, AObj *>& Ia::getMapEnemy()
   return (*enemy);
 }
 
-int		Ia::getCloserEnemy()
+void Ia::moveToEnemy(const int id)
 {
-  int	id = 0;
-  return (id);
+  AObj* enemy = getCloserEnemy();
+  std::pair<float, float> pos = enemy->getPos();
+  float xDist;
+  float yDist;
+
+  xDist = _x - pos.first;
+  yDist = _y - pos.second;
+  xDist = yDist - xDist;
 }
 
-int   Ia::getDistance(int id)
+std::string	Ia::getMap() const
+{
+  std::string map("########");
+
+  return (map);
+}
+
+AObj*		Ia::getCloserEnemy() const
+{
+  std::map<float, AObj *>   enemy = getMapEnemy();
+
+  std::map<float, AObj *>::iterator it = enemy.begin();
+  return (it->second);
+}
+
+int   Ia::getDistance(int id) const
 {
   // todo !
   (void)id;
   return (0);
 }
 
-int   Ia::getCloserAvailableEnemy()
+int   Ia::getCloserAvailableEnemy() const
 {
   std::map<float, AObj *>   enemy = getMapEnemy();
   int id(0);
@@ -113,21 +134,10 @@ int   Ia::getCloserAvailableEnemy()
   return (id);
 }
 
-void	Ia::getPosById(const int id)
+void	Ia::setPosById(const int id)
 {
-  std::vector<std::vector<AObj *>>           v = _board.getFullBoard();
+  std::map<float, AObj *>   enemy = getMapEnemy();
 
-  for (std::vector<std::vector<AObj *>>::iterator it = v.begin();
-       it != v.end(); ++it)
-    {
-      std::vector<AObj *> tmp = *it;
-      for (std::vector<AObj *>::iterator i = tmp.begin(); i != tmp.end(); ++i)
-        {
-          AObj  *obj = *i;
-          if (obj->getType() == PLAYER) {
-            std::cout << "Ouais == " << obj->getId() << std::endl; // TO FILL
-          }
-        }
-    }
+  _enemyX = enemy[id]->getPos().first;
   return ;
 }
