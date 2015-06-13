@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Sun Jun 14 00:05:25 2015 Hugo Prenat
+// Last update Sun Jun 14 00:40:53 2015 Hugo Prenat
 //
 
 #include "GameEngine.hh"
@@ -47,7 +47,6 @@ void	Ia::run_user()
   try
   {
     _chai.eval_file(_fileName);
-    std::cout << "toto" << std::endl;
   }
   catch (const std::exception &err)
   {
@@ -143,12 +142,8 @@ AObj*		Ia::getEnemyById(int id) const
   ++it)
   {
     if (it->second->getId() == id)
-    {
-      std::cout << "Ok wuala == " << id << std::endl;
       return (it->second);
-    }
   }
-  std::cout << getId() << "ouuuppppppppsssssss === " << id << std::endl;
   return (NULL);
 }
 
