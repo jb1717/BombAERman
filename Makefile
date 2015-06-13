@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sat Jun 13 06:24:14 2015 Jamais
+## Last update Sat Jun 13 15:21:51 2015 Emmanuel Chambon
 ##
 
 GRAPHICALGAME	=	yes
@@ -14,7 +14,7 @@ GRAPHICALGAME	=	yes
 #			BASICS				#
 #########################################################
 
-CC	=	g++-5
+CC	=	g++
 RM	=	rm -f
 RMDIR	=	rm -rf
 ECHO	=	echo -ne
@@ -170,6 +170,7 @@ BOMBERMAN_SRC		=				\
 				Controller.cpp		\
 				Binput.cpp		\
 				CreditsUI.cpp		\
+				Settings.cpp		\
 #				main.cpp		\
 
 BOMBERMAN		=	bomberman

@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:22:05 2015 Jean-Baptiste Grégoire
-// Last update Fri Jun  5 23:08:42 2015 Jamais
+// Last update Sat Jun 13 15:13:59 2015 Emmanuel Chambon
 //
 
 #ifndef Board_HH_
@@ -50,12 +50,13 @@ public:
   void	deleteEntity(float x, float y, int id = 0, bool breakWall = false);
   void	setExplosion(float x, float y);
   void  popEntity(int x, int y, int id);
+  void  spawnPlayers(unsigned int);
   void	removePlayer(int id);
   bool	collideAround(AObj *, long int x, long int y);
   bool	checkOneCollision(std::vector<AObj *> field, AObj *);
 
 public:
-  std::vector<std::vector<AObj *> >	&getFullBoard();
+  std::vector<std::vector<AObj *>>	&getFullBoard();
   std::vector<Player *>  &getPlayers();
   std::vector<AObj *> &getSquareObjects(size_t x, size_t y);
   std::vector<AObj *>   &operator[](size_t);
@@ -68,6 +69,7 @@ private:
   AObj  *removeFromSquare(int x, int y, int id);
   void  updatePos(float x, float y, AObj *obj);
   std::vector<AObj *> &getCase(int at);
+  void  makeSomePlace(int, int, int, Direction, Direction, Direction);
 
 private:
   std::vector<std::vector<AObj *> > _board;
