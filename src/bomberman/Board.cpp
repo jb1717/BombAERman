@@ -374,6 +374,7 @@ void Board::removePlayer(long int id)
     {
       if ((*it)->getId() == id)
 	{
+		(*it)->triggerAlive();
 	  _players.erase(it);
 	  return ;
 	}
