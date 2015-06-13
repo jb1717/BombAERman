@@ -15,7 +15,7 @@ BoardHandler::BoardHandler()
 {
 	generate();
 	load();
-	generate(5, 5);
+	generate(10, 10);
 }
 
 /*

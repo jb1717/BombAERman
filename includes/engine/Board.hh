@@ -51,11 +51,12 @@ public:
   void	setExplosion(float x, float y);
   void  popEntity(int x, int y, long int id);
   void	removePlayer(long int id);
+  void  spawnPlayers(unsigned int);
   bool	collideAround(AObj *, long int x, long int y);
   bool	checkOneCollision(std::vector<AObj *> field, AObj *);
 
 public:
-  std::vector<std::vector<AObj *> >	&getFullBoard();
+  std::vector<std::vector<AObj *>>	&getFullBoard();
   std::vector<Player *>  &getPlayers();
   std::vector<AObj *> &getSquareObjects(size_t x, size_t y);
   std::vector<AObj *>   &operator[](size_t);
@@ -68,6 +69,7 @@ private:
   AObj  *removeFromSquare(int x, int y, long int id);
   void  updatePos(float x, float y, AObj *obj);
   std::vector<AObj *> &getCase(int at);
+  void  makeSomePlace(int, int, int, Direction, Direction, Direction);
 
 private:
   std::vector<std::vector<AObj *> > _board;

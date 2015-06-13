@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 22:57:54 2015 TommyStarK
-// Last update Fri Jun 12 22:19:34 2015 TommyStarK
+// Last update Sat Jun 13 10:23:54 2015 TommyStarK
 //
 
 #ifndef  _AUI_HH_
@@ -19,6 +19,7 @@
 # include "Clock.hh"
 # include "Camera.hh"
 # include "Texture.hh"
+# include "Settings.hh"
 # include "AssetManager.hh"
 # include "gameEngine/graphics.hh"
 # include "gameEngine/Cube.hh"

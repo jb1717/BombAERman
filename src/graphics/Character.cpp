@@ -69,7 +69,7 @@ void			Character::update(Binput& input, Camera const& camera)
       _rotation.y = camera.getRotation().y + 45.0;
       translate(glm::vec3(cos(camera.getRotation().y + 45.0) * _speed, 0, sin(camera.getRotation().y + 45) * _speed));
     }
-  if (input._default.getKey(SDLK_SPACE))
+  if (input._default.getKey(SDLK_SPACE) || input.handleEvent(event, bomber::Event::Free3))
     {
       _bombing = true;
     }

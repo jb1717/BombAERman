@@ -172,6 +172,7 @@ BOMBERMAN_SRC		=				\
 				Controller.cpp		\
 				Binput.cpp		\
 				CreditsUI.cpp		\
+				Settings.cpp		\
 #				main.cpp		\
 
 BOMBERMAN		=	bomberman

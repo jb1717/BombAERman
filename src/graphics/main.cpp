@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 15 21:29:13 2015 Jamais
-// Last update Sat Jun 13 23:59:16 2015 Jean-Baptiste Grégoire
+// Last update Sat Jun 13 15:19:08 2015 Emmanuel Chambon
 //
 
 #include        <cstdlib>
@@ -56,6 +56,7 @@ int     main()
   Player	*toto = new Player(*board);
   toto->setId(1);
   board->placeEntity(5, 5, toto);
+  // board->spawnPlayers(8);
   board->initialize();
   board->initGameObjects();
 

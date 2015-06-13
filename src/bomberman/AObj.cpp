@@ -32,7 +32,7 @@ void	AObj::setId(long int id)
   _id = id;
 }
 
-long int	AObj::getId(void) const
+long int		AObj::getId(void) const
 {
   return (_id);
 }

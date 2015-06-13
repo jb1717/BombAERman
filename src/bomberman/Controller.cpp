@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Sun May  3 16:38:09 2015 Jean-Baptiste Grégoire
-// Last update Wed Jun 10 23:40:56 2015 Jean-Baptiste Grégoire
+// Last update Sat Jun 13 18:28:25 2015 Jean-Baptiste Grégoire
 //
 
 #include "Controller.hh"
@@ -120,7 +120,7 @@ bool		Controller::handleEvent(bomber::Event &event, bomber::Event::KeyID key)
 
 void		Controller::qualifyEvent(t_controller *ctrler, bomber::Event &event)
 {
-    if (ctrler->type == JOYSTICK)
+  if (ctrler->type == JOYSTICK)
 	event.type = bomber::Event::JoystickMove;
       else
 	{
@@ -135,21 +135,26 @@ void		Controller::qualifyEvent(t_controller *ctrler, bomber::Event &event)
 	  if (event.type == bomber::Event::JoystickMove)
 	    event.key = (ctrler->value > 0 ? bomber::Event::JoyMiddleRight : bomber::Event::JoyMiddleLeft);
 	  else
-	    event.key = bomber::Event::XboxY;
+	    event.key = bomber::Event::Free1;
 	  break;
 	case 1:
 	  if (event.type == bomber::Event::JoystickMove)
 	    event.key = (ctrler->value > 0 ? bomber::Event::JoyMiddleDown : bomber::Event::JoyMiddleUp);
 	  else
-	    event.key = bomber::Event::XboxB;
+	    event.key = bomber::Event::Free2;
 	  break;
 	case 2:
 	  if (event.type == bomber::Event::JoystickMove)
 	    event.key = (ctrler->value > 0 ? bomber::Event::JoyRightRight : bomber::Event::JoyRightLeft);
 	  else
-	    event.key = bomber::Event::XboxA;
+	    event.key = bomber::Event::Free3;
 	  break;
-	case 3: event.key  = (event.type == bomber::Event::JoystickMove ? bomber::Event::TriggerLB : bomber::Event::XboxX); break;
+	case 3:
+	  if (event.type == bomber::Event::JoystickMove)
+	    event.key  = (ctrler->value > 0 ? bomber::Event::JoyRightDown : bomber::Event::JoyRightUp);
+	  else
+	    event.key = bomber::Event::Free4;
+	  break;
 	case 4: event.key = (event.type == bomber::Event::JoystickMove ? bomber::Event::TriggerRB : bomber::Event::TriggerLT); break;
 	case 5:
 	  if (event.type == bomber::Event::JoystickMove)

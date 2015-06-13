@@ -32,7 +32,8 @@ public:
   void				setPos(float x, float y);
   std::pair<float, float>	getPos() const;
   void				setId(long int);
-  long int			getId(void) const;
+  long int				getId(void) const;
+
 public:
   AGameObject			*getGameObj() const;
   void				setGameObj(AGameObject *);
@@ -44,7 +45,7 @@ protected:
   entityType	_type;
   float		_x;
   float		_y;
-  long int	_id;
+  long int		_id;
   AGameObject	*_gameObj;
 };
 

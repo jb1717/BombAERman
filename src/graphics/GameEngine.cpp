@@ -168,12 +168,15 @@ bool		GameEngine::initialize()
 
 bool		GameEngine::getEvent()
 {
-  if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT))
+  bomber::Event event;
+
+  if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT) ||
+      _input.handleEvent(event, bomber::Event::Start))
     return false;
 
-  if (_input._default.getMouseWheel().y)
-    camera.zoom( 0.05 * _input._default.getMouseWheel().y);
-
+  if (_input._default.getMouseWheel().y) {
+    camera.zoom(0.05 * _input._default.getMouseWheel().y);
+  }
   if (_input._default.getKey(SDLK_f))
     GUI = !GUI;
 

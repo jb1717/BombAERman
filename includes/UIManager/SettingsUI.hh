@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:35:33 2015 TommyStarK
-// Last update Sat Jun 13 06:26:41 2015 TommyStarK
+// Last update Sat Jun 13 12:14:39 2015 TommyStarK
 //
 
 #ifndef  _SETTINGSUI_HH_
@@ -17,7 +17,7 @@
 # include <iostream>
 # include <stdexcept>
 # include <unistd.h>
-#include "AUI.hh"
+# include "AUI.hh"
 
 class       SettingsUI : public AUI
 {
@@ -31,6 +31,7 @@ public:
 private:
   int                         _width;
   int                         _height;
+  bool                        _first;
   int                         _behavior;
   int                         _selected;
   int                         _fixItems;
@@ -45,6 +46,8 @@ private:
 
 private:
   Geometric                   *_front[3];
+  glm::vec3                   *_posSettings[3];
+  GraphicString               *_settings[3];
   std::vector<Geometric *>    _items;
   std::vector<std::string>    _itemsName;
   std::map<int, float>        _cursor;
@@ -54,6 +57,8 @@ private:
   void                        setupDisplay();
   void                        setupItemsSettings();
   void                        itemFocus();
+  void                        modifySettings();
+  void                        updateSettings();
   void                        updateContext();
 
 public:

@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Sat Jun 13 15:20:56 2015 Jean-Baptiste Grégoire
+// Last update Sat Jun 13 18:59:51 2015 Jean-Baptiste Grégoire
 //
 
 #include "Board.hh"
@@ -313,6 +313,63 @@ bool Board::moveEntity(float x, float y, long int id, Direction dir)
 	tmp = removeFromSquare(posX, posY, id);
 	updatePos(toX, toY, tmp);
 	return (true);
+}
+
+void Board::makeSomePlace(int x, int y, int id, Direction dir, Direction r1, Direction r2)
+{
+  if (r1 == West)
+    _board[((y * _yLength) + x - 1)].clear();
+  else if (r1 == East)
+    _board[((y * _yLength) + x + 1)].clear();
+  else if (r1 == North)
+    _board[((y * _yLength) + x - _xLength)].clear();
+  else if (r1 == South)
+    _board[((y * _yLength) + x + _xLength)].clear();
+  if (r2 == West)
+    _board[((y * _yLength) + x - 1)].clear();
+  else if (r2 == East)
+    _board[((y * _yLength) + x + 1)].clear();
+  else if (r2 == North)
+    _board[((y * _yLength) + x - _xLength)].clear();
+  else if (r2 == South)
+    _board[((y * _yLength) + x + _xLength)].clear();
+
+  _board[(y * _yLength) + x].clear();
+
+  placeEntity(x, y, ::PLAYER, id, dir);
+}
+
+void Board::spawnPlayers(unsigned int nb)
+{
+  if (nb > ((_xLength - 2) * (_yLength - 2) - 10))
+    throw std::logic_error("Map can't hold that much players.");
+
+  unsigned int play = 1;
+
+  makeSomePlace(1, 1, play, South, South, East);
+  if (play++ == nb)
+    return;
+  makeSomePlace(_xLength - 2, _yLength - 2, play, North, West, North);
+  if (play++ == nb)
+    return;
+  makeSomePlace(1, _yLength - 2, play, North, North, East);
+  if (play++ == nb)
+    return;
+  makeSomePlace(_xLength - 2, 1, play, South, West, South);
+  if (play++ == nb)
+    return;
+  makeSomePlace(_xLength - 2, (_yLength - 2) / 2, play, West, West, North);
+  if (play++ == nb)
+    return;
+  makeSomePlace(1, (_yLength - 2) / 2, play, East, South, East);
+  if (play++ == nb)
+    return;
+  makeSomePlace((_xLength - 2) / 2, 1, play, South, South, East);
+  if (play++ == nb)
+    return;
+  makeSomePlace((_xLength - 2) / 2, _yLength - 2, play, North, West, North);
+  if (play++ == nb)
+    return;
 }
 
 void Board::removePlayer(long int id)
