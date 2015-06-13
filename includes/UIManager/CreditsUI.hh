@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat Jun 13 00:55:20 2015 TommyStarK
-// Last update Sat Jun 13 01:43:25 2015 TommyStarK
+// Last update Sat Jun 13 04:11:36 2015 TommyStarK
 //
 
 #ifndef _CREDITSUI_HH_
@@ -27,6 +27,7 @@ public:
 
 private:
   Geometric                  *_front[2];
+  GraphicString              *_text;
   std::vector<std::string>   _itemsName;
 
 private:

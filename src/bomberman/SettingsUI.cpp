@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:21:08 2015 TommyStarK
-// Last update Sat Jun 13 03:25:12 2015 Milox Thomas
+// Last update Sat Jun 13 04:06:18 2015 TommyStarK
 //
 
 #include "UIManager/SettingsUI.hh"
@@ -18,10 +18,10 @@ SettingsUI::SettingsUI(int width, int height, const std::string & winName)
   _itemsName.push_back("quit");
   _dynamicItems = _itemsName.size();
   _itemsName.push_back("SettingsBackground");
-  _itemsName.push_back("SettingsTitle3");
-  _itemsName.push_back("bomb");
+  _itemsName.push_back("SettingsCursor");
   _fixItems = _itemsName.size() - _dynamicItems;
   _cursor[NBR] = _spreading + 0.5;
+  _text = new GraphicString();
   this->setName("SettingsUI");
 }
 
@@ -52,8 +52,7 @@ void                          SettingsUI::setupItemsSettings()
   auto asset = AssetManager::instance();
   _factory = GeometryFactory::instanciate();
   _front[0] = new Geometric(glm::vec3(0, 0, 15.1), glm::vec3(), glm::vec3(40, 24, 1));
-  _front[1] = new Geometric(glm::vec3(0, 7, 12), glm::vec3(), glm::vec3(2, 2, 1));
-  _front[2] = new Geometric(glm::vec3(5.5, _cursor[NBR], 12), glm::vec3(), glm::vec3(1.5, 1.5, 1));
+  _front[1] = new Geometric(glm::vec3(6.25, 7.35, 12), glm::vec3(), glm::vec3(1.5, 1.5, 1));
   int fixItems = _itemsName.size() - _dynamicItems;
   for (int i = 0; i < _fixItems; i++) {
     int n = _itemsName.size() - fixItems;
@@ -71,6 +70,10 @@ void                          SettingsUI::setupItemsSettings()
     _items.back()->draw(_shader, _clock);
     _spreading -= 3;
   }
+  _text->setText("SETTINGS");
+  _text->scale(glm::vec3(0.5, 0.5, 0.5));
+  _text->translate(glm::vec3(0, 5.35, 8.25));
+  _text->draw(_shader, _clock);
 }
 
 void                          SettingsUI::updateContext()
@@ -80,6 +83,7 @@ void                          SettingsUI::updateContext()
     i->update(_clock, _input._default);
   for (int i = 0; i < _fixItems; i++)
     _front[i]->update(_clock, _input._default);
+  _text->update(_clock, _input._default);
   _camera.update(_clock, _input);
 }
 

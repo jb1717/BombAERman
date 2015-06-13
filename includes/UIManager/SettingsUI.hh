@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:35:33 2015 TommyStarK
-// Last update Fri Jun 12 23:45:32 2015 TommyStarK
+// Last update Sat Jun 13 03:47:38 2015 TommyStarK
 //
 
 #ifndef  _SETTINGSUI_HH_
@@ -40,6 +40,7 @@ private:
 
 private:
   Geometric                   *_front[3];
+  GraphicString               *_text;
   std::vector<Geometric *>    _items;
   std::vector<std::string>    _itemsName;
   std::map<int, float>        _cursor;

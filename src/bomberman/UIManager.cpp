@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 21:02:19 2015 TommyStarK
-// Last update Sat Jun 13 01:16:30 2015 TommyStarK
+// Last update Sat Jun 13 04:14:10 2015 TommyStarK
 //
 
 #include "UIManager/UIManager.hh"
@@ -35,7 +35,9 @@ void                          UIManager::startService()
 
 std::tuple<int, std::string>  UIManager::controller(bool quit, const std::string &ui)
 {
-  switch (quit) {
+  int i = !quit ? 0 : 1;
+
+  switch (i) {
     case 0:
         if (ui == "PlayUI")
           return (std::tuple<int, std::string>(0, ui));

@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 22:06:02 2015 TommyStarK
-// Last update Sat Jun 13 03:24:05 2015 Milox Thomas
+// Last update Sat Jun 13 04:39:19 2015 TommyStarK
 //
 
 #include "UIManager/LauncherUI.hh"
@@ -68,8 +68,6 @@ void                       LauncherUI::setupDisplay()
   _camera.setPosition(glm::vec3(0, 0, -2));
   _camera.refreshPosition();
   _shader.bind();
-  // _shader.setUniform("view", _camera.getTransformationMatrix());
-  // _shader.setUniform("projection", _camera.getProjectionMatrix());
   _camera.lockShader(_shader, true);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   this->setupItemsMenu();
@@ -154,9 +152,9 @@ stateUI                    LauncherUI::handlerEvent()
       return (std::tuple<bool, std::string>(false, this->getUItoDisplay(_selected)));
     else
     {
-      if (_input._default.getInput(SDLK_UP))
+      if (_input._default.getInput(SDLK_UP) || _input._default.getInput(SDLK_LEFT))
         _behavior = 1;
-      else if (_input._default.getInput(SDLK_DOWN))
+      else if (_input._default.getInput(SDLK_DOWN) || _input._default.getInput(SDLK_RIGHT))
         _behavior = -1;
     }
   }
