@@ -5,7 +5,7 @@
 // Login   <paasch_j@epitech.net>
 //
 // Started on  Mon Apr 27 11:27:27 2015 Johan Paasche
-// Last update Thu May 28 02:17:09 2015 Emmanuel Chambon
+// Last update Sat Jun 13 07:11:18 2015 Milox Thomas
 //
 
 #include	"Bomberman.hh"
@@ -38,4 +38,5 @@ int	main()
   // } catch (std::exception &e) {
   //   std::cerr << e.what() << std::endl;
   // }
+    return (0);
 }

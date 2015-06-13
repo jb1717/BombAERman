@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:32:15 2015 TommyStarK
-// Last update Fri Jun 12 22:23:16 2015 TommyStarK
+// Last update Sat Jun 13 13:59:16 2015 TommyStarK
 //
 
 #ifndef  _PLAYUI_HH_
@@ -14,6 +14,7 @@
 # include <dirent.h>
 # include <string>
 # include <vector>
+# include <stdlib.h>
 # include "AUI.hh"
 
 class             PlayUI : public AUI
