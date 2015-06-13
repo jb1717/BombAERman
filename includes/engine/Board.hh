@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:22:05 2015 Jean-Baptiste Grégoire
-// Last update Sat Jun 13 18:54:54 2015 Jean-Baptiste Grégoire
+// Last update Sat Jun 13 01:45:56 2015 Jean-Baptiste Grégoire
 //
 
 #ifndef Board_HH_

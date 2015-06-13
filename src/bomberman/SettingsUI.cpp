@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:21:08 2015 TommyStarK
-// Last update Sat Jun 13 14:44:48 2015 TommyStarK
+// Last update Sun Jun 14 00:31:56 2015 TommyStarK
 //
 
 #include "UIManager/SettingsUI.hh"
@@ -20,6 +20,8 @@ SettingsUI::SettingsUI(int width, int height, const std::string & winName)
   _itemsName.push_back("back");
   _dynamicItems = _itemsName.size();
   _itemsName.push_back("SettingsBackground");
+  _itemsName.push_back("settings-title");
+  _itemsName.push_back("settings-help");
   _itemsName.push_back("bomb");
   _fixItems = _itemsName.size() - _dynamicItems;
   _cursor[ALIASING] = _spreading + 0.5;
@@ -83,8 +85,10 @@ void                          SettingsUI::setupItemsSettings()
 {
   auto asset = AssetManager::instance();
   _factory = GeometryFactory::instanciate();
-  _front[0] = new Geometric(glm::vec3(0, 0, 15.1), glm::vec3(0, 0, 0), glm::vec3(40, 24, 1));
-  _front[1] = new Geometric(glm::vec3(4.5, _cursor[ALIASING], 12), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
+  _front[0] = new Geometric(glm::vec3(0, 0, 15.1), glm::vec3(0, 0, 0), glm::vec3(39, 20, 2));
+  _front[1] = new Geometric(glm::vec3(0, 6.5, 12), glm::vec3(), glm::vec3(2.5, 1.75, 15));
+  _front[2] = new Geometric(glm::vec3(-6.5, -3.5, 6.5), glm::vec3(), glm::vec3(4, 2, 10));
+  _front[3] = new Geometric(glm::vec3(4.5, _cursor[ALIASING], 12), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
   int fixItems = _itemsName.size() - _dynamicItems;
   for (int i = 0; i < _fixItems; i++) {
     int n = _itemsName.size() - fixItems;
@@ -95,7 +99,7 @@ void                          SettingsUI::setupItemsSettings()
     --fixItems;
   }
   for (int i = 0; i < _dynamicItems; i++) {
-    _items.push_back(new Geometric(glm::vec3(3, _spreading, 10), glm::vec3(0, 0, 0), glm::vec3(2, 1.2, 10)));
+    _items.push_back(new Geometric(glm::vec3(3, _spreading, 10), glm::vec3(0, 0, 0), glm::vec3(2.5, 1.5, 40)));
     _items.back()->setGeometry(_factory->getGeometry(GeometryFactory::VERTICAL_PLANE));
     _items.back()->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))[_itemsName[i]]));
     _items.back()->initialize();

@@ -18,6 +18,7 @@
 #include        "Crate.hh"
 #include        "UnbreakableWall.hh"
 #include        "Player.hh"
+#include        "Ia.hh"
 
 std::mutex	_mutex;
 
@@ -27,11 +28,20 @@ std::ostream&	operator<<(std::ostream& os, glm::vec3 const& v)
   return os;
 }
 
-void		*launch_play(void *arg)
+static void		*launch_play(void *arg)
 {
   Player	*corpse = static_cast<Player *>(arg);
 
   corpse->run_user();
+  return (NULL);
+}
+
+static void		*launch_ia(void *arg)
+{
+  Ia	*corpse = static_cast<Ia *>(arg);
+
+  corpse->run_user();
+  return (NULL);
 }
 
 int     main()
@@ -45,6 +55,12 @@ int     main()
   // Player	*toto = new Player(*board);
   // board->placeEntity(1, 1, toto);
   board->spawnPlayers(5);
+  // Ia  *killer = new Ia("ia/easy.chai", *board);
+  // board->placeEntity(1, 1, killer);
+  // Player	*toto = new Player(*board);
+  // toto->setId(1);
+  // board->placeEntity(5, 5, toto);
+  // board->spawnPlayers(8);
   board->initialize();
   board->initGameObjects();
 
@@ -61,8 +77,14 @@ int     main()
       return (EXIT_FAILURE);
     }
   std::thread	t1(launch_play, std::ref(board->getPlayers().front()));
-  std::cout << board->getPlayers().front()->getId() << std::endl;
+  // std::cout << board->getPlayers().front()->getId() << std::endl;
   // if (pthread_create(&_thread, NULL, launch_play, toto) != 0)
+  //   return (EXIT_FAILURE);
+  // pthread_t	_thread;
+  // if (pthread_create(&_thread, NULL, launch_ia, killer) != 0)
+  //   return (EXIT_FAILURE);
+  // pthread_t	_threadT;
+  // if (pthread_create(&_threadT, NULL, launch_play, toto) != 0)
   //   return (EXIT_FAILURE);
   while (engine.update() == true)
     engine.draw();

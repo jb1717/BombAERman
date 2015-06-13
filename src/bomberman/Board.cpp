@@ -192,7 +192,7 @@ void Board::deleteEntity(float x, float y, long int id, bool breakWall)
 void	Board::setExplosion(float x, float y)
 {
   int posx = static_cast<int>(x), posy = static_cast<int>(y);
-  int pos = posy * _xLength + posx;
+  int pos = static_cast<int>(posy) * _xLength + static_cast<int>(posx);
   int true_x = (_xLength / 2) - x;
   int true_y = (_yLength / 2) - y;
   Explosion     *exp = new Explosion(*this);
@@ -216,30 +216,30 @@ AObj    *Board::removeFromSquare(int x, int y, long int id)
 	  break;
 	}
     }
-  for (std::vector<AObj *>::iterator it = _board[y * _xLength + x + 1].begin(); it != _board[y * _xLength + x].end(); ++it)
+  for (std::vector<AObj *>::iterator it = _board[y * _xLength + x + 1].begin(); it != _board[y * _xLength + x + 1].end(); ++it)
     {
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[y * _xLength + x].erase(it);
+	  _board[y * _xLength + x + 1].erase(it);
 	  break;
 	}
     }
-  for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+  for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x].begin(); it != _board[(y + 1) * _xLength + x].end(); ++it)
     {
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[y * _xLength + x].erase(it);
+	  _board[(y + 1) * _xLength + x].erase(it);
 	  break;
 	}
     }
-  for (std::vector<AObj *>::iterator it = _board[((y + 1)* _xLength) + x + 1].begin(); it != _board[y * _xLength + x].end(); ++it)
+  for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x + 1].begin(); it != _board[(y + 1) * _xLength + x + 1].end(); ++it)
     {
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[y * _xLength + x].erase(it);
+	  _board[(y + 1) * _xLength + x + 1].erase(it);
 	  break;
 	}
     }
@@ -287,25 +287,29 @@ bool Board::moveEntity(float x, float y, long int id, Direction dir)
 			toY -= 0.1;
 		else
 			toY = -1.0;
+		break ;
 	case South:
 		if (y < _yLength)
 			toY += 0.1;
 		else
 			toY = -1.0;
+		break ;
 	case East:
 		if (x > 0)
 			toX -= 0.1;
 		else
 			toX = -1.0;
+		break ;
 	case West:
 		if (x < _xLength)
 			toX += 0.1;
 		else
 			toX = -1.0;
-	default: return(false);
+		break ;
+	default: return(false); break;
 	}
-	if (toX == -1.0 || toY == -1.0)
-		return (false);
+	if (toX == -1.0 || toY == -1.0) {
+	  return (false); }
 	tmp = removeFromSquare(posX, posY, id);
 	updatePos(toX, toY, tmp);
 	return (true);
@@ -374,6 +378,7 @@ void Board::removePlayer(long int id)
     {
       if ((*it)->getId() == id)
 	{
+		(*it)->triggerAlive();
 	  _players.erase(it);
 	  return ;
 	}

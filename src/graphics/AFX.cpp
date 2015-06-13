@@ -58,19 +58,19 @@ void		AFX::update(gdl::Clock const& clock, UNUSED Binput& input)
 
 void		AFX::update(gdl::Clock const& clock, Binput& input, Camera const& camera)
 {
-  _timer -= clock.getElapsed();
-      for (size_t i = 0; i < _spareParts.size(); i++)
-	{
-	  _spareParts[i]->setRotation(glm::vec3(0, 10 * cos(camera.getRotation().y), 1));
-	  _spareParts[i]->rotate(glm::vec3(0, 0, rand() % 10 * 0.15), -1);
-	  if (_timer >= 0.0f)
-	    _spareParts[i]->scale(glm::vec3(1.01, 1.01, 1.01));
-	  else
-	    _spareParts[i]->scale(glm::vec3(0.99, 0.99, 0.99));
-	}
-      _color.g *= 0.99;
-      _color.b *= 0.99;
-      _color.a *= 0.99;
+ _timer -= clock.getElapsed();
+  for (size_t i = 0; i < _spareParts.size(); i++)
+    {
+      _spareParts[i]->setRotation(glm::vec3(0, 10 * cos(camera.getRotation().y), 1));
+      _spareParts[i]->rotate(glm::vec3(0, 0, rand() % 10 * 0.15), -1);
+      if (_timer >= 0.0f)
+	_spareParts[i]->scale(glm::vec3(1.01, 1.01, 1.01));
+      else
+	_spareParts[i]->scale(glm::vec3(0.99, 0.99, 0.99));
+    }
+  _color.g *= 0.99;
+  _color.b *= 0.99;
+  _color.a *= 0.99;
 }
 
 void		AFX::draw(gdl::AShader& shader, gdl::Clock const& clock)

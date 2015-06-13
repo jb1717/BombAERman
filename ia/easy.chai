@@ -1,0 +1,19 @@
+var i = 0
+while(iaAlive() == true)
+{
+  if (i % 500000 == 0)
+  {
+    iaChooseDir(South)
+    //iaDropBomb()
+    print("lol")
+    print(iaCloserEnemy())
+    iaMoveToEnemy(iaCloserEnemy())
+  }
+  i = i + 1
+}
+
+print("DED")
+
+//iaChooseDir(East)
+//iaChooseDir(East)
+//iaChooseDir(East)

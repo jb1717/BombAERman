@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Sat Jun 13 06:37:49 2015 Jamais
+// Last update Sat Jun 13 23:42:20 2015 Jean-Baptiste Grégoire
 //
 
 #include	"GameEngine.hh"
@@ -220,7 +220,7 @@ bool		GameEngine::update()
       if ((*it)->getGameObj() && (*it)->getId() == 1)
 	{
 	  glm::vec3 save = (*it)->getGameObj()->getPosition();
-	  (*it)->getGameObj()->update(_clock, _input, camera);
+	  (*it)->getGameObj()->update(_clock, _input, camera, (*it)->getId());
 	  glm::vec3 p = (*it)->getGameObj()->getPosition();
 	  if (_board->collideAround((*it), p.x, p.z))
 	    (*it)->getGameObj()->setPosition(save);
@@ -247,7 +247,9 @@ void		GameEngine::draw()
 	if ((*itk) && (*itk)->getGameObj())
 	  {
 	    if ((*itk)->getId() == -4)
-	      (*itk)->getGameObj()->update(_clock, _input, camera);
+	      {
+		static_cast<AFX *>((*itk)->getGameObj())->update(_clock, _input, camera);
+	      }
 	    (*itk)->getGameObj()->draw(_shader, _clock);
 	  }
     }
