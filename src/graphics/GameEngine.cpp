@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Fri Jun 12 09:42:11 2015 Jamais
+// Last update Sat Jun 13 06:37:49 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -25,6 +25,7 @@
 #include	"AssetManager.hh"
 #include	"AFX.hh"
 #include	"ParticleSystem.hh"
+#include	"Bonus.hh"
 
 #include	<unistd.h>
 
@@ -37,6 +38,8 @@ AGameModel*	bomb;
 gdl::Texture	*texFloor;
 gdl::Texture	*texCrate;
 gdl::Texture	*texWall;
+gdl::Texture	*texCrate2;
+gdl::Texture	*texCrate3;
 gdl::Texture*	texMenu;
 
 bool		GUI = true;
@@ -49,14 +52,25 @@ ParticleSystem*	psystem;
 AFX*			effect;
 
 Geometric*		ground;
+Bonus*			bn;
+AGameModel*	test;
+#define		LIMIT(x, limit)	(((x) < 0) ? 0 : ((x) > (limit)  ? (limit) : (x)))
 GameEngine::GameEngine() : Game()
 {
   _videoContext = VideoContext::instanciate();
   auto		asset = AssetManager::instance();
   texCrate = (*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate"];
+  texCrate2 = (*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate2"];
+  texCrate3 = (*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate3"];
   texWall = (*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["wall"];
   texMenu = (*THEME((*THEME_HANDLER(asset["themes"]))["GUI"]))["menu"];
   bomb = new BasicBomb();
+  // bomb =// &((*MODEL_HANDLER(asset["models"]))["PumpkinBomb.fbx"]);
+  bn = new Bonus(glm::vec3(0, 0,  0));
+  bn->load("./assets/models/bonusPower.fbx");
+  bn->setPosition(glm::vec3(0, 5, 0));
+  bn->setColor(glm::vec4(1.0f, 0.8f, 0.8f, 1.0f));
+  // bn->load("./assets/models/bonusPower.fbx");
 }
 
 bool		GameEngine::createMap(UNUSED std::string const& confFilePath)
@@ -121,7 +135,7 @@ bool		GameEngine::initialize()
   bombChooser->setTexture(*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["GUIBomb"]);
   bombChooser->setPosition(glm::vec3(-1.90, -1.25, 0.0));
 
-  s = new GraphicString("LOADING");
+   s = new GraphicString("LOADING");
   s->render(*factory);
   s->translate(glm::vec3(-5, 15, 25));
 
@@ -129,17 +143,21 @@ bool		GameEngine::initialize()
   bomb->translate(glm::vec3(0, -0.10, 0));
   bomb->scale(glm::vec3(0.40, 0.40, 0.40));
   bomb->setColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+
   menu = new Geometric(glm::vec3(0, 0, -2));
   menu->setGeometry(factory->getGeometry(GeometryFactory::VERTICAL_PLANE));
   menu->setTexture(*texMenu);
 
-  ground = new Geometric(glm::vec3(0, -0.00f, 0));
+  ground = new Geometric(glm::vec3(0, 0.f, 0));
+  //  ground->setColor(glm::vec4(0.4f, 1.0f, 0.4f, 1.0f));
   ground->setGeometry(factory->getGeometry(GeometryFactory::CUBE));
   ground->setTexture(*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["floor"]);
-  ground->scale(glm::vec3(_board->getHeight()  -1.0f, 1, _board->getWidth() -1.0f));
-
+  ground->scale(glm::vec3(_board->getHeight()  -1.0f, _board->getWidth(), _board->getWidth() -1.0f));
+  ground->translate(glm::vec3(0, _board->getWidth() * -0.5, 0));
   /*
   ** Special Effect of explosion :: folow it in update and draw */
+  // std::cout << "Bonjour" << std::endl;
+  // exit(0);
   effect = new AFX(glm::vec3(0 , 2, 0));
   effect->setScale(glm::vec3(2, 2, 2));
   effect->resetFrame();
@@ -191,7 +209,7 @@ bool		GameEngine::update()
       i = 0;
       frame = 0.0f;
     }
-  bomb->update(_clock, _input);
+  bn->rotate(glm::vec3(0, 1, 0), 1);
   for (auto it = _board->getPlayers().begin(); it != _board->getPlayers().end(); it++)
     {
       glm::vec3 save = (*it)->getGameObj()->getPosition();
@@ -209,23 +227,32 @@ bool		GameEngine::update()
 
 void		GameEngine::draw()
 {
-  camera.lockShader(_shader);
+  camera.lockShader(_shader, true, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   sk->draw(_shader, _clock);
   ground->draw(_shader, _clock);
+  // bomb->draw(_shader, _clock);
+  // std::cout << "CameraTarget : " << camera.getTarget().x << " & " << camera.getTarget().z << std::endl;
+  // std::cout << "Camera true target : " << camera.getTarget().x * cos(camera.getRotation().y) << " & " << camera.getTarget().z * -sin(camera.getRotation().y) << std::endl;
+
+  // int			startx = LIMIT(_board->getWidth() / 2 + camera.getTarget().x, _board->getWidth());
+  // int			starty = LIMIT(_board->getHeight() / 2 + camera.getTarget().y, _board->getHeight());
   for (auto it = _board->getFullBoard().begin(); it != _board->getFullBoard().end(); it++)
     for (auto itk = (*it).begin(); itk != (*it).end(); itk++)
     	(*itk)->getGameObj()->draw(_shader, _clock);
-  effect->draw(_shader, _clock);
-  if (GUI)
-    {
-      menuCam.lockShader(_shader);
-       bomb->draw(_shader, _clock);
-      bombChooser->draw(_shader, _clock);
-      s->draw(_shader, _clock);
-      menu->draw(_shader, _clock);
+  // std::cout << "X = " << startx << " y = " << starty << std::endl;
+  bn->draw(_shader, _clock);
+  menuCam.lockShader(_shader);
+  bomb->draw(_shader, _clock);
+  bombChooser->draw(_shader, _clock);
+  // bn->draw(_shader, _clock);
+  s->draw(_shader, _clock);
+   // test->draw(_shader, _clock);
+  // if (GUI)
+  //   {
+  //     menu->draw(_shader, _clock);
+  //   }
 
-    }
   _videoContext->flush();
 }
 
