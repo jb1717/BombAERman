@@ -46,7 +46,7 @@ int     main()
   board->initialize();
   board->initGameObjects();
 
-  SOUND_HANDLER(asset["sounds"])->play("bomberman");
+  //  SOUND_HANDLER(asset["sounds"])->play("bomberman");
 
   if (engine.setupGame(board) == false)
     {

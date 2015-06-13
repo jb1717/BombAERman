@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Fri Jun 12 01:09:14 2015 Jamais
+## Last update Sat Jun 13 06:24:14 2015 Jamais
 ##
 
 GRAPHICALGAME	=	yes
@@ -14,7 +14,7 @@ GRAPHICALGAME	=	yes
 #			BASICS				#
 #########################################################
 
-CC	=	g++
+CC	=	g++-5
 RM	=	rm -f
 RMDIR	=	rm -rf
 ECHO	=	echo -ne
@@ -95,6 +95,7 @@ GRAPHICS_SRC		=				\
 				AGameModel.cpp		\
 				AGameObject.cpp		\
 				BasicBomb.cpp		\
+				Bonus.cpp			\
 				Camera.cpp		\
 				Character.cpp		\
 				Collider.cpp		\
@@ -108,7 +109,7 @@ GRAPHICS_SRC		=				\
 				ParticleSystem.cpp	\
 				Skybox.cpp		\
 				VideoContext.cpp	\
-				main.cpp
+				 main.cpp
 
 ifeq ($(GRAPHICALGAME),yes)
 $(GRAPHICS_SRC) += main.cpp
@@ -168,6 +169,7 @@ BOMBERMAN_SRC		=				\
 				Event.cpp		\
 				Controller.cpp		\
 				Binput.cpp		\
+				CreditsUI.cpp		\
 #				main.cpp		\
 
 BOMBERMAN		=	bomberman

@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:32:15 2015 TommyStarK
-// Last update Mon Jun  1 09:47:18 2015 Emmanuel Chambon
+// Last update Fri Jun 12 22:23:16 2015 TommyStarK
 //
 
 #ifndef  _PLAYUI_HH_
@@ -22,13 +22,19 @@ public:
   PlayUI();
   ~PlayUI();
 
-public:
-  void            launch();
-  stateUI         handlerEvent();
-  void            getIaNames();
 
 private:
   std::vector<std::string>    _iaNames;
+
+
+private:
+  void            getIaNames();
+  void            updateContext();
+
+public:
+  void            launch();
+  stateUI         handlerEvent();
+
 
 };
 
