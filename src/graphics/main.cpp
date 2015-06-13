@@ -49,7 +49,7 @@ int     main()
   auto asset = AssetManager::instance();
   GameEngine engine;
 
-  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
+  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[1]);
 
   Ia  *killer = new Ia("ia/easy.chai", *board);
   board->placeEntity(1, 1, killer);

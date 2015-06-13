@@ -1,6 +1,15 @@
-print("lol")
-// iaDropBomb()
-iaChooseDir(East)
-iaChooseDir(East)
-iaChooseDir(East)
-iaChooseDir(East)
+var i = 0
+while(iaAlive())
+{
+  if (i % 50000 == 0)
+  {
+    //iaChooseDir(East)
+    //iaDropBomb()
+    print("lol")
+  }
+  i = i + 1
+}
+
+//iaChooseDir(East)
+//iaChooseDir(East)
+//iaChooseDir(East)

@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:12:42 2015 Hugo Prenat
-// Last update Sat Jun 13 06:17:50 2015 Jean-Baptiste Grégoire
+// Last update Sat Jun 13 13:55:40 2015 Hugo Prenat
 //
 
 #ifndef IA_HH_
@@ -14,6 +14,7 @@
 # include <chaiscript/chaiscript.hpp>
 
 # include "Player.hh"
+# include "Node.hh"
 
 class				Ia : public Player
 {
@@ -23,21 +24,20 @@ public:
 
 public:
   Board&			getBoard() const;
+  int				getDistance(int id) const;
+  int				getCloserAvailableEnemy() const;
   std::string			getMap() const;
   AObj*				getCloserEnemy() const;		// Return Enemy Id
   std::map<float, AObj *>&	getMapEnemy() const;
 
 public:
-  bool			userAction();
-  void			run_user();
-  bool			chooseDir(const int dir);
-  void			setPosById(const long int id);	// Set _enemyX _enemyY to Id Pos
-
-public:
-  long int       getDistance(long int id) const ;
-  long int       getCloserAvailableEnemy() const;
+  bool				userAction();
+  void				run_user();
+  bool				chooseDir(const int dir);
   void				moveToEnemy(const int id);
 
+public:
+  void				setPosById(const int id);	// Set _enemyX _enemyY to Id Pos
 
 private:
   int				_key;

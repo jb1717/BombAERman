@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sat Jun 13 06:24:14 2015 Jamais
+## Last update Sat Jun 13 13:57:19 2015 Hugo Prenat
 ##
 
 GRAPHICALGAME	=	yes
@@ -14,7 +14,7 @@ GRAPHICALGAME	=	yes
 #			BASICS				#
 #########################################################
 
-CC	=	g++-5
+CC	=	g++
 RM	=	rm -f
 RMDIR	=	rm -rf
 ECHO	=	echo -ne
@@ -77,6 +77,7 @@ AI_OBJS			=	$(addsuffix .o, $(basename $(subst $(AI_SRC_DIR), $(AI_OBJ_DIR), $(A
 AI_CHAI_DIR	=	./lib/src/
 
 AI_SRC			=	Ia.cpp		\
+				Node.cpp	\
 
 
 

@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Sat Jun 13 06:15:03 2015 Jean-Baptiste Grégoire
+// Last update Sat Jun 13 14:07:01 2015 Hugo Prenat
 //
 
 #include "Ia.hh"
@@ -41,8 +41,15 @@ Ia::~Ia()
 
 void	Ia::run_user()
 {
-  _chai.eval_file(_fileName);
-  std::cout << "toto" << std::endl;
+  try
+  {
+    _chai.eval_file(_fileName);
+    std::cout << "toto" << std::endl;
+  }
+  catch (const std::exception &err)
+  {
+    std::cerr << err.what() << std::endl;
+  }
 }
 
 bool	Ia::chooseDir(const int dir)
@@ -82,7 +89,6 @@ std::map<float, AObj *>& Ia::getMapEnemy() const
   return (*enemy);
 }
 
-
 void Ia::moveToEnemy(const int id)
 {
   AObj* enemy = getCloserEnemy();
@@ -110,17 +116,17 @@ AObj*		Ia::getCloserEnemy() const
   return (it->second);
 }
 
-long int   Ia::getDistance(long int id) const
+int   Ia::getDistance(int id) const
 {
   // todo !
   (void)id;
   return (0);
 }
 
-long int   Ia::getCloserAvailableEnemy() const
+int   Ia::getCloserAvailableEnemy() const
 {
   std::map<float, AObj *>   enemy = getMapEnemy();
-  long int id(0);
+  int id(0);
 
   for (auto it = enemy.begin(); it != enemy.end(); ++it)
   {
@@ -135,7 +141,7 @@ long int   Ia::getCloserAvailableEnemy() const
   return (id);
 }
 
-void	Ia::setPosById(const long int id)
+void	Ia::setPosById(const int id)
 {
   std::map<float, AObj *>   enemy = getMapEnemy();
 

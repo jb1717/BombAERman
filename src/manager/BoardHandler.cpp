@@ -6,7 +6,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Wed May 20 15:53:08 2015 Emmanuel Chambon
-// Last update Wed May 20 21:43:23 2015 Emmanuel Chambon
+// Last update Sat Jun 13 14:16:39 2015 Emmanuel Chambon
 //
 
 #include "BoardHandler.hh"
@@ -15,6 +15,7 @@ BoardHandler::BoardHandler()
 {
 	generate();
 	load();
+	generate(5, 5);
 }
 
 /*
@@ -27,8 +28,8 @@ void BoardHandler::save(std::shared_ptr<Board> const &board, std::string const &
 	doc.SetObject();
 
 	doc.AddMember("name", rapidjson::Value(name.c_str(), name.length()), allocator);
-	doc.AddMember("height", rapidjson::Value(board->getHeight()), allocator);
-	doc.AddMember("width", rapidjson::Value(board->getWidth()), allocator);
+	doc.AddMember("height", rapidjson::Value(board->getHeight() - 2), allocator);
+	doc.AddMember("width", rapidjson::Value(board->getWidth() - 2), allocator);
 
 	//TODO generateThumbnail(board);
 
@@ -132,14 +133,14 @@ std::shared_ptr<Board> BoardHandler::loadMap(rapidjson::Value const &map, int x,
 
 	std::shared_ptr<Board> board = std::make_shared<Board>(x, y);
 
-	for (int y_ = 0; y_ < y; y_++) {
-		for (int x_ = 0; x_ < x; x_++) {
+	for (int y_ = 0; y_ < y + 2; y_++) {
+		for (int x_ = 0; x_ < x + 2; x_++) {
 			if (!map[(y * y_) + x_].IsNumber()
-			    || static_cast<::entityType>(map[(y * y_) + x_].GetInt()) > ::END)
+			    || static_cast<::entityType>(map[((y + 2) * y_) + x_].GetInt()) > ::END)
 				throw std::invalid_argument("Corrupted JSON map. Will not be loaded.");
 			board->placeEntity(static_cast<float>(x_),
 			                   static_cast<float>(y_),
-			                   static_cast<::entityType>(map[(y * y_) + x_].GetInt()),
+			                   static_cast<::entityType>(map[((y + 2) * y_) + x_].GetInt()),
 			                   0);
 		}
 	}
