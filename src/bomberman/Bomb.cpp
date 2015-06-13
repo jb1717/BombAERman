@@ -33,7 +33,7 @@ void	Bomb::explosion()
 {
   int	x = _x, y = _y;
   std::vector<AObj *> tmp;
-  for (int i = 1; i < range + 1; ++i)
+  for (int i = 1; i <= range; ++i)
   {
     if (y - i > 0)
       {

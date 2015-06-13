@@ -159,9 +159,9 @@ bool		GameEngine::initialize()
   ** Special Effect of explosion :: folow it in update and draw */
   // std::cout << "Bonjour" << std::endl;
   // exit(0);
-  effect = new AFX(glm::vec3(0 , 2, 0));
-  effect->setScale(glm::vec3(2, 2, 2));
-  effect->resetFrame();
+  // effect = new AFX(glm::vec3(0 , 2, 0));
+  // effect->setScale(glm::vec3(2, 2, 2));
+  // effect->resetFrame();
 
   return true;
 }
@@ -180,10 +180,10 @@ bool		GameEngine::getEvent()
   if (_input._default.getKey(SDLK_f))
     GUI = !GUI;
 
-  if (_input._default.getKey(SDLK_SPACE))
-    {
-      effect->resetFrame();
-    }
+  // if (_input._default.getKey(SDLK_SPACE))
+  //   {
+  //     effect->resetFrame();
+  //   }
 
   return true;
 }
@@ -217,7 +217,7 @@ bool		GameEngine::update()
   bn->rotate(glm::vec3(0, 1, 0), 1);
   for (auto it = _board->getPlayers().begin(); it != _board->getPlayers().end(); it++)
     {
-      if ((*it)->getGameObj())
+      if ((*it)->getGameObj() && (*it)->getId() == 1)
 	{
 	  glm::vec3 save = (*it)->getGameObj()->getPosition();
 	  (*it)->getGameObj()->update(_clock, _input, camera);
@@ -252,7 +252,7 @@ void		GameEngine::draw()
 	  }
     }
   _mutex.unlock();
-  effect->draw(_shader, _clock);
+  // effect->draw(_shader, _clock);
   // if (GUI)
   //   {
   //     menuCam.lockShader(_shader);

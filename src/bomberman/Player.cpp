@@ -77,16 +77,17 @@ bool	Player::triggerOneBomb()
 {
   std::vector<Bomb *>::iterator	it = _bombs.begin();
   auto	positions = getPos();
-  float	true_x = (_board.getWidth() / 2) - _x;
-  float	true_y = (_board.getHeight() / 2) - _y;
+  float	true_x = (_board.getWidth() / 2) - static_cast<int>(_x);
+  float	true_y = (_board.getHeight() / 2) - static_cast<int>(_y);
 
   while (it != _bombs.end())
     {
       if (!(*it)->isLaunched())
 	{
 	  (*it)->triggerLaunch();
-	  (*it)->setPos(positions.first, positions.second);
+	  (*it)->setPos(static_cast<int>(_x), static_cast<int>(_y));
 	  // _bombThread->addWork(run_bomb, (*it));
+	  std::cout << _x << "/" << _y << std::endl;;
 	  _board.placeEntity(_x, _y, (*it));
 	  (*it)->setGameObj(new BasicBomb());
 	  (*it)->getGameObj()->setPosition(glm::vec3(true_x, 0.5, true_y));

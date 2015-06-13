@@ -11,6 +11,7 @@
 #include        <cstdlib>
 #include	<pthread.h>
 #include	<mutex>
+#include	<thread>
 #include        "GameEngine.hh"
 #include        "Camera.hh"
 #include        "AssetManager.hh"
@@ -43,7 +44,7 @@ int     main()
 
   // Player	*toto = new Player(*board);
   // board->placeEntity(1, 1, toto);
-  board->spawnPlayers(8);
+  board->spawnPlayers(5);
   board->initialize();
   board->initGameObjects();
 
@@ -59,7 +60,8 @@ int     main()
       std::cerr << "ini" << std::endl;
       return (EXIT_FAILURE);
     }
-  pthread_t	_thread;
+  std::thread	t1(launch_play, std::ref(board->getPlayers().front()));
+  std::cout << board->getPlayers().front()->getId() << std::endl;
   // if (pthread_create(&_thread, NULL, launch_play, toto) != 0)
   //   return (EXIT_FAILURE);
   while (engine.update() == true)

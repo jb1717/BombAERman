@@ -196,7 +196,7 @@ void	Board::setExplosion(float x, float y)
   int true_x = (_xLength / 2) - x;
   int true_y = (_yLength / 2) - y;
   Explosion     *exp = new Explosion(*this);
-  exp->setGameObj(new AFX(glm::vec3(true_x, 2, true_y)));
+  exp->setGameObj(new AFX(glm::vec3(true_x, 1, true_y)));
   exp->getGameObj()->setScale(glm::vec3(2, 2, 2));
   reinterpret_cast<AFX *>(exp->getGameObj())->resetFrame();
   if (_board[pos].empty())
@@ -387,7 +387,7 @@ bool Board::checkOneCollision(std::vector<AObj *> field, AObj *player)
 
   while (it != field.end())
     {
-      if (player->getType() != (*it)->getType())
+      if (player->getType() != (*it)->getType() && (*it)->getId() != -4)
 	{
 	  if ((*it)->getId() == -2 && reinterpret_cast<Crate *>((*it))->isBreak())
 	    return (false);
