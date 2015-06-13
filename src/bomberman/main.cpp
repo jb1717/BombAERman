@@ -10,12 +10,12 @@
 
 #include	"Bomberman.hh"
 #include	"UIManager/UIManager.hh"
-#include    "AssetManager.hh"
+// #include    "AssetManager.hh"
 
 int	main()
 {
-  try {
-    AssetManager::instance();
+  // try {
+    // AssetManager::instance();
 
     // ScoreHandler  test;
     // test.debug();
@@ -32,10 +32,10 @@ int	main()
     // for (BestScores::iterator i = top->begin(); i != top->end(); i++)
     //   std::cout << (*i).best << std::endl;
 
-    // UIManager();
+    UIManager();
 
-    Bomberman();
-  } catch (std::exception &e) {
-    std::cerr << e.what() << std::endl;
-  }
+    // Bomberman();
+  // } catch (std::exception &e) {
+  //   std::cerr << e.what() << std::endl;
+  // }
 }

@@ -5,14 +5,14 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:22:00 2015 TommyStarK
-// Last update Thu May 28 13:59:22 2015 TommyStarK
+// Last update Fri Jun 12 22:23:25 2015 TommyStarK
 //
 
 #include "UIManager/PlayUI.hh"
 
 PlayUI::PlayUI()
 {
-  getIaNames();
+  this->getIaNames();
 }
 
 PlayUI::~PlayUI()
@@ -32,7 +32,7 @@ void                          PlayUI::getIaNames()
       tmp.push_back(current->d_name);
     }
     for (auto i : tmp) {
-      if ((pos = i.find_last_of(".")) != std::string::npos && i.substr(pos) == ".lua")
+      if ((pos = i.find_last_of(".")) != std::string::npos && i.substr(pos) == ".chai")
       {
         std::string token;
         token = i.substr(0, pos);
@@ -42,12 +42,17 @@ void                          PlayUI::getIaNames()
   }
 }
 
-void                          PlayUI::launch()
+void                          PlayUI::updateContext()
 {
 
 }
 
+void                          PlayUI::launch()
+{
+  std::cout << "######### LAUNCHING PLAY UI ##########" << std::endl;
+}
+
 stateUI                       PlayUI::handlerEvent()
 {
-  return (std::tuple<bool, std::string>(false, this->getName()));
+  return (std::tuple<bool, std::string>(true, this->getName()));
 }

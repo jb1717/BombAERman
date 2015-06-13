@@ -12,6 +12,7 @@
 # define EXPLOSION_HH_
 
 # include "AObj.hh"
+# include "Board.hh"
 
 class	Explosion : public AObj
 {

@@ -8,19 +8,39 @@
 // Last update Fri Jun 12 11:11:22 2015 Emmanuel Chambon
 //
 
-#include	<cstdlib>
-#include	"GameEngine.hh"
-#include	"Camera.hh"
-#include	"AssetManager.hh"
-#include	"Crate.hh"
-#include	"UnbreakableWall.hh"
-#include	"Player.hh"
-#include	"Ia.hh"
+#include        <cstdlib>
+#include	<pthread.h>
+#include	<mutex>
+#include        "GameEngine.hh"
+#include        "Camera.hh"
+#include        "AssetManager.hh"
+#include        "Crate.hh"
+#include        "UnbreakableWall.hh"
+#include        "Player.hh"
+#include        "Ia.hh"
+
+std::mutex	_mutex;
 
 std::ostream&	operator<<(std::ostream& os, glm::vec3 const& v)
 {
   os << " {" << v.x << ", " << v.y << ", " << v.z << "}";
   return os;
+}
+
+static void		*launch_play(void *arg)
+{
+  Player	*corpse = static_cast<Player *>(arg);
+
+  corpse->run_user();
+  return (NULL);
+}
+
+static void		*launch_ia(void *arg)
+{
+  Ia	*corpse = static_cast<Ia *>(arg);
+
+  corpse->run_user();
+  return (NULL);
 }
 
 int     main()
@@ -33,10 +53,12 @@ int     main()
 
   Ia  *killer = new Ia("ia/easy.chai", *board);
   board->placeEntity(1, 1, killer);
+  // Player	*toto = new Player(*board);
+  // board->placeEntity(1, 1, toto);
   board->initialize();
   board->initGameObjects();
 
-  SOUND_HANDLER(asset["sounds"])->play("bomberman");
+  //  SOUND_HANDLER(asset["sounds"])->play("bomberman");
 
   if (engine.setupGame(board) == false)
     {
@@ -48,10 +70,9 @@ int     main()
       std::cerr << "ini" << std::endl;
       return (EXIT_FAILURE);
     }
-
-  EThread toto;
-
-  toto.launch(launch_ia, killer);
+  pthread_t	_thread;
+  if (pthread_create(&_thread, NULL, launch_ia, killer) != 0)
+    return (EXIT_FAILURE);
   while (engine.update() == true)
     engine.draw();
   return EXIT_SUCCESS;

@@ -14,6 +14,7 @@ Crate::Crate(Board &board) : AObj(board, 0, 0), _break(false)
 {
   _type = CRATE;
   _bonus = static_cast<Crate::BonusType>(std::rand() % 4); // remember to initialize the seed !
+  _id = Board::CrateID;
 }
 
 Crate::BonusType	Crate::getBonus() const

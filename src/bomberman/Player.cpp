@@ -8,6 +8,7 @@
 // Last update Sat Jun 13 04:55:24 2015 Jean-Baptiste Grégoire
 //
 
+#include "GameEngine.hh"
 #include "Player.hh"
 
 Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true)
@@ -15,7 +16,6 @@ Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true)
   Bomb	*newone = new Bomb(Board);
 
   _bombs.push_back(newone);
-  _bombThread = new EThreadPool(1);
   _type = PLAYER;
   _dir = Board::North;
 }
@@ -83,14 +83,15 @@ bool	Player::triggerOneBomb()
 
   while (it != _bombs.end())
     {
-      if ((*it)->isLaunched() == false)
+      if (!(*it)->isLaunched())
 	{
 	  (*it)->triggerLaunch();
 	  (*it)->setPos(positions.first, positions.second);
 	  // _bombThread->addWork(run_bomb, (*it));
 	  _board.placeEntity(_x, _y, (*it));
 	  (*it)->setGameObj(new BasicBomb());
-	  (*it)->getGameObj()->setPosition(glm::vec3(true_x, 1, true_y));
+	  (*it)->getGameObj()->setPosition(glm::vec3(true_x, 0.5, true_y));
+	  (*it)->getGameObj()->setScale(glm::vec3(0.003f, 0.003f, 0.003f));
 	  return (true);
 	}
       it++;
@@ -111,19 +112,31 @@ void	Player::powerUpRange()
 
 void	Player::goAllExplosions()
 {
+  std::lock_guard<std::mutex> lock(_mutex);
   for (std::vector<Bomb *>::iterator	it = _bombs.begin() ; it !=_bombs.end() ; it++)
     {
-      if ((*it)->isLaunched())
+      if ((*it)->isLaunched() && (*it)->getGameObj())
 	{
-	  //	  ABomb	*tmp = (*it)->
-	  if (static_cast<ABomb *>((*it)->getGameObj())->isExplosed())
+	  BasicBomb	*tmp = reinterpret_cast<BasicBomb *>((*it)->getGameObj());
+	  if (tmp->isExplosed())
 	    {
-	      AGameObject	*to_del = (*it)->getGameObj();
-	      delete to_del;
+	      // AGameObject	*to_del = (*it)->getGameObj();
+	      // delete to_del;
 	      (*it)->triggerLaunch();
-	      (*it)->setGameObj(NULL);
 	      (*it)->explosion();
 	    }
+	}
+    }
+}
+
+void	Player::update_bombs(gdl::Clock const &clock, Binput &input)
+{
+  for (std::vector<Bomb *>::iterator	it = _bombs.begin() ; it !=_bombs.end() ; it++)
+    {
+      if ((*it)->isLaunched() && (*it)->getGameObj())
+	{
+	  BasicBomb	*tmp = reinterpret_cast<BasicBomb *>((*it)->getGameObj());
+	  tmp->update(clock, input);
 	}
     }
 }
@@ -134,19 +147,21 @@ void	Player::goAllExplosions()
 
 void	Player::checkPosPowerUp()
 {
-  std::vector<AObj *>	all_in = _board.getSquareObjects(static_cast<int>(_x), static_cast<int>(_y));
+  std::lock_guard<std::mutex> lock(_mutex);
+  std::vector<AObj *>	&all_in = _board.getSquareObjects(static_cast<int>(_x), static_cast<int>(_y));
   auto			all_in_it = all_in.begin();
   Crate::BonusType	powerup = Crate::NONE;
 
-  while (all_in_it != all_in.begin())
+  while (all_in_it != all_in.end())
     {
-      if ((*all_in_it)->getId() == -2)
+      if ((*all_in_it)->getId() == -2 && reinterpret_cast<Crate *>((*all_in_it))->isBreak())
 	{
 	  powerup = reinterpret_cast<Crate *>((*all_in_it))->getBonus();
 	  if (powerup == Crate::RANGE)
 	    powerUpRange();
 	  else if (powerup == Crate::ADD)
 	    addBomb();
+	  _board.deleteEntity(_x, _y, 0, false);
 	  return ;
 	}
       all_in_it++;
@@ -157,8 +172,6 @@ void	Player::run_user()
 {
   while (_isAlive)
     {
-      if (!userAction())
-	return ; // If Negative , throw
       checkPosPowerUp();
       goAllExplosions();
     }

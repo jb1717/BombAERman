@@ -13,7 +13,7 @@
 
 # include <vector>
 # include <utility>
-# include "EThreadPool.hh"
+# include <mutex>
 # include "Board.hh"
 # include "Bomb.hh"
 # include "AObj.hh"
@@ -22,7 +22,6 @@
 # include "ABomb.hh"
 
 class	Bomb;
-class	EThreadPool;
 
 enum	keyActions
   {
@@ -45,6 +44,7 @@ public: // Principal functions
   bool					userAction();
   keyActions				commandValue();
   void					checkPosPowerUp();
+  void					update_bombs(gdl::Clock const &, Binput &);
 public: // Player Safety
   bool					is_Alive() const;
   void					triggerAlive();
@@ -61,7 +61,6 @@ private:
   bool			_isAlive;
   std::vector<Bomb *>	_bombs;
   Board::Direction	_dir;
-  EThreadPool		*_bombThread;
 };
 
 #endif // !PLAYER_HH

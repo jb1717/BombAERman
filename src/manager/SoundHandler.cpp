@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Sun May 24 08:37:30 2015 Emmanuel Chambon
-// Last update Fri Jun 12 02:43:59 2015 Emmanuel Chambon
+// Last update Sat Jun 13 01:26:05 2015 Emmanuel Chambon
 //
 
 #include "SoundHandler.hh"
@@ -99,8 +99,11 @@ void SoundHandler::stop()
 		fmodError(_channel->stop());
 }
 
-void SoundHandler::play(std::string const &sound, bool sample)
+void SoundHandler::play(std::string const &sound, bool sample, bool loop)
 {
+	if (loop)
+		fmodError(_sounds[sound]->setMode(FMOD_LOOP_NORMAL));
+
 	if (sample) {
 		fmodError(_system->playSound(_sounds[sound], 0, false, &_channelSample));
 		fmodError(_channelSample->setVolume(_foregroundVolume));

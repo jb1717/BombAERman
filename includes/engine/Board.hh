@@ -16,6 +16,8 @@
 # include <vector>
 # include "AObj.hh"
 # include "AGameObject.hh"
+# include "AFX.hh"
+# include "Explosion.hh"
 
 # define MAP_EMPTY_CHAR	'o'
 
@@ -30,7 +32,7 @@ public:
     };
   enum	IDType
     {
-      Bomb = -3, CrateID = -2, Wall = -1, NoID = 0
+      Explode = -4, Bomb = -3, CrateID = -2, Wall = -1, NoID = 0
     };
 
 public:
@@ -53,7 +55,7 @@ public:
   bool	checkOneCollision(std::vector<AObj *> field, AObj *);
 
 public:
-  std::vector<std::vector<AObj *>>	&getFullBoard();
+  std::vector<std::vector<AObj *> >	&getFullBoard();
   std::vector<Player *>  &getPlayers();
   std::vector<AObj *> &getSquareObjects(size_t x, size_t y);
   std::vector<AObj *>   &operator[](size_t);
@@ -65,6 +67,7 @@ private:
   AObj	*createEntity(Board &board, entityType type);
   AObj  *removeFromSquare(int x, int y, long int id);
   void  updatePos(float x, float y, AObj *obj);
+  std::vector<AObj *> &getCase(int at);
 
 private:
   std::vector<std::vector<AObj *> > _board;

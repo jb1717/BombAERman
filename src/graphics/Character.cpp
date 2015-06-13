@@ -12,21 +12,21 @@
 #include		"GameEngine.hh"
 #include		<cmath>
 
-Character::Character() : AGameModel()
+Character::Character() : AGameModel(), _bombing(false)
 {
 
 }
 
-Character::Character(glm::vec3 const& position) : AGameModel(position)
+Character::Character(glm::vec3 const& position) : AGameModel(position), _bombing(false)
 {
 }
 
-Character::Character(std::string const& filePath) : AGameModel(filePath)
+Character::Character(std::string const& filePath) : AGameModel(filePath), _bombing(false)
 {
 
 }
 
-Character::Character(glm::vec3 const& position, std::string const& filePath) : AGameModel(position, filePath)
+Character::Character(glm::vec3 const& position, std::string const& filePath) : AGameModel(position, filePath), _bombing(false)
 {
 
 }
@@ -43,6 +43,7 @@ void			Character::update(Binput& input, Camera const& camera)
   float			angle = camera.getRotation().y * M_PI / 180;
   bomber::Event	event;
 
+  _bombing = false;
    if (input._default.getKey(SDLK_z) || input.handleEvent(event, bomber::Event::JoyMiddleUp))
     {
       _rotation.y = -1 * camera.getRotation().y;
@@ -67,6 +68,10 @@ void			Character::update(Binput& input, Camera const& camera)
     {
       _rotation.y = camera.getRotation().y + 45.0;
       translate(glm::vec3(cos(camera.getRotation().y + 45.0) * _speed, 0, sin(camera.getRotation().y + 45) * _speed));
+    }
+  if (input._default.getKey(SDLK_SPACE))
+    {
+      _bombing = true;
     }
 }
 
@@ -75,6 +80,7 @@ void			Character::update(UNUSED gdl::Clock const& clock, Binput& input, Camera c
   float			angle = camera.getRotation().y * M_PI / 180;
   bomber::Event	event;
 
+  _bombing = false;
    if (input._default.getKey(SDLK_z) || input.handleEvent(event, bomber::Event::JoyMiddleUp))
     {
       _rotation.y = -1 * camera.getRotation().y;
@@ -99,6 +105,10 @@ void			Character::update(UNUSED gdl::Clock const& clock, Binput& input, Camera c
     {
       _rotation.y = camera.getRotation().y + 45.0;
       translate(glm::vec3(cos(camera.getRotation().y + 45.0) * _speed, 0, sin(camera.getRotation().y + 45) * _speed));
+    }
+  if (input._default.getKey(SDLK_SPACE))
+    {
+      _bombing = true;
     }
 }
 
