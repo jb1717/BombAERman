@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat Jun 13 00:55:20 2015 TommyStarK
-// Last update Sat Jun 13 06:41:03 2015 TommyStarK
+// Last update Sun Jun 14 00:24:32 2015 TommyStarK
 //
 
 #ifndef _CREDITSUI_HH_
