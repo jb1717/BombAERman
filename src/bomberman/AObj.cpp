@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Fri May 15 22:18:52 2015 Jean-Baptiste Grégoire
-// Last update Sun May 17 19:54:23 2015 David Tran
+// Last update Sat Jun 13 01:49:31 2015 Jean-Baptiste Grégoire
 //
 
 #include "AObj.hh"
