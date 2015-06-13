@@ -5,23 +5,54 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:35:33 2015 TommyStarK
-// Last update Sun May 24 17:58:06 2015 TommyStarK
+// Last update Fri Jun 12 23:45:32 2015 TommyStarK
 //
 
 #ifndef  _SETTINGSUI_HH_
 #define _SETTINGSUI_HH_
 
+# include <map>
+# include <vector>
+# include <utility>
+# include <iostream>
+# include <stdexcept>
+# include <unistd.h>
 #include "AUI.hh"
 
 class       SettingsUI : public AUI
 {
 public:
-  SettingsUI();
+  SettingsUI(int, int,const std::string &);
   ~SettingsUI();
 
 public:
-  void       launch();
-  stateUI    handlerEvent();
+  enum Display {NBR = 0, SOUND = 1, QUIT = 2};
+
+private:
+  int                         _width;
+  int                         _height;
+  int                         _behavior;
+  int                         _selected;
+  int                         _fixItems;
+  int                         _dynamicItems;
+  float                       _spreading;
+  std::string                 _name;
+
+private:
+  Geometric                   *_front[3];
+  std::vector<Geometric *>    _items;
+  std::vector<std::string>    _itemsName;
+  std::map<int, float>        _cursor;
+
+
+private:
+  void                        setupDisplay();
+  void                        setupItemsSettings();
+  void                        updateContext();
+
+public:
+  void                        launch();
+  stateUI                     handlerEvent();
 };
 
 #endif /* end of include guard: _SETTINGSUI_HH_ */
