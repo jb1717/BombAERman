@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 15 21:29:13 2015 Jamais
-// Last update Fri Jun 12 11:11:22 2015 Emmanuel Chambon
+// Last update Sat Jun 13 23:59:16 2015 Jean-Baptiste Grégoire
 //
 
 #include        <cstdlib>
@@ -54,6 +54,7 @@ int     main()
   Ia  *killer = new Ia("ia/easy.chai", *board);
   board->placeEntity(1, 1, killer);
   Player	*toto = new Player(*board);
+  toto->setId(1);
   board->placeEntity(5, 5, toto);
   board->initialize();
   board->initGameObjects();
