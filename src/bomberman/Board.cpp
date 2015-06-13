@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Sat Jun 13 03:52:06 2015 Jean-Baptiste Grégoire
+// Last update Sat Jun 13 15:20:56 2015 Jean-Baptiste Grégoire
 //
 
 #include "Board.hh"
@@ -216,30 +216,30 @@ AObj    *Board::removeFromSquare(int x, int y, long int id)
 	  break;
 	}
     }
-  for (std::vector<AObj *>::iterator it = _board[y * _xLength + x + 1].begin(); it != _board[y * _xLength + x].end(); ++it)
+  for (std::vector<AObj *>::iterator it = _board[y * _xLength + x + 1].begin(); it != _board[y * _xLength + x + 1].end(); ++it)
     {
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[y * _xLength + x].erase(it);
+	  _board[y * _xLength + x + 1].erase(it);
 	  break;
 	}
     }
-  for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+  for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x].begin(); it != _board[(y + 1) * _xLength + x].end(); ++it)
     {
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[y * _xLength + x].erase(it);
+	  _board[(y + 1) * _xLength + x].erase(it);
 	  break;
 	}
     }
-  for (std::vector<AObj *>::iterator it = _board[((y + 1)* _xLength) + x + 1].begin(); it != _board[y * _xLength + x].end(); ++it)
+  for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x + 1].begin(); it != _board[(y + 1) * _xLength + x + 1].end(); ++it)
     {
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[y * _xLength + x].erase(it);
+	  _board[(y + 1) * _xLength + x + 1].erase(it);
 	  break;
 	}
     }
