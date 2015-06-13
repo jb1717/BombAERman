@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:35:33 2015 TommyStarK
-// Last update Sat Jun 13 03:47:38 2015 TommyStarK
+// Last update Sat Jun 13 06:26:41 2015 TommyStarK
 //
 
 #ifndef  _SETTINGSUI_HH_
@@ -26,7 +26,7 @@ public:
   ~SettingsUI();
 
 public:
-  enum Display {NBR = 0, SOUND = 1, QUIT = 2};
+  enum Display {ALIASING = 0, MVOLUM = 1, FXVOLUM = 2, QUIT = 3};
 
 private:
   int                         _width;
@@ -39,8 +39,12 @@ private:
   std::string                 _name;
 
 private:
+  int                         _gameVolum;
+  int                         _fxVolum;
+  bool                        _antiAliasing;
+
+private:
   Geometric                   *_front[3];
-  GraphicString               *_text;
   std::vector<Geometric *>    _items;
   std::vector<std::string>    _itemsName;
   std::map<int, float>        _cursor;
@@ -49,6 +53,7 @@ private:
 private:
   void                        setupDisplay();
   void                        setupItemsSettings();
+  void                        itemFocus();
   void                        updateContext();
 
 public:

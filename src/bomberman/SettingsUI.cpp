@@ -5,29 +5,56 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:21:08 2015 TommyStarK
-// Last update Sat Jun 13 04:06:18 2015 TommyStarK
+// Last update Sat Jun 13 06:59:04 2015 TommyStarK
 //
 
 #include "UIManager/SettingsUI.hh"
 
 SettingsUI::SettingsUI(int width, int height, const std::string & winName)
-  : _width(width), _height(height), _spreading(2), _name(winName)
+  : _width(width), _height(height), _spreading(2), _name(winName),
+  _gameVolum(50), _fxVolum(50), _antiAliasing(false)
 {
-  _itemsName.push_back("music");
-  _itemsName.push_back("players");
-  _itemsName.push_back("quit");
+  _itemsName.push_back("aa");
+  _itemsName.push_back("master-volume");
+  _itemsName.push_back("fx-volume");
+  _itemsName.push_back("back");
   _dynamicItems = _itemsName.size();
   _itemsName.push_back("SettingsBackground");
-  _itemsName.push_back("SettingsCursor");
+  _itemsName.push_back("bomb");
   _fixItems = _itemsName.size() - _dynamicItems;
-  _cursor[NBR] = _spreading + 0.5;
-  _text = new GraphicString();
+  _cursor[ALIASING] = _spreading + 0.5;
+  _cursor[MVOLUM] = -0.5;
+  _cursor[FXVOLUM] = -3;
+  _cursor[QUIT] = -6.5;
   this->setName("SettingsUI");
 }
 
 SettingsUI::~SettingsUI()
 {
 
+}
+
+void                          SettingsUI::itemFocus()
+{
+  switch (_behavior) {
+    case 1:
+      _selected = (!_selected ? QUIT : _selected == 1 ? ALIASING : _selected == 2 ? MVOLUM : FXVOLUM);
+      break ;
+    case -1:
+      _selected = (_selected == 3 ? ALIASING : !_selected ? MVOLUM : _selected == 1 ? FXVOLUM : QUIT);
+      break ;
+    default:
+      break;
+  }
+  _behavior = 0;
+  int cursor = _itemsName.size() - _dynamicItems - 1;
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  _front[cursor]->setPosition(glm::vec3(5.5, _cursor[_selected], 12));
+  for (int i = 0; i < _fixItems; i++)
+    _front[i]->draw(_shader, _clock);
+  for (int i = 0; i < _dynamicItems; i++)
+    _items[i]->draw(_shader, _clock);
+  _window->flush();
 }
 
 void                          SettingsUI::setupDisplay()
@@ -51,8 +78,8 @@ void                          SettingsUI::setupItemsSettings()
 {
   auto asset = AssetManager::instance();
   _factory = GeometryFactory::instanciate();
-  _front[0] = new Geometric(glm::vec3(0, 0, 15.1), glm::vec3(), glm::vec3(40, 24, 1));
-  _front[1] = new Geometric(glm::vec3(6.25, 7.35, 12), glm::vec3(), glm::vec3(1.5, 1.5, 1));
+  _front[0] = new Geometric(glm::vec3(0, 0, 15.1), glm::vec3(0, 0, 0), glm::vec3(40, 24, 1));
+  _front[1] = new Geometric(glm::vec3(4.5, _cursor[ALIASING], 12), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
   int fixItems = _itemsName.size() - _dynamicItems;
   for (int i = 0; i < _fixItems; i++) {
     int n = _itemsName.size() - fixItems;
@@ -63,17 +90,13 @@ void                          SettingsUI::setupItemsSettings()
     --fixItems;
   }
   for (int i = 0; i < _dynamicItems; i++) {
-    _items.push_back(new Geometric(glm::vec3(3, _spreading, 10), glm::vec3(), glm::vec3(2.5, 1.15, 1.25)));
+    _items.push_back(new Geometric(glm::vec3(3, _spreading, 10), glm::vec3(0, 0, 0), glm::vec3(1.5, 1.2, 1)));
     _items.back()->setGeometry(_factory->getGeometry(GeometryFactory::VERTICAL_PLANE));
     _items.back()->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))[_itemsName[i]]));
     _items.back()->initialize();
     _items.back()->draw(_shader, _clock);
-    _spreading -= 3;
+    _spreading -= 2.5;
   }
-  _text->setText("SETTINGS");
-  _text->scale(glm::vec3(0.5, 0.5, 0.5));
-  _text->translate(glm::vec3(0, 5.35, 8.25));
-  _text->draw(_shader, _clock);
 }
 
 void                          SettingsUI::updateContext()
@@ -83,7 +106,6 @@ void                          SettingsUI::updateContext()
     i->update(_clock, _input._default);
   for (int i = 0; i < _fixItems; i++)
     _front[i]->update(_clock, _input._default);
-  _text->update(_clock, _input._default);
   _camera.update(_clock, _input);
 }
 
@@ -98,14 +120,26 @@ void                          SettingsUI::launch()
 
 stateUI                       SettingsUI::handlerEvent()
 {
+  _selected = ALIASING;
+  _behavior = ALIASING;
   while (_isRunning)
   {
     usleep(75000);
+    this->itemFocus();
     this->updateContext();
-    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT))
+    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT) ||
+        ((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
+         && _selected == QUIT))
     {
       _isRunning = false;
       break ;
+    }
+    else
+    {
+      if (_input._default.getInput(SDLK_UP))
+        _behavior = 1;
+      else if (_input._default.getInput(SDLK_DOWN))
+        _behavior = -1;
     }
   }
   return (std::tuple<bool, std::string>(true, this->getName()));

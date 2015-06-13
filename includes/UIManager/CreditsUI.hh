@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat Jun 13 00:55:20 2015 TommyStarK
-// Last update Sat Jun 13 04:11:36 2015 TommyStarK
+// Last update Sat Jun 13 06:41:03 2015 TommyStarK
 //
 
 #ifndef _CREDITSUI_HH_
@@ -25,21 +25,21 @@ public:
   CreditsUI();
   ~CreditsUI();
 
+//Private display attributes
 private:
-  Geometric                  *_front[2];
-  GraphicString              *_text;
-  std::vector<std::string>   _itemsName;
+  Geometric                   *_front[3];
+  std::vector<std::string>    _itemsName;
 
 private:
-   void                   setupDisplay();
-   void                   setupItemsCredits();
+   void                       setupDisplay();
+   void                       setupItemsCredits();
 
 private:
-  void                    updateContext();
+  void                        updateContext();
 
 public:
-  void                    launch();
-  stateUI                 handlerEvent();
+  void                        launch();
+  stateUI                     handlerEvent();
 };
 
 #endif /* end of include guard: _CREDITSUI_HH_ */

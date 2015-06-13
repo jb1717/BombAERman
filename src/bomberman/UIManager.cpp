@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 21:02:19 2015 TommyStarK
-// Last update Sat Jun 13 04:14:10 2015 TommyStarK
+// Last update Sat Jun 13 05:43:50 2015 TommyStarK
 //
 
 #include "UIManager/UIManager.hh"
@@ -50,6 +50,8 @@ std::tuple<int, std::string>  UIManager::controller(bool quit, const std::string
     case 1:
         if (ui == "Quit")
           return (std::tuple<int, std::string>(3, ""));
+        else if (ui == "SettingsUI")
+          return (std::tuple<int, std::string>(0, "StartUI"));
     default:
       break ;
   }

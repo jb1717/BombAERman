@@ -5,14 +5,14 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 22:06:02 2015 TommyStarK
-// Last update Sat Jun 13 04:39:19 2015 TommyStarK
+// Last update Sat Jun 13 06:07:36 2015 TommyStarK
 //
 
 #include "UIManager/LauncherUI.hh"
 
 
 LauncherUI::LauncherUI(int width, int height, const std::string & winName)
-  : _width(width), _height(height), _spreading(10), _name(winName)
+  : _width(width), _height(height), _first(false), _spreading(10), _name(winName)
 {
   _itemsName.push_back("play");
   _itemsName.push_back("settings");
@@ -47,10 +47,11 @@ void                        LauncherUI::itemFocus()
       break;
   }
   _behavior = 0;
+  int cursor = _itemsName.size() - _dynamicItems - 1;
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  _front[2]->setPosition(glm::vec3(_cursor[_selected], -4.4 , 12));
-  for (int i = 0; i < 3; i++)
-    _front[i]->draw(_shader, _clock);
+  _front[cursor]->setPosition(glm::vec3(_cursor[_selected], -4.4 , 12));
+  for (auto i : _front)
+    i->draw(_shader, _clock);
   for (auto i : _items)
     i->draw(_shader, _clock);
   _window->flush();
@@ -79,9 +80,9 @@ void                        LauncherUI::setupItemsMenu()
 {
   auto asset = AssetManager::instance();
   _factory = GeometryFactory::instanciate();
-  _front[0] = new Geometric(glm::vec3(0, 0, 15.1), glm::vec3(), glm::vec3(40, 24, 1));
-  _front[1] = new Geometric(glm::vec3(0, 5, 10), glm::vec3(), glm::vec3(10, 2, 1));
-  _front[2] = new Geometric(glm::vec3(_cursor[PLAY], -4.4, 12), glm::vec3(), glm::vec3(1, 1, 1));
+  _front[0] = new Geometric(glm::vec3(0, 0, 15.1), glm::vec3(0, 0, 0), glm::vec3(40, 24, 1));
+  _front[1] = new Geometric(glm::vec3(0, 5, 10), glm::vec3(0, 0, 0), glm::vec3(10, 2, 1));
+  _front[2] = new Geometric(glm::vec3(_cursor[PLAY], -4.4, 12), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
   int fixItems = _itemsName.size() - _dynamicItems;
   for (auto i : _front) {
     int n = _itemsName.size() - fixItems;
@@ -92,7 +93,7 @@ void                        LauncherUI::setupItemsMenu()
     --fixItems;
   }
   for (int i = 0; i < _dynamicItems; i++) {
-    _items.push_back(new Geometric(glm::vec3(_spreading, -5, 10), glm::vec3(), glm::vec3(2.5, 1.15, 1.25)));
+    _items.push_back(new Geometric(glm::vec3(_spreading, -5, 10), glm::vec3(0, 0, 0), glm::vec3(2.5, 1.15, 1.25)));
     _items.back()->setGeometry(_factory->getGeometry(GeometryFactory::VERTICAL_PLANE));
     _items.back()->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))[_itemsName[i]]));
     _items.back()->initialize();
@@ -125,10 +126,16 @@ void                        LauncherUI::launch()
   _window = VideoContext::instanciate();
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  _window->setScreenWidth(_width);
-  _window->setScreenHeight(_height);
-  if (!_window->init())
-    throw std::runtime_error("(LauncherUI::)launch - init VideoContext failed.");
+  if (_first)
+    _window->flush();
+  if (!_first)
+  {
+    _first = true;
+    _window->setScreenWidth(_width);
+    _window->setScreenHeight(_height);
+    if (!_window->init())
+      throw std::runtime_error("(LauncherUI::)launch - init VideoContext failed.");
+  }
   this->setupDisplay();
 }
 

@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 21:39:13 2015 TommyStarK
-// Last update Fri Jun 12 22:20:34 2015 TommyStarK
+// Last update Sat Jun 13 05:47:54 2015 TommyStarK
 //
 
 #ifndef _LAUNCHERUI_HH_
@@ -39,6 +39,7 @@ private:
   int                         _behavior;
   int                         _selected;
   int                         _dynamicItems;
+  bool                        _first;
   float                       _spreading;
   std::string                 _name;
 
