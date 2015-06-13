@@ -5,9 +5,10 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Sat Jun 13 19:18:24 2015 Hugo Prenat
+// Last update Sun Jun 14 00:05:25 2015 Hugo Prenat
 //
 
+#include "GameEngine.hh"
 #include "Ia.hh"
 #include "Node.hh"
 
@@ -56,6 +57,7 @@ void	Ia::run_user()
 
 bool	Ia::chooseDir(const int dir)
 {
+  std::lock_guard<std::mutex> lock(_mutex);
   std::cout << "Before x = " << _x << " y = " << _y << std::endl;
   selectDirection(static_cast<Board::Direction>(dir));
   std::cout << "Afteer x = " << _x << " y = " << _y << std::endl;
@@ -69,6 +71,7 @@ Board&	Ia::getBoard() const
 
 std::map<float, AObj *>& Ia::getMapEnemy() const
 {
+  std::lock_guard<std::mutex> lock(_mutex);
   std::vector<std::vector<AObj *>>  v = _board.getFullBoard();
   std::map<float, AObj *>           *enemy = new std::map<float, AObj *>;
 
