@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Fri May 15 22:18:39 2015 Jean-Baptiste Grégoire
-// Last update Sat Jun  6 00:56:38 2015 Jamais
+// Last update Sat Jun 13 01:11:30 2015 Jean-Baptiste Grégoire
 //
 
 #ifndef AOBJ_HH_
@@ -31,8 +31,8 @@ public:
 public:
   void				setPos(float x, float y);
   std::pair<float, float>	getPos() const;
-  void				setId(int);
-  int				getId(void) const;
+  void				setId(long int);
+  long int			getId(void) const;
 public:
   AGameObject			*getGameObj() const;
   void				setGameObj(AGameObject *);
@@ -44,7 +44,7 @@ protected:
   entityType	_type;
   float		_x;
   float		_y;
-  int		_id;
+  long int	_id;
   AGameObject	*_gameObj;
 };
 

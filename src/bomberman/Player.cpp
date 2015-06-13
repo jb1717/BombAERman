@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:33:50 2015 David Tran
-// Last update Wed May 20 14:13:06 2015 David Tran
+// Last update Sat Jun 13 04:55:24 2015 Jean-Baptiste Grégoire
 //
 
 #include "Player.hh"
@@ -17,6 +17,7 @@ Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true)
   _bombs.push_back(newone);
   _bombThread = new EThreadPool(1);
   _type = PLAYER;
+  _dir = Board::North;
 }
 
 bool		Player::playerSpawn(float x, float y, Board::Direction direction, int Id)
@@ -192,6 +193,7 @@ bool	Player::selectDirection(Board::Direction direc)
 
 bool	Player::turnLeft()
 {
+  std::cout << "turnLeft" << std::endl;
   _dir = static_cast<Board::Direction>((_dir + 1) % 4);
   if (!_board.moveEntity(_x, _y, _id, _dir))
     return (false);
@@ -203,6 +205,7 @@ bool	Player::turnLeft()
 
 bool	Player::turnRight()
 {
+  std::cout << "turnRight" << std::endl;
   _dir = static_cast<Board::Direction>((_dir - 1) >= 0 ? _dir - 1 : 3);
   if (!_board.moveEntity(_x, _y, _id, _dir))
     return (false);
@@ -214,6 +217,7 @@ bool	Player::turnRight()
 
 bool	Player::goAhead()
 {
+  std::cout << "goAhead" << std::endl;
   if (!_board.moveEntity(_x, _y, _id, _dir))
     return (false);
   float	true_x = (_board.getWidth() / 2) - _x;
@@ -224,6 +228,7 @@ bool	Player::goAhead()
 
 bool	Player::goBack()
 {
+  std::cout << "goBack" << std::endl;
   _dir = static_cast<Board::Direction>((_dir + 2) % 4);
   if (!_board.moveEntity(_x, _y, _id, _dir))
     return (false);

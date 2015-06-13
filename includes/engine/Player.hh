@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Wed May 20 12:00:49 2015 David Tran
+// Last update Sat Jun 13 01:42:11 2015 Jean-Baptiste Grégoire
 //
 
 #ifndef PLAYER_HH_
@@ -20,8 +20,6 @@
 # include "Crate.hh"
 # include "BasicBomb.hh"
 # include "ABomb.hh"
-
-# define PLAYER_CHAR	'p'
 
 class	Bomb;
 class	EThreadPool;

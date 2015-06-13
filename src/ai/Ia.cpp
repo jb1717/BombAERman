@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Sat Jun 13 00:10:38 2015 Hugo Prenat
+// Last update Sat Jun 13 01:45:03 2015 Jean-Baptiste Grégoire
 //
 
 #include "Ia.hh"
@@ -82,23 +82,23 @@ std::map<float, AObj *>& Ia::getMapEnemy()
   return (*enemy);
 }
 
-int		Ia::getCloserEnemy()
+long int		Ia::getCloserEnemy()
 {
-  int	id = 0;
+  long int	id = 0;
   return (id);
 }
 
-int   Ia::getDistance(int id)
+long int   Ia::getDistance(long int id)
 {
   // todo !
   (void)id;
   return (0);
 }
 
-int   Ia::getCloserAvailableEnemy()
+long int   Ia::getCloserAvailableEnemy()
 {
   std::map<float, AObj *>   enemy = getMapEnemy();
-  int id(0);
+  long int id(0);
 
   for (auto it = enemy.begin(); it != enemy.end(); ++it)
   {
@@ -113,7 +113,7 @@ int   Ia::getCloserAvailableEnemy()
   return (id);
 }
 
-void	Ia::getPosById(const int id)
+void	Ia::getPosById(const long int id)
 {
   std::vector<std::vector<AObj *>>           v = _board.getFullBoard();
 

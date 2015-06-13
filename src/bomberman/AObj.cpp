@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Fri May 15 22:18:52 2015 Jean-Baptiste Grégoire
-// Last update Sun May 17 19:54:23 2015 David Tran
+// Last update Sat Jun 13 01:49:31 2015 Jean-Baptiste Grégoire
 //
 
 #include "AObj.hh"
@@ -13,6 +13,7 @@
 AObj::AObj(Board &board, float x, float y) : _board(board), _x(x), _y(y)
 {
   _gameObj = NULL;
+  _id = reinterpret_cast<long int>(this);
 }
 
 void  AObj::setPos(float x, float y)
@@ -26,12 +27,12 @@ std::pair<float, float> AObj::getPos() const
   return (std::pair<float, float>(_x, _y));
 }
 
-void	AObj::setId(int id)
+void	AObj::setId(long int id)
 {
   _id = id;
 }
 
-int		AObj::getId(void) const
+long int	AObj::getId(void) const
 {
   return (_id);
 }

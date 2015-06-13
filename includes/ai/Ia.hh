@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:12:42 2015 Hugo Prenat
-// Last update Thu Jun 11 15:59:50 2015 Hugo Prenat
+// Last update Sat Jun 13 01:14:46 2015 Jean-Baptiste Grégoire
 //
 
 #ifndef IA_HH_
@@ -28,13 +28,13 @@ public:
   bool			userAction();
   void			run_user();
   bool			chooseDir(const int dir);
-  int			getCloserEnemy();		// Return Enemy Id
-  void			getPosById(const int id);	// Set _enemyX _enemyY to Id Pos
+  long int		getCloserEnemy();		// Return Enemy Id
+  void			getPosById(const long int id);	// Set _enemyX _enemyY to Id Pos
   std::map<float, AObj *>& getMapEnemy();
 
 public:
-  int       getDistance(int id);
-  int       getCloserAvailableEnemy();
+  long int       getDistance(long int id);
+  long int       getCloserAvailableEnemy();
 
 private:
   int				_key;

@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Fri Jun 12 03:51:28 2015 Jamais
+// Last update Sat Jun 13 03:52:06 2015 Jean-Baptiste Grégoire
 //
 
 #include "Board.hh"
@@ -99,7 +99,7 @@ AObj  *Board::createEntity(Board &board, entityType type)
 	}
 }
 
-bool Board::placeEntity(float x, float y, entityType type, int id, Direction dir)
+bool Board::placeEntity(float x, float y, entityType type, long int id, Direction dir)
 {
 	int to = static_cast<int>(y) * _xLength + static_cast<int>(x);
 	AObj  *obj;
@@ -132,7 +132,7 @@ bool Board::placeEntity(float x, float y, AObj *entity)
 	return (true);
 }
 
-void Board::popEntity(int x, int y, int id)
+void Board::popEntity(int x, int y, long int id)
 {
 	for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
 	{
@@ -141,7 +141,7 @@ void Board::popEntity(int x, int y, int id)
 	}
 }
 
-void Board::deleteEntity(float x, float y, int id, bool breakWall)
+void Board::deleteEntity(float x, float y, long int id, bool breakWall)
 {
 	int posx = static_cast<int>(x), posy = static_cast<int>(y);
 	std::vector<AObj *>   tmp = _board[posy * _xLength + posx];
@@ -184,43 +184,43 @@ void Board::setExplosion(float x, float y)
 		_board[pos].push_back(exp);
 }
 
-AObj    *Board::removeFromSquare(int x, int y, int id)
+AObj    *Board::removeFromSquare(int x, int y, long int id)
 {
-	AObj  *tmp;
+	AObj  *tmp = NULL;
 
 	for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
 	{
 		if ((*it)->getId() == id)
 		{
-			tmp = *it;
-			_board[y * _xLength + x].erase(it);
-			break;
+		  tmp = *it;
+		  _board[y * _xLength + x].erase(it);
+		  break;
 		}
 	}
-	for (std::vector<AObj *>::iterator it = _board[y * _xLength + x + 1].begin(); it != _board[y * _xLength + x].end(); ++it)
+	for (std::vector<AObj *>::iterator it = _board[y * _xLength + x + 1].begin(); it != _board[y * _xLength + x + 1].end(); ++it)
 	{
 		if ((*it)->getId() == id)
 		{
 			tmp = *it;
-			_board[y * _xLength + x].erase(it);
+			_board[y * _xLength + x + 1].erase(it);
 			break;
 		}
 	}
-	for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+	for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x].begin(); it != _board[(y + 1) * _xLength + x].end(); ++it)
 	{
 		if ((*it)->getId() == id)
 		{
 			tmp = *it;
-			_board[y * _xLength + x].erase(it);
+			_board[(y + 1) * _xLength + x].erase(it);
 			break;
 		}
 	}
-	for (std::vector<AObj *>::iterator it = _board[((y + 1)* _xLength) + x + 1].begin(); it != _board[y * _xLength + x].end(); ++it)
+	for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x + 1].begin(); it != _board[(y + 1) * _xLength + x + 1].end(); ++it)
 	{
 		if ((*it)->getId() == id)
 		{
 			tmp = *it;
-			_board[y * _xLength + x].erase(it);
+			_board[(y + 1) * _xLength + x + 1].erase(it);
 			break;
 		}
 	}
@@ -255,7 +255,7 @@ void Board::updatePos(float x, float y, AObj *obj)
 	}
 }
 
-bool Board::moveEntity(float x, float y, int id, Direction dir)
+bool Board::moveEntity(float x, float y, long int id, Direction dir)
 {
 	float toX = x, toY = y;
 	int posX = static_cast<int>(x), posY = static_cast<int>(y);
@@ -268,31 +268,35 @@ bool Board::moveEntity(float x, float y, int id, Direction dir)
 			toY -= 0.1;
 		else
 			toY = -1.0;
+		break ;
 	case South:
 		if (y < _yLength)
 			toY += 0.1;
 		else
 			toY = -1.0;
+		break ;
 	case East:
 		if (x > 0)
 			toX -= 0.1;
 		else
 			toX = -1.0;
+		break ;
 	case West:
 		if (x < _xLength)
 			toX += 0.1;
 		else
 			toX = -1.0;
-	default: return(false);
+		break ;
+	default: return(false); break;
 	}
-	if (toX == -1.0 || toY == -1.0)
-		return (false);
+	if (toX == -1.0 || toY == -1.0) {
+	  return (false); }
 	tmp = removeFromSquare(posX, posY, id);
 	updatePos(toX, toY, tmp);
 	return (true);
 }
 
-void Board::removePlayer(int id)
+void Board::removePlayer(long int id)
 {
 	for (std::vector<Player *>::iterator it = _players.begin(); it != _players.end(); ++it)
 	{
