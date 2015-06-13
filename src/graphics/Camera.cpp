@@ -41,6 +41,8 @@ bool		Camera::setupCamera(VideoContext const& context)
 
 void		Camera::update(UNUSED gdl::Clock const& clock, Binput& input)
 {
+  bomber::Event event;
+
   if (input._default.getMouseWheel().y)
     zoom(0.05 * input._default.getMouseWheel().y);
   if (input._default.getKey(SDL_BUTTON_LEFT))
@@ -50,17 +52,17 @@ void		Camera::update(UNUSED gdl::Clock const& clock, Binput& input)
       glm::vec3	delta(input._default.getMouseDelta().x * -0.1, input._default.getMouseDelta().y * 0.1, 0);
       _target += delta;
     }
-  if (input._default.getKey(SDLK_KP_PLUS))
+  if (input._default.getKey(SDLK_KP_PLUS) || input.handleEvent(event, bomber::Event::TriggerLT))
     rotate(glm::vec3(-1, 0, 0), 0.10f);
-  if (input._default.getKey(SDLK_KP_MINUS))
+  if (input._default.getKey(SDLK_KP_MINUS) || input.handleEvent(event, bomber::Event::TriggerRT))
     rotate(glm::vec3(1, 0, 0), 0.10f);
-  if (input._default.getKey(SDLK_UP))
+  if (input._default.getKey(SDLK_UP) || input.handleEvent(event, bomber::Event::JoyRightUp))
     move(glm::vec3(0, 0, 1));
-  if (input._default.getKey(SDLK_DOWN))
+  if (input._default.getKey(SDLK_DOWN) || input.handleEvent(event, bomber::Event::JoyRightDown))
     move(glm::vec3(0, 0, -1));
-  if (input._default.getKey(SDLK_LEFT))
+  if (input._default.getKey(SDLK_LEFT) || input.handleEvent(event, bomber::Event::JoyRightLeft))
     move(glm::vec3(1, 0, 0));
-  if (input._default.getKey(SDLK_RIGHT))
+  if (input._default.getKey(SDLK_RIGHT) || input.handleEvent(event, bomber::Event::JoyRightRight))
     move(glm::vec3(-1, 0, 0));
   if (_position == _target)
     _target += glm::vec3(1, 1, 1);

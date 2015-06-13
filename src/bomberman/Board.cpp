@@ -99,7 +99,7 @@ AObj  *Board::createEntity(Board &board, entityType type)
 	}
 }
 
-bool Board::placeEntity(float x, float y, entityType type, int id, Direction dir)
+bool Board::placeEntity(float x, float y, entityType type, long int id, Direction dir)
 {
 	int to = static_cast<int>(y) * _xLength + static_cast<int>(x);
 	AObj  *obj;
@@ -132,7 +132,7 @@ bool Board::placeEntity(float x, float y, AObj *entity)
 	return (true);
 }
 
-void Board::popEntity(int x, int y, int id)
+void Board::popEntity(int x, int y, long int id)
 {
 	for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
 	{
@@ -141,7 +141,7 @@ void Board::popEntity(int x, int y, int id)
 	}
 }
 
-void Board::deleteEntity(float x, float y, int id, bool breakWall)
+void Board::deleteEntity(float x, float y, long int id, bool breakWall)
 {
 	int posx = static_cast<int>(x), posy = static_cast<int>(y);
 	std::vector<AObj *>   tmp = _board[posy * _xLength + posx];
@@ -184,7 +184,7 @@ void Board::setExplosion(float x, float y)
 		_board[pos].push_back(exp);
 }
 
-AObj    *Board::removeFromSquare(int x, int y, int id)
+AObj    *Board::removeFromSquare(int x, int y, long int id)
 {
 	AObj  *tmp;
 
@@ -255,7 +255,7 @@ void Board::updatePos(float x, float y, AObj *obj)
 	}
 }
 
-bool Board::moveEntity(float x, float y, int id, Direction dir)
+bool Board::moveEntity(float x, float y, long int id, Direction dir)
 {
 	float toX = x, toY = y;
 	int posX = static_cast<int>(x), posY = static_cast<int>(y);
@@ -292,7 +292,7 @@ bool Board::moveEntity(float x, float y, int id, Direction dir)
 	return (true);
 }
 
-void Board::removePlayer(int id)
+void Board::removePlayer(long int id)
 {
 	for (std::vector<Player *>::iterator it = _players.begin(); it != _players.end(); ++it)
 	{

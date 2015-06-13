@@ -42,13 +42,13 @@ public:
   void			initGameObjects();
 
 public:
-  bool  placeEntity(float x, float y, entityType type, int id, Direction dir = North);
+  bool  placeEntity(float x, float y, entityType type, long int id, Direction dir = North);
   bool  placeEntity(float x, float y, AObj *entity);
-  bool  moveEntity(float x, float y, int id, Direction dir);
-  void	deleteEntity(float x, float y, int id = 0, bool breakWall = false);
+  bool  moveEntity(float x, float y, long int id, Direction dir);
+  void	deleteEntity(float x, float y, long int id = 0, bool breakWall = false);
   void	setExplosion(float x, float y);
-  void  popEntity(int x, int y, int id);
-  void	removePlayer(int id);
+  void  popEntity(int x, int y, long int id);
+  void	removePlayer(long int id);
   bool	collideAround(AObj *, long int x, long int y);
   bool	checkOneCollision(std::vector<AObj *> field, AObj *);
 
@@ -63,7 +63,7 @@ public:
 
 private:
   AObj	*createEntity(Board &board, entityType type);
-  AObj  *removeFromSquare(int x, int y, int id);
+  AObj  *removeFromSquare(int x, int y, long int id);
   void  updatePos(float x, float y, AObj *obj);
 
 private:

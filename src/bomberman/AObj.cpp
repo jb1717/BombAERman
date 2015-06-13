@@ -13,6 +13,7 @@
 AObj::AObj(Board &board, float x, float y) : _board(board), _x(x), _y(y)
 {
   _gameObj = NULL;
+  _id = reinterpret_cast<long int>(this);
 }
 
 void  AObj::setPos(float x, float y)
@@ -26,12 +27,12 @@ std::pair<float, float> AObj::getPos() const
   return (std::pair<float, float>(_x, _y));
 }
 
-void	AObj::setId(int id)
+void	AObj::setId(long int id)
 {
   _id = id;
 }
 
-int		AObj::getId(void) const
+long int		AObj::getId(void) const
 {
   return (_id);
 }
