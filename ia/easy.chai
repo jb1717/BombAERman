@@ -3,7 +3,7 @@ while(iaAlive())
 {
   if (i % 500000 == 0)
   {
-    //iaChooseDir(East)
+    iaChooseDir(East)
     //iaDropBomb()
     print("lol")
     print(iaCloserEnemy())

@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sat Jun 13 13:57:19 2015 Hugo Prenat
+## Last update Sat Jun 13 14:54:49 2015 Jean-Baptiste Grégoire
 ##
 
 GRAPHICALGAME	=	yes
@@ -201,11 +201,11 @@ FIRST		:=	$(shell test -d $(BINARY_DIR)		|| mkdir $(BINARY_DIR))		\
 			$(shell test -d $(BOMBERMAN_OBJ_DIR)	|| mkdir $(BOMBERMAN_OBJ_DIR))
 
 all		:
-			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS)' MAKEFLAGS='$(MAKEFLAGS) -j -l4'
+			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS)' MAKEFLAGS='$(MAKEFLAGS) -j4 -l4'
 
 
 debug		:	$(FIRST) fclean
-			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS) -g3' MAKEFLAGS='$(MAKEFLAGS) -j -l4'
+			@$(MAKE) $(BOMBERMAN) CC=$(CC) CFLAGS='$(CFLAGS) -g3' MAKEFLAGS='$(MAKEFLAGS) -j4 -l4'
 
 $(BOMBERMAN)	:	$(PRO)
 ifeq	($(LINKING), yes)
