@@ -12,8 +12,8 @@
 
 Bomb::Bomb(Board &Board, bool Launch, char Range) : AObj(Board), launched(Launch), range(Range)
 {
-  //  bombThread = new EThread;
   _type = BOMB;
+  _id = Board::Bomb;
 }
 
 Bomb::~Bomb()
@@ -27,31 +27,90 @@ bool	Bomb::isLaunched() const
 void	Bomb::triggerLaunch()
 {
   launched = !launched;
-  if (launched)
-    _time = std::chrono::steady_clock::now();
 }
 
 void	Bomb::explosion()
 {
-  for (float i = 1.0; i < static_cast<float>(range + 1); ++i)
+  int	x = _x, y = _y;
+  std::vector<AObj *> tmp;
+  for (int i = 1; i < range + 1; ++i)
   {
-    _board.deleteEntity(_x, _y - i);
-    _board.setExplosion(_x, _y - i);
-    _board.deleteEntity(_x, _y + i);
-    _board.setExplosion(_x, _y + i);
-    _board.deleteEntity(_x - i, _y);
-    _board.setExplosion(_x - i, _y);
-    _board.deleteEntity(_x + i, _y - i);
-    _board.setExplosion(_x + i, _y - i);
+    if (y - i > 0)
+      {
+	tmp = _board.getSquareObjects(x, y - i);
+	if ((tmp.size() != 0 && tmp.front()->getType() != BOMB && tmp.front()->getType() != PLAYER) || (tmp.size() != 0 && tmp.front()->getType() == CRATE && reinterpret_cast<Crate *>(tmp.front())->isBreak()))
+	  {
+	    _board.deleteEntity(x, y - i);
+	    _board.setExplosion(x, y - i);
+	    i = range + 1;
+	  }
+	else
+	  {
+	    _board.deleteEntity(x, y - i);
+	    _board.setExplosion(x, y - i);
+	  }
+      }
   }
+  for (int i = 1; i < range + 1; ++i)
+  {
+    if (static_cast<size_t>(y + i) < _board.getHeight())
+      {
+	tmp = _board.getSquareObjects(x, y + i);
+	if ((tmp.size() != 0 && tmp.front()->getType() != BOMB && tmp.front()->getType() != PLAYER) || (tmp.size() != 0 && tmp.front()->getType() == CRATE && reinterpret_cast<Crate *>(tmp.front())->isBreak()))
+	  {
+	    _board.deleteEntity(x, y + i);
+	    _board.setExplosion(x, y + i);
+	    i = range + 1;
+	  }
+	else
+	  {
+	    _board.deleteEntity(x, y + i);
+	    _board.setExplosion(x, y + i);
+	  }
+      }
+  }
+  for (int i = 1; i < range + 1; ++i)
+  {
+    if (x - i > 0)
+      {
+	tmp = _board.getSquareObjects(x - i, y);
+	if ((tmp.size() != 0 && tmp.front()->getType() != BOMB && tmp.front()->getType() != PLAYER) || (tmp.size() != 0 && tmp.front()->getType() == CRATE && reinterpret_cast<Crate *>(tmp.front())->isBreak()))
+	  {
+	    _board.deleteEntity(x - i, y);
+	    _board.setExplosion(x - i, y);
+	    i = range + 1;
+	  }
+	else
+	  {
+	    _board.deleteEntity(x - i, y);
+	    _board.setExplosion(x - i, y);
+	  }
+      }
+  }
+  for (int i = 1; i < range + 1; ++i)
+  {
+    if (static_cast<size_t>(x + i) < _board.getWidth())
+      {
+	tmp = _board.getSquareObjects(x + i, y);
+	if ((tmp.size() != 0 && tmp.front()->getType() != BOMB && tmp.front()->getType() != PLAYER) || (tmp.size() != 0 && tmp.front()->getType() == CRATE && reinterpret_cast<Crate *>(tmp.front())->isBreak()))
+	  {
+	    _board.deleteEntity(x + i, y);
+	    _board.setExplosion(x + i, y);
+	    i = range + 1;
+	  }
+	else
+	  {
+	    _board.deleteEntity(x + i, y);
+	    _board.setExplosion(x + i, y);
+	  }
+      }
+  }
+  _board.deleteEntity(x, y);
 }
 
 bool	Bomb::explosion_check()
 {
-  std::chrono::steady_clock::time_point timeNow = std::chrono::steady_clock::now();
-  if (launched && (std::chrono::duration_cast<std::chrono::duration<int>>(timeNow - _time)).count() > 3)
-    return (true);
-  return (false);
+  return (true);
 }
 
 char	Bomb::getRange() const

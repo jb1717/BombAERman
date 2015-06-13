@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Mon Jun  1 10:02:54 2015 Emmanuel Chambon
-// Last update Sat Jun  6 00:47:38 2015 Jamais
+// Last update Sat Jun 13 01:36:58 2015 Emmanuel Chambon
 //
 
 #include "ModelHandler.hh"
@@ -34,7 +34,10 @@ void ModelHandler::load()
 		try {
 			while ((ent = readdir (dir)) != NULL) {
 				if (std::string(ent->d_name)[0] != '.' && std::regex_match(ent->d_name, std::regex("((.*)\\.(fbx))")))
-					loadModel("assets/models/" + std::string(ent->d_name), ent->d_name);
+					// loadModel("assets/models/" + std::string(ent->d_name), ent->d_name);
+
+
+                	_models[ent->d_name] = new AGameModel("assets/models/" + std::string(ent->d_name));;
 			}
 		} catch (std::invalid_argument &e) {
 			std::cerr << e.what() << std::endl;
@@ -47,10 +50,10 @@ void ModelHandler::load()
 
 void ModelHandler::loadModel(std::string const &path, std::string const &name)
 {
-	std::shared_ptr<AGameModel> model = std::make_shared<AGameModel>(path);
-
-	std::lock_guard<std::mutex> guard(_mutex);
-	_models[name] = model;
+	// std::shared_ptr<AGameModel> model = std::make_shared<AGameModel>(path);
+    //
+	// std::lock_guard<std::mutex> guard(_mutex);
+	// _models[name] = model;
 }
 
 AGameModel                  &ModelHandler::operator[](std::string const &at)

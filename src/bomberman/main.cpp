@@ -5,17 +5,17 @@
 // Login   <paasch_j@epitech.net>
 //
 // Started on  Mon Apr 27 11:27:27 2015 Johan Paasche
-// Last update Thu May 28 02:17:09 2015 Emmanuel Chambon
+// Last update Sat Jun 13 07:11:18 2015 Milox Thomas
 //
 
 #include	"Bomberman.hh"
 #include	"UIManager/UIManager.hh"
-#include    "AssetManager.hh"
+// #include    "AssetManager.hh"
 
 int	main()
 {
-  try {
-    AssetManager::instance();
+  // try {
+    // AssetManager::instance();
 
     // ScoreHandler  test;
     // test.debug();
@@ -32,10 +32,11 @@ int	main()
     // for (BestScores::iterator i = top->begin(); i != top->end(); i++)
     //   std::cout << (*i).best << std::endl;
 
-    // UIManager();
+    UIManager();
 
-    Bomberman();
-  } catch (std::exception &e) {
-    std::cerr << e.what() << std::endl;
-  }
+    // Bomberman();
+  // } catch (std::exception &e) {
+  //   std::cerr << e.what() << std::endl;
+  // }
+    return (0);
 }

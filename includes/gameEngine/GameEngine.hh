@@ -11,6 +11,7 @@
 #ifndef			___GAMEENGINE_HH___
 # define		___GAMEENGINE_HH___
 
+# include		<mutex>
 # include		"graphics.hh"
 
 # include		"VideoContext.hh"
@@ -29,6 +30,7 @@ extern gdl::Texture	*texFloor;
 extern gdl::Texture	*texCrate;
 extern gdl::Texture	*texWall;
 extern VideoContext	*V;
+extern std::mutex	_mutex;
 
 # define		FRAGMENT_SHADER		"shaders/fragmentShader"
 # define		VERTEX_SHADER		"shaders/vertexShader"

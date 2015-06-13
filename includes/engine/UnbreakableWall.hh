@@ -12,6 +12,7 @@
 # define UNBREAKABLEWALL_HH_
 
 # include "AObj.hh"
+# include "Board.hh"
 
 class Board;
 
@@ -20,7 +21,6 @@ class UnbreakableWall : public AObj
 public:
   UnbreakableWall(Board &board);
   ~UnbreakableWall();
-  
 };
 
 #endif // !UNBREAKABLEWALL_HH_

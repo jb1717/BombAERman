@@ -13,6 +13,7 @@
 
 # include <cstdlib>
 # include "AObj.hh"
+# include "Board.hh"
 
 class		Crate : public AObj
 {
