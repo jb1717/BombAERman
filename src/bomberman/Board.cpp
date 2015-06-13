@@ -15,6 +15,7 @@
 #include "Explosion.hh"
 #include "Cube.hh"
 #include "GameEngine.hh"
+#include "Bonus.hh"
 
 Board::Board(size_t xLength, size_t yLength) : _xLength(xLength + 2), _yLength(yLength + 2)
 {
@@ -39,14 +40,14 @@ bool Board::initialize()
 	    {
 	    case CRATE:
 	      {
-		obj = new Cube(glm::vec3(true_x, 1, true_y));
+		obj = new Cube(glm::vec3(true_x, 0.5, true_y));
 		obj->setTexture(*texCrate);
 		(*internIt)->setGameObj(obj);
 		break;
 	      }
 	    case UNBREAKABLE_WALL:
 	      {
-		obj = new Cube(glm::vec3(true_x, 1, true_y));
+		obj = new Cube(glm::vec3(true_x, 0.5, true_y));
 		// obj = new Cube(glm::vec3(-5 + (x / _xLength), 0, -5 + (x % _yLength)));
 		//		obj = new Cube(glm::vec3((_xLength / 2 ) - (x / _xLength), 1, (x % _yLength) / 2 - (x % _yLength) / 2));
 		obj->setTexture(*texWall);
@@ -165,6 +166,9 @@ void Board::deleteEntity(float x, float y, int id, bool breakWall)
 		   !(reinterpret_cast<Crate *>(*it)->isBreak()))
 	    {
 	      reinterpret_cast<Crate *>(*it)->breakIt();
+	      // (*it)->setGameObj(new Bonus((*it)->getGameObj()->getPosition()));
+	      // reinterpret_cast<Bonus *>((*it)->getGameObj())->load("./assets/models/bonusPower.fbx");
+	      // (*it)->getGameObj()->setColor(glm::vec4(1.0f, 0.8f, 0.8f, 1.0f));
 	      ++it;
 	    }
 	  else

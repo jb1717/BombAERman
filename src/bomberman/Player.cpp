@@ -89,7 +89,7 @@ bool	Player::triggerOneBomb()
 	  // _bombThread->addWork(run_bomb, (*it));
 	  _board.placeEntity(_x, _y, (*it));
 	  (*it)->setGameObj(new BasicBomb());
-	  (*it)->getGameObj()->setPosition(glm::vec3(true_x, 1, true_y));
+	  (*it)->getGameObj()->setPosition(glm::vec3(true_x, 0.5, true_y));
 	  (*it)->getGameObj()->setScale(glm::vec3(0.003f, 0.003f, 0.003f));
 	  return (true);
 	}
