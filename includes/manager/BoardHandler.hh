@@ -14,14 +14,6 @@
 #ifndef BOARDHANDLER_HH_
 #define BOARDHANDLER_HH_
 
-#include <vector>
-#include <random>
-#include <iostream>
-#include <memory>
-#include <stdexcept>
-#include <dirent.h>
-#include <future>
-#include <mutex>
 #include "AObj.hh"
 #include "Board.hh"
 #include "AAsset.hh"
@@ -35,29 +27,29 @@ class BoardHandler : public AAsset
 {
 public:
     BoardHandler();
-    ~BoardHandler() {}
 
 public:
     // Public typedefs
-    struct  board_t
+    typedef struct              board_s
     {
         std::string             name;
         std::string             thumbnail;
         std::shared_ptr<Board>  board;
-    };
+    }                           board_t;
 
 public:
     // Public functions
-    void                                        save(std::shared_ptr<Board> const&, std::string const &name) const;
+    void                                        save(std::shared_ptr<Board> const&, std::string const &) const;
     void                                        generate(int = 42, int = 42);
     void                                        load(std::string const &);
 
 public:
     // Public accessors
-    Board                                       &operator[](ssize_t);
-    BoardHandler::board_t                       at(ssize_t);
+    Board                                       &operator[](long int) const;
+    Board                                       &operator[](std::string const &) const;
+    BoardHandler::board_t                       at(long int) const;
     std::vector<BoardHandler::board_t>          getBoards() const;
-    friend std::ostream&    	                operator<<(std::ostream&, BoardHandler const &);
+    std::vector<std::string>                    getBoardsNames() const;
 
 private:
     // Private functions

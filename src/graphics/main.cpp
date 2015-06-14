@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 15 21:29:13 2015 Jamais
-// Last update Sat Jun 13 15:19:08 2015 Emmanuel Chambon
+// Last update Sun Jun 14 08:37:31 2015 Emmanuel Chambon
 //
 
 #include        <cstdlib>
@@ -50,15 +50,10 @@ int     main()
   auto asset = AssetManager::instance();
   GameEngine engine;
 
-  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[1]);
+  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
 
-  Ia  *killer = new Ia("ia/easy.chai", *board);
-  board->placeEntity(1, 1, killer);
-  Player	*toto = new Player(*board);
-  toto->setId(1);
-  killer->setId(5);
-  board->placeEntity(5, 5, toto);
-  // board->spawnPlayers(8);
+
+  board->spawnPlayers(2, 5, "easy.chai");
   board->initialize();
   board->initGameObjects();
 
@@ -74,16 +69,7 @@ int     main()
       std::cerr << "ini" << std::endl;
       return (EXIT_FAILURE);
     }
-  // std::thread	t1(launch_play, std::ref(board->getPlayers().front()));
-  // std::cout << board->getPlayers().front()->getId() << std::endl;
-  // if (pthread_create(&_thread, NULL, launch_play, toto) != 0)
-  //   return (EXIT_FAILURE);
-  pthread_t	_thread;
-  if (pthread_create(&_thread, NULL, launch_ia, killer) != 0)
-    return (EXIT_FAILURE);
-  pthread_t	_threadT;
-  if (pthread_create(&_threadT, NULL, launch_play, toto) != 0)
-    return (EXIT_FAILURE);
+  std::thread	t1(launch_play, std::ref(board->getPlayers().front()));
   while (engine.update() == true)
     engine.draw();
   return EXIT_SUCCESS;

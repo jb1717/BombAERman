@@ -8,6 +8,7 @@
 // Last update Sat Jun 13 01:45:56 2015 Jean-Baptiste Grégoire
 //
 
+#pragma once
 #ifndef Board_HH_
 # define Board_HH_
 
@@ -52,7 +53,7 @@ public:
   void	setExplosion(float x, float y);
   void  popEntity(int x, int y, long int id);
   void	removePlayer(long int id);
-  void  spawnPlayers(unsigned int);
+  void  spawnPlayers(unsigned int, unsigned int, std::string const&);
   bool	collideAround(AObj *, long int x, long int y);
   bool	checkOneCollision(std::vector<AObj *> field, AObj *);
   bool	checkAlreadyCase(int, int, long int);
@@ -71,7 +72,8 @@ private:
   AObj  *removeFromSquare(int x, int y, long int id);
   void  updatePos(float x, float y, AObj *obj);
   std::vector<AObj *> &getCase(int at);
-  void  makeSomePlace(int, int, int, Direction, Direction, Direction);
+  void  makeSomePlace(int, int, int, Direction, Direction, Direction, std::string const &);
+  bool  decPlayers(unsigned int *, unsigned int *);
 
 private:
   std::vector<std::vector<AObj *> > _board;

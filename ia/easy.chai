@@ -10,14 +10,9 @@ while(iaAlive() == true)
     }
   else
     {
-      if (i % 500000 == 0)
-      {
-        iaChooseDir(South)
-        //iaDropBomb()
-        print("lol")
-        print(iaCloserEnemy())
-        iaMoveToEnemy(iaCloserEnemy())
-      }
+      print("lol")
+      print(iaCloserEnemy())
+      iaMoveToEnemy(iaCloserEnemy())
     }
   i = i + 1
 }

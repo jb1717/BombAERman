@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Fri May 22 21:07:26 2015 Emmanuel Chambon
-// Last update Sat Jun 13 15:25:35 2015 Emmanuel Chambon
+// Last update Sun Jun 14 02:57:51 2015 Emmanuel Chambon
 //
 
 #include "ThemeHandler.hh"
@@ -15,46 +15,43 @@ ThemeHandler::ThemeHandler()
 	load();
 }
 
-ThemeHandler::~ThemeHandler()
-{
-}
-
+/*
+** Load all themes located in assets/themes
+*/
 void ThemeHandler::load()
 {
 	DIR *dir;
 	struct dirent *ent;
 
 	if ((dir = opendir ("./assets/themes")) != NULL) {
-	  try {
-	    while ((ent = readdir (dir)) != NULL) {
-	      if (std::string(ent->d_name)[0] != '.')
-		loadTheme("assets/themes/" + std::string(ent->d_name), ent->d_name);
-	    }
-	  } catch (std::invalid_argument &e) {
-	    std::cerr << e.what() << std::endl;
-	  }
-	  closedir (dir);
+		try {
+			while ((ent = readdir (dir)) != NULL) {
+				if (std::string(ent->d_name)[0] != '.')
+					loadTheme("assets/themes/" + std::string(ent->d_name), ent->d_name);
+			}
+		} catch (std::invalid_argument &e) {
+			std::cerr << e.what() << std::endl;
+		}
+		closedir (dir);
 	} else {
 		throw std::runtime_error("Cannot close themes folder.");
 	}
 }
 
-void ThemeHandler::load(std::initializer_list<std::initializer_list<std::string>> const &paths)
-{
-	for (auto i : paths)
-		for (auto x : i)
-			std::cout << x << std::endl;
-}
-
+/*
+** Load theme located at [path]
+*/
 void ThemeHandler::loadTheme(std::string const &path, std::string const &name)
 {
 	std::shared_ptr<Theme> theme = std::make_shared<Theme>(path, name);
 
+	// Lock to avoid race condition
 	std::lock_guard<std::mutex> guard(_mutex);
 	_themes[name] = theme;
 }
 
-std::vector<std::string> 		ThemeHandler::getThemes() const
+// Return vector of themes names
+std::vector<std::string>                ThemeHandler::getThemes() const
 {
 	std::vector<std::string> ret;
 
@@ -63,6 +60,9 @@ std::vector<std::string> 		ThemeHandler::getThemes() const
 	return ret;
 }
 
+/*
+** Return theme [at]
+*/
 Theme               &ThemeHandler::operator[](std::string const &at)
 {
 	if (_themes.find(at) == _themes.end())
@@ -70,13 +70,16 @@ Theme               &ThemeHandler::operator[](std::string const &at)
 	return *_themes[at];
 }
 
-Theme              &ThemeHandler::operator[](ssize_t at)
+/*
+** Return theme [at]
+*/
+Theme              &ThemeHandler::operator[](long int at)
 {
 	if (at < 0) {
 		for (std::map<std::string, std::shared_ptr<Theme>>::reverse_iterator i = _themes.rbegin();
 		     i != _themes.rend(); i++) {
 			if (at == 0)
-			return *(*i).second;
+				return *(*i).second;
 			at++;
 		}
 		throw std::out_of_range("Out of range ThemeHandler.");
@@ -84,7 +87,7 @@ Theme              &ThemeHandler::operator[](ssize_t at)
 		ssize_t x = 0;
 		for (auto i  = _themes.begin(); i != _themes.end(); i++) {
 			if (x == at)
-			return *(*i).second;
+				return *(*i).second;
 			x++;
 		}
 		throw std::out_of_range("Out of range ThemeHandler.");
