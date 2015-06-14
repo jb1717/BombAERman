@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Sun Jun 14 08:36:53 2015 Hugo Prenat
+// Last update Sun Jun 14 10:05:08 2015 Hugo Prenat
 //
 
 #include "GameEngine.hh"
@@ -241,4 +241,10 @@ void	Ia::setPosById(const int id)
 
   _enemyX = enemy[id]->getPos().first;
   return ;
+}
+
+bool	Ia::possibleToMove(const int dir)
+{
+  std::cout << dir << std::endl;;
+  return (true);
 }
