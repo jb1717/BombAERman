@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 21:02:19 2015 TommyStarK
-// Last update Sun Jun 14 02:35:42 2015 TommyStarK
+// Last update Sun Jun 14 04:36:37 2015 TommyStarK
 //
 
 #include "UIManager/UIManager.hh"
@@ -15,10 +15,12 @@ UIManager::UIManager()
     _defaultWidthWin(1820), _defaultHeightWin(980), _defaultName("BombAERman")
 {
   _ui["StartUI"] = std::make_shared<LauncherUI>(_defaultWidthWin, _defaultHeightWin, _defaultName);
-  _ui["SettingsUI"] = std::make_shared<SettingsUI>(_defaultWidthWin, _defaultHeightWin, _defaultName);
-  _ui["PlayUI"] = std::make_shared<PlayUI>(_defaultWidthWin, _defaultHeightWin, _defaultName);
-  _ui["PauseUI"] = std::make_shared<PauseUI>();
+  _ui["SettingsUI"] = std::make_shared<SettingsUI>();
+  _ui["PlayUI"] = std::make_shared<PlayUI>();
   _ui["CreditsUI"] = std::make_shared<CreditsUI>();
+  // _ui["NewGameUI"] = std::make_shared<NewGameUI>();
+  // _ui["LoadGameUI"] = std::make_shared<LoadGameUI>();
+  _ui["PauseUI"] = std::make_shared<PauseUI>();
   this->startService();
 }
 

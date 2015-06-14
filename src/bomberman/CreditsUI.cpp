@@ -5,12 +5,13 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat Jun 13 00:56:32 2015 TommyStarK
-// Last update Sun Jun 14 03:03:27 2015 TommyStarK
+// Last update Sun Jun 14 05:04:23 2015 TommyStarK
 //
 
 #include "UIManager/CreditsUI.hh"
 
 CreditsUI::CreditsUI()
+  : _first(true), _spreading(10)
 {
   _itemsName.push_back("EndBackground3");
   _itemsName.push_back("GameOver");
@@ -31,7 +32,10 @@ void                        CreditsUI::setupDisplay()
       || !_shader.load(VERTEX_SHADER, GL_VERTEX_SHADER)
       || !_shader.build())
     throw std::runtime_error("(SettingsUI::)setupDisplay - load/build shader failed.");
-  _camera.setPosition(glm::vec3(0, 0, -2));
+  // _camera.setPosition(glm::vec3(0, 0, -2));
+  // _camera.refreshPosition();
+  _camera.setPosition(glm::vec3(0, 0, -20));
+  _camera.setZoom(glm::vec3(12, 12, 12));
   _camera.refreshPosition();
   _shader.bind();
   _camera.lockShader(_shader, true);

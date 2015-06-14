@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat Jun 13 00:55:20 2015 TommyStarK
-// Last update Sun Jun 14 00:42:01 2015 TommyStarK
+// Last update Sun Jun 14 04:37:35 2015 TommyStarK
 //
 
 #ifndef _CREDITSUI_HH_
@@ -24,6 +24,14 @@ class           CreditsUI : public AUI
 public:
   CreditsUI();
   ~CreditsUI();
+
+private:
+    bool                        _first;
+    int                         _behavior;
+    int                         _selected;
+    int                         _fixItems;
+    int                         _dynamicItems;
+    float                       _spreading;
 
 //Private display attributes
 private:

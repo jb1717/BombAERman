@@ -5,14 +5,13 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:21:08 2015 TommyStarK
-// Last update Sun Jun 14 03:03:23 2015 TommyStarK
+// Last update Sun Jun 14 05:04:29 2015 TommyStarK
 //
 
 #include "UIManager/SettingsUI.hh"
 
-SettingsUI::SettingsUI(int width, int height, const std::string & winName)
-  : _width(width), _height(height), _first(true), _spreading(2), _name(winName),
-  _gameVolum(50), _fxVolum(50), _antiAliasing(false)
+SettingsUI::SettingsUI()
+  : _first(true), _spreading(2), _gameVolum(50), _fxVolum(50), _antiAliasing(false)
 {
   _itemsName.push_back("aa");
   _itemsName.push_back("master-volume");
@@ -27,7 +26,7 @@ SettingsUI::SettingsUI(int width, int height, const std::string & winName)
   _cursor[ALIASING] = _spreading + 0.5;
   _cursor[MVOLUM] = -0.5;
   _cursor[FXVOLUM] = -3.5;
-  _cursor[QUIT] = -6.5;
+  _cursor[BACK] = -6.5;
   _posSettings[0] = new glm::vec3(-0.5, 2.5 + _spreading - (0 * 3.25), 25);
   _posSettings[1] = new glm::vec3(-0.5, _spreading - (1 * 3.25), 25);
   _posSettings[2] = new glm::vec3(-0.5, _spreading - (2 * 3.25) - 2.5, 25);
@@ -43,10 +42,10 @@ void                          SettingsUI::itemFocus()
 {
   switch (_behavior) {
     case 1:
-      _selected = (!_selected ? QUIT : _selected == 1 ? ALIASING : _selected == 2 ? MVOLUM : FXVOLUM);
+      _selected = (!_selected ? BACK : _selected == 1 ? ALIASING : _selected == 2 ? MVOLUM : FXVOLUM);
       break ;
     case -1:
-      _selected = (_selected == 3 ? ALIASING : !_selected ? MVOLUM : _selected == 1 ? FXVOLUM : QUIT);
+      _selected = (_selected == 3 ? ALIASING : !_selected ? MVOLUM : _selected == 1 ? FXVOLUM : BACK);
       break ;
     default:
       break;
@@ -72,7 +71,10 @@ void                          SettingsUI::setupDisplay()
       || !_shader.load(VERTEX_SHADER, GL_VERTEX_SHADER)
       || !_shader.build())
     throw std::runtime_error("(SettingsUI::)setupDisplay - load/build shader failed.");
-  _camera.setPosition(glm::vec3(0, 0, -2));
+  // _camera.setPosition(glm::vec3(0, 0, -2));
+  // _camera.refreshPosition();
+  _camera.setPosition(glm::vec3(0, 0, -20));
+  _camera.setZoom(glm::vec3(12, 12, 12));
   _camera.refreshPosition();
   _shader.bind();
   _camera.lockShader(_shader, true);
@@ -221,13 +223,13 @@ stateUI                       SettingsUI::handlerEvent()
     this->updateContext();
     if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT) ||
         ((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
-         && _selected == QUIT))
+         && _selected == BACK))
     {
       _isRunning = false;
       break ;
     }
     else if ((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
-              && _selected < QUIT)
+              && _selected < BACK)
       this->modifySettings();
     else
     {

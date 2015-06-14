@@ -5,15 +5,18 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:22:00 2015 TommyStarK
-// Last update Sun Jun 14 03:03:20 2015 TommyStarK
+// Last update Sun Jun 14 05:04:39 2015 TommyStarK
 //
 
 #include "UIManager/PlayUI.hh"
 
-PlayUI::PlayUI(int width, int height, const std::string & winName)
-: _width(width), _height(height), _first(true), _spreading(2), _name(winName)
+PlayUI::PlayUI()
+: _first(true), _spreading(2)
 {
   this->getIaNames();
+  auto settings = Settings::instance();
+  for (auto i : _iaNames)
+    settings.addIa(i);
   _itemsName.push_back("newgame");
   _itemsName.push_back("loadgame");
   _itemsName.push_back("back");
@@ -86,7 +89,10 @@ void                          PlayUI::setupDisplay()
       || !_shader.load(VERTEX_SHADER, GL_VERTEX_SHADER)
       || !_shader.build())
     throw std::runtime_error("(LauncherUI::)setUpDisplay - load/build shader failed.");
-  _camera.setPosition(glm::vec3(0, 0, -2));
+  // _camera.setPosition(glm::vec3(0, 0, -2));
+  // _camera.refreshPosition();
+  _camera.setPosition(glm::vec3(0, 0, -20));
+  _camera.setZoom(glm::vec3(12, 12, 12));
   _camera.refreshPosition();
   _shader.bind();
   _camera.lockShader(_shader, true);
