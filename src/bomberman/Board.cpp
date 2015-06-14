@@ -178,42 +178,39 @@ void Board::deleteEntity(float x, float y, long int id, bool breakWall)
     {
       if (id == 0)
 	{
-		if (id == 0)
-		{
-			if ((*it)->getId() == Wall && breakWall == false)
-			{
-				++it;
-				continue;
-			}
-			else if ((*it)->getId() == CrateID && reinterpret_cast<Crate *>(*it)->getBonus() != Crate::NONE &&
-			         !(reinterpret_cast<Crate *>(*it)->isBreak()))
-			{
-				reinterpret_cast<Crate *>(*it)->breakIt();
-				// (*it)->setGameObj(new Bonus((*it)->getGameObj()->getPosition()));
-				// reinterpret_cast<Bonus *>((*it)->getGameObj())->load("./assets/models/bonusPower.fbx");
-				// (*it)->getGameObj()->setColor(glm::vec4(1.0f, 0.8f, 0.8f, 1.0f));
-				++it;
-			}
-			else
-			{
-				//				delete *it;
-				if ((*it)->getType() == PLAYER)
-					removePlayer((*it)->getId());
-				it = tmp.erase(it);
-			}
-		}
-		else if (id == (*it)->getId())
-		{
-			//			delete *it;
-			if ((*it)->getType() == PLAYER)
-				removePlayer((*it)->getId());
-			it = tmp.erase(it);
-		}
-		else if ((*it)->getId() == Explode)
-			it = tmp.erase(it);
-		else
-			++it;
+	  if ((*it)->getId() == Wall && breakWall == false)
+	    {
+	      ++it;
+	      continue;
+	    }
+	  else if ((*it)->getId() == CrateID && reinterpret_cast<Crate *>(*it)->getBonus() != Crate::NONE &&
+		   !(reinterpret_cast<Crate *>(*it)->isBreak()))
+	    {
+	      reinterpret_cast<Crate *>(*it)->breakIt();
+	      // (*it)->setGameObj(new Bonus((*it)->getGameObj()->getPosition()));
+	      // reinterpret_cast<Bonus *>((*it)->getGameObj())->load("./assets/models/bonusPower.fbx");
+	      // (*it)->getGameObj()->setColor(glm::vec4(1.0f, 0.8f, 0.8f, 1.0f));
+	      ++it;
+	    }
+	  else
+	    {
+	      //				delete *it;
+	      if ((*it)->getType() == PLAYER)
+		removePlayer((*it)->getId());
+	      it = tmp.erase(it);
+	    }
 	}
+      else if (id == (*it)->getId())
+	{
+	  //			delete *it;
+	  if ((*it)->getType() == PLAYER)
+	    removePlayer((*it)->getId());
+	  it = tmp.erase(it);
+	}
+      else if ((*it)->getId() == Explode)
+	it = tmp.erase(it);
+      else
+	++it;
     }
 }
 
