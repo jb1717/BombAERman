@@ -29,9 +29,10 @@ void	Bomb::triggerLaunch()
   launched = !launched;
 }
 
-void	Bomb::explosion()
+int	Bomb::explosion()
 {
   int	x = _x, y = _y;
+  int	killed = 0;
   std::vector<AObj *> tmp;
   for (int i = 1; i <= range; ++i)
   {
@@ -40,6 +41,7 @@ void	Bomb::explosion()
 	tmp = _board.getSquareObjects(x, y - i);
 	if (tmp.size() != 0 && (tmp.front()->getType() == UNBREAKABLE_WALL || (tmp.front()->getType() == CRATE && !reinterpret_cast<Crate *>(tmp.front())->isBreak())))
 	  {
+	    killed += _board.heroInDaPlace(x, y - i);
 	    _board.deleteEntity(x, y - i);
 	    if (tmp.front()->getType() != UNBREAKABLE_WALL)
 	      _board.setExplosion(x, y - i);
@@ -47,6 +49,7 @@ void	Bomb::explosion()
 	  }
 	else
 	  {
+	    killed += _board.heroInDaPlace(x, y - i);
 	    _board.deleteEntity(x, y - i);
 	    _board.setExplosion(x, y - i);
 	  }
@@ -59,6 +62,7 @@ void	Bomb::explosion()
 	tmp = _board.getSquareObjects(x, y + i);
 	if (tmp.size() != 0 && (tmp.front()->getType() == UNBREAKABLE_WALL || (tmp.front()->getType() == CRATE && !reinterpret_cast<Crate *>(tmp.front())->isBreak())))
 	  {
+	    killed += _board.heroInDaPlace(x, y + i);
 	    _board.deleteEntity(x, y + i);
 	    if (tmp.front()->getType() != UNBREAKABLE_WALL)
 	    _board.setExplosion(x, y + i);
@@ -66,6 +70,7 @@ void	Bomb::explosion()
 	  }
 	else
 	  {
+	    killed += _board.heroInDaPlace(x, y + i);
 	    _board.deleteEntity(x, y + i);
 	    _board.setExplosion(x, y + i);
 	  }
@@ -78,6 +83,7 @@ void	Bomb::explosion()
 	tmp = _board.getSquareObjects(x - i, y);
 	if (tmp.size() != 0 && (tmp.front()->getType() == UNBREAKABLE_WALL || (tmp.front()->getType() == CRATE && !reinterpret_cast<Crate *>(tmp.front())->isBreak())))
 	  {
+	    killed += _board.heroInDaPlace(x - i, y);
 	    _board.deleteEntity(x - i, y);
 	    if (tmp.front()->getType() != UNBREAKABLE_WALL)
 	    _board.setExplosion(x - i, y);
@@ -85,6 +91,7 @@ void	Bomb::explosion()
 	  }
 	else
 	  {
+	    killed += _board.heroInDaPlace(x - i, y);
 	    _board.deleteEntity(x - i, y);
 	    _board.setExplosion(x - i, y);
 	  }
@@ -97,6 +104,7 @@ void	Bomb::explosion()
 	tmp = _board.getSquareObjects(x + i, y);
 	if (tmp.size() != 0 && (tmp.front()->getType() == UNBREAKABLE_WALL || (tmp.front()->getType() == CRATE && !reinterpret_cast<Crate *>(tmp.front())->isBreak())))
 	  {
+	    killed += _board.heroInDaPlace(x + i, y);
 	    _board.deleteEntity(x + i, y);
 	    if (tmp.front()->getType() != UNBREAKABLE_WALL)
 	    _board.setExplosion(x + i, y);
@@ -104,12 +112,15 @@ void	Bomb::explosion()
 	  }
 	else
 	  {
+	    killed += _board.heroInDaPlace(x + i, y);
 	    _board.deleteEntity(x + i, y);
 	    _board.setExplosion(x + i, y);
 	  }
       }
   }
+  killed += _board.heroInDaPlace(x, y);
   _board.deleteEntity(x, y);
+  return (killed);
 }
 
 bool	Bomb::explosion_check()

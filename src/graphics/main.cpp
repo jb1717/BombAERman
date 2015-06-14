@@ -50,10 +50,10 @@ int     main()
   auto asset = AssetManager::instance();
   GameEngine engine;
 
-  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
+  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[1]);
 
 
-  board->spawnPlayers(2, 0, "easy.chai");
+  board->spawnPlayers(2, 0, "ia/easy.chai");
   board->initialize();
   board->initGameObjects();
 

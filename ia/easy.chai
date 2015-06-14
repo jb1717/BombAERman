@@ -12,7 +12,8 @@ while(iaAlive() == true)
     {
       print("lol")
       print(iaCloserEnemy())
-      iaMoveToEnemy(iaCloserEnemy())
+      dir = iaMoveToEnemy(iaCloserEnemy())
+      iaChooseDir(dir)
     }
   i = i + 1
 }

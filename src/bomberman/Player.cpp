@@ -142,7 +142,7 @@ void	Player::goAllExplosions()
 	      // AGameObject	*to_del = (*it)->getGameObj();
 	      // delete to_del;
 	      (*it)->triggerLaunch();
-	      (*it)->explosion();
+	      _score += (*it)->explosion();
 	    }
 	}
     }
@@ -175,6 +175,7 @@ void	Player::checkPosPowerUp()
     {
       if ((*all_in_it)->getId() == -2 && reinterpret_cast<Crate *>((*all_in_it))->isBreak())
 	{
+	  _score++;
 	  powerup = reinterpret_cast<Crate *>((*all_in_it))->getBonus();
 	  if (powerup == Crate::RANGE)
 	    powerUpRange();
