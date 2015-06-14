@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Sun Jun 14 04:20:51 2015 Hugo Prenat
+// Last update Sun Jun 14 08:36:53 2015 Hugo Prenat
 //
 
 #include "GameEngine.hh"
@@ -93,6 +93,25 @@ std::map<float, AObj *>& Ia::getMapEnemy() const
   return (*enemy);
 }
 
+static int	moveToObj(std::map<int, std::string> map, const char obj,
+			  std::pair<float, float> const pos)
+{
+  int		north = 0;
+  int		west = 1;
+  int		south = 2;
+  int		east = 3;
+
+  if (map[static_cast<size_t>(pos.first - 1)][static_cast<size_t>(pos.second)] == obj)
+    return (north);
+  if (map[static_cast<size_t>(pos.first + 1)][static_cast<size_t>(pos.second)] == obj)
+    return (west);
+  if (map[static_cast<size_t>(pos.first)][static_cast<size_t>(pos.second + 1)] == obj)
+    return (south);
+  if (map[static_cast<size_t>(pos.first)][static_cast<size_t>(pos.second - 1)] == obj)
+    return (east);
+  return (0);
+}
+
 int Ia::dangerZone()
 {
   std::lock_guard<std::mutex> lock(_mutex);
@@ -148,13 +167,13 @@ int Ia::dangerZone()
     }
   if (map[static_cast<size_t>(getPos().first)][static_cast<size_t>(getPos().second)] != '1')
     return (-1);
-  if (map[static_cast<size_t>(getPos().first - 1)][static_cast<size_t>(getPos().second)] == ' ')
+  if (map[static_cast<size_t>(getPos().first - 1)][static_cast<size_t>(getPos().second)] == '0')
     return (0);
-  if (map[static_cast<size_t>(getPos().first + 1)][static_cast<size_t>(getPos().second)] == ' ')
+  if (map[static_cast<size_t>(getPos().first + 1)][static_cast<size_t>(getPos().second)] == '0')
     return (2);
-  if (map[static_cast<size_t>(getPos().first)][static_cast<size_t>(getPos().second + 1)] == ' ')
+  if (map[static_cast<size_t>(getPos().first)][static_cast<size_t>(getPos().second + 1)] == '0')
     return (1);
-  if (map[static_cast<size_t>(getPos().first)][static_cast<size_t>(getPos().second - 1)] == ' ')
+  if (map[static_cast<size_t>(getPos().first)][static_cast<size_t>(getPos().second - 1)] == '0')
     return (3);
   std::cout << "DANS LA MIERDA" << std::endl;
   return (-1);
@@ -189,10 +208,10 @@ int Ia::moveToEnemy(const int id)
   Node Algo(map, getPos().first, getPos().second, pos.first, pos.second);
 
   old = Algo.fillMap();
-  for (size_t i = 0; i < getBoard().getWidth(); i++) {
-    std::cout << old[i] << std::endl;
-  }
-  return (0);
+  // for (size_t i = 0; i < getBoard().getWidth(); i++) {
+  //   std::cout << old[i] << std::endl;
+  // }
+  return (moveToObj(old, 'u', getPos()));
 }
 
 int		Ia::getCloserEnemy() const
