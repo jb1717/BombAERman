@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Sat Jun 13 18:59:51 2015 Jean-Baptiste Grégoire
+// Last update Sun Jun 14 17:03:50 2015 Jamais
 //
 
 #include "Board.hh"
@@ -17,6 +17,7 @@
 #include "Cube.hh"
 #include "GameEngine.hh"
 #include "Bonus.hh"
+#include "AssetManager.hh"
 
 Board::Board(size_t xLength, size_t yLength) : _xLength(xLength + 2), _yLength(yLength + 2)
 {
@@ -25,6 +26,7 @@ Board::Board(size_t xLength, size_t yLength) : _xLength(xLength + 2), _yLength(y
 
 bool Board::initialize()
 {
+  auto asset = AssetManager::instance();
 	int x = 0;
 
 	int true_x;
@@ -42,23 +44,26 @@ bool Board::initialize()
 			case CRATE:
 			{
 				obj = new Cube(glm::vec3(true_x, 0.5, true_y));
-				obj->setTexture(*texCrate);
+				if (rand() % 5 == 0)
+				  obj->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate"]));
+				else if (rand() % 2 == 0)
+				  obj->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate2"]));
+				else
+				  obj->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate3"]));
 				(*internIt)->setGameObj(obj);
 				break;
 			}
 			case UNBREAKABLE_WALL:
 			{
 				obj = new Cube(glm::vec3(true_x, 0.5, true_y));
-				// obj = new Cube(glm::vec3(-5 + (x / _xLength), 0, -5 + (x % _yLength)));
-				//		obj = new Cube(glm::vec3((_xLength / 2 ) - (x / _xLength), 1, (x % _yLength) / 2 - (x % _yLength) / 2));
 				obj->setTexture(*texWall);
 				(*internIt)->setGameObj(obj);
 				break;
 			}
 			case PLAYER:
 			{
-				obj = new Character(glm::vec3(true_x, 0.5, true_y), "./assets/models/marvin.fbx");
-				obj->scale(glm::vec3(0.0025f, 0.00025f, 0.0025f));
+				obj = new Character(glm::vec3(true_x, 0.0, true_y), "./assets/models/marvin.fbx");
+				obj->scale(glm::vec3(0.0015f, 0.0015f, 0.0015f));
 				obj->setColor(glm::vec4(1.0f, 1.0f, 0.0f, 1.0f));
 				(*internIt)->setGameObj(obj);
 				reinterpret_cast<Character *>(obj)->setCurrentAnim(0);
@@ -131,6 +136,8 @@ bool Board::placeEntity(float x, float y, AObj *entity)
 
 	// if (!_board[to].empty())
 	//   return (false);
+	if (entity->getId() > 0)
+		_players.push_back(reinterpret_cast<Player *>(entity));
 	_board[to].push_back(entity);
 	return (true);
 }
@@ -377,6 +384,19 @@ void Board::makeSomePlace(int x, int y, int id, Direction dir, Direction r1, Dir
 		AObj *ia = new Ia(difficulty, *this);
 		ia->setId(id);
 		placeEntity(x, y, ia);
+	}
+}
+
+void Board::dump() const
+{
+	for (auto it = _board.begin(); it != _board.end(); ++it)
+	{
+		std::cout << "case :";
+		for (auto itk = (*it).begin(); itk != (*it).end(); ++itk)
+		{
+			std::cout << (*itk)->getId() << " ";
+		}
+		std::cout << std::endl;
 	}
 }
 

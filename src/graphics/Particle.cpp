@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Tue Jun  9 03:26:25 2015 Jamais
-// Last update Fri Jun 12 06:16:52 2015 Jamais
+// Last update Sun Jun 14 14:57:21 2015 Jamais
 //
 
 #include "Particle.hh"
@@ -30,25 +30,21 @@ Particle::~Particle()
 
 void			Particle::setColor(glm::vec4 const& color)
 {
-  auto f = GeometryFactory::instanciate();
-
-  setGeometry(f->getGeometry(GeometryFactory::VERTICAL_PLANE));
-  _geometry.build();
+  _color = color;
 }
 
-void			Particle::update(gdl::Clock const& clock, Binput& input)
+void			Particle::update(UNUSED gdl::Clock const& clock, UNUSED Binput& input)
 {
-  // _life -= clock.getElapsed();
-  // _fade -= 0.01f;
-  // if (_start > 0.0f)
-  //   _start -= clock.getElapsed();
-  // _start = -1.0f;
-  // else
-  //   {
+  _life -= clock.getElapsed();
+  _fade -= 0.01f;
+  if (_start > 0.0f)
+    _start -= clock.getElapsed();
+  else
+    {
   _rotation.x += 0.01f;
   translate(_direction);
-  _direction.y = _direction.y - 0.01f /*_gravity.y*/;
-    // }
-  // if (_life <= 0.0f)
-  //   _active = false;
+  _direction.y = _direction.y - 0.01f * _gravity.y;
+    }
+  if (_life <= 0.0f)
+    _active = false;
 }

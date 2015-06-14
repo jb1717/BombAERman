@@ -5,16 +5,17 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Sun May 24 08:35:43 2015 Emmanuel Chambon
-// Last update Sun Jun 14 02:28:12 2015 Emmanuel Chambon
+// Last update Sun Jun 14 14:48:22 2015 Jamais
 //
 
 #pragma once
 #ifndef SOUNDHANDLER_HH_
 #define SOUNDHANDLER_HH_
 
+#include <map>
+
 #include "AAsset.hh"
 #include "fmod/fmod.hpp"
-
 /*
 ** /!\ Unable to use smart pointers due to fmod API
 */

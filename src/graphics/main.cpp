@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 15 21:29:13 2015 Jamais
-// Last update Sun Jun 14 08:37:31 2015 Emmanuel Chambon
+// Last update Sun Jun 14 15:59:51 2015 Jamais
 //
 
 #include        <cstdlib>
@@ -53,7 +53,7 @@ int     main()
   Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[1]);
 
 
-  board->spawnPlayers(1, 2, "ia/easy.chai");
+  board->spawnPlayers(2, 0, "ia/easy.chai");
   board->initialize();
   board->initGameObjects();
 
@@ -69,8 +69,8 @@ int     main()
       std::cerr << "ini" << std::endl;
       return (EXIT_FAILURE);
     }
-  std::thread	t1(launch_play, std::ref(board->getPlayers().front()));
-  std::thread	t2(launch_ia, std::ref(board->getPlayers()[0]));
+  std::thread t1(launch_play, std::ref(board->getPlayers().front()));
+  std::thread t2(launch_play, std::ref(board->getPlayers()[1]));
   while (engine.update() == true)
     engine.draw();
   return EXIT_SUCCESS;

@@ -18,6 +18,7 @@ Player::Player(Board &Board) : AObj(Board, 0, 0), _isAlive(true)
   _bombs.push_back(newone);
   _type = PLAYER;
   _dir = Board::North;
+  _score = 0;
 }
 
 bool		Player::playerSpawn(float x, float y, Board::Direction direction, int Id)
@@ -51,6 +52,16 @@ bool	Player::is_Alive() const
 void	Player::triggerAlive()
 {
   _isAlive = !_isAlive;
+}
+
+size_t	Player::getScore() const
+{
+  return (_score);
+}
+
+void	Player::setScore(size_t add)
+{
+  _score += add;
 }
 
 //

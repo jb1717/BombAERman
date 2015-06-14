@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Sat Jun 13 23:42:20 2015 Jean-Baptiste Grégoire
+// Last update Sun Jun 14 17:35:32 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -65,8 +65,10 @@ GameEngine::GameEngine() : Game()
   texCrate3 = (*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate3"];
   texWall = (*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["wall"];
   texMenu = (*THEME((*THEME_HANDLER(asset["themes"]))["GUI"]))["menu"];
-  bomb = new BasicBomb();
-  // bomb =// &((*MODEL_HANDLER(asset["models"]))["PumpkinBomb.fbx"]);
+  //bomb = new BasicBomb();
+  bomb = &((*MODEL_HANDLER(asset["models"]))["PumpkinBomb.fbx"]);
+  bomb->scale(glm::vec3(0.002, 0.002, 0.002));
+
   bn = new Bonus(glm::vec3(0, 0,  0));
   bn->load("./assets/models/bonusPower.fbx");
   bn->setPosition(glm::vec3(0, 5, 0));
@@ -150,18 +152,10 @@ bool		GameEngine::initialize()
   menu->setTexture(*texMenu);
 
   ground = new Geometric(glm::vec3(0, 0.f, 0));
-  //  ground->setColor(glm::vec4(0.4f, 1.0f, 0.4f, 1.0f));
-  ground->setGeometry(factory->getGeometry(GeometryFactory::CUBE));
-  ground->setTexture(*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["floor"]);
+  ground->setGeometry(factory->getGeometry(GeometryFactory::HORIZONTAL_PLANE));
+  ground->setTexture(*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["ground"]);
   ground->scale(glm::vec3(_board->getHeight()  -1.0f, _board->getWidth(), _board->getWidth() -1.0f));
-  ground->translate(glm::vec3(0, _board->getWidth() * -0.5, 0));
-  /*
-  ** Special Effect of explosion :: folow it in update and draw */
-  // std::cout << "Bonjour" << std::endl;
-  // exit(0);
-  // effect = new AFX(glm::vec3(0 , 2, 0));
-  // effect->setScale(glm::vec3(2, 2, 2));
-  // effect->resetFrame();
+  ground->translate(glm::vec3(0, 0, 0));
 
   return true;
 }
@@ -179,11 +173,6 @@ bool		GameEngine::getEvent()
   }
   if (_input._default.getKey(SDLK_f))
     GUI = !GUI;
-
-  // if (_input._default.getKey(SDLK_SPACE))
-  //   {
-  //     effect->resetFrame();
-  //   }
 
   return true;
 }
@@ -216,7 +205,7 @@ bool		GameEngine::update()
   bn->rotate(glm::vec3(0, 1, 0), 1);
   for (auto it = _board->getPlayers().begin(); it != _board->getPlayers().end(); it++)
     {
-      if ((*it)->getGameObj() && (*it)->getId() == 1)
+      if ((*it)->getGameObj() && ((*it)->getId() == 1 || (*it)->getId() == 2))
 	{
 	  glm::vec3 save = (*it)->getGameObj()->getPosition();
 	  (*it)->getGameObj()->update(_clock, _input, camera, (*it)->getId());
@@ -225,11 +214,11 @@ bool		GameEngine::update()
 	    (*it)->getGameObj()->setPosition(save);
 	  else
 	    {
-	      // _board->moveEntity((((save.x) - (((_board)->getWidth()) / (2))) < 0) ?	(((save.x) - ((_board)->getWidth()) / (2)) * (-1)) : ((save.x) - ((_board)->getWidth()) / (2)),
-	      // 		 (((save.z) - ((_board)->getHeight()) / (2)) < 0) ? (((save.z) - ((_board)->getHeight()) / (2)) * (-1)) : (((save.z) - ((_board)->getHeight()) / (2))),
-	      // 		 (((p.x) - (((_board)->getWidth()) / (2))) < 0) ? (((p.x) - ((_board)->getWidth()) / (2)) * (-1)) : ((p.x) - ((_board)->getWidth()) / (2)),
-	      // 		 (((p.z) - ((_board)->getHeight()) / (2)) < 0) ? (((p.z) - ((_board)->getHeight()) / (2)) * (-1)) : (((p.z) - ((_board)->getHeight()) / (2))),
-	      // 		 (*it)->getId());
+	      _board->moveEntity((((save.x) - (((_board)->getWidth()) / (2))) < 0) ?	(((save.x) - ((_board)->getWidth()) / (2)) * (-1)) : ((save.x) - ((_board)->getWidth()) / (2)),
+	      		 (((save.z) - ((_board)->getHeight()) / (2)) < 0) ? (((save.z) - ((_board)->getHeight()) / (2)) * (-1)) : (((save.z) - ((_board)->getHeight()) / (2))),
+	      		 (((p.x) - (((_board)->getWidth()) / (2))) < 0) ? (((p.x) - ((_board)->getWidth()) / (2)) * (-1)) : ((p.x) - ((_board)->getWidth()) / (2)),
+	      		 (((p.z) - ((_board)->getHeight()) / (2)) < 0) ? (((p.z) - ((_board)->getHeight()) / (2)) * (-1)) : (((p.z) - ((_board)->getHeight()) / (2))),
+	      		 (*it)->getId());
 	      (*it)->setPos(LOGICAL_POSITION(p.x, p.z));
 	    }
 	  if ((*it) && (*it)->getGameObj() && reinterpret_cast<Character *>((*it)->getGameObj())->_bombing)
@@ -242,7 +231,9 @@ bool		GameEngine::update()
 
 void		GameEngine::draw()
 {
-  camera.lockShader(_shader, true, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  std::vector <AGameObject*>	explosions;
+
+  camera.lockShader(_shader, true);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   sk->draw(_shader, _clock);
   ground->draw(_shader, _clock);
@@ -255,21 +246,22 @@ void		GameEngine::draw()
 	    if ((*itk)->getId() == -4)
 	      {
 		static_cast<AFX *>((*itk)->getGameObj())->update(_clock, _input, camera);
+		explosions.push_back((*itk)->getGameObj());
 	      }
-	    (*itk)->getGameObj()->draw(_shader, _clock);
+	    else
+	      (*itk)->getGameObj()->draw(_shader, _clock);
 	  }
     }
+  for (auto it = explosions.begin(); it != explosions.end(); it++)
+    (*it)->draw(_shader, _clock);
   _mutex.unlock();
-  // effect->draw(_shader, _clock);
-  // if (GUI)
-  //   {
-  //     menuCam.lockShader(_shader);
-  //     bomb->draw(_shader, _clock);
-  //     bombChooser->draw(_shader, _clock);
-  //     s->draw(_shader, _clock);
-  //     menu->draw(_shader, _clock);
-
-  //   }
+  if (GUI)
+    {
+      menuCam.lockShader(_shader);
+      bomb->draw(_shader, _clock);
+      bombChooser->draw(_shader, _clock);
+      s->draw(_shader, _clock);
+    }
   _videoContext->flush();
 }
 

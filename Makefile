@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sun Jun 14 05:42:47 2015 Emmanuel Chambon
+## Last update Sun Jun 14 10:00:16 2015 Jean-Baptiste Grégoire
 ##
 
 GRAPHICALGAME	=	yes
@@ -111,7 +111,7 @@ GRAPHICS_SRC		=				\
 				ParticleSystem.cpp	\
 				Skybox.cpp		\
 				VideoContext.cpp	\
-				main.cpp
+				 main.cpp
 
 ifeq ($(GRAPHICALGAME),yes)
 $(GRAPHICS_SRC) += main.cpp
@@ -174,7 +174,7 @@ BOMBERMAN_SRC		=				\
 				Binput.cpp		\
 				CreditsUI.cpp		\
 				Settings.cpp		\
-#				main.cpp		\
+				# main.cpp		\
 
 BOMBERMAN		=	bomberman
 PRO			=	$(addprefix $(BINARY_DIR), $(BOMBERMAN))

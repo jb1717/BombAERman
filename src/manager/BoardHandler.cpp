@@ -121,6 +121,18 @@ std::vector<BoardHandler::board_t>              BoardHandler::getBoards() const
 }
 
 /*
+** Return vector of all the boards names available
+*/
+std::vector<std::string>              BoardHandler::getBoardsNames() const
+{
+	std::vector<std::string> ret;
+
+	for (auto i : _boards)
+		ret.push_back(i.name);
+	return ret;
+}
+
+/*
 ** Translate a json map value into a Board Object
 */
 std::shared_ptr<Board> BoardHandler::loadMap(rapidjson::Value const &map, int x, int y)
