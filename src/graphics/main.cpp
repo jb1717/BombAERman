@@ -50,10 +50,10 @@ int     main()
   auto asset = AssetManager::instance();
   GameEngine engine;
 
-  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
+  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[1]);
 
   // Player	*toto = new Player(*board);
-  // board->placeEntity(1, 1, toto);
+  // board->placeEntity(5, 5, toto);
   board->spawnPlayers(5);
   // Ia  *killer = new Ia("ia/easy.chai", *board);
   // board->placeEntity(1, 1, killer);

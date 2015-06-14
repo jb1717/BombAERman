@@ -80,7 +80,14 @@ bool	Player::triggerOneBomb()
   auto	positions = getPos();
   float	true_x = (_board.getWidth() / 2) - static_cast<int>(_x);
   float	true_y = (_board.getHeight() / 2) - static_cast<int>(_y);
+  int	typ;
 
+  // for (auto ite = _board[static_cast<int>(_y) * _board.getWidth() + static_cast<int>(_x)].begin() ; ite != _board[static_cast<int>(_y) * _board.getWidth() + static_cast<int>(_x)].end() ; ite++)
+  //   {
+  //     typ = (*ite)->getId();
+  //     if (typ == Board::Wall || typ == Board::Bomb || typ == Board::CrateID)
+  // 	return (true);
+  //   }
   while (it != _bombs.end())
     {
       if (!(*it)->isLaunched())
@@ -88,8 +95,7 @@ bool	Player::triggerOneBomb()
 	  (*it)->triggerLaunch();
 	  (*it)->setPos(static_cast<int>(_x), static_cast<int>(_y));
 	  // _bombThread->addWork(run_bomb, (*it));
-	  std::cout << _x << "/" << _y << std::endl;;
-	  _board.placeEntity(_x, _y, (*it));
+	  _board.placeEntity(static_cast<int>(_x), static_cast<int>(_y), (*it));
 	  (*it)->setGameObj(new BasicBomb());
 	  (*it)->getGameObj()->setPosition(glm::vec3(true_x, 0.5, true_y));
 	  (*it)->getGameObj()->setScale(glm::vec3(0.003f, 0.003f, 0.003f));

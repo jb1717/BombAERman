@@ -225,7 +225,7 @@ bool		GameEngine::update()
 	  if (_board->collideAround((*it), p.x, p.z))
 	    (*it)->getGameObj()->setPosition(save);
 	  else
-	    (*it)->setPos(LOGICAL_POSITION(p.x, p.z));
+	    //	      (*it)->setPos(LOGICAL_POSITION(p.x, p.z));
 	  if ((*it) && (*it)->getGameObj() && reinterpret_cast<Character *>((*it)->getGameObj())->_bombing)
 	    (*it)->triggerOneBomb();
 	  (*it)->update_bombs(_clock, _input);

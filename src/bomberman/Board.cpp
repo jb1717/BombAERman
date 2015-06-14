@@ -276,43 +276,43 @@ void Board::updatePos(float x, float y, AObj *obj)
 
 bool Board::moveEntity(float x, float y, long int id, Direction dir)
 {
-	float toX = x, toY = y;
-	int posX = static_cast<int>(x), posY = static_cast<int>(y);
-	AObj  *tmp = NULL;
+  float toX = x, toY = y;
+  int posX = static_cast<int>(x), posY = static_cast<int>(y);
+  AObj  *tmp = NULL;
 
-	switch (dir)
-	{
-	case North:
-		if (y > 0)
-			toY -= 0.1;
-		else
-			toY = -1.0;
-		break ;
-	case South:
-		if (y < _yLength)
-			toY += 0.1;
-		else
-			toY = -1.0;
-		break ;
-	case East:
-		if (x > 0)
-			toX -= 0.1;
-		else
-			toX = -1.0;
-		break ;
-	case West:
-		if (x < _xLength)
-			toX += 0.1;
-		else
-			toX = -1.0;
-		break ;
-	default: return(false); break;
-	}
-	if (toX == -1.0 || toY == -1.0) {
-	  return (false); }
-	tmp = removeFromSquare(posX, posY, id);
-	updatePos(toX, toY, tmp);
-	return (true);
+  switch (dir)
+    {
+    case North:
+      if (y > 0)
+	toY -= 0.1;
+      else
+	toY = -1.0;
+      break ;
+    case South:
+      if (y < _yLength)
+	toY += 0.1;
+      else
+	toY = -1.0;
+      break ;
+    case East:
+      if (x > 0)
+	toX -= 0.1;
+      else
+	toX = -1.0;
+      break ;
+    case West:
+      if (x < _xLength)
+	toX += 0.1;
+      else
+	toX = -1.0;
+      break ;
+    default: return(false); break;
+    }
+  if (toX == -1.0 || toY == -1.0) {
+    return (false); }
+  tmp = removeFromSquare(posX, posY, id);
+  updatePos(toX, toY, tmp);
+  return (true);
 }
 
 void Board::makeSomePlace(int x, int y, int id, Direction dir, Direction r1, Direction r2)
@@ -378,7 +378,7 @@ void Board::removePlayer(long int id)
     {
       if ((*it)->getId() == id)
 	{
-		(*it)->triggerAlive();
+	  (*it)->triggerAlive();
 	  _players.erase(it);
 	  return ;
 	}
