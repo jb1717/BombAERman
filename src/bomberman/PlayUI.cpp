@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:22:00 2015 TommyStarK
-// Last update Sun Jun 14 19:51:17 2015 TommyStarK
+// Last update Sun Jun 14 22:08:11 2015 TommyStarK
 //
 
 #include "UIManager/PlayUI.hh"
@@ -161,8 +161,9 @@ stateUI                       PlayUI::handlerEvent()
     usleep(75000);
     this->itemsFocus();
     this->updateContext();
-    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT) ||
-        ((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
+    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT))
+      return (std::tuple<bool, std::string>(true, "Quit"));
+    else if (((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
          && _selected == BACK))
     {
       _isRunning = false;
