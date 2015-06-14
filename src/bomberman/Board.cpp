@@ -149,8 +149,9 @@ bool Board::placeEntity(float x, float y, AObj *entity)
 
 	// if (!_board[to].empty())
 	//   return (false);
+	entity->setPos(x, y);
 	if (entity->getId() > 0)
-		_players.push_back(reinterpret_cast<Player *>(entity));
+	  _players.push_back(reinterpret_cast<Player *>(entity));
 	_board[to].push_back(entity);
 	return (true);
 }
