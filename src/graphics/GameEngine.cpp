@@ -188,7 +188,6 @@ bool		GameEngine::getEvent()
   return true;
 }
 
-
 bool		GameEngine::update()
 {
   std::lock_guard<std::mutex> lock(_mutex);
