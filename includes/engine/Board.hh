@@ -57,6 +57,7 @@ public:
   bool	collideAround(AObj *, long int x, long int y);
   bool	checkOneCollision(std::vector<AObj *> field, AObj *);
   bool	checkAlreadyCase(int, int, long int);
+  int	heroInDaPlace(int, int) const;
 
   void  dump() const;
 

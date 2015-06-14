@@ -102,6 +102,19 @@ AObj  *Board::createEntity(Board &board, entityType type)
 	}
 }
 
+int	Board::heroInDaPlace(int x, int y) const
+{
+  int	scoreP = 0;
+  for (std::vector<AObj *>::const_iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() > 0)
+	scoreP += 10;
+      if ((*it)->getId() == CrateID)
+	scoreP += 1;
+    }
+  return (scoreP);
+}
+
 bool Board::placeEntity(float x, float y, entityType type, long int id, Direction dir)
 {
 	int to = static_cast<int>(y) * _xLength + static_cast<int>(x);
@@ -139,11 +152,11 @@ bool Board::placeEntity(float x, float y, AObj *entity)
 
 void Board::popEntity(int x, int y, long int id)
 {
-	for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
-	{
-		if ((*it)->getId() == id)
-			_board[y * _xLength + x].erase(it);
-	}
+  for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() == id)
+	_board[y * _xLength + x].erase(it);
+    }
 }
 
 std::vector<AObj *> &Board::getCase(int at)
@@ -153,43 +166,43 @@ std::vector<AObj *> &Board::getCase(int at)
 
 void Board::deleteEntity(float x, float y, long int id, bool breakWall)
 {
-	int posx = static_cast<int>(x), posy = static_cast<int>(y);
-	std::vector<AObj *>   &tmp = getCase(posy * _xLength + posx);
+  int posx = static_cast<int>(x), posy = static_cast<int>(y);
+  std::vector<AObj *>   &tmp = getCase(posy * _xLength + posx);
 
-	for (std::vector<AObj *>::iterator it = tmp.begin(); it != tmp.end(); )
+  for (std::vector<AObj *>::iterator it = tmp.begin(); it != tmp.end(); )
+    {
+      if (id == 0)
 	{
-		if (id == 0)
-		{
-			if ((*it)->getId() == Wall && breakWall == false)
-			{
-				++it;
-				continue;
-			}
-			else if ((*it)->getId() == CrateID && reinterpret_cast<Crate *>(*it)->getBonus() != Crate::NONE &&
-			         !(reinterpret_cast<Crate *>(*it)->isBreak()))
-			{
-				reinterpret_cast<Crate *>(*it)->breakIt();
-				// (*it)->setGameObj(new Bonus((*it)->getGameObj()->getPosition()));
-				// reinterpret_cast<Bonus *>((*it)->getGameObj())->load("./assets/models/bonusPower.fbx");
-				// (*it)->getGameObj()->setColor(glm::vec4(1.0f, 0.8f, 0.8f, 1.0f));
-				++it;
-			}
-			else
-			{
-				//				delete *it;
-				if ((*it)->getType() == PLAYER)
-					removePlayer((*it)->getId());
-				it = tmp.erase(it);
-			}
-		}
-		else if (id == (*it)->getId())
-		{
-			//			delete *it;
-			if ((*it)->getType() == PLAYER)
-				removePlayer((*it)->getId());
-			it = tmp.erase(it);
-		}
+	  if ((*it)->getId() == Wall && breakWall == false)
+	    {
+	      ++it;
+	      continue;
+	    }
+	  else if ((*it)->getId() == CrateID && reinterpret_cast<Crate *>(*it)->getBonus() != Crate::NONE &&
+		   !(reinterpret_cast<Crate *>(*it)->isBreak()))
+	    {
+	      reinterpret_cast<Crate *>(*it)->breakIt();
+	      // (*it)->setGameObj(new Bonus((*it)->getGameObj()->getPosition()));
+	      // reinterpret_cast<Bonus *>((*it)->getGameObj())->load("./assets/models/bonusPower.fbx");
+	      // (*it)->getGameObj()->setColor(glm::vec4(1.0f, 0.8f, 0.8f, 1.0f));
+	      ++it;
+	    }
+	  else
+	    {
+	      //				delete *it;
+	      if ((*it)->getType() == PLAYER)
+		removePlayer((*it)->getId());
+	      it = tmp.erase(it);
+	    }
 	}
+      else if (id == (*it)->getId())
+	{
+	  //			delete *it;
+	  if ((*it)->getType() == PLAYER)
+	    removePlayer((*it)->getId());
+	  it = tmp.erase(it);
+	}
+    }
 }
 
 void Board::setExplosion(float x, float y)

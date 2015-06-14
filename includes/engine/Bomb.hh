@@ -30,7 +30,7 @@ public:
   char			getRange() const;
   void			setRange(char const &);
   void			run();
-  void			explosion();
+  int			explosion();
 private:
   bool					launched;
   std::chrono::steady_clock::time_point	_time;
