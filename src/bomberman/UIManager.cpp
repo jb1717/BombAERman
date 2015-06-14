@@ -5,14 +5,16 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 21:02:19 2015 TommyStarK
-// Last update Sun Jun 14 12:22:07 2015 TommyStarK
+// Last update Sun Jun 14 23:40:41 2015 TommyStarK
 //
 
 #include "UIManager/UIManager.hh"
+#include "GameEngine.hh"
 
 UIManager::UIManager()
   : _start(true), _pause(false), _running(true), _current("StartUI"),
-    _defaultWidthWin(1820), _defaultHeightWin(980), _defaultName("BombAERman")
+    _defaultWidthWin(1820), _defaultHeightWin(980), _defaultName("BombAERman"),
+    _settings(Settings::instance())
 {
   _ui["StartUI"] = std::make_shared<LauncherUI>(_defaultWidthWin, _defaultHeightWin, _defaultName);
   _ui["SettingsUI"] = std::make_shared<SettingsUI>();
@@ -35,6 +37,37 @@ void                          UIManager::startService()
     this->UIhandler(_current);
 }
 
+void                          UIManager::launchGame()
+{
+  auto asset = AssetManager::instance();
+  GameEngine engine;
+
+  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
+
+  board->spawnPlayers(2, 0, "ia/easy.chai");
+  board->initialize();
+  board->initGameObjects();
+
+  //  SOUND_HANDLER(asset["sounds"])->play("bomberman");
+
+  if (engine.setupGame(board) == false)
+    {
+      std::cout << "Couldn't load the map." << std::endl;
+      exit(EXIT_FAILURE);
+    }
+  if (engine.initialize() == false)
+    {
+      std::cerr << "ini" << std::endl;
+      exit(EXIT_FAILURE);
+    }
+    EThread t1;
+    t1.launch(launch_play, std::ref(board->getPlayers().front()));
+    EThread t2;
+    t2.launch(launch_play, std::ref(board->getPlayers()[1]));
+  while (engine.update() == true)
+    engine.draw();
+}
+
 std::tuple<int, std::string>  UIManager::controller(bool quit, const std::string &ui)
 {
   int i = !quit ? 0 : 1;
@@ -46,7 +79,7 @@ std::tuple<int, std::string>  UIManager::controller(bool quit, const std::string
         else if (ui == "QuitLauncher")
           return (std::tuple<int, std::string>(0, "CreditsUI"));
         else if (ui == "LAUNCHGAME:)") {
-            std::cout << "LAUNCHGAME:)" << std::endl;
+            this->launchGame();
             return (std::tuple<int, std::string>(3, ""));
         }
         else

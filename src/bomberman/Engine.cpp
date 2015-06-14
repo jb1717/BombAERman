@@ -25,14 +25,16 @@ Board	&Engine::getBoard() const
 
 bool	Engine::initialize(int player, int ia, std::string const &difficulty)
 {
-  VideoContext::instanciate()->init();
   auto asset = AssetManager::instance();
 
   _nbPlay = player;
   _nbIa = ia;
+  std::cout << "ça passe" << std::endl;
+  // std::cout << player << " " << ia << " " << diffic<< std::endl;
   _board.spawnPlayers(player, ia, difficulty);
+  std::cout << "ça passe" << std::endl;
   _board.initialize();
-  _board.initGameObjects();
+  std::cout << "ça passe" << std::endl;
   return (true);
 }
 
@@ -71,16 +73,19 @@ bool	Engine::checkRealAlive()
 bool	Engine::launch_game()
 {
   engine = new GameEngine;
+  std::cout << "ça passe" << std::endl;
   if (engine->setupGame(&_board) == false)
     {
       std::cout << "Couldn't load the map." << std::endl;
       return (false);
     }
+    std::cout << "ça passe" << std::endl;
   if (engine->initialize() == false)
     {
       std::cerr << "ini" << std::endl;
       return (false);
     }
+    std::cout << "ça passe" << std::endl;
   if (!players_thread())
     return (false);
   run();

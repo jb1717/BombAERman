@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 20:58:21 2015 TommyStarK
-// Last update Sun Jun 14 12:27:37 2015 TommyStarK
+// Last update Sun Jun 14 22:45:22 2015 TommyStarK
 //
 
 #ifndef _UIMANAGER_HH_
@@ -23,6 +23,7 @@
 # include "LoadGameUI.hh"
 # include "SettingsUI.hh"
 # include "LauncherUI.hh"
+# include "engine/Engine.hh"
 
 class      UIManager
 {
@@ -47,11 +48,13 @@ private:
 
 // UI Controller.
 private:
+  Settings                                     &_settings;
   std::map<std::string, std::shared_ptr<AUI>>  _ui;
 
 
 // Private interns functions to manage different view to display.
 private:
+  void                              launchGame();
   void                              UIhandler(const std::string &);
   std::tuple<int, std::string>      controller(bool, const std::string &);
 

@@ -5,19 +5,19 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 22:06:02 2015 TommyStarK
-// Last update Sun Jun 14 05:11:48 2015 TommyStarK
+// Last update Sun Jun 14 22:50:30 2015 TommyStarK
 //
 
 #include "UIManager/LauncherUI.hh"
 
 
 LauncherUI::LauncherUI(int width, int height, const std::string & winName)
-  : _width(width), _height(height), _first(true), _spreading(10), _name(winName), _const(new glm::vec3())
+  : _width(width), _height(height), _first(true), _spreading(10),
+   _name(winName), _settings(Settings::instance()), _const(new glm::vec3())
 {
-  auto settings = Settings::instance();
-  settings.setWidth(_width);
-  settings.setHeight(_height);
-  settings.setWindowName(_name);
+  _settings.setWidth(_width);
+  _settings.setHeight(_height);
+  _settings.setWindowName(_name);
   _itemsName.push_back("play");
   _itemsName.push_back("settings");
   _itemsName.push_back("quit");

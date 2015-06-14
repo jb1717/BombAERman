@@ -33,7 +33,7 @@ bool Board::initialize()
 	int true_y;
 	for (auto it = _board.begin(); it != _board.end(); it++)
 	{
-		//      std::cout << "size = " << (*it).size() << std::endl;
+		     std::cout << "size = " << (*it).size() << std::endl;
 		for (auto internIt = (*it).begin(); internIt != (*it).end(); internIt++)
 		{
 			AGameObject*  obj;

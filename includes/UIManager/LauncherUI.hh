@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 21:39:13 2015 TommyStarK
-// Last update Sun Jun 14 05:08:33 2015 TommyStarK
+// Last update Sun Jun 14 22:49:53 2015 TommyStarK
 //
 
 #ifndef _LAUNCHERUI_HH_
@@ -45,6 +45,7 @@ private:
 
 // Private menu attributes.
 private:
+  Settings                    &_settings;
   glm::vec3                   *_const;
   Geometric                   *_front[3];
   std::vector<std::string>    _itemsName;

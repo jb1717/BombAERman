@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat May 16 20:52:10 2015 Jamais
-// Last update Sun Jun 14 15:59:06 2015 Jamais
+// Last update Sun Jun 14 23:41:03 2015 Milox Thomas
 //
 
 #include	"AGameObject.hh"
@@ -62,7 +62,7 @@ bool		AGameObject::initialize() { return true; }
 void		AGameObject::update(UNUSED gdl::Clock const& clock, UNUSED Binput &input)
 {}
 
-void		AGameObject::update(UNUSED gdl::Clock const& clock, UNUSED Binput &input, UNUSED Camera const& camera, long int id)
+void		AGameObject::update(UNUSED gdl::Clock const& clock, UNUSED Binput &input, UNUSED Camera const& camera, UNUSED long int id)
 {
   _rotation.y = -1 * camera.getRotation().y;
   // _rotation.x = -1 * camera.getRotation().x;
