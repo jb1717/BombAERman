@@ -188,9 +188,9 @@ void Board::deleteEntity(float x, float y, long int id, bool breakWall)
 		   !(reinterpret_cast<Crate *>(*it)->isBreak()))
 	    {
 	      reinterpret_cast<Crate *>(*it)->breakIt();
-	      // (*it)->setGameObj(new Bonus((*it)->getGameObj()->getPosition()));
-	      // reinterpret_cast<Bonus *>((*it)->getGameObj())->load("./assets/models/bonusPower.fbx");
-	      // (*it)->getGameObj()->setColor(glm::vec4(1.0f, 0.8f, 0.8f, 1.0f));
+	      (*it)->setGameObj(new Bonus((*it)->getGameObj()->getPosition()));
+	      (*it)->getGameObj()->scale(glm::vec3(200, 1, 200));
+	      reinterpret_cast<Bonus *>((*it)->getGameObj())->load("./assets/models/bonusPower.fbx");
 	      ++it;
 	    }
 	  else

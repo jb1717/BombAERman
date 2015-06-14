@@ -53,7 +53,7 @@ int     main()
   Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[1]);
 
 
-  board->spawnPlayers(2, 1, "ia/easy.chai");
+  board->spawnPlayers(2, 0, "ia/easy.chai");
   board->initialize();
   board->initGameObjects();
 
@@ -71,7 +71,7 @@ int     main()
     }
   std::thread t1(launch_play, std::ref(board->getPlayers().front()));
   std::thread t2(launch_play, std::ref(board->getPlayers()[1]));
-  std::thread t3(launch_ia, std::ref(board->getPlayers()[2]));
+  //  std::thread t3(launch_ia, std::ref(board->getPlayers()[2]));
   while (engine.update() == true)
     engine.draw();
   return EXIT_SUCCESS;
