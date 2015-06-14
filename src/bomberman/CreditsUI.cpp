@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat Jun 13 00:56:32 2015 TommyStarK
-// Last update Sat Jun 13 07:00:30 2015 TommyStarK
+// Last update Sun Jun 14 03:03:27 2015 TommyStarK
 //
 
 #include "UIManager/CreditsUI.hh"

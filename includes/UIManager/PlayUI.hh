@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:32:15 2015 TommyStarK
-// Last update Sat Jun 13 13:59:16 2015 TommyStarK
+// Last update Sun Jun 14 02:54:00 2015 TommyStarK
 //
 
 #ifndef  _PLAYUI_HH_
@@ -20,21 +20,44 @@
 class             PlayUI : public AUI
 {
 public:
-  PlayUI();
+  PlayUI(int, int, const std::string &);
   ~PlayUI();
 
+public:
+  enum Display {NEWGAME = 0, LOADGAME = 1, BACK = 2};
+
+private:
+  int                         _width;
+  int                         _height;
+  bool                        _first;
+  int                         _behavior;
+  int                         _selected;
+  int                         _fixItems;
+  int                         _dynamicItems;
+  float                       _spreading;
+  std::string                 _name;
 
 private:
   std::vector<std::string>    _iaNames;
+  std::vector<std::string>    _itemsName;
+  std::map<int , float>       _cursor;
+
+private:
+  Geometric                   *_front[2];
+  std::vector<Geometric *>    _items;
 
 
 private:
-  void            getIaNames();
-  void            updateContext();
+  void                        getIaNames();
+  void                        setupDisplay();
+  void                        itemsFocus();
+  void                        setupItemsToGame();
+  void                        updateContext();
+  std::string                 displayNextUi();
 
 public:
-  void            launch();
-  stateUI         handlerEvent();
+  void                        launch();
+  stateUI                     handlerEvent();
 
 
 };

@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 21:02:19 2015 TommyStarK
-// Last update Sat Jun 13 05:43:50 2015 TommyStarK
+// Last update Sun Jun 14 02:35:42 2015 TommyStarK
 //
 
 #include "UIManager/UIManager.hh"
@@ -16,7 +16,7 @@ UIManager::UIManager()
 {
   _ui["StartUI"] = std::make_shared<LauncherUI>(_defaultWidthWin, _defaultHeightWin, _defaultName);
   _ui["SettingsUI"] = std::make_shared<SettingsUI>(_defaultWidthWin, _defaultHeightWin, _defaultName);
-  _ui["PlayUI"] = std::make_shared<PlayUI>();
+  _ui["PlayUI"] = std::make_shared<PlayUI>(_defaultWidthWin, _defaultHeightWin, _defaultName);
   _ui["PauseUI"] = std::make_shared<PauseUI>();
   _ui["CreditsUI"] = std::make_shared<CreditsUI>();
   this->startService();
@@ -50,7 +50,7 @@ std::tuple<int, std::string>  UIManager::controller(bool quit, const std::string
     case 1:
         if (ui == "Quit")
           return (std::tuple<int, std::string>(3, ""));
-        else if (ui == "SettingsUI")
+        else if (ui == "SettingsUI" || ui == "PlayUI")
           return (std::tuple<int, std::string>(0, "StartUI"));
     default:
       break ;
