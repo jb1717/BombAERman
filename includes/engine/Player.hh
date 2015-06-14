@@ -5,7 +5,7 @@
 // Login   <tran_0@epitech.net>
 //
 // Started on  Sun May  3 01:20:37 2015 David Tran
-// Last update Sat Jun 13 01:42:11 2015 Jean-Baptiste Grégoire
+// Last update Sun Jun 14 15:29:49 2015 Hugo Prenat
 //
 
 #ifndef PLAYER_HH_
@@ -56,11 +56,14 @@ public: // Player Bomb tools
   bool					triggerOneBomb();
   void					powerUpRange();
   void					goAllExplosions();
+  size_t				getScore() const;
+  void					setScore(size_t add);
 
 private:
   bool			_isAlive;
   std::vector<Bomb *>	_bombs;
   Board::Direction	_dir;
+  size_t		_score;
 };
 
 #endif // !PLAYER_HH
