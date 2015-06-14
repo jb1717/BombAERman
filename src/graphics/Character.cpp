@@ -81,7 +81,7 @@ void			Character::update(UNUSED gdl::Clock const& clock, Binput& input, Camera c
   bomber::Event	event;
 
   _bombing = false;
-  if ((id == 1 && input._default.getKey(SDLK_z)) || (id == 2 && (input.handleEvent(event, bomber::Event::JoyMiddleDown) || input._default.getKey(SDLK_KP_5))))
+  if ((id == 1 && input._default.getKey(SDLK_z)) || (id == 2 && (input.handleEvent(event, bomber::Event::JoyMiddleUp) || input._default.getKey(SDLK_KP_5))))
     {
       _rotation.y = -1 * camera.getRotation().y;
       translate(glm::vec3(-sin(angle) * _speed, 0, cos(angle) * _speed));
