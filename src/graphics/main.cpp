@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Fri May 15 21:29:13 2015 Jamais
-// Last update Sun Jun 14 08:37:31 2015 Emmanuel Chambon
+// Last update Sun Jun 14 15:59:51 2015 Jamais
 //
 
 #include        <cstdlib>
@@ -50,7 +50,7 @@ int     main()
   auto asset = AssetManager::instance();
   GameEngine engine;
 
-  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[1]);
+  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
 
 
   board->spawnPlayers(2, 0, "easy.chai");

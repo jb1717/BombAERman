@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Sun Jun 14 15:31:54 2015 Jamais
+// Last update Sun Jun 14 16:07:50 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -65,8 +65,10 @@ GameEngine::GameEngine() : Game()
   texCrate3 = (*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate3"];
   texWall = (*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["wall"];
   texMenu = (*THEME((*THEME_HANDLER(asset["themes"]))["GUI"]))["menu"];
-  bomb = new BasicBomb();
-  // bomb =// &((*MODEL_HANDLER(asset["models"]))["PumpkinBomb.fbx"]);
+  //bomb = new BasicBomb();
+  bomb = &((*MODEL_HANDLER(asset["models"]))["PumpkinBomb.fbx"]);
+  bomb->scale(glm::vec3(0.002, 0.002, 0.002));
+
   bn = new Bonus(glm::vec3(0, 0,  0));
   bn->load("./assets/models/bonusPower.fbx");
   bn->setPosition(glm::vec3(0, 5, 0));
@@ -272,15 +274,15 @@ void		GameEngine::draw()
     // _board->dump();
   _mutex.unlock();
   // effect->draw(_shader, _clock);
-  // if (GUI)
-  //   {
-  //     menuCam.lockShader(_shader);
-  //     bomb->draw(_shader, _clock);
-  //     bombChooser->draw(_shader, _clock);
-  //     s->draw(_shader, _clock);
-  //     menu->draw(_shader, _clock);
+  if (GUI)
+    {
+      menuCam.lockShader(_shader);
+      bomb->draw(_shader, _clock);
+      bombChooser->draw(_shader, _clock);
+      s->draw(_shader, _clock);
+      //      menu->draw(_shader, _clock);
 
-  //   }
+    }
   _videoContext->flush();
 }
 
