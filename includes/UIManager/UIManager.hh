@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 20:58:21 2015 TommyStarK
-// Last update Sun Jun 14 00:42:08 2015 TommyStarK
+// Last update Sun Jun 14 12:27:37 2015 TommyStarK
 //
 
 #ifndef _UIMANAGER_HH_
@@ -19,6 +19,8 @@
 # include "PlayUI.hh"
 # include "PauseUI.hh"
 # include "CreditsUI.hh"
+# include "NewGameUI.hh"
+# include "LoadGameUI.hh"
 # include "SettingsUI.hh"
 # include "LauncherUI.hh"
 

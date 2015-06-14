@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:32:15 2015 TommyStarK
-// Last update Sun Jun 14 04:37:18 2015 TommyStarK
+// Last update Sun Jun 14 19:55:26 2015 TommyStarK
 //
 
 #ifndef  _PLAYUI_HH_
@@ -35,6 +35,7 @@ private:
   float                       _spreading;
 
 private:
+  Settings                    &_settings;
   std::vector<std::string>    _iaNames;
   std::vector<std::string>    _itemsName;
   std::map<int , float>       _cursor;

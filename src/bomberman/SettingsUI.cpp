@@ -5,14 +5,16 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:21:08 2015 TommyStarK
-// Last update Sun Jun 14 05:04:29 2015 TommyStarK
+// Last update Sun Jun 14 19:36:03 2015 TommyStarK
 //
 
 #include "UIManager/SettingsUI.hh"
 
 SettingsUI::SettingsUI()
-  : _first(true), _spreading(2), _gameVolum(50), _fxVolum(50), _antiAliasing(false)
+  : _first(true), _spreading(2), _gameVolum(50), _fxVolum(50),
+  _antiAliasing(false), _param(Settings::instance())
 {
+  this->updateSingletonSettings();
   _itemsName.push_back("aa");
   _itemsName.push_back("master-volume");
   _itemsName.push_back("fx-volume");
@@ -71,8 +73,6 @@ void                          SettingsUI::setupDisplay()
       || !_shader.load(VERTEX_SHADER, GL_VERTEX_SHADER)
       || !_shader.build())
     throw std::runtime_error("(SettingsUI::)setupDisplay - load/build shader failed.");
-  // _camera.setPosition(glm::vec3(0, 0, -2));
-  // _camera.refreshPosition();
   _camera.setPosition(glm::vec3(0, 0, -20));
   _camera.setZoom(glm::vec3(12, 12, 12));
   _camera.refreshPosition();
@@ -108,7 +108,15 @@ void                          SettingsUI::setupItemsSettings()
     _items.back()->draw(_shader, _clock);
     if (i < (_dynamicItems - 1))
     {
-      _settings[i] = new GraphicString(!i ? "OFF" : "50");
+      std::vector<std::string>    tmp;
+      std::ostringstream          gv;
+      std::ostringstream          fx;
+      gv << _gameVolum;
+      fx << _fxVolum;
+      tmp.push_back(!_antiAliasing ? "OFF" : "ON");
+      tmp.push_back(gv.str());
+      tmp.push_back(fx.str());
+      _settings[i] = new GraphicString(tmp[i]);
       _settings[i]->render(*_factory);
       _settings[i]->translate(*_posSettings[i]);
       _settings[i]->scale(glm::vec3(2, 4, 10));
@@ -121,6 +129,8 @@ void                          SettingsUI::setupItemsSettings()
 
 void                          SettingsUI::modifySettings()
 {
+  std::ostringstream          in;
+
   switch (_selected) {
     case 0:
       _settings[_selected]->setText(!_antiAliasing ? "ON" : "OFF");
@@ -129,57 +139,29 @@ void                          SettingsUI::modifySettings()
       _antiAliasing = !_antiAliasing;
       break ;
     case 1:
-      _input._default.removeKeyInput(SDLK_RETURN);
-      while (1) {
-        usleep(75000);
-        this->updateSettings();
-          if (_input._default.getKey(SDLK_RETURN))
-            break;
-          else {
-            if (_input._default.getKey(SDLK_LEFT))
-              _gameVolum = _gameVolum <= 0 ? 0 : _gameVolum - 1;
-            else if (_input._default.getKey(SDLK_RIGHT))
-              _gameVolum = _gameVolum >= 99 ? 100 : _gameVolum + 1;
-          }
-      }
+      _gameVolum = _gameVolum ==  100 ? 0 : _gameVolum + 1;
+      in << _gameVolum;
+      _settings[_selected]->setText(in.str());
+      _settings[_selected]->translate(*_posSettings[_selected]);
+      _settings[_selected]->scale(glm::vec3(2, 4, 10));
       break ;
     case 2:
-      _input._default.removeKeyInput(SDLK_RETURN);
-      while (1) {
-          usleep(75000);
-          this->updateSettings();
-          if (_input._default.getKey(SDLK_RETURN))
-            break;
-          else {
-            if (_input._default.getKey(SDLK_LEFT))
-              _fxVolum = _fxVolum  <= 0 ? 0 : _fxVolum - 1;
-            else if (_input._default.getKey(SDLK_RIGHT))
-              _fxVolum = _fxVolum >= 99 ? 100 : _fxVolum + 1;
-          }
-      }
+      _fxVolum = _fxVolum ==  100 ? 0 : _fxVolum + 1;
+      in << _fxVolum;
+      _settings[_selected]->setText(in.str());
+      _settings[_selected]->translate(*_posSettings[_selected]);
+      _settings[_selected]->scale(glm::vec3(2, 4, 10));
       break ;
     default:
       break ;
   }
 }
 
-void                          SettingsUI::updateSettings()
+void                          SettingsUI::updateSingletonSettings()
 {
-  auto settings = Settings::instance();
-  std::ostringstream  in1;
-  in1 << _gameVolum;
-  _settings[1]->setText(in1.str());
-  _settings[1]->translate(*_posSettings[1]);
-  _settings[1]->scale(glm::vec3(2, 4, 10));
-  std::ostringstream  in2;
-  in2 << _fxVolum;
-  _settings[2]->setText(in2.str());
-  _settings[2]->translate(*_posSettings[2]);
-  _settings[2]->scale(glm::vec3(2, 4, 10));
-  settings.setAntiAliasing(_antiAliasing);
-  settings.setGameVolum(_gameVolum);
-  settings.setFxVolum(_fxVolum);
-  this->updateContext();
+  _param.setAntiAliasing(_antiAliasing);
+  _param.setGameVolum(_gameVolum);
+  _param.setFxVolum(_fxVolum);
 }
 
 void                          SettingsUI::updateContext()
@@ -203,10 +185,9 @@ void                          SettingsUI::launch()
   if (!_first)
   {
     _window->flush();
-    auto settings = Settings::instance();
-    _gameVolum = settings.getGameVolum();
-    _fxVolum = settings.getFxVolum();
-    _antiAliasing = settings.getAntiAliasing();
+    _gameVolum = _param.getGameVolum();
+    _fxVolum = _param.getFxVolum();
+    _antiAliasing = _param.getAntiAliasing();
   }
   _first = false;
   this->setupDisplay();
@@ -225,6 +206,7 @@ stateUI                       SettingsUI::handlerEvent()
         ((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
          && _selected == BACK))
     {
+      this->updateSingletonSettings();
       _isRunning = false;
       break ;
     }
