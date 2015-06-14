@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sun May 17 00:23:57 2015 Jamais
-// Last update Sat Jun 13 23:42:20 2015 Jean-Baptiste Grégoire
+// Last update Sun Jun 14 15:31:54 2015 Jamais
 //
 
 #include	"GameEngine.hh"
@@ -256,9 +256,19 @@ void		GameEngine::draw()
 	      {
 		static_cast<AFX *>((*itk)->getGameObj())->update(_clock, _input, camera);
 	      }
-	    (*itk)->getGameObj()->draw(_shader, _clock);
+	    else
+	      (*itk)->getGameObj()->draw(_shader, _clock);
 	  }
     }
+    for (auto it = _board->getFullBoard().begin(); it != _board->getFullBoard().end(); it++)
+      {
+	for (auto itk = (*it).begin(); itk != (*it).end(); itk++)
+	  if ((*itk) && (*itk)->getGameObj())
+	    {
+	      if ((*itk)->getId() == -4)
+		(*itk)->getGameObj()->draw(_shader, _clock);
+	    }
+      }
     // _board->dump();
   _mutex.unlock();
   // effect->draw(_shader, _clock);

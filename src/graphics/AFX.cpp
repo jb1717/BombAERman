@@ -5,7 +5,7 @@
 // Login   <Jamais@epitech.net>
 //
 // Started on  Sat Jun  6 04:02:46 2015 Jamais
-// Last update Fri Jun 12 09:17:39 2015 Jamais
+// Last update Sun Jun 14 14:52:56 2015 Jamais
 //
 
 #include	"AFX.hh"
@@ -56,12 +56,13 @@ void		AFX::update(gdl::Clock const& clock, UNUSED Binput& input)
   _timer -= clock.getElapsed();
 }
 
-void		AFX::update(gdl::Clock const& clock, Binput& input, Camera const& camera)
+void		AFX::update(gdl::Clock const& clock, UNUSED Binput& input, Camera const& camera)
 {
  _timer -= clock.getElapsed();
   for (size_t i = 0; i < _spareParts.size(); i++)
     {
-      _spareParts[i]->setRotation(glm::vec3(0, 10 * cos(camera.getRotation().y), 1));
+      // _spareParts[i]->setRotation(glm::vec3(0, 10 * cos(camera.getRotation().y), 1));
+      _spareParts[i]->AGameObject::update(clock, input, camera);
       _spareParts[i]->rotate(glm::vec3(0, 0, rand() % 10 * 0.15), -1);
       if (_timer >= 0.0f)
 	_spareParts[i]->scale(glm::vec3(1.01, 1.01, 1.01));
