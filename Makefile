@@ -111,7 +111,7 @@ GRAPHICS_SRC		=				\
 				ParticleSystem.cpp	\
 				Skybox.cpp		\
 				VideoContext.cpp	\
-				 main.cpp
+				#  main.cpp
 
 ifeq ($(GRAPHICALGAME),yes)
 $(GRAPHICS_SRC) += main.cpp
@@ -174,7 +174,9 @@ BOMBERMAN_SRC		=				\
 				Binput.cpp		\
 				CreditsUI.cpp		\
 				Settings.cpp		\
-				# main.cpp		\
+				NewGameUI.cpp 	\
+				LoadGameUI.cpp	\
+				main.cpp		\
 
 BOMBERMAN		=	bomberman
 PRO			=	$(addprefix $(BINARY_DIR), $(BOMBERMAN))

@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat Jun 13 00:56:32 2015 TommyStarK
-// Last update Sun Jun 14 05:04:23 2015 TommyStarK
+// Last update Sun Jun 14 19:38:00 2015 TommyStarK
 //
 
 #include "UIManager/CreditsUI.hh"
@@ -13,7 +13,7 @@
 CreditsUI::CreditsUI()
   : _first(true), _spreading(10)
 {
-  _itemsName.push_back("EndBackground3");
+  _itemsName.push_back("EndBackground");
   _itemsName.push_back("GameOver");
   _itemsName.push_back("credits");
   this->setName("CreditsUI");
@@ -27,13 +27,11 @@ CreditsUI::~CreditsUI()
 void                        CreditsUI::setupDisplay()
 {
   if (!_camera.setupCamera(*_window))
-    throw std::runtime_error("(SettingsUI::)setupDisplay - setup camera failed.");
+    throw std::runtime_error("(CreditsUI::)setupDisplay - setup camera failed.");
   if (!_shader.load(FRAGMENT_SHADER, GL_FRAGMENT_SHADER)
       || !_shader.load(VERTEX_SHADER, GL_VERTEX_SHADER)
       || !_shader.build())
-    throw std::runtime_error("(SettingsUI::)setupDisplay - load/build shader failed.");
-  // _camera.setPosition(glm::vec3(0, 0, -2));
-  // _camera.refreshPosition();
+    throw std::runtime_error("(CreditsUI::)setupDisplay - load/build shader failed.");
   _camera.setPosition(glm::vec3(0, 0, -20));
   _camera.setZoom(glm::vec3(12, 12, 12));
   _camera.refreshPosition();
@@ -62,9 +60,8 @@ void                        CreditsUI::setupItemsCredits()
 void                        CreditsUI::updateContext()
 {
   _window->updateContext(_clock, _input);
-  for (size_t i = 0; i < _itemsName.size(); i++) {
+  for (size_t i = 0; i < _itemsName.size(); i++)
     _front[i]->update(_clock, _input._default);
-  }
   _camera.update(_clock, _input);
 }
 
@@ -80,7 +77,7 @@ void                        CreditsUI::launch()
 
 stateUI                     CreditsUI::handlerEvent()
 {
-  sleep(6);
+  sleep(3);
   this->updateContext();
   return (std::tuple<bool, std::string>(true, this->getName()));
 }

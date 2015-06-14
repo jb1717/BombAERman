@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:35:33 2015 TommyStarK
-// Last update Sun Jun 14 04:39:24 2015 TommyStarK
+// Last update Sun Jun 14 19:13:15 2015 TommyStarK
 //
 
 #ifndef  _SETTINGSUI_HH_
@@ -40,6 +40,7 @@ private:
   int                         _gameVolum;
   int                         _fxVolum;
   bool                        _antiAliasing;
+  Settings                    &_param;
 
 private:
   Geometric                   *_front[4];
@@ -55,7 +56,8 @@ private:
   void                        setupItemsSettings();
   void                        itemFocus();
   void                        modifySettings();
-  void                        updateSettings();
+  // void                        updateSettings();
+  void                        updateSingletonSettings();
   void                        updateContext();
 
 public:
