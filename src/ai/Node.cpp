@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Sat Jun 13 13:56:45 2015 Hugo Prenat
-// Last update Sat Jun 13 17:09:00 2015 Hugo Prenat
+// Last update Sun Jun 14 02:39:16 2015 Hugo Prenat
 //
 
 #include "Node.hh"
@@ -50,7 +50,7 @@ void	Node::addAjacentsBox(std::pair<int, int>& box)
 	{
 	  if (y < 0 ||
 	      y >= static_cast<int>(_map[x].length()) ||
-	      _map[x][y] == 'x' ||
+	      _map[x][y] == 'x' || _map[x][y] == 'p' ||
 	      (x == box.first && y == box.second))
 	    continue;
 	  std::pair<int,int> it(x, y);

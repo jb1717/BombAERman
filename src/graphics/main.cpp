@@ -55,6 +55,7 @@ int     main()
   board->placeEntity(1, 1, killer);
   Player	*toto = new Player(*board);
   toto->setId(1);
+  killer->setId(5);
   board->placeEntity(5, 5, toto);
   // board->spawnPlayers(8);
   board->initialize();
