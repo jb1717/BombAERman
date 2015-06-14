@@ -127,8 +127,8 @@ std::vector<std::string>              BoardHandler::getBoardsNames() const
 {
 	std::vector<std::string> ret;
 
-	for (auto i : _boards)
-		ret.push_back(i.name);
+	for (size_t i = 0; i < _boards.size(); i++)
+		ret.push_back(_boards[i].name);
 	return ret;
 }
 

@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun Jun 14 06:38:02 2015 TommyStarK
-// Last update Sun Jun 14 22:08:40 2015 TommyStarK
+// Last update Sun Jun 14 22:34:59 2015 TommyStarK
 //
 
 #include "UIManager/NewGameUI.hh"
@@ -19,6 +19,10 @@ NewGameUI::NewGameUI()
     std::transform(_ia[i].begin(), _ia[i].end(), _ia[i].begin(), toupper);
   _map.push_back("TEST");
   _map.push_back("YOLO");
+  _settings.setPlayerNbr(_human);
+  _settings.setIaNbr(_ennemy);
+  _settings.setDifficulty(_ia[_ia_iter]);
+  _settings.setMapName(_map[_map_iter]);
   _itemsName.push_back("human");
   _itemsName.push_back("ennemy");
   _itemsName.push_back("difficulty");
