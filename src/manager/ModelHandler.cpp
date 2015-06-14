@@ -5,26 +5,19 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Mon Jun  1 10:02:54 2015 Emmanuel Chambon
-// Last update Sat Jun 13 01:36:58 2015 Emmanuel Chambon
+// Last update Sun Jun 14 02:41:23 2015 Emmanuel Chambon
 //
 
 #include "ModelHandler.hh"
 
-ModelHandler::ModelHandler()
+ModelHandler::ModelHandler() : _videoContext(VideoContext::instanciate())
 {
-	// _videoContext = new VideoContext(1920, 1280, "Afghanistan : 1994 .1..");
-
-	// _videoContext->init();
-  _videoContext = VideoContext::instanciate();
-	// V = _videoContext;
 	load();
 }
 
-ModelHandler::~ModelHandler()
-{
-
-}
-
+/*
+** Load all models located in assets/models
+*/
 void ModelHandler::load()
 {
 	struct dirent *ent;
@@ -34,10 +27,8 @@ void ModelHandler::load()
 		try {
 			while ((ent = readdir (dir)) != NULL) {
 				if (std::string(ent->d_name)[0] != '.' && std::regex_match(ent->d_name, std::regex("((.*)\\.(fbx))")))
-					// loadModel("assets/models/" + std::string(ent->d_name), ent->d_name);
-
-
-                	_models[ent->d_name] = new AGameModel("assets/models/" + std::string(ent->d_name));;
+					loadModel("assets/models/" + std::string(ent->d_name), ent->d_name);
+				// _models[ent->d_name] = new AGameModel("assets/models/" + std::string(ent->d_name));;
 			}
 		} catch (std::invalid_argument &e) {
 			std::cerr << e.what() << std::endl;
@@ -48,14 +39,20 @@ void ModelHandler::load()
 	}
 }
 
+/*
+** Load the model located at [path]
+** and store it as [name]
+*/
 void ModelHandler::loadModel(std::string const &path, std::string const &name)
 {
-	// std::shared_ptr<AGameModel> model = std::make_shared<AGameModel>(path);
-    //
-	// std::lock_guard<std::mutex> guard(_mutex);
-	// _models[name] = model;
+	std::shared_ptr<AGameModel> model = std::make_shared<AGameModel>(path);
+
+	_models[name] = model;
 }
 
+/*
+** Return the [at] model
+*/
 AGameModel                  &ModelHandler::operator[](std::string const &at)
 {
 	if (_models.find(at) == _models.end())

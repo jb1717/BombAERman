@@ -5,22 +5,13 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 07:00:39 2015 TommyStarK
-// Last update Thu May 28 12:12:43 2015 Emmanuel Chambon
+// Last update Sun Jun 14 02:04:16 2015 Emmanuel Chambon
 //
 
-
+#pragma once
 #ifndef _SCOREHANDLER_HH_
 # define _SCOREHANDLER_HH_
 
-# include <ctime>
-# include <vector>
-# include <sstream>
-# include <fstream>
-# include <stdio.h>
-# include <dirent.h>
-# include <iostream>
-# include <unistd.h>
-# include <stdexcept>
 # include "AAsset.hh"
 # include "rapidjson/rapidjson.h"
 # include "rapidjson/document.h"
