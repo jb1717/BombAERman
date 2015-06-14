@@ -81,22 +81,22 @@ void			Character::update(UNUSED gdl::Clock const& clock, Binput& input, Camera c
   bomber::Event	event;
 
   _bombing = false;
-  if ((id == 1 && input._default.getKey(SDLK_z)) || (id == 2 && input.handleEvent(event, bomber::Event::JoyMiddleUp)))
+  if ((id == 1 && input._default.getKey(SDLK_z)) || (id == 2 && (input.handleEvent(event, bomber::Event::JoyMiddleDown) || input._default.getKey(SDLK_KP_8))))
     {
       _rotation.y = -1 * camera.getRotation().y;
       translate(glm::vec3(-sin(angle) * _speed, 0, cos(angle) * _speed));
     }
-  if ((id == 1 && input._default.getKey(SDLK_s)) || (id == 2 && input.handleEvent(event, bomber::Event::JoyMiddleDown)))
+  if ((id == 1 && input._default.getKey(SDLK_s)) || (id == 2 && (input.handleEvent(event, bomber::Event::JoyMiddleDown) || input._default.getKey(SDLK_KP_2))))
     {
       _rotation.y = 180 - camera.getRotation().y;
       translate(glm::vec3(sin(angle) * _speed, 0, -cos(angle) * _speed));
     }
-  if ((id == 1 && input._default.getKey(SDLK_q)) || (id == 2 && input.handleEvent(event, bomber::Event::JoyMiddleLeft)))
+  if ((id == 1 && input._default.getKey(SDLK_q)) || (id == 2 && (input.handleEvent(event, bomber::Event::JoyMiddleLeft) || input._default.getKey(SDLK_KP_4))))
     {
       _rotation.y = 90.0 - camera.getRotation().y;
       translate(glm::vec3(cos(angle) * _speed, 0, sin(angle) * _speed));
     }
-  if ((id == 1 && input._default.getKey(SDLK_d)) || (id == 2 && input.handleEvent(event, bomber::Event::JoyMiddleRight)))
+  if ((id == 1 && input._default.getKey(SDLK_d)) || (id == 2 && (input.handleEvent(event, bomber::Event::JoyMiddleRight) || input._default.getKey(SDLK_KP_6))))
     {
       _rotation.y = 270.0 - camera.getRotation().y;
       translate(glm::vec3(-cos(angle) * _speed, 0, -sin(angle) * _speed));
@@ -106,7 +106,7 @@ void			Character::update(UNUSED gdl::Clock const& clock, Binput& input, Camera c
       _rotation.y = camera.getRotation().y + 45.0;
       translate(glm::vec3(cos(camera.getRotation().y + 45.0) * _speed, 0, sin(camera.getRotation().y + 45) * _speed));
     }
-  if ((id == 1 && input._default.getKey(SDLK_SPACE)) || (id == 2 && input.handleEvent(event, bomber::Event::Free3)))
+  if ((id == 1 && input._default.getKey(SDLK_SPACE)) || (id == 2 && (input.handleEvent(event, bomber::Event::Free3) || input._default.getKey(SDLK_KP_5))))
     {
       _bombing = true;
     }

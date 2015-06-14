@@ -216,7 +216,7 @@ bool		GameEngine::update()
   bn->rotate(glm::vec3(0, 1, 0), 1);
   for (auto it = _board->getPlayers().begin(); it != _board->getPlayers().end(); it++)
     {
-      if ((*it)->getGameObj() && (*it)->getId() == 1)
+      if ((*it)->getGameObj() && ((*it)->getId() == 1 || (*it)->getId() == 2))
 	{
 	  glm::vec3 save = (*it)->getGameObj()->getPosition();
 	  (*it)->getGameObj()->update(_clock, _input, camera, (*it)->getId());

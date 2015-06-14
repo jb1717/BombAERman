@@ -50,10 +50,10 @@ int     main()
   auto asset = AssetManager::instance();
   GameEngine engine;
 
-  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
+  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[1]);
 
 
-  board->spawnPlayers(2, 5, "easy.chai");
+  board->spawnPlayers(2, 0, "easy.chai");
   board->initialize();
   board->initGameObjects();
 
@@ -69,7 +69,8 @@ int     main()
       std::cerr << "ini" << std::endl;
       return (EXIT_FAILURE);
     }
-  std::thread	t1(launch_play, std::ref(board->getPlayers().front()));
+  std::thread t1(launch_play, std::ref(board->getPlayers().front()));
+  std::thread t2(launch_play, std::ref(board->getPlayers()[1]));
   while (engine.update() == true)
     engine.draw();
   return EXIT_SUCCESS;
