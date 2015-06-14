@@ -5,7 +5,7 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Sat May 23 02:03:11 2015 Emmanuel Chambon
-// Last update Mon Jun  8 06:51:35 2015 Emmanuel Chambon
+// Last update Sun Jun 14 02:51:05 2015 Emmanuel Chambon
 //
 
 #pragma once
@@ -14,7 +14,6 @@
 
 #include <string>
 #include <map>
-#include <initializer_list>
 #include <iostream>
 #include <memory>
 #include <mutex>
@@ -27,7 +26,6 @@ class Theme
 {
 public:
     Theme(std::string const &, std::string const &);
-    ~Theme();
 
 public:
     gdl::Texture                *operator[](std::string const &);

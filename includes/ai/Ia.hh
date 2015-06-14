@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:12:42 2015 Hugo Prenat
-// Last update Sat Jun 13 19:03:19 2015 Hugo Prenat
+// Last update Sun Jun 14 04:00:57 2015 Hugo Prenat
 //
 
 #ifndef IA_HH_
@@ -24,7 +24,6 @@ public:
 
 public:
   Board&			getBoard() const;
-  int				getDistance(int id) const;
   int				getCloserAvailableEnemy() const;
   int				getCloserEnemy() const;		// Return Enemy Id
   AObj*				getEnemyById(int id) const;
@@ -34,7 +33,8 @@ public:
   bool				userAction();
   void				run_user();
   bool				chooseDir(const int dir);
-  void				moveToEnemy(const int id);
+  int				moveToEnemy(const int id);
+  int				dangerZone();
 
 public:
   void				setPosById(const int id);	// Set _enemyX _enemyY to Id Pos

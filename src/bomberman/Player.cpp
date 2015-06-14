@@ -206,9 +206,9 @@ bool	Player::selectDirection(Board::Direction direc)
 {
   if (_dir == direc)
     return (goAhead());
-  else if (_dir == (static_cast<Board::Direction>((_dir - 1) % 4)))
+  else if (direc == (static_cast<Board::Direction>((_dir + 1) % 4)))
     return (turnLeft());
-  else if (_dir == (static_cast<Board::Direction>((_dir + 1) % 4)))
+  else if (direc == (static_cast<Board::Direction>((_dir - 1) % 4)))
     return (turnRight());
   return (goBack());
 }

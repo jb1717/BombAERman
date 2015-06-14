@@ -5,23 +5,19 @@
 // Login   <chambo_e@epitech.eu>
 //
 // Started on  Sun May 24 08:35:43 2015 Emmanuel Chambon
-// Last update Sat Jun 13 00:56:32 2015 Emmanuel Chambon
+// Last update Sun Jun 14 02:28:12 2015 Emmanuel Chambon
 //
 
 #pragma once
 #ifndef SOUNDHANDLER_HH_
 #define SOUNDHANDLER_HH_
 
-#include <iostream>
-#include <map>
-#include <vector>
-#include <memory>
-#include <future>
-#include <mutex>
-#include <regex>
-#include <dirent.h>
 #include "AAsset.hh"
 #include "fmod/fmod.hpp"
+
+/*
+** /!\ Unable to use smart pointers due to fmod API
+*/
 
 class SoundHandler : public AAsset
 {
@@ -32,15 +28,15 @@ public:
 public:
     void                        setBackgroundVolume(float);
     void                        setForegroundVolume(float);
-    void                        pause();
-    void                        resume();
-    void                        stop();
+    void                        pause() const;
+    void                        resume() const;
+    void                        stop() const;
     void                        play(std::string const &, bool = false, bool = true);
-    bool                        isPlaying();
+    bool                        isPlaying() const;
     FMOD::Sound                 *operator[](std::string const&);
 
 private:
-    void                        fmodError(FMOD_RESULT);
+    void                        fmodError(FMOD_RESULT) const;
     void                        load();
     void                        loadSound(std::string const &);
 

@@ -5,7 +5,7 @@
 ## Login   <paasch_j@epitech.net>
 ##
 ## Started on  Mon Apr 27 12:03:45 2015 Johan Paasche
-## Last update Sun Jun 14 04:42:51 2015 Jean-Baptiste Grégoire
+## Last update Sun Jun 14 10:00:16 2015 Jean-Baptiste Grégoire
 ##
 
 GRAPHICALGAME	=	yes
@@ -136,6 +136,7 @@ MANAGER_SRC		=				\
 				AssetManager.cpp	\
 				BoardHandler.cpp	\
 				ScoreHandler.cpp	\
+				SaveHandler.cpp		\
 				ModelHandler.cpp	\
 
 #########################################################

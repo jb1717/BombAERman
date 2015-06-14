@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Sun Jun 14 00:05:25 2015 Hugo Prenat
+// Last update Sun Jun 14 08:36:53 2015 Hugo Prenat
 //
 
 #include "GameEngine.hh"
@@ -20,7 +20,6 @@ Ia::Ia(std::string const &fileName, Board &Board) : Player(Board),
   int south = 2;
   int east = 3;
 
-  std::cout << "je créé l'IA" << std::endl;
   _key = -1;
   _enemyX = -1;
   _enemyY = -1;
@@ -30,6 +29,7 @@ Ia::Ia(std::string const &fileName, Board &Board) : Player(Board),
   _chai.add(chaiscript::fun(&Ia::getCloserEnemy, this), "iaCloserEnemy");
   _chai.add(chaiscript::fun(&Ia::setPosById, this), "iaPosById");
   _chai.add(chaiscript::fun(&Ia::moveToEnemy, this), "iaMoveToEnemy");
+  _chai.add(chaiscript::fun(&Ia::dangerZone, this), "iaDangerZone");
   _chai.add(chaiscript::fun(&Player::goAhead, this), "iaMove");
   _chai.add_global_const(chaiscript::const_var(north), "North");
   _chai.add_global_const(chaiscript::const_var(west), "West");
@@ -47,11 +47,10 @@ void	Ia::run_user()
   try
   {
     _chai.eval_file(_fileName);
-    std::cout << "toto" << std::endl;
   }
   catch (const std::exception &err)
   {
-    std::cerr << err.what() << std::endl;
+    std::cerr << "\033[36m" << err.what() << "\033[0m" << std::endl;
   }
 }
 
@@ -94,10 +93,97 @@ std::map<float, AObj *>& Ia::getMapEnemy() const
   return (*enemy);
 }
 
-void Ia::moveToEnemy(const int id)
+static int	moveToObj(std::map<int, std::string> map, const char obj,
+			  std::pair<float, float> const pos)
+{
+  int		north = 0;
+  int		west = 1;
+  int		south = 2;
+  int		east = 3;
+
+  if (map[static_cast<size_t>(pos.first - 1)][static_cast<size_t>(pos.second)] == obj)
+    return (north);
+  if (map[static_cast<size_t>(pos.first + 1)][static_cast<size_t>(pos.second)] == obj)
+    return (west);
+  if (map[static_cast<size_t>(pos.first)][static_cast<size_t>(pos.second + 1)] == obj)
+    return (south);
+  if (map[static_cast<size_t>(pos.first)][static_cast<size_t>(pos.second - 1)] == obj)
+    return (east);
+  return (0);
+}
+
+int Ia::dangerZone()
+{
+  std::lock_guard<std::mutex> lock(_mutex);
+  std::vector<std::vector<AObj *>>  v = _board.getFullBoard();
+  std::map<int, std::string>           map;
+  std::map<int, std::string>           safe;
+
+  for (size_t i = 0; i < getBoard().size(); i++)
+    {
+      map[i / getBoard().getWidth()] += '0';
+      safe[i / getBoard().getWidth()] += ' ';
+    }
+
+  for (std::vector<std::vector<AObj *>>::iterator it = v.begin();
+       it != v.end(); ++it)
+    {
+      std::vector<AObj *> tmp = *it;
+      for (std::vector<AObj *>::iterator i = tmp.begin(); i != tmp.end(); ++i)
+        {
+          AObj  *obj = *i;
+
+          switch (obj->getType())
+            {
+	    case ::BOMB:
+	      {
+		std::pair<float, float> pos = obj->getPos();
+		map[static_cast<int>(pos.first)][static_cast<int>(pos.second)] = '1';
+		for (size_t i = 0; i < static_cast<size_t>(reinterpret_cast<Bomb *>(obj)->getRange()); i++)
+		  {
+		    map[static_cast<size_t>(pos.first - i)][static_cast<size_t>(pos.second)] = '1';
+		    map[static_cast<size_t>(pos.first + i)][static_cast<size_t>(pos.second)] = '1';
+		    map[static_cast<size_t>(pos.first)][static_cast<size_t>(pos.second - i)] = '1';
+		    map[static_cast<size_t>(pos.first)][static_cast<size_t>(pos.second + i)] = '1';
+		  }
+		break ;
+	      }
+	    case ::UNBREAKABLE_WALL:
+	      {
+		std::pair<float, float> pos = obj->getPos();
+		map[static_cast<int>(pos.first)][static_cast<int>(pos.second)] = '8';
+		map[static_cast<int>(pos.first)][static_cast<int>(pos.second)] = 'x';
+		break ;
+	      }
+	    case ::CRATE:
+	      {
+		std::pair<float, float> pos = obj->getPos();
+		map[static_cast<int>(pos.first)][static_cast<int>(pos.second)] = 'p';
+		break ;
+	      }
+	    default: break ;
+            }
+        }
+    }
+  if (map[static_cast<size_t>(getPos().first)][static_cast<size_t>(getPos().second)] != '1')
+    return (-1);
+  if (map[static_cast<size_t>(getPos().first - 1)][static_cast<size_t>(getPos().second)] == '0')
+    return (0);
+  if (map[static_cast<size_t>(getPos().first + 1)][static_cast<size_t>(getPos().second)] == '0')
+    return (2);
+  if (map[static_cast<size_t>(getPos().first)][static_cast<size_t>(getPos().second + 1)] == '0')
+    return (1);
+  if (map[static_cast<size_t>(getPos().first)][static_cast<size_t>(getPos().second - 1)] == '0')
+    return (3);
+  std::cout << "DANS LA MIERDA" << std::endl;
+  return (-1);
+}
+
+int Ia::moveToEnemy(const int id)
 {
   AObj* enemy = getEnemyById(id);
   std::pair<float, float> pos = enemy->getPos();
+  std::lock_guard<std::mutex> lock(_mutex);
   std::vector<std::vector<AObj *>>  v = _board.getFullBoard();
   std::map<int, std::string>           map;
   std::map<int, std::string>           old;
@@ -122,9 +208,10 @@ void Ia::moveToEnemy(const int id)
   Node Algo(map, getPos().first, getPos().second, pos.first, pos.second);
 
   old = Algo.fillMap();
-  for (size_t i = 0; i < getBoard().getWidth(); i++) {
-    std::cout << old[i] << std::endl;
-  }
+  // for (size_t i = 0; i < getBoard().getWidth(); i++) {
+  //   std::cout << old[i] << std::endl;
+  // }
+  return (moveToObj(old, 'u', getPos()));
 }
 
 int		Ia::getCloserEnemy() const
@@ -143,38 +230,9 @@ AObj*		Ia::getEnemyById(int id) const
   ++it)
   {
     if (it->second->getId() == id)
-    {
-      std::cout << "Ok wuala == " << id << std::endl;
       return (it->second);
-    }
   }
-  std::cout << getId() << "ouuuppppppppsssssss === " << id << std::endl;
   return (NULL);
-}
-
-int   Ia::getDistance(int id) const
-{
-  // todo !
-  (void)id;
-  return (0);
-}
-
-int   Ia::getCloserAvailableEnemy() const
-{
-  std::map<float, AObj *>   enemy = getMapEnemy();
-  int id(0);
-
-  for (auto it = enemy.begin(); it != enemy.end(); ++it)
-  {
-    int tmp = getDistance((*it).first);
-    if (id == 0)
-      id = tmp;
-    if (tmp < id)
-      id = tmp;
-  }
-  if (id == 0 && enemy.size() > 0)
-      id = enemy.begin()->first;
-  return (id);
 }
 
 void	Ia::setPosById(const int id)

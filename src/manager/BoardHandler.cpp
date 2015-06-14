@@ -15,7 +15,6 @@ BoardHandler::BoardHandler()
 {
 	generate();
 	load();
-	generate(10, 10);
 }
 
 /*
@@ -30,8 +29,6 @@ void BoardHandler::save(std::shared_ptr<Board> const &board, std::string const &
 	doc.AddMember("name", rapidjson::Value(name.c_str(), name.length()), allocator);
 	doc.AddMember("height", rapidjson::Value(board->getHeight() - 2), allocator);
 	doc.AddMember("width", rapidjson::Value(board->getWidth() - 2), allocator);
-
-	//TODO generateThumbnail(board);
 
 	std::string tbPath("./assets/thumbnail/" + name + ".jpg");
 	doc.AddMember("thumbnail", rapidjson::Value(tbPath.c_str(), tbPath.length()), allocator);
@@ -68,8 +65,8 @@ void BoardHandler::save(std::shared_ptr<Board> const &board, std::string const &
 */
 void BoardHandler::generate(int x, int y)
 {
-	if (x <= 4 && y <= 4)
-		throw std::logic_error("Map width and height must be > 4");
+	if (x <= 10 && y <= 10)
+		throw std::logic_error("Map width and height must be > 10");
 
 	// Random init
 	std::random_device rd;
@@ -121,6 +118,18 @@ void BoardHandler::generate(int x, int y)
 std::vector<BoardHandler::board_t>              BoardHandler::getBoards() const
 {
 	return _boards;
+}
+
+/*
+** Return vector of all the boards names available
+*/
+std::vector<std::string>              BoardHandler::getBoardsNames() const
+{
+	std::vector<std::string> ret;
+
+	for (auto i : _boards)
+		ret.push_back(i.name);
+	return ret;
 }
 
 /*
@@ -242,11 +251,24 @@ void BoardHandler::load(std::string const &file)
 **
 ** !! Return only a Board instance and not a board_t structure.
 */
-Board                          &BoardHandler::operator[](ssize_t at)
+Board                          &BoardHandler::operator[](long int at) const
 {
 	if (static_cast<std::vector<BoardHandler::board_t>::size_type>(std::abs(at)) > _boards.size())
 		throw std::out_of_range("Out of range query on BoardHandler");
 	return (at < 0) ? *_boards[_boards.size() - at].board : *_boards[at].board;
+}
+
+/*
+** Access the Board Object [name]
+**
+** !! Return only a Board instance and not a board_t structure.
+*/
+Board                          &BoardHandler::operator[](std::string const &name) const
+{
+	for (auto i : _boards)
+		if (i.name == name)
+			return *i.board;
+	throw std::out_of_range("Out of range query on BoardHandler");
 }
 
 /*
@@ -256,21 +278,9 @@ Board                          &BoardHandler::operator[](ssize_t at)
 **
 ** !! Return only a board structure and not a Board instance.
 */
-BoardHandler::board_t BoardHandler::at(ssize_t at)
+BoardHandler::board_t BoardHandler::at(long int at) const
 {
 	if (static_cast<std::vector<BoardHandler::board_t>::size_type>(std::abs(at)) > _boards.size())
 		throw std::out_of_range("Out of range query on BoardHandler");
 	return (at < 0) ? _boards[_boards.size() - at] : _boards[at];
-}
-
-std::ostream&                           operator<<(std::ostream& os, BoardHandler const &bd)
-{
-	for (auto i = bd._boards.begin(); i != bd._boards.end(); i++) {
-		os << "name: " << (*i).name << std::endl
-		   << "width: " << (*i).board->getWidth() << " height: " << (*i).board->getHeight() << std::endl
-		   << "thumbnail: " << (*i).thumbnail;
-		if (i != std::prev(bd._boards.end(), 1))
-			os << std::endl << std::endl;
-	}
-	return os;
 }
