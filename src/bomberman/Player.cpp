@@ -186,7 +186,6 @@ void	Player::checkPosPowerUp()
 	}
       all_in_it++;
     }
-  std::cout << "Score :" << _score << std::endl;
 }
 
 void	Player::run_user()
