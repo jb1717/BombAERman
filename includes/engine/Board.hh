@@ -57,6 +57,8 @@ public:
   bool	checkOneCollision(std::vector<AObj *> field, AObj *);
   bool	checkAlreadyCase(int, int, long int);
 
+  void  dump() const;
+
 public:
   std::vector<std::vector<AObj *>>	&getFullBoard();
   std::vector<Player *>  &getPlayers();

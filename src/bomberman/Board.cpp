@@ -130,6 +130,8 @@ bool Board::placeEntity(float x, float y, AObj *entity)
 
 	// if (!_board[to].empty())
 	//   return (false);
+	if (entity->getId() > 0)
+		_players.push_back(reinterpret_cast<Player *>(entity));
 	_board[to].push_back(entity);
 	return (true);
 }
@@ -346,6 +348,19 @@ bool Board::moveEntity(float x, float y, long int id, Direction dir)
   tmp = removeFromSquare(posX, posY, id);
   updatePos(toX, toY, tmp);
   return (true);
+}
+
+void Board::dump() const
+{
+	for (auto it = _board.begin(); it != _board.end(); ++it)
+	{
+		std::cout << "case :";
+		for (auto itk = (*it).begin(); itk != (*it).end(); ++itk)
+		{
+			std::cout << (*itk)->getId() << " ";
+		}
+		std::cout << std::endl;
+	}
 }
 
 void Board::makeSomePlace(int x, int y, int id, Direction dir, Direction r1, Direction r2)

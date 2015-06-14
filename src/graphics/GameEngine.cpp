@@ -225,12 +225,12 @@ bool		GameEngine::update()
 	    (*it)->getGameObj()->setPosition(save);
 	  else
 	    {
-	      // _board->moveEntity((((save.x) - (((_board)->getWidth()) / (2))) < 0) ?	(((save.x) - ((_board)->getWidth()) / (2)) * (-1)) : ((save.x) - ((_board)->getWidth()) / (2)),
-	      // 		 (((save.z) - ((_board)->getHeight()) / (2)) < 0) ? (((save.z) - ((_board)->getHeight()) / (2)) * (-1)) : (((save.z) - ((_board)->getHeight()) / (2))),
-	      // 		 (((p.x) - (((_board)->getWidth()) / (2))) < 0) ? (((p.x) - ((_board)->getWidth()) / (2)) * (-1)) : ((p.x) - ((_board)->getWidth()) / (2)),
-	      // 		 (((p.z) - ((_board)->getHeight()) / (2)) < 0) ? (((p.z) - ((_board)->getHeight()) / (2)) * (-1)) : (((p.z) - ((_board)->getHeight()) / (2))),
-	      // 		 (*it)->getId());
-	      (*it)->setPos(LOGICAL_POSITION(p.x, p.z));
+	      _board->moveEntity((((save.x) - (((_board)->getWidth()) / (2))) < 0) ?	(((save.x) - ((_board)->getWidth()) / (2)) * (-1)) : ((save.x) - ((_board)->getWidth()) / (2)),
+	      		 (((save.z) - ((_board)->getHeight()) / (2)) < 0) ? (((save.z) - ((_board)->getHeight()) / (2)) * (-1)) : (((save.z) - ((_board)->getHeight()) / (2))),
+	      		 (((p.x) - (((_board)->getWidth()) / (2))) < 0) ? (((p.x) - ((_board)->getWidth()) / (2)) * (-1)) : ((p.x) - ((_board)->getWidth()) / (2)),
+	      		 (((p.z) - ((_board)->getHeight()) / (2)) < 0) ? (((p.z) - ((_board)->getHeight()) / (2)) * (-1)) : (((p.z) - ((_board)->getHeight()) / (2))),
+	      		 (*it)->getId());
+	      // (*it)->setPos(LOGICAL_POSITION(p.x, p.z));
 	    }
 	  if ((*it) && (*it)->getGameObj() && reinterpret_cast<Character *>((*it)->getGameObj())->_bombing)
 	    (*it)->triggerOneBomb();
@@ -259,6 +259,7 @@ void		GameEngine::draw()
 	    (*itk)->getGameObj()->draw(_shader, _clock);
 	  }
     }
+    _board->dump();
   _mutex.unlock();
   // effect->draw(_shader, _clock);
   // if (GUI)
