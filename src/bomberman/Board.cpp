@@ -5,7 +5,7 @@
 // Login   <jibb@epitech.net>
 //
 // Started on  Wed May  6 13:21:36 2015 Jean-Baptiste Grégoire
-// Last update Sun Jun 14 16:03:52 2015 Jamais
+// Last update Sun Jun 14 17:03:50 2015 Jamais
 //
 
 #include "Board.hh"
@@ -17,6 +17,7 @@
 #include "Cube.hh"
 #include "GameEngine.hh"
 #include "Bonus.hh"
+#include "AssetManager.hh"
 
 Board::Board(size_t xLength, size_t yLength) : _xLength(xLength + 2), _yLength(yLength + 2)
 {
@@ -25,6 +26,7 @@ Board::Board(size_t xLength, size_t yLength) : _xLength(xLength + 2), _yLength(y
 
 bool Board::initialize()
 {
+  auto asset = AssetManager::instance();
 	int x = 0;
 
 	int true_x;
@@ -42,15 +44,18 @@ bool Board::initialize()
 			case CRATE:
 			{
 				obj = new Cube(glm::vec3(true_x, 0.5, true_y));
-				obj->setTexture(*texCrate);
+				if (rand() % 5 == 0)
+				  obj->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate"]));
+				else if (rand() % 2 == 0)
+				  obj->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate2"]));
+				else
+				  obj->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate3"]));
 				(*internIt)->setGameObj(obj);
 				break;
 			}
 			case UNBREAKABLE_WALL:
 			{
 				obj = new Cube(glm::vec3(true_x, 0.5, true_y));
-				// obj = new Cube(glm::vec3(-5 + (x / _xLength), 0, -5 + (x % _yLength)));
-				//		obj = new Cube(glm::vec3((_xLength / 2 ) - (x / _xLength), 1, (x % _yLength) / 2 - (x % _yLength) / 2));
 				obj->setTexture(*texWall);
 				(*internIt)->setGameObj(obj);
 				break;

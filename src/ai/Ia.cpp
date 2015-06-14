@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Sun Jun 14 08:36:53 2015 Hugo Prenat
+// Last update Sun Jun 14 16:31:21 2015 Hugo Prenat
 //
 
 #include "GameEngine.hh"
@@ -241,4 +241,25 @@ void	Ia::setPosById(const int id)
 
   _enemyX = enemy[id]->getPos().first;
   return ;
+}
+
+bool	Ia::possibleToMove(const int dir)
+{
+  int i = 0, j = 0;
+
+  std::cout << dir << std::endl;
+  switch (dir) {
+    case 0: i = -1; break;
+    case 1: j = -1; break;
+    case 2: i = 1; break;
+    case 3: j = 1; break;
+    default : break;
+  }
+  std::vector<AObj *> v = getBoard().getSquareObjects(_x + i, _y + j);
+  for(std::vector<AObj *>::iterator it = v.begin(); it != v.end(); ++it)
+    {
+      if ((*it)->getType() == CRATE)
+        return (false);
+    }
+  return (true);
 }

@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:12:42 2015 Hugo Prenat
-// Last update Sun Jun 14 04:00:57 2015 Hugo Prenat
+// Last update Sun Jun 14 10:04:30 2015 Hugo Prenat
 //
 
 #ifndef IA_HH_
@@ -35,6 +35,7 @@ public:
   bool				chooseDir(const int dir);
   int				moveToEnemy(const int id);
   int				dangerZone();
+  bool				possibleToMove(const int dir);
 
 public:
   void				setPosById(const int id);	// Set _enemyX _enemyY to Id Pos
