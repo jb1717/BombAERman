@@ -5,18 +5,17 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:22:00 2015 TommyStarK
-// Last update Sun Jun 14 05:04:39 2015 TommyStarK
+// Last update Sun Jun 14 22:08:11 2015 TommyStarK
 //
 
 #include "UIManager/PlayUI.hh"
 
 PlayUI::PlayUI()
-: _first(true), _spreading(2)
+: _first(true), _spreading(2), _settings(Settings::instance())
 {
   this->getIaNames();
-  auto settings = Settings::instance();
-  for (auto i : _iaNames)
-    settings.addIa(i);
+  for (size_t i = 0; i < _iaNames.size(); i++)
+    _settings.addIa(_iaNames[i]);
   _itemsName.push_back("newgame");
   _itemsName.push_back("loadgame");
   _itemsName.push_back("back");
@@ -84,13 +83,11 @@ void                          PlayUI::itemsFocus()
 void                          PlayUI::setupDisplay()
 {
   if (!_camera.setupCamera(*_window))
-    throw std::runtime_error("(LauncherUI::)setUpDisplay - setup camera failed.");
+    throw std::runtime_error("(PlayUI::)setupDisplay - setup camera failed.");
   if (!_shader.load(FRAGMENT_SHADER, GL_FRAGMENT_SHADER)
       || !_shader.load(VERTEX_SHADER, GL_VERTEX_SHADER)
       || !_shader.build())
-    throw std::runtime_error("(LauncherUI::)setUpDisplay - load/build shader failed.");
-  // _camera.setPosition(glm::vec3(0, 0, -2));
-  // _camera.refreshPosition();
+    throw std::runtime_error("(PlayUI::)setupDisplay - load/build shader failed.");
   _camera.setPosition(glm::vec3(0, 0, -20));
   _camera.setZoom(glm::vec3(12, 12, 12));
   _camera.refreshPosition();
@@ -140,7 +137,7 @@ void                          PlayUI::updateContext()
 
 std::string                   PlayUI::displayNextUi()
 {
-  return (!_selected ? "NEWGAME" : "LOADGAME");
+  return (!_selected ? "NewGameUI" : "LoadGameUI");
 }
 
 void                          PlayUI::launch()
@@ -164,8 +161,9 @@ stateUI                       PlayUI::handlerEvent()
     usleep(75000);
     this->itemsFocus();
     this->updateContext();
-    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT) ||
-        ((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
+    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT))
+      return (std::tuple<bool, std::string>(true, "Quit"));
+    else if (((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
          && _selected == BACK))
     {
       _isRunning = false;

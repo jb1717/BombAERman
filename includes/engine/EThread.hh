@@ -13,6 +13,7 @@
 
 # include <pthread.h>
 # include <stdlib.h>
+# include <signal.h>
 
 # define NO_TIMEOUT 0
 
@@ -25,6 +26,7 @@ public:
   int	launch(void *(*ptr)(void *), void *arg);
   bool	is_running() const;
   int	waitThread();
+  int	kill_Thread();
 private:
   pthread_t	_thread;
   bool		_running;

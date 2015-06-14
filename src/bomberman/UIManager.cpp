@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 21:02:19 2015 TommyStarK
-// Last update Sun Jun 14 04:36:37 2015 TommyStarK
+// Last update Sun Jun 14 12:22:07 2015 TommyStarK
 //
 
 #include "UIManager/UIManager.hh"
@@ -18,8 +18,8 @@ UIManager::UIManager()
   _ui["SettingsUI"] = std::make_shared<SettingsUI>();
   _ui["PlayUI"] = std::make_shared<PlayUI>();
   _ui["CreditsUI"] = std::make_shared<CreditsUI>();
-  // _ui["NewGameUI"] = std::make_shared<NewGameUI>();
-  // _ui["LoadGameUI"] = std::make_shared<LoadGameUI>();
+  _ui["NewGameUI"] = std::make_shared<NewGameUI>();
+  _ui["LoadGameUI"] = std::make_shared<LoadGameUI>();
   _ui["PauseUI"] = std::make_shared<PauseUI>();
   this->startService();
 }
@@ -41,12 +41,14 @@ std::tuple<int, std::string>  UIManager::controller(bool quit, const std::string
 
   switch (i) {
     case 0:
-        if (ui == "PlayUI")
-          return (std::tuple<int, std::string>(0, ui));
-        else if (ui == "SettingsUI")
+        if (ui == "PlayUI" || ui == "SettingsUI" || ui == "NewGameUI" || ui == "LoadGameUI")
           return (std::tuple<int, std::string>(0, ui));
         else if (ui == "QuitLauncher")
           return (std::tuple<int, std::string>(0, "CreditsUI"));
+        else if (ui == "LAUNCHGAME:)") {
+            std::cout << "LAUNCHGAME:)" << std::endl;
+            return (std::tuple<int, std::string>(3, ""));
+        }
         else
           break ;
     case 1:
@@ -54,6 +56,8 @@ std::tuple<int, std::string>  UIManager::controller(bool quit, const std::string
           return (std::tuple<int, std::string>(3, ""));
         else if (ui == "SettingsUI" || ui == "PlayUI")
           return (std::tuple<int, std::string>(0, "StartUI"));
+        else if (ui == "NewGameUI" || ui == "LoadGameUI")
+          return (std::tuple<int, std::string>(0, "PlayUI"));
     default:
       break ;
   }

@@ -18,6 +18,8 @@
 # include "Player.hh"
 # include "EThread.hh"
 # include "GameEngine.hh"
+# include "Ia.hh"
+# include "AssetManager.hh"
 
 # define UNUSED __attribute__((unused))
 
@@ -26,17 +28,25 @@ class	EThread;
 class	Engine
 {
 public:
-  Engine(Board &board, size_t, size_t);
+  Engine(Board &board);
   ~Engine();
 public:
+  bool		initialize(int, int, std::string const &);
+  bool		launch_game();
   void		run();
+  bool		players_thread();
+  bool		checkRealAlive();
 public:
   Board		&getBoard() const;
 private:
   Board				&_board;
-  GameEngine			engine;
+  GameEngine			*engine;
+  int				_nbPlay;
+  int				_nbIa;
+  std::vector<EThread *>	_players;
 };
 
-void	*launch_player(void *);
+void	*launch_play(void *);
+void	*launch_ia(void *);
 
 #endif // !Engine_HH_
