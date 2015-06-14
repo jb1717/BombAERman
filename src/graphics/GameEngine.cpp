@@ -259,7 +259,7 @@ void		GameEngine::draw()
 	    (*itk)->getGameObj()->draw(_shader, _clock);
 	  }
     }
-    _board->dump();
+    // _board->dump();
   _mutex.unlock();
   // effect->draw(_shader, _clock);
   // if (GUI)
