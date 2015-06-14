@@ -180,7 +180,7 @@ void	Player::checkPosPowerUp()
 	    powerUpRange();
 	  else if (powerup == Crate::ADD)
 	    addBomb();
-	  _board.deleteEntity(_x, _y, 0, false);
+	  _board.deleteEntity(_x, _y, -2, false);
 	  return ;
 	}
       all_in_it++;

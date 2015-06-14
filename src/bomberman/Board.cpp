@@ -189,6 +189,10 @@ void Board::deleteEntity(float x, float y, long int id, bool breakWall)
 				removePlayer((*it)->getId());
 			it = tmp.erase(it);
 		}
+		else if ((*it)->getId() == Explode)
+			it = tmp.erase(it);
+		else
+			++it;
 	}
 }
 
