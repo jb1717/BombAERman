@@ -1,8 +1,10 @@
 var i = 0
 var dir = -1
+var id = 0
 
 while(iaAlive() == true)
 {
+  usleep(5000)
   dir = iaDangerZone()
   if (dir != -1)
     {
@@ -10,11 +12,25 @@ while(iaAlive() == true)
     }
   else
     {
-      print("lol")
-      print(iaCloserEnemy())
-      dir = iaMoveToEnemy(iaCloserEnemy())
-      iaChooseDir(dir)
+//      print(iaCloserEnemy())
+      id = iaCloserEnemy()
+      print(id)
+      dir = iaMoveToEnemy(id)
+      print("dir == " + to_string(dir))
+      if (iaPossible(dir))
+        {
+          iaChooseDir(dir)
+        }
+      else if (iaObject(dir) == 3)
+        {
+          iaDropBomb()
+        }
+      else
+        {
+          print("stop")
+        }
     }
+//  print("lol")
   i = i + 1
 }
 

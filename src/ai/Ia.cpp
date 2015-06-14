@@ -5,7 +5,7 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Mon May 18 15:23:47 2015 Hugo Prenat
-// Last update Sun Jun 14 16:31:21 2015 Hugo Prenat
+// Last update Sun Jun 14 22:17:11 2015 Hugo Prenat
 //
 
 #include "GameEngine.hh"
@@ -23,13 +23,17 @@ Ia::Ia(std::string const &fileName, Board &Board) : Player(Board),
   _key = -1;
   _enemyX = -1;
   _enemyY = -1;
+  _chai.add(chaiscript::fun(&usleep), "usleep");
   _chai.add(chaiscript::fun(&Player::is_Alive, this), "iaAlive");
   _chai.add(chaiscript::fun(&Player::triggerOneBomb, this), "iaDropBomb");
   _chai.add(chaiscript::fun(&Ia::chooseDir, this), "iaChooseDir");
   _chai.add(chaiscript::fun(&Ia::getCloserEnemy, this), "iaCloserEnemy");
   _chai.add(chaiscript::fun(&Ia::setPosById, this), "iaPosById");
   _chai.add(chaiscript::fun(&Ia::moveToEnemy, this), "iaMoveToEnemy");
+  _chai.add(chaiscript::fun(&Ia::moveToType, this), "iaMoveToType");
   _chai.add(chaiscript::fun(&Ia::dangerZone, this), "iaDangerZone");
+  _chai.add(chaiscript::fun(&Ia::possibleToMove, this), "iaPossible");
+  _chai.add(chaiscript::fun(&Ia::whichObject, this), "iaObject");
   _chai.add(chaiscript::fun(&Player::goAhead, this), "iaMove");
   _chai.add_global_const(chaiscript::const_var(north), "North");
   _chai.add_global_const(chaiscript::const_var(west), "West");
@@ -169,25 +173,27 @@ int Ia::dangerZone()
     return (-1);
   if (map[static_cast<size_t>(getPos().first - 1)][static_cast<size_t>(getPos().second)] == '0')
     return (0);
+  std::cout << "DANS LA MIERDA" << std::endl;
   if (map[static_cast<size_t>(getPos().first + 1)][static_cast<size_t>(getPos().second)] == '0')
     return (2);
   if (map[static_cast<size_t>(getPos().first)][static_cast<size_t>(getPos().second + 1)] == '0')
     return (1);
   if (map[static_cast<size_t>(getPos().first)][static_cast<size_t>(getPos().second - 1)] == '0')
     return (3);
-  std::cout << "DANS LA MIERDA" << std::endl;
   return (-1);
 }
 
 int Ia::moveToEnemy(const int id)
 {
   AObj* enemy = getEnemyById(id);
-  std::pair<float, float> pos = enemy->getPos();
+  std::pair<float, float> posEn = enemy->getPos();
   std::lock_guard<std::mutex> lock(_mutex);
   std::vector<std::vector<AObj *>>  v = _board.getFullBoard();
   std::map<int, std::string>           map;
   std::map<int, std::string>           old;
 
+  std::cout << "pos == [" << posEn.first << "," << posEn.second << "]" << std::endl;
+  std::cout << "pos == [" << getPos().first << "," << getPos().second << "]" << std::endl;
   for (size_t i = 0; i < getBoard().size(); i++) {
     map[i / getBoard().getWidth()] += ' ';
   }
@@ -201,17 +207,65 @@ int Ia::moveToEnemy(const int id)
           AObj  *obj = *i;
           if (obj->getType() == UNBREAKABLE_WALL) {
             std::pair<float, float> pos = obj->getPos();
-            map[static_cast<int>(pos.first)][static_cast<int>(pos.second)] = 'x';
+            map[static_cast<int>(round(pos.first))][static_cast<int>(round(pos.second))] = 'x';
           }
         }
     }
-  Node Algo(map, getPos().first, getPos().second, pos.first, pos.second);
+  Node Algo(map, static_cast<int>(round(getPos().first)),
+	    static_cast<int>(round(getPos().second)),
+	    static_cast<int>(round(posEn.first)),
+	    static_cast<int>(round(posEn.second)));
 
   old = Algo.fillMap();
-  // for (size_t i = 0; i < getBoard().getWidth(); i++) {
-  //   std::cout << old[i] << std::endl;
-  // }
+  for (size_t i = 0; i < getBoard().getWidth(); i++) {
+    std::cout << old[i] << std::endl;
+  }
   return (moveToObj(old, 'u', getPos()));
+}
+
+int Ia::moveToType(const char obj)
+{
+  std::lock_guard<std::mutex> lock(_mutex);
+  std::vector<std::vector<AObj *>>  v = _board.getFullBoard();
+  std::map<int, std::string>           map;
+
+  for (size_t i = 0; i < getBoard().size(); i++) {
+    map[i / getBoard().getWidth()] += ' ';
+  }
+
+  for (std::vector<std::vector<AObj *>>::iterator it = v.begin();
+       it != v.end(); ++it)
+    {
+      std::vector<AObj *> tmp = *it;
+      for (std::vector<AObj *>::iterator i = tmp.begin(); i != tmp.end(); ++i)
+        {
+          AObj  *obj = *i;
+          switch (obj->getType())
+            {
+	    case UNBREAKABLE_WALL:
+	      {
+		std::pair<float, float> pos = obj->getPos();
+		map[static_cast<int>(round(pos.first))][static_cast<int>(round(pos.second))] = 'x';
+		break;
+	      }
+	    case CRATE:
+	      {
+		std::pair<float, float> pos = obj->getPos();
+		map[static_cast<int>(round(pos.first))][static_cast<int>(round(pos.second))] = 'o';
+		break;
+	      }
+	    case PLAYER:
+	      {
+		std::pair<float, float> pos = obj->getPos();
+		if (pos != getPos())
+		  map[static_cast<int>(round(pos.first))][static_cast<int>(round(pos.second))] = 'p';
+		break;
+	      }
+	    default: break;
+            }
+        }
+    }
+  return (moveToObj(map, obj, getPos()));
 }
 
 int		Ia::getCloserEnemy() const
@@ -243,6 +297,24 @@ void	Ia::setPosById(const int id)
   return ;
 }
 
+int	Ia::whichObject(const int dir)
+{
+  int i = 0, j = 0;
+
+  std::cout << dir << std::endl;
+  switch (dir) {
+    case 0: i = -1; break;
+    case 1: j = -1; break;
+    case 2: i = 1; break;
+    case 3: j = 1; break;
+    default : break;
+  }
+  std::vector<AObj *> v = getBoard().getSquareObjects(_x + i, _y + j);
+  for(std::vector<AObj *>::iterator it = v.begin(); it != v.end(); ++it)
+    return ((*it)->getType());
+  return (0);
+}
+
 bool	Ia::possibleToMove(const int dir)
 {
   int i = 0, j = 0;
@@ -259,6 +331,8 @@ bool	Ia::possibleToMove(const int dir)
   for(std::vector<AObj *>::iterator it = v.begin(); it != v.end(); ++it)
     {
       if ((*it)->getType() == CRATE)
+        return (false);
+      if ((*it)->getType() == UNBREAKABLE_WALL)
         return (false);
     }
   return (true);
