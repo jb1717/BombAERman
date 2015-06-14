@@ -192,11 +192,11 @@ void Board::deleteEntity(float x, float y, long int id, bool breakWall)
 void	Board::setExplosion(float x, float y)
 {
   int posx = static_cast<int>(x), posy = static_cast<int>(y);
-  int pos = posy * _xLength + posx;
+  int pos = static_cast<int>(posy) * _xLength + static_cast<int>(posx);
   int true_x = (_xLength / 2) - x;
   int true_y = (_yLength / 2) - y;
   Explosion     *exp = new Explosion(*this);
-  exp->setGameObj(new AFX(glm::vec3(true_x, 2, true_y)));
+  exp->setGameObj(new AFX(glm::vec3(true_x, 1, true_y)));
   exp->getGameObj()->setScale(glm::vec3(2, 2, 2));
   reinterpret_cast<AFX *>(exp->getGameObj())->resetFrame();
   if (_board[pos].empty())
@@ -212,7 +212,7 @@ AObj    *Board::removeFromSquare(int x, int y, long int id)
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[y * _xLength + x].erase(it);
+	  it = _board[y * _xLength + x].erase(it);
 	  break;
 	}
     }
@@ -221,7 +221,7 @@ AObj    *Board::removeFromSquare(int x, int y, long int id)
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[y * _xLength + x + 1].erase(it);
+	  it = _board[y * _xLength + x + 1].erase(it);
 	  break;
 	}
     }
@@ -230,7 +230,7 @@ AObj    *Board::removeFromSquare(int x, int y, long int id)
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[(y + 1) * _xLength + x].erase(it);
+	  it = _board[(y + 1) * _xLength + x].erase(it);
 	  break;
 	}
     }
@@ -239,80 +239,113 @@ AObj    *Board::removeFromSquare(int x, int y, long int id)
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[(y + 1) * _xLength + x + 1].erase(it);
+	  it = _board[(y + 1) * _xLength + x + 1].erase(it);
 	  break;
 	}
     }
   return (tmp);
 }
 
+bool	Board::checkAlreadyCase(int x, int y, long int id)
+{
+  for (std::vector<AObj *>::iterator it = _board[(y * _xLength) + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() == id)
+	return (true);
+    }
+  return (false);
+}
+
 void Board::updatePos(float x, float y, AObj *obj)
 {
-	float intPartX, intPartY;
-	int intx = static_cast<int>(x), inty = static_cast<int>(y);
+  float intPartX, intPartY;
+  int intx = static_cast<int>(x), inty = static_cast<int>(y);
 
-	std::modf(x, &intPartX);
-	std::modf(x, &intPartY);
+  std::modf(x, &intPartX);
+  std::modf(y, &intPartY);
   obj->setPos(x, y);
-	if (x < intPartX + 0.5)
-		_board[inty * _xLength + intx].push_back(obj);
-	else if (x > intPartX + 0.5)
-		_board[inty * _xLength + intx + 1].push_back(obj);
-	else
-	{
-		_board[inty * _xLength + intx].push_back(obj);
-		_board[inty * _xLength + intx + 1].push_back(obj);
-	}
-	if (y < intPartY + 0.5)
-		_board[inty * _xLength + intx].push_back(obj);
-	else if (y > intPartY + 0.5)
-		_board[inty + 1* _xLength + intx].push_back(obj);
-	else
-	{
-		_board[inty * _xLength + intx].push_back(obj);
-		_board[((inty + 1) * _xLength) + intx].push_back(obj);
-	}
+  if (x < intPartX + 0.5)
+    {
+      if (!checkAlreadyCase(intx, inty, obj->getId()))
+	_board[inty * _xLength + intx].push_back(obj);
+    }
+  else if (x > intPartX + 0.5)
+    {
+      if (!checkAlreadyCase(intx + 1, inty, obj->getId()))
+	_board[inty * _xLength + intx + 1].push_back(obj);
+    }
+  else
+    {
+      if (!checkAlreadyCase(intx, inty, obj->getId()))
+	_board[inty * _xLength + intx].push_back(obj);
+      if (!checkAlreadyCase(intx + 1, inty, obj->getId()))
+	_board[inty * _xLength + intx + 1].push_back(obj);
+    }
+  if (y < intPartY + 0.5)
+    {
+      if (!checkAlreadyCase(intx, inty, obj->getId()))
+	_board[inty * _xLength + intx].push_back(obj);
+    }
+  else if (y > intPartY + 0.5)
+    {
+      if (!checkAlreadyCase(intx, inty + 1, obj->getId()))
+	_board[(inty + 1) * _xLength + intx].push_back(obj);
+    }
+  else
+    {
+      if (!checkAlreadyCase(intx, inty, obj->getId()))
+	_board[inty * _xLength + intx].push_back(obj);
+      if (!checkAlreadyCase(intx, inty + 1, obj->getId()))
+	_board[((inty + 1) * _xLength) + intx].push_back(obj);
+    }
+}
+
+bool Board::moveEntity(float fromX, float fromY, float toX, float toY, long int id)
+{
+  AObj *tmp = removeFromSquare(fromX, fromY, id);
+  updatePos(toX, toY, tmp);
+  return (true);
 }
 
 bool Board::moveEntity(float x, float y, long int id, Direction dir)
 {
-	float toX = x, toY = y;
-	int posX = static_cast<int>(x), posY = static_cast<int>(y);
-	AObj  *tmp = NULL;
+  float toX = x, toY = y;
+  int posX = static_cast<int>(x), posY = static_cast<int>(y);
+  AObj  *tmp = NULL;
 
-	switch (dir)
-	{
-	case North:
-		if (y > 0)
-			toY -= 0.1;
-		else
-			toY = -1.0;
-		break ;
-	case South:
-		if (y < _yLength)
-			toY += 0.1;
-		else
-			toY = -1.0;
-		break ;
-	case East:
-		if (x > 0)
-			toX -= 0.1;
-		else
-			toX = -1.0;
-		break ;
-	case West:
-		if (x < _xLength)
-			toX += 0.1;
-		else
-			toX = -1.0;
-		break ;
-	default: return(false); break;
-	}
-	if (toX == -1.0 || toY == -1.0) {
-	  return (false); }
-	tmp = removeFromSquare(posX, posY, id);
-	updatePos(toX, toY, tmp);
-	return (true);
+  switch (dir)
+    {
+    case North:
+      if (y > 0)
+	toY -= 0.1;
+      else
+	toY = -1.0;
+      break ;
+    case South:
+      if (y < _yLength)
+	toY += 0.1;
+      else
+	toY = -1.0;
+      break ;
+    case East:
+      if (x > 0)
+	toX -= 0.1;
+      else
+	toX = -1.0;
+      break ;
+    case West:
+      if (x < _xLength)
+	toX += 0.1;
+      else
+	toX = -1.0;
+      break ;
+    default: return(false); break;
+    }
+  if (toX == -1.0 || toY == -1.0) {
+    return (false); }
+  tmp = removeFromSquare(posX, posY, id);
+  updatePos(toX, toY, tmp);
+  return (true);
 }
 
 void Board::makeSomePlace(int x, int y, int id, Direction dir, Direction r1, Direction r2)
@@ -378,7 +411,7 @@ void Board::removePlayer(long int id)
     {
       if ((*it)->getId() == id)
 	{
-		(*it)->triggerAlive();
+	  (*it)->triggerAlive();
 	  _players.erase(it);
 	  return ;
 	}
@@ -392,7 +425,7 @@ bool Board::checkOneCollision(std::vector<AObj *> field, AObj *player)
 
   while (it != field.end())
     {
-      if (player->getType() != (*it)->getType())
+      if (player->getType() != (*it)->getType() && (*it)->getId() != -4)
 	{
 	  if ((*it)->getId() == -2 && reinterpret_cast<Crate *>((*it))->isBreak())
 	    return (false);
@@ -435,7 +468,7 @@ std::vector<AObj *> &Board::getSquareObjects(size_t x, size_t y)
 
 std::vector<AObj *> &Board::operator[](size_t at)
 {
-	return _board[at];
+  return _board[at];
 }
 
 size_t Board::size() const

@@ -10,7 +10,10 @@
 
 #include	"Bomberman.hh"
 #include	"UIManager/UIManager.hh"
-// #include    "AssetManager.hh"
+#include    "AssetManager.hh"
+# include	<mutex>
+
+std::mutex	_mutex;
 
 int	main()
 {

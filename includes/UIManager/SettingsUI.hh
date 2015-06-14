@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:35:33 2015 TommyStarK
-// Last update Sat Jun 13 12:14:39 2015 TommyStarK
+// Last update Sun Jun 14 04:39:24 2015 TommyStarK
 //
 
 #ifndef  _SETTINGSUI_HH_
@@ -22,22 +22,19 @@
 class       SettingsUI : public AUI
 {
 public:
-  SettingsUI(int, int,const std::string &);
+  SettingsUI();
   ~SettingsUI();
 
 public:
-  enum Display {ALIASING = 0, MVOLUM = 1, FXVOLUM = 2, QUIT = 3};
+  enum Display {ALIASING = 0, MVOLUM = 1, FXVOLUM = 2, BACK = 3};
 
 private:
-  int                         _width;
-  int                         _height;
   bool                        _first;
   int                         _behavior;
   int                         _selected;
   int                         _fixItems;
   int                         _dynamicItems;
   float                       _spreading;
-  std::string                 _name;
 
 private:
   int                         _gameVolum;
@@ -45,7 +42,7 @@ private:
   bool                        _antiAliasing;
 
 private:
-  Geometric                   *_front[3];
+  Geometric                   *_front[4];
   glm::vec3                   *_posSettings[3];
   GraphicString               *_settings[3];
   std::vector<Geometric *>    _items;

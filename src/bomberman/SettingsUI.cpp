@@ -5,14 +5,13 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:21:08 2015 TommyStarK
-// Last update Sat Jun 13 14:44:48 2015 TommyStarK
+// Last update Sun Jun 14 05:04:29 2015 TommyStarK
 //
 
 #include "UIManager/SettingsUI.hh"
 
-SettingsUI::SettingsUI(int width, int height, const std::string & winName)
-  : _width(width), _height(height), _spreading(2), _name(winName),
-  _gameVolum(50), _fxVolum(50), _antiAliasing(false)
+SettingsUI::SettingsUI()
+  : _first(true), _spreading(2), _gameVolum(50), _fxVolum(50), _antiAliasing(false)
 {
   _itemsName.push_back("aa");
   _itemsName.push_back("master-volume");
@@ -20,12 +19,14 @@ SettingsUI::SettingsUI(int width, int height, const std::string & winName)
   _itemsName.push_back("back");
   _dynamicItems = _itemsName.size();
   _itemsName.push_back("SettingsBackground");
+  _itemsName.push_back("settings-title");
+  _itemsName.push_back("settings-help");
   _itemsName.push_back("bomb");
   _fixItems = _itemsName.size() - _dynamicItems;
   _cursor[ALIASING] = _spreading + 0.5;
   _cursor[MVOLUM] = -0.5;
   _cursor[FXVOLUM] = -3.5;
-  _cursor[QUIT] = -6.5;
+  _cursor[BACK] = -6.5;
   _posSettings[0] = new glm::vec3(-0.5, 2.5 + _spreading - (0 * 3.25), 25);
   _posSettings[1] = new glm::vec3(-0.5, _spreading - (1 * 3.25), 25);
   _posSettings[2] = new glm::vec3(-0.5, _spreading - (2 * 3.25) - 2.5, 25);
@@ -41,10 +42,10 @@ void                          SettingsUI::itemFocus()
 {
   switch (_behavior) {
     case 1:
-      _selected = (!_selected ? QUIT : _selected == 1 ? ALIASING : _selected == 2 ? MVOLUM : FXVOLUM);
+      _selected = (!_selected ? BACK : _selected == 1 ? ALIASING : _selected == 2 ? MVOLUM : FXVOLUM);
       break ;
     case -1:
-      _selected = (_selected == 3 ? ALIASING : !_selected ? MVOLUM : _selected == 1 ? FXVOLUM : QUIT);
+      _selected = (_selected == 3 ? ALIASING : !_selected ? MVOLUM : _selected == 1 ? FXVOLUM : BACK);
       break ;
     default:
       break;
@@ -70,7 +71,10 @@ void                          SettingsUI::setupDisplay()
       || !_shader.load(VERTEX_SHADER, GL_VERTEX_SHADER)
       || !_shader.build())
     throw std::runtime_error("(SettingsUI::)setupDisplay - load/build shader failed.");
-  _camera.setPosition(glm::vec3(0, 0, -2));
+  // _camera.setPosition(glm::vec3(0, 0, -2));
+  // _camera.refreshPosition();
+  _camera.setPosition(glm::vec3(0, 0, -20));
+  _camera.setZoom(glm::vec3(12, 12, 12));
   _camera.refreshPosition();
   _shader.bind();
   _camera.lockShader(_shader, true);
@@ -83,8 +87,10 @@ void                          SettingsUI::setupItemsSettings()
 {
   auto asset = AssetManager::instance();
   _factory = GeometryFactory::instanciate();
-  _front[0] = new Geometric(glm::vec3(0, 0, 15.1), glm::vec3(0, 0, 0), glm::vec3(40, 24, 1));
-  _front[1] = new Geometric(glm::vec3(4.5, _cursor[ALIASING], 12), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
+  _front[0] = new Geometric(glm::vec3(0, 0, 15.1), glm::vec3(0, 0, 0), glm::vec3(39, 20, 2));
+  _front[1] = new Geometric(glm::vec3(0, 6.5, 12), glm::vec3(), glm::vec3(2.5, 1.75, 15));
+  _front[2] = new Geometric(glm::vec3(-6.5, -3.5, 6.5), glm::vec3(), glm::vec3(4, 2, 10));
+  _front[3] = new Geometric(glm::vec3(4.5, _cursor[ALIASING], 12), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
   int fixItems = _itemsName.size() - _dynamicItems;
   for (int i = 0; i < _fixItems; i++) {
     int n = _itemsName.size() - fixItems;
@@ -95,7 +101,7 @@ void                          SettingsUI::setupItemsSettings()
     --fixItems;
   }
   for (int i = 0; i < _dynamicItems; i++) {
-    _items.push_back(new Geometric(glm::vec3(3, _spreading, 10), glm::vec3(0, 0, 0), glm::vec3(2, 1.2, 10)));
+    _items.push_back(new Geometric(glm::vec3(3, _spreading, 10), glm::vec3(0, 0, 0), glm::vec3(2.5, 1.5, 40)));
     _items.back()->setGeometry(_factory->getGeometry(GeometryFactory::VERTICAL_PLANE));
     _items.back()->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))[_itemsName[i]]));
     _items.back()->initialize();
@@ -191,17 +197,18 @@ void                          SettingsUI::updateContext()
 void                          SettingsUI::launch()
 {
   _isRunning = true;
-  if (_first)
+  _window = VideoContext::instanciate();
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  if (!_first)
   {
+    _window->flush();
     auto settings = Settings::instance();
     _gameVolum = settings.getGameVolum();
     _fxVolum = settings.getFxVolum();
     _antiAliasing = settings.getAntiAliasing();
   }
-  _first = true;
-  _window = VideoContext::instanciate();
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  _first = false;
   this->setupDisplay();
 }
 
@@ -216,13 +223,13 @@ stateUI                       SettingsUI::handlerEvent()
     this->updateContext();
     if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT) ||
         ((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
-         && _selected == QUIT))
+         && _selected == BACK))
     {
       _isRunning = false;
       break ;
     }
     else if ((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
-              && _selected < QUIT)
+              && _selected < BACK)
       this->modifySettings();
     else
     {

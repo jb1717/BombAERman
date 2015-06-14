@@ -47,6 +47,7 @@ public:
   bool  placeEntity(float x, float y, entityType type, long int id, Direction dir = North);
   bool  placeEntity(float x, float y, AObj *entity);
   bool  moveEntity(float x, float y, long int id, Direction dir);
+  bool  moveEntity(float fromX, float fromY, float toX, float toY, long int id);
   void	deleteEntity(float x, float y, long int id = 0, bool breakWall = false);
   void	setExplosion(float x, float y);
   void  popEntity(int x, int y, long int id);
@@ -54,6 +55,7 @@ public:
   void  spawnPlayers(unsigned int);
   bool	collideAround(AObj *, long int x, long int y);
   bool	checkOneCollision(std::vector<AObj *> field, AObj *);
+  bool	checkAlreadyCase(int, int, long int);
 
 public:
   std::vector<std::vector<AObj *>>	&getFullBoard();

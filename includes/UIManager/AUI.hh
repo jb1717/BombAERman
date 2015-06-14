@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 22:57:54 2015 TommyStarK
-// Last update Sat Jun 13 10:23:54 2015 TommyStarK
+// Last update Sun Jun 14 04:38:09 2015 TommyStarK
 //
 
 #ifndef  _AUI_HH_
@@ -36,7 +36,6 @@ class               AUI
 {
 public:
   virtual ~AUI() {};
-
 
 // private necessary attributes to display & catch events.
 protected:

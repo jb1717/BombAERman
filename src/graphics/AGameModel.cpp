@@ -14,26 +14,26 @@
 AGameModel::AGameModel() : AGameObject()
 {
   _transformMatrix = glm::translate(glm::mat4(1.0f), _position);
-  _speed = 0.2f;
+  _speed = 0.1f;
 }
 
 AGameModel::AGameModel(glm::vec3 const& position) : AGameObject(position)
 {
   _transformMatrix = glm::translate(glm::mat4(1.0f), _position);
-  _speed = 0.2f;
+  _speed = 0.1f;
 }
 
 AGameModel::AGameModel(std::string const& filePath) : AGameObject()
 {
   _transformMatrix = glm::translate(glm::mat4(1.0f), _position);
-  _speed = 0.2f;
+  _speed = 0.1f;
   load(filePath);
 }
 
 AGameModel::AGameModel(glm::vec3 const& position, std::string const& filePath) : AGameObject(position)
 {
   _transformMatrix = glm::translate(glm::mat4(1.0f), _position);
-  _speed = 0.2f;
+  _speed = 0.1f;
   load(filePath);
 }
 

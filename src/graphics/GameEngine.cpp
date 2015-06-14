@@ -159,9 +159,9 @@ bool		GameEngine::initialize()
   ** Special Effect of explosion :: folow it in update and draw */
   // std::cout << "Bonjour" << std::endl;
   // exit(0);
-  effect = new AFX(glm::vec3(0 , 2, 0));
-  effect->setScale(glm::vec3(2, 2, 2));
-  effect->resetFrame();
+  // effect = new AFX(glm::vec3(0 , 2, 0));
+  // effect->setScale(glm::vec3(2, 2, 2));
+  // effect->resetFrame();
 
   return true;
 }
@@ -180,14 +180,13 @@ bool		GameEngine::getEvent()
   if (_input._default.getKey(SDLK_f))
     GUI = !GUI;
 
-  if (_input._default.getKey(SDLK_SPACE))
-    {
-      effect->resetFrame();
-    }
+  // if (_input._default.getKey(SDLK_SPACE))
+  //   {
+  //     effect->resetFrame();
+  //   }
 
   return true;
 }
-
 
 bool		GameEngine::update()
 {
@@ -217,7 +216,7 @@ bool		GameEngine::update()
   bn->rotate(glm::vec3(0, 1, 0), 1);
   for (auto it = _board->getPlayers().begin(); it != _board->getPlayers().end(); it++)
     {
-      if ((*it)->getGameObj())
+      if ((*it)->getGameObj() && (*it)->getId() == 1)
 	{
 	  glm::vec3 save = (*it)->getGameObj()->getPosition();
 	  (*it)->getGameObj()->update(_clock, _input, camera, (*it)->getId());
@@ -225,7 +224,14 @@ bool		GameEngine::update()
 	  if (_board->collideAround((*it), p.x, p.z))
 	    (*it)->getGameObj()->setPosition(save);
 	  else
-	    (*it)->setPos(LOGICAL_POSITION(p.x, p.z));
+	    {
+	      // _board->moveEntity((((save.x) - (((_board)->getWidth()) / (2))) < 0) ?	(((save.x) - ((_board)->getWidth()) / (2)) * (-1)) : ((save.x) - ((_board)->getWidth()) / (2)),
+	      // 		 (((save.z) - ((_board)->getHeight()) / (2)) < 0) ? (((save.z) - ((_board)->getHeight()) / (2)) * (-1)) : (((save.z) - ((_board)->getHeight()) / (2))),
+	      // 		 (((p.x) - (((_board)->getWidth()) / (2))) < 0) ? (((p.x) - ((_board)->getWidth()) / (2)) * (-1)) : ((p.x) - ((_board)->getWidth()) / (2)),
+	      // 		 (((p.z) - ((_board)->getHeight()) / (2)) < 0) ? (((p.z) - ((_board)->getHeight()) / (2)) * (-1)) : (((p.z) - ((_board)->getHeight()) / (2))),
+	      // 		 (*it)->getId());
+	      (*it)->setPos(LOGICAL_POSITION(p.x, p.z));
+	    }
 	  if ((*it) && (*it)->getGameObj() && reinterpret_cast<Character *>((*it)->getGameObj())->_bombing)
 	    (*it)->triggerOneBomb();
 	  (*it)->update_bombs(_clock, _input);
@@ -247,12 +253,14 @@ void		GameEngine::draw()
 	if ((*itk) && (*itk)->getGameObj())
 	  {
 	    if ((*itk)->getId() == -4)
-	      (*itk)->getGameObj()->update(_clock, _input, camera);
+	      {
+		static_cast<AFX *>((*itk)->getGameObj())->update(_clock, _input, camera);
+	      }
 	    (*itk)->getGameObj()->draw(_shader, _clock);
 	  }
     }
   _mutex.unlock();
-  effect->draw(_shader, _clock);
+  // effect->draw(_shader, _clock);
   // if (GUI)
   //   {
   //     menuCam.lockShader(_shader);
