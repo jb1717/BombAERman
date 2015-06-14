@@ -5,13 +5,13 @@
 // Login   <prenat_h@epitech.eu>
 //
 // Started on  Sat Jun 13 13:56:45 2015 Hugo Prenat
-// Last update Sun Jun 14 02:39:16 2015 Hugo Prenat
+// Last update Sun Jun 14 20:54:33 2015 Hugo Prenat
 //
 
 #include "Node.hh"
 
 Node::Node(std::map<int, std::string>& map, int x, int y, int xEnemy, int yEnemy)
-	: _map(map)
+  : _map(map)
 {
 	_start.father.first = x;
 	_start.father.second = y;
@@ -50,7 +50,7 @@ void	Node::addAjacentsBox(std::pair<int, int>& box)
 	{
 	  if (y < 0 ||
 	      y >= static_cast<int>(_map[x].length()) ||
-	      _map[x][y] == 'x' || _map[x][y] == 'p' ||
+	      _map[x][y] == 'x' ||
 	      (x == box.first && y == box.second))
 	    continue;
 	  std::pair<int,int> it(x, y);
@@ -111,42 +111,44 @@ void	Node::findPath()
   old.first  = tmp.father.first;
   old.second = tmp.father.second;
   _path.push_front(path);
-
-  while (old != std::pair<int,int>(_start.father.first, _start.father.first))
-		{
-			path.first = old.first;
-	    path.second = old.second;
-	    _path.push_front(path);
-	    tmp = _closeList[tmp.father];
-	    old.first  = tmp.father.first;
-	    old.second = tmp.father.second;
-	   }
+  while (old != std::pair<int,int>(_start.father.first, _start.father.second))
+    {
+      path.first = old.first;
+      path.second = old.second;
+      _path.push_front(path);
+      tmp = _closeList[tmp.father];
+      old.first  = tmp.father.first;
+      old.second = tmp.father.second;
+    }
   return ;
 }
 
 std::map<int, std::string>& Node::fillMap()
 {
-	std::pair<int,int> current;
+  std::pair<int,int> current;
 
   current.first  = 0;
   current.second = 0;
-
   _openList[current] = _start;
   addCloseList(current);
   addAjacentsBox(current);
-  while (!((current.first == _end.first) && (current.second == _end.second)) && (!_openList.empty()))
-		{
+  while (!((current.first == _end.first) && (current.second == _end.second)) &&
+	 (!_openList.empty()))
+    {
       current = bestNode(_openList);
       addCloseList(current);
       addAjacentsBox(current);
     }
   if ((current.first == _end.first) && (current.second == _end.second))
-		{
-			findPath();
-			std::list<std::pair<int, int>>::iterator it;
+    {
+      std::list<std::pair<int, int>>::iterator it;
 
-			for (it = _path.begin(); it != _path.end(); it++)
-					_map[it->first][it->second] = 'u';
-		}
-	return (_map);
+      findPath();
+      for (it = _path.begin(); it != _path.end(); it++)
+	{
+	  if (_map[it->first][it->second] != 'x')
+	    _map[it->first][it->second] = 'u';
+	}
+    }
+  return (_map);
 }
