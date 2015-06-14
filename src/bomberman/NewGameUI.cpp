@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun Jun 14 06:38:02 2015 TommyStarK
-// Last update Sun Jun 14 20:42:54 2015 TommyStarK
+// Last update Sun Jun 14 22:08:40 2015 TommyStarK
 //
 
 #include "UIManager/NewGameUI.hh"
@@ -213,8 +213,9 @@ stateUI                       NewGameUI::handlerEvent()
     usleep(75000);
     this->itemFocus();
     this->updateContext();
-    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT) ||
-        ((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
+    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT))
+      return (std::tuple<bool, std::string>(true, "Quit"));
+    else if (((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
          && _selected == BACK))
     {
       _isRunning = false;

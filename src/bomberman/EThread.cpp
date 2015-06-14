@@ -44,12 +44,16 @@ int	EThread::waitThread()
   return (wait);
 }
 
-void	*launch_player(void *arg)
+int	EThread::kill_Thread()
 {
-  Engine		*corpse = static_cast<Engine *>(arg);
-  Player		newone(corpse->getBoard());
+  return (pthread_kill(_thread, SIGINT));
+}
 
-  newone.run_user();
+void	*launch_play(void *arg)
+{
+  Player		*newone = reinterpret_cast<Player *>(arg);
+
+  newone->run_user();
   return (NULL);
 }
 

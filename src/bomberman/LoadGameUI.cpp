@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun Jun 14 11:14:23 2015 TommyStarK
-// Last update Sun Jun 14 20:42:21 2015 TommyStarK
+// Last update Sun Jun 14 22:09:22 2015 TommyStarK
 //
 
 #include "UIManager/LoadGameUI.hh"
@@ -160,8 +160,9 @@ stateUI                       LoadGameUI::handlerEvent()
     usleep(75000);
     this->itemsFocus();
     this->updateContext();
-    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT) ||
-        ((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
+    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT))
+      return (std::tuple<bool, std::string>(true, "Quit"));
+    else if (((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
          && _selected == BACK))
     {
       _isRunning = false;

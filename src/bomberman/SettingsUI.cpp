@@ -5,7 +5,7 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:21:08 2015 TommyStarK
-// Last update Sun Jun 14 19:36:03 2015 TommyStarK
+// Last update Sun Jun 14 22:07:41 2015 TommyStarK
 //
 
 #include "UIManager/SettingsUI.hh"
@@ -202,8 +202,9 @@ stateUI                       SettingsUI::handlerEvent()
     usleep(75000);
     this->itemFocus();
     this->updateContext();
-    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT) ||
-        ((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
+    if (_input._default.getKey(SDLK_ESCAPE) || _input._default.getInput(SDL_QUIT))
+      return (std::tuple<bool, std::string>(true, "Quit"));
+    else if (((_input._default.getKey(SDLK_RETURN) || _input._default.getInput(SDLK_RETURN))
          && _selected == BACK))
     {
       this->updateSingletonSettings();
