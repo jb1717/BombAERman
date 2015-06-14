@@ -274,6 +274,13 @@ void Board::updatePos(float x, float y, AObj *obj)
 	}
 }
 
+bool Board::moveEntity(float fromX, float fromY, float toX, float toY, long int id)
+{
+	AObj *tmp = removeFromSquare(fromX, fromY, id);
+	updatePos(toX, toY, tmp);
+	return (true);
+}
+
 bool Board::moveEntity(float x, float y, long int id, Direction dir)
 {
   float toX = x, toY = y;

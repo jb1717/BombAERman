@@ -5,14 +5,14 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sat May 23 22:06:02 2015 TommyStarK
-// Last update Sat Jun 13 06:07:36 2015 TommyStarK
+// Last update Sun Jun 14 03:03:54 2015 TommyStarK
 //
 
 #include "UIManager/LauncherUI.hh"
 
 
 LauncherUI::LauncherUI(int width, int height, const std::string & winName)
-  : _width(width), _height(height), _first(false), _spreading(10), _name(winName)
+  : _width(width), _height(height), _first(true), _spreading(10), _name(winName)
 {
   _itemsName.push_back("play");
   _itemsName.push_back("settings");
@@ -126,11 +126,11 @@ void                        LauncherUI::launch()
   _window = VideoContext::instanciate();
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  if (_first)
-    _window->flush();
   if (!_first)
+    _window->flush();
+  if (_first)
   {
-    _first = true;
+    _first = false;
     _window->setScreenWidth(_width);
     _window->setScreenHeight(_height);
     if (!_window->init())

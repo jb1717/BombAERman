@@ -5,13 +5,13 @@
 // Login   <milox_t@epitech.eu>
 //
 // Started on  Sun May 24 17:21:08 2015 TommyStarK
-// Last update Sun Jun 14 00:31:56 2015 TommyStarK
+// Last update Sun Jun 14 03:03:23 2015 TommyStarK
 //
 
 #include "UIManager/SettingsUI.hh"
 
 SettingsUI::SettingsUI(int width, int height, const std::string & winName)
-  : _width(width), _height(height), _spreading(2), _name(winName),
+  : _width(width), _height(height), _first(true), _spreading(2), _name(winName),
   _gameVolum(50), _fxVolum(50), _antiAliasing(false)
 {
   _itemsName.push_back("aa");
@@ -195,17 +195,18 @@ void                          SettingsUI::updateContext()
 void                          SettingsUI::launch()
 {
   _isRunning = true;
-  if (_first)
+  _window = VideoContext::instanciate();
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  if (!_first)
   {
+    _window->flush();
     auto settings = Settings::instance();
     _gameVolum = settings.getGameVolum();
     _fxVolum = settings.getFxVolum();
     _antiAliasing = settings.getAntiAliasing();
   }
-  _first = true;
-  _window = VideoContext::instanciate();
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  _first = false;
   this->setupDisplay();
 }
 
