@@ -55,6 +55,7 @@ public:
   void  spawnPlayers(unsigned int);
   bool	collideAround(AObj *, long int x, long int y);
   bool	checkOneCollision(std::vector<AObj *> field, AObj *);
+  bool	checkAlreadyCase(int, int, long int);
 
 public:
   std::vector<std::vector<AObj *>>	&getFullBoard();

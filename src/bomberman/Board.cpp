@@ -212,7 +212,7 @@ AObj    *Board::removeFromSquare(int x, int y, long int id)
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[y * _xLength + x].erase(it);
+	  it = _board[y * _xLength + x].erase(it);
 	  break;
 	}
     }
@@ -221,7 +221,7 @@ AObj    *Board::removeFromSquare(int x, int y, long int id)
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[y * _xLength + x + 1].erase(it);
+	  it = _board[y * _xLength + x + 1].erase(it);
 	  break;
 	}
     }
@@ -230,7 +230,7 @@ AObj    *Board::removeFromSquare(int x, int y, long int id)
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[(y + 1) * _xLength + x].erase(it);
+	  it = _board[(y + 1) * _xLength + x].erase(it);
 	  break;
 	}
     }
@@ -239,46 +239,72 @@ AObj    *Board::removeFromSquare(int x, int y, long int id)
       if ((*it)->getId() == id)
 	{
 	  tmp = *it;
-	  _board[(y + 1) * _xLength + x + 1].erase(it);
+	  it = _board[(y + 1) * _xLength + x + 1].erase(it);
 	  break;
 	}
     }
   return (tmp);
 }
 
+bool	Board::checkAlreadyCase(int x, int y, long int id)
+{
+  for (std::vector<AObj *>::iterator it = _board[(y * _xLength) + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() == id)
+	return (true);
+    }
+  return (false);
+}
+
 void Board::updatePos(float x, float y, AObj *obj)
 {
-	float intPartX, intPartY;
-	int intx = static_cast<int>(x), inty = static_cast<int>(y);
+  float intPartX, intPartY;
+  int intx = static_cast<int>(x), inty = static_cast<int>(y);
 
-	std::modf(x, &intPartX);
-	std::modf(x, &intPartY);
+  std::modf(x, &intPartX);
+  std::modf(y, &intPartY);
   obj->setPos(x, y);
-	if (x < intPartX + 0.5)
-		_board[inty * _xLength + intx].push_back(obj);
-	else if (x > intPartX + 0.5)
-		_board[inty * _xLength + intx + 1].push_back(obj);
-	else
-	{
-		_board[inty * _xLength + intx].push_back(obj);
-		_board[inty * _xLength + intx + 1].push_back(obj);
-	}
-	if (y < intPartY + 0.5)
-		_board[inty * _xLength + intx].push_back(obj);
-	else if (y > intPartY + 0.5)
-		_board[inty + 1* _xLength + intx].push_back(obj);
-	else
-	{
-		_board[inty * _xLength + intx].push_back(obj);
-		_board[((inty + 1) * _xLength) + intx].push_back(obj);
-	}
+  if (x < intPartX + 0.5)
+    {
+      if (!checkAlreadyCase(intx, inty, obj->getId()))
+	_board[inty * _xLength + intx].push_back(obj);
+    }
+  else if (x > intPartX + 0.5)
+    {
+      if (!checkAlreadyCase(intx + 1, inty, obj->getId()))
+	_board[inty * _xLength + intx + 1].push_back(obj);
+    }
+  else
+    {
+      if (!checkAlreadyCase(intx, inty, obj->getId()))
+	_board[inty * _xLength + intx].push_back(obj);
+      if (!checkAlreadyCase(intx + 1, inty, obj->getId()))
+	_board[inty * _xLength + intx + 1].push_back(obj);
+    }
+  if (y < intPartY + 0.5)
+    {
+      if (!checkAlreadyCase(intx, inty, obj->getId()))
+	_board[inty * _xLength + intx].push_back(obj);
+    }
+  else if (y > intPartY + 0.5)
+    {
+      if (!checkAlreadyCase(intx, inty + 1, obj->getId()))
+	_board[(inty + 1) * _xLength + intx].push_back(obj);
+    }
+  else
+    {
+      if (!checkAlreadyCase(intx, inty, obj->getId()))
+	_board[inty * _xLength + intx].push_back(obj);
+      if (!checkAlreadyCase(intx, inty + 1, obj->getId()))
+	_board[((inty + 1) * _xLength) + intx].push_back(obj);
+    }
 }
 
 bool Board::moveEntity(float fromX, float fromY, float toX, float toY, long int id)
 {
-	AObj *tmp = removeFromSquare(fromX, fromY, id);
-	updatePos(toX, toY, tmp);
-	return (true);
+  AObj *tmp = removeFromSquare(fromX, fromY, id);
+  updatePos(toX, toY, tmp);
+  return (true);
 }
 
 bool Board::moveEntity(float x, float y, long int id, Direction dir)
@@ -442,7 +468,7 @@ std::vector<AObj *> &Board::getSquareObjects(size_t x, size_t y)
 
 std::vector<AObj *> &Board::operator[](size_t at)
 {
-	return _board[at];
+  return _board[at];
 }
 
 size_t Board::size() const

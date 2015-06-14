@@ -183,6 +183,7 @@ void	Player::run_user()
       checkPosPowerUp();
       goAllExplosions();
     }
+  _board.removePlayer(_id);
 }
 
 keyActions	Player::commandValue()
