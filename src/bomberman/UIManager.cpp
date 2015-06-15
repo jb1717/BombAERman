@@ -42,13 +42,13 @@ void                          UIManager::launchGame()
   auto asset = AssetManager::instance();
   GameEngine engine;
 
-  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[0]);
+  Board *board = BOARD((*BOARD_HANDLER(asset["boards"]))[1]);
 
   board->spawnPlayers(2, 0, "ia/easy.chai");
   board->initialize();
   board->initGameObjects();
 
-  //  SOUND_HANDLER(asset["sounds"])->play("bomberman");
+  SOUND_HANDLER(asset["sounds"])->play("bomberman");
 
   if (engine.setupGame(board) == false)
     {
@@ -60,12 +60,25 @@ void                          UIManager::launchGame()
       std::cerr << "ini" << std::endl;
       exit(EXIT_FAILURE);
     }
-    EThread t1;
-    t1.launch(launch_play, std::ref(board->getPlayers().front()));
-    EThread t2;
-    t2.launch(launch_play, std::ref(board->getPlayers()[1]));
-  while (engine.update() == true)
-    engine.draw();
+  std::cout << board->getPlayers().size() << std::endl;
+  EThread t1;
+  t1.launch(launch_play, std::ref(board->getPlayers().front()));
+  EThread t2;
+  t2.launch(launch_play, std::ref(board->getPlayers()[1]));
+  while (board->getPlayers().size() > 1 && engine.update() == true)
+    {
+      engine.draw();
+    }
+  t1.kill_Thread();
+  t2.kill_Thread();
+  SOUND_HANDLER(asset["sounds"])->play("gameover");
+  sleep(2);
+  if (board->getPlayers().size() == 0)
+    std::cout << "You Both Lost... LOOSER" << std::endl;
+  else if (board->getPlayers().size() > 1)
+    std::cout << "No LOOSERS.. Sadly.." << std::endl;
+  else
+    std::cout << "Player " << board->getPlayers().front()->getId() << " ! WINS" << std::endl;
 }
 
 std::tuple<int, std::string>  UIManager::controller(bool quit, const std::string &ui)

@@ -27,84 +27,82 @@ Board::Board(size_t xLength, size_t yLength) : _xLength(xLength + 2), _yLength(y
 bool Board::initialize()
 {
   auto asset = AssetManager::instance();
-	int x = 0;
+  int x = 0;
 
-	int true_x;
-	int true_y;
-	for (auto it = _board.begin(); it != _board.end(); it++)
+  int true_x;
+  int true_y;
+  for (auto it = _board.begin(); it != _board.end(); it++)
+    {
+      for (auto internIt = (*it).begin(); internIt != (*it).end(); internIt++)
 	{
-		     std::cout << "size = " << (*it).size() << std::endl;
-		for (auto internIt = (*it).begin(); internIt != (*it).end(); internIt++)
-		{
-			AGameObject*  obj;
-			true_x = (_xLength / 2) - (x % _xLength);
-			true_y = (_yLength / 2) - (x / _xLength);
-			switch ((*internIt)->getType())
-			{
-			case CRATE:
-			{
-				obj = new Cube(glm::vec3(true_x, 0.5, true_y));
-				if (rand() % 5 == 0)
-				  obj->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate"]));
-				else if (rand() % 2 == 0)
-				  obj->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate2"]));
-				else
-				  obj->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate3"]));
-				(*internIt)->setGameObj(obj);
-				break;
-			}
-			case UNBREAKABLE_WALL:
-			{
-				obj = new Cube(glm::vec3(true_x, 0.5, true_y));
-				obj->setTexture(*texWall);
-				(*internIt)->setGameObj(obj);
-				break;
-			}
-			case PLAYER:
-			{
-				obj = new Character(glm::vec3(true_x, 0.0, true_y), "./assets/models/marvin.fbx");
-				obj->scale(glm::vec3(0.0015f, 0.0015f, 0.0015f));
-				obj->setColor(glm::vec4(1.0f, 1.0f, 0.0f, 1.0f));
-				(*internIt)->setGameObj(obj);
-				reinterpret_cast<Character *>(obj)->setCurrentAnim(0);
-				_players.push_back(reinterpret_cast<Player *>(*internIt));
-				break;
-			}
-			default:
-				break;
-			}
-		}
-		++x;
+	  AGameObject*  obj;
+	  true_x = (_xLength / 2) - (x % _xLength);
+	  true_y = (_yLength / 2) - (x / _xLength);
+	  switch ((*internIt)->getType())
+	    {
+	    case CRATE:
+	      {
+		obj = new Cube(glm::vec3(true_x, 0.5, true_y));
+		if (rand() % 5 == 0)
+		  obj->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate"]));
+		else if (rand() % 2 == 0)
+		  obj->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate2"]));
+		else
+		  obj->setTexture((*(*THEME((*THEME_HANDLER(asset["themes"]))["default"]))["crate3"]));
+		(*internIt)->setGameObj(obj);
+		break;
+	      }
+	    case UNBREAKABLE_WALL:
+	      {
+		obj = new Cube(glm::vec3(true_x, 0.5, true_y));
+		obj->setTexture(*texWall);
+		(*internIt)->setGameObj(obj);
+		break;
+	      }
+	    case PLAYER:
+	      {
+		obj = new Character(glm::vec3(true_x, 0.0, true_y), "./assets/models/marvin.fbx");
+		obj->scale(glm::vec3(0.0015f, 0.0015f, 0.0015f));
+		obj->setColor(glm::vec4(1.0f, 1.0f, 0.0f, 1.0f));
+		(*internIt)->setGameObj(obj);
+		reinterpret_cast<Character *>(obj)->setCurrentAnim(0);
+		break;
+	      }
+	    default:
+	      break;
+	    }
 	}
-	initGameObjects();
-	return true;
+      ++x;
+    }
+  initGameObjects();
+  return true;
 }
 
 void Board::initGameObjects()
 {
-	for (auto it = _board.begin(); it != _board.end(); it++)
+  for (auto it = _board.begin(); it != _board.end(); it++)
+    {
+      for (auto internIt = (*it).begin(); internIt != (*it).end(); internIt++)
 	{
-		for (auto internIt = (*it).begin(); internIt != (*it).end(); internIt++)
-		{
-			if ((*internIt)->getType())
-				(*internIt)->getGameObj()->initialize();
-		}
+	  if ((*internIt)->getType())
+	    (*internIt)->getGameObj()->initialize();
 	}
+    }
 }
 
 AObj  *Board::createEntity(Board &board, entityType type)
 {
-	switch (type)
-	{
-	case PLAYER:
-		return (new Player(board));
-	case CRATE:
-		return (new Crate(board));
-	case UNBREAKABLE_WALL:
-		return (new UnbreakableWall(board));
-	default:
-		return (NULL);
-	}
+  switch (type)
+    {
+    case PLAYER:
+      return (new Player(board));
+    case CRATE:
+      return (new Crate(board));
+    case UNBREAKABLE_WALL:
+      return (new UnbreakableWall(board));
+    default:
+      return (NULL);
+    }
 }
 
 int	Board::heroInDaPlace(int x, int y) const
@@ -122,38 +120,38 @@ int	Board::heroInDaPlace(int x, int y) const
 
 bool Board::placeEntity(float x, float y, entityType type, long int id, Direction dir)
 {
-	int to = static_cast<int>(y) * _xLength + static_cast<int>(x);
-	AObj  *obj;
+  int to = static_cast<int>(y) * _xLength + static_cast<int>(x);
+  AObj  *obj;
 
-	if (_board[to].empty())
-	{
-		obj = createEntity(*this, type);
-		if (!obj)
-			return (false);
-		if (type != PLAYER)
-			obj->setPos(x, y);
-		else
-		{
-			reinterpret_cast<Player *>(obj)->playerSpawn(x, y, dir, id);
-			_players.push_back(reinterpret_cast<Player *>(obj));
-		}
-		_board[to].push_back(obj);
-		return (true);
-	}
+  if (_board[to].empty())
+    {
+      obj = createEntity(*this, type);
+      if (!obj)
 	return (false);
+      if (type != PLAYER)
+	obj->setPos(x, y);
+      else
+	{
+	  reinterpret_cast<Player *>(obj)->playerSpawn(x, y, dir, id);
+	  _players.push_back(reinterpret_cast<Player *>(obj));
+	}
+      _board[to].push_back(obj);
+      return (true);
+    }
+  return (false);
 }
 
 bool Board::placeEntity(float x, float y, AObj *entity)
 {
-	int to = static_cast<int>(y) * _xLength + static_cast<int>(x);
+  int to = static_cast<int>(y) * _xLength + static_cast<int>(x);
 
-	// if (!_board[to].empty())
-	//   return (false);
-	entity->setPos(x, y);
-	if (entity->getId() > 0)
-	  _players.push_back(reinterpret_cast<Player *>(entity));
-	_board[to].push_back(entity);
-	return (true);
+  // if (!_board[to].empty())
+  //   return (false);
+  entity->setPos(x, y);
+  if (entity->getId() > 0)
+    _players.push_back(reinterpret_cast<Player *>(entity));
+  _board[to].push_back(entity);
+  return (true);
 }
 
 void Board::popEntity(int x, int y, long int id)
@@ -167,7 +165,7 @@ void Board::popEntity(int x, int y, long int id)
 
 std::vector<AObj *> &Board::getCase(int at)
 {
-	return (_board[at]);
+  return (_board[at]);
 }
 
 void Board::deleteEntity(float x, float y, long int id, bool breakWall)
@@ -197,8 +195,12 @@ void Board::deleteEntity(float x, float y, long int id, bool breakWall)
 	    {
 	      //				delete *it;
 	      if ((*it)->getType() == PLAYER)
-		removePlayer((*it)->getId());
-	      it = tmp.erase(it);
+		{
+		  removeFromSquare(x, y, (*it)->getId());
+		  removePlayer((*it)->getId());
+		}
+	      else
+		it = tmp.erase(it);
 	    }
 	}
       else if (id == (*it)->getId())
@@ -217,59 +219,59 @@ void Board::deleteEntity(float x, float y, long int id, bool breakWall)
 
 void Board::setExplosion(float x, float y)
 {
-	int posx = static_cast<int>(x), posy = static_cast<int>(y);
-	int pos = static_cast<int>(posy) * _xLength + static_cast<int>(posx);
-	int true_x = (_xLength / 2) - x;
-	int true_y = (_yLength / 2) - y;
-	Explosion     *exp = new Explosion(*this);
-	exp->setGameObj(new AFX(glm::vec3(true_x, 1, true_y)));
-	exp->getGameObj()->setScale(glm::vec3(2, 2, 2));
-	reinterpret_cast<AFX *>(exp->getGameObj())->resetFrame();
-	if (_board[pos].empty())
-		_board[pos].push_back(exp);
+  int posx = static_cast<int>(x), posy = static_cast<int>(y);
+  int pos = static_cast<int>(posy) * _xLength + static_cast<int>(posx);
+  int true_x = (_xLength / 2) - x;
+  int true_y = (_yLength / 2) - y;
+  Explosion     *exp = new Explosion(*this);
+  exp->setGameObj(new AFX(glm::vec3(true_x, 1, true_y)));
+  exp->getGameObj()->setScale(glm::vec3(2, 2, 2));
+  reinterpret_cast<AFX *>(exp->getGameObj())->resetFrame();
+  if (_board[pos].empty())
+    _board[pos].push_back(exp);
 }
 
 AObj    *Board::removeFromSquare(int x, int y, long int id)
 {
-	AObj  *tmp;
+  AObj  *tmp;
 
-	for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+  for (std::vector<AObj *>::iterator it = _board[y * _xLength + x].begin(); it != _board[y * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() == id)
 	{
-		if ((*it)->getId() == id)
-		{
-			tmp = *it;
-			it = _board[y * _xLength + x].erase(it);
-			break;
-		}
+	  tmp = *it;
+	  it = _board[y * _xLength + x].erase(it);
+	  break;
 	}
-	for (std::vector<AObj *>::iterator it = _board[y * _xLength + x + 1].begin(); it != _board[y * _xLength + x + 1].end(); ++it)
+    }
+  for (std::vector<AObj *>::iterator it = _board[y * _xLength + x + 1].begin(); it != _board[y * _xLength + x + 1].end(); ++it)
+    {
+      if ((*it)->getId() == id)
 	{
-		if ((*it)->getId() == id)
-		{
-			tmp = *it;
-			it = _board[y * _xLength + x + 1].erase(it);
-			break;
-		}
+	  tmp = *it;
+	  it = _board[y * _xLength + x + 1].erase(it);
+	  break;
 	}
-	for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x].begin(); it != _board[(y + 1) * _xLength + x].end(); ++it)
+    }
+  for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x].begin(); it != _board[(y + 1) * _xLength + x].end(); ++it)
+    {
+      if ((*it)->getId() == id)
 	{
-		if ((*it)->getId() == id)
-		{
-			tmp = *it;
-			it = _board[(y + 1) * _xLength + x].erase(it);
-			break;
-		}
+	  tmp = *it;
+	  it = _board[(y + 1) * _xLength + x].erase(it);
+	  break;
 	}
-	for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x + 1].begin(); it != _board[(y + 1) * _xLength + x + 1].end(); ++it)
+    }
+  for (std::vector<AObj *>::iterator it = _board[((y + 1) * _xLength) + x + 1].begin(); it != _board[(y + 1) * _xLength + x + 1].end(); ++it)
+    {
+      if ((*it)->getId() == id)
 	{
-		if ((*it)->getId() == id)
-		{
-			tmp = *it;
-			it = _board[(y + 1) * _xLength + x + 1].erase(it);
-			break;
-		}
+	  tmp = *it;
+	  it = _board[(y + 1) * _xLength + x + 1].erase(it);
+	  break;
 	}
-	return (tmp);
+    }
+  return (tmp);
 }
 
 bool Board::checkAlreadyCase(int x, int y, long int id)
@@ -377,116 +379,116 @@ bool Board::moveEntity(float x, float y, long int id, Direction dir)
 
 void Board::makeSomePlace(int x, int y, int id, Direction dir, Direction r1, Direction r2, std::string const &difficulty)
 {
-	if (r1 == West)
-		_board[((y * _yLength) + x - 1)].clear();
-	else if (r1 == East)
-		_board[((y * _yLength) + x + 1)].clear();
-	else if (r1 == North)
-		_board[((y * _yLength) + x - _xLength)].clear();
-	else if (r1 == South)
-		_board[((y * _yLength) + x + _xLength)].clear();
-	if (r2 == West)
-		_board[((y * _yLength) + x - 1)].clear();
-	else if (r2 == East)
-		_board[((y * _yLength) + x + 1)].clear();
-	else if (r2 == North)
-		_board[((y * _yLength) + x - _xLength)].clear();
-	else if (r2 == South)
-		_board[((y * _yLength) + x + _xLength)].clear();
+  if (r1 == West)
+    _board[((y * _yLength) + x - 1)].clear();
+  else if (r1 == East)
+    _board[((y * _yLength) + x + 1)].clear();
+  else if (r1 == North)
+    _board[((y * _yLength) + x - _xLength)].clear();
+  else if (r1 == South)
+    _board[((y * _yLength) + x + _xLength)].clear();
+  if (r2 == West)
+    _board[((y * _yLength) + x - 1)].clear();
+  else if (r2 == East)
+    _board[((y * _yLength) + x + 1)].clear();
+  else if (r2 == North)
+    _board[((y * _yLength) + x - _xLength)].clear();
+  else if (r2 == South)
+    _board[((y * _yLength) + x + _xLength)].clear();
 
-	_board[(y * _yLength) + x].clear();
+  _board[(y * _yLength) + x].clear();
 
-	if (difficulty == "")
-		placeEntity(x, y, ::PLAYER, id, dir);
-	else {
-		AObj *ia = new Ia(difficulty, *this);
-		ia->setId(id);
-		placeEntity(x, y, ia);
-	}
+  if (difficulty == "")
+    {
+      placeEntity(x, y, ::PLAYER, id, dir);
+    }
+  else {
+    AObj *ia = new Ia(difficulty, *this);
+    ia->setId(id);
+    placeEntity(x, y, ia);
+  }
 }
 
 void Board::dump() const
 {
-	for (auto it = _board.begin(); it != _board.end(); ++it)
+  for (auto it = _board.begin(); it != _board.end(); ++it)
+    {
+      std::cout << "case :";
+      for (auto itk = (*it).begin(); itk != (*it).end(); ++itk)
 	{
-		std::cout << "case :";
-		for (auto itk = (*it).begin(); itk != (*it).end(); ++itk)
-		{
-			std::cout << (*itk)->getId() << " ";
-		}
-		std::cout << std::endl;
+	  std::cout << (*itk)->getId() << " ";
 	}
+      std::cout << std::endl;
+    }
 }
 
 bool Board::decPlayers(unsigned int *players, unsigned int *ia)
 {
-	if (*players != 0)
-		(*players)--;
-	else if (*ia != 0)
-		(*ia)--;
-	return (*players == 0 && *ia == 0)
-	       ? false
-	       : true;
+  if (*players != 0)
+    (*players)--;
+  else if (*ia != 0)
+    (*ia)--;
+  return (*players == 0 && *ia == 0)
+    ? false
+    : true;
 }
 
 void Board::spawnPlayers(unsigned int players, unsigned int ia, std::string const &difficulty)
 {
-    if (players > 2)
-        throw std::logic_error("Map can't hold more than 2 players");
-	if ((players + ia) > ((_xLength - 2) * (_yLength - 2) - 10))
-		throw std::logic_error("Map can't hold that much players.");
-
-	std::string diff = (players == 2) ? "" : difficulty;
-
-	makeSomePlace(1, 1, 1, South, South, East, "");
-	if (!decPlayers(&players, &ia))
-		return;
-	makeSomePlace(_xLength - 2, _yLength - 2, 2, North, West, North, diff);
-	if (!decPlayers(&players, &ia))
-		return;
-	makeSomePlace(1, _yLength - 2, 3, North, North, East, difficulty);
-	if (!decPlayers(&players, &ia))
-		return;
-	makeSomePlace(_xLength - 2, 1, 4, South, West, South, difficulty);
-	if (!decPlayers(&players, &ia))
-		return;
-	makeSomePlace(_xLength - 2, (_yLength - 2) / 2, 5, West, West, North, difficulty);
-	if (!decPlayers(&players, &ia))
-		return;
-	makeSomePlace(1, (_yLength - 2) / 2, 6, East, South, East, difficulty);
-	if (!decPlayers(&players, &ia))
-		return;
-	makeSomePlace((_xLength - 2) / 2, 1, 7, South, South, East, difficulty);
-	if (!decPlayers(&players, &ia))
-		return;
-	makeSomePlace((_xLength - 2) / 2, _yLength - 2, 8, North, West, North, difficulty);
-	if (!decPlayers(&players, &ia))
-		return;
-	makeSomePlace((_xLength / 3), (_yLength / 3), 9, South, East, South, difficulty);
-	if (!decPlayers(&players, &ia))
-		return;
-	makeSomePlace(((_xLength / 3) * 2) + 1, ((_yLength / 3) * 2) + 1, 10, North, North, West, difficulty);
-	if (!decPlayers(&players, &ia))
-		return;
-	makeSomePlace((_xLength / 3), ((_yLength / 3) * 2) + 1, 11, South, West, South, difficulty);
-	if (!decPlayers(&players, &ia))
-		return;
-	makeSomePlace(((_xLength / 3) * 2) + 1, (_yLength / 3), 12, North, North, East, difficulty);
-	if (!decPlayers(&players, &ia))
-		return;
+  if (players > 2)
+    throw std::logic_error("Map can't hold more than 2 players");
+  if ((players + ia) > ((_xLength - 2) * (_yLength - 2) - 10))
+    throw std::logic_error("Map can't hold that much players.");
+  std::string diff = (players == 2) ? "" : difficulty;
+  makeSomePlace(1, 1, 1, South, South, East, "");
+  if (!decPlayers(&players, &ia))
+    return;
+  makeSomePlace(_xLength - 2, _yLength - 2, 2, North, West, North, diff);
+  if (!decPlayers(&players, &ia))
+    return;
+  makeSomePlace(1, _yLength - 2, 3, North, North, East, difficulty);
+  if (!decPlayers(&players, &ia))
+    return;
+  makeSomePlace(_xLength - 2, 1, 4, South, West, South, difficulty);
+  if (!decPlayers(&players, &ia))
+    return;
+  makeSomePlace(_xLength - 2, (_yLength - 2) / 2, 5, West, West, North, difficulty);
+  if (!decPlayers(&players, &ia))
+    return;
+  makeSomePlace(1, (_yLength - 2) / 2, 6, East, South, East, difficulty);
+  if (!decPlayers(&players, &ia))
+    return;
+  makeSomePlace((_xLength - 2) / 2, 1, 7, South, South, East, difficulty);
+  if (!decPlayers(&players, &ia))
+    return;
+  makeSomePlace((_xLength - 2) / 2, _yLength - 2, 8, North, West, North, difficulty);
+  if (!decPlayers(&players, &ia))
+    return;
+  makeSomePlace((_xLength / 3), (_yLength / 3), 9, South, East, South, difficulty);
+  if (!decPlayers(&players, &ia))
+    return;
+  makeSomePlace(((_xLength / 3) * 2) + 1, ((_yLength / 3) * 2) + 1, 10, North, North, West, difficulty);
+  if (!decPlayers(&players, &ia))
+    return;
+  makeSomePlace((_xLength / 3), ((_yLength / 3) * 2) + 1, 11, South, West, South, difficulty);
+  if (!decPlayers(&players, &ia))
+    return;
+  makeSomePlace(((_xLength / 3) * 2) + 1, (_yLength / 3), 12, North, North, East, difficulty);
+  if (!decPlayers(&players, &ia))
+    return;
 }
 
 void Board::removePlayer(long int id)
 {
-	for (std::vector<Player *>::iterator it = _players.begin(); it != _players.end(); ++it)
+  for (std::vector<Player *>::iterator it = _players.begin(); it != _players.end(); ++it)
+    {
+      if ((*it)->getId() == id)
 	{
-		if ((*it)->getId() == id)
-		{
-			(*it)->triggerAlive();
-			_players.erase(it);
-			return;
-		}
+	  (*it)->triggerAlive();
+	  _players.erase(it);
+	  return;
 	}
+    }
 }
 
 bool Board::checkOneCollision(std::vector<AObj *> field, AObj *player)
