@@ -180,6 +180,8 @@ void	Player::checkPosPowerUp()
 	    powerUpRange();
 	  else if (powerup == Crate::ADD)
 	    addBomb();
+	  else
+	    reinterpret_cast<Character *>((*all_in_it))->addSpeed();
 	  _board.deleteEntity(_x, _y, -2, false);
 	  return ;
 	}

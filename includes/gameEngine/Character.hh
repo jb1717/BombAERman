@@ -37,6 +37,7 @@ public:
 
 public:
   glm::mat4		getTransformation() const;
+  void			addSpeed();
 
 public:
   bool			_bombing;

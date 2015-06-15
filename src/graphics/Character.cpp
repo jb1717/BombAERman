@@ -121,3 +121,8 @@ glm::mat4			Character::getTransformation() const
   model = glm::scale(model, _scale);
   return model;
 }
+
+void				Character::addSpeed()
+{
+  _speed += 0.1f;
+}
